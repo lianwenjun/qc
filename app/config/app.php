@@ -121,6 +121,12 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
+		'Way\Generators\GeneratorsServiceProvider',
+		'Cartalyst\Sentry\SentryServiceProvider',
+		'Clockwork\Support\Laravel\ClockworkServiceProvider',
+		'Mews\Captcha\CaptchaServiceProvider',
+		'DaveJamesMiller\Breadcrumbs\ServiceProvider',
+		'Kmd\Logviewer\LogviewerServiceProvider',
 
 	),
 
@@ -188,6 +194,10 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
+		'Sentry'          => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
+		'Clockwork'       => 'Clockwork\Support\Laravel\Facade',
+		'Captcha'         => 'Mews\Captcha\Facades\Captcha',
+		'Breadcrumbs'     => 'DaveJamesMiller\Breadcrumbs\Facade',
 
 	),
 

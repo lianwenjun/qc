@@ -6,6 +6,14 @@
 	"require": {
 		"laravel/framework": "4.2.*"
 	},
+	"require-dev": {
+        "way/generators": "~2.0",
+        "cartalyst/sentry": "2.1.*",
+        "itsgoingd/clockwork": "1.*",
+        "mews/captcha": "dev-master",
+        "davejamesmiller/laravel-breadcrumbs": "dev-master",
+        "kmd/logviewer": "1.1.*"
+	},
 	"autoload": {
 		"classmap": [
 			"app/commands",
