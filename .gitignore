@@ -2,3 +2,5 @@
 Thumbs.db
 *.swp
 *.swo
+
+tests/_output/*
