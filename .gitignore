@@ -2,5 +2,6 @@
 Thumbs.db
 *.swp
 *.swo
-
+app/storage/*
 tests/_output/*
+.gitignore
