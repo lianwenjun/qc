@@ -5,3 +5,5 @@ Thumbs.db
 app/storage/*
 tests/_output/*
 .gitignore
+.git/*
+.*
