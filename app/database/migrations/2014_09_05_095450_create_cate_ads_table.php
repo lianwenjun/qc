@@ -15,7 +15,7 @@ class CreateCateAdsTable extends Migration {
         Schema::create('cate_ads', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->string('title', 255)->comment('游戏名');
+            $table->string('title', 255)->comment('分类名');
             $table->string('image', 255)->comment('分类图片');
             $table->softDeletes();
             $table->timestamps();

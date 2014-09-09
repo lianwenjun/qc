@@ -16,7 +16,7 @@ class CreateAdsTable extends Migration {
         {
             $table->increments('id');
             $table->integer('app_id');
-            $table->string('title', 255)->comment('游戏名');
+            $table->string('title', 127)->comment('游戏名');
             $table->string('location', 255)->comment('广告区域');
             $table->string('image', 255)->comment('图片路径');
             $table->string('word', 255)->comment('广告词');

@@ -15,8 +15,8 @@ class CreateStopwordsTable extends Migration {
         Schema::create('stopwords', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->string('word', 255)->comment('替换词');
-            $table->string('to_word', 255)->comment('目标词');
+            $table->string('word', 15)->comment('替换词');
+            $table->string('to_word', 15)->comment('目标词');
             $table->softDeletes();
             $table->timestamps();
         });

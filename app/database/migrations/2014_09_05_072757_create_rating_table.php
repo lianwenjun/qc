@@ -16,7 +16,7 @@ class CreateRatingTable extends Migration {
         {
             $table->increments('id');
             $table->integer('app_id');
-            $table->string('title', 255)->comment('游戏名');
+            $table->string('title', 127)->comment('游戏名');
             $table->string('pack', 255)->comment('包名');
             $table->integer('total')->default(0)->comment('总评分');
             $table->integer('counts')->default(0)->comment('评分次数');
