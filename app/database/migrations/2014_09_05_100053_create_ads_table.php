@@ -5,39 +5,39 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateAdsTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::create('ads', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->integer('app_id');
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('ads', function(Blueprint $table)
+        {
+            $table->increments('id');
+            $table->integer('app_id');
             $table->string('title', 255)->comment('游戏名');
             $table->string('location', 255)->comment('广告区域');
-			$table->timestamp('onshelfed_at')->comment('上架时间');
-			$table->timestamp('offshelfed_at')->comment('下架时间');
-			$table->enum('is_onshelf', ['yes', 'no'])->default('no')->comment('是否上架');
-			$table->enum('is_top', ['yes', 'no'])->default('no')->comment('是否置顶');
-			$table->string('image', 255)->comment('图片路径');
-			$table->string('word', 255)->comment('广告词');
-			$table->softDeletes();
-			$table->timestamps();
-		});
-	}
+            $table->string('image', 255)->comment('图片路径');
+            $table->string('word', 255)->comment('广告词');
+            $table->enum('is_onshelf', ['yes', 'no'])->default('no')->comment('是否上架');
+            $table->enum('is_top', ['yes', 'no'])->default('no')->comment('是否置顶');
+            $table->timestamp('onshelfed_at')->comment('上架时间');
+            $table->timestamp('offshelfed_at')->comment('下架时间');
+            $table->softDeletes();
+            $table->timestamps();
+        });
+    }
 
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::drop('ads');
-	}
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('ads');
+    }
 
 }
