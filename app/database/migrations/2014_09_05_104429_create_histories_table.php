@@ -17,9 +17,9 @@ class CreateHistoriesTable extends Migration {
             $table->increments('id');
             $table->integer('app_id')->comment('appID');
             $table->string('icon', 255)->comment('ICON');
-            $table->string('title', 255)->comment('游戏名');
+            $table->string('title', 127)->comment('游戏名');
             $table->string('pack', 255)->comment('包名');
-            $table->string('size', 32)->comment('游戏大小');
+            $table->string('size', 31)->comment('游戏大小');
             $table->string('version', 63)->comment('游戏版本');                     
             $table->string('keywords', 255)->comment('游戏关键字');
             $table->string('author', 127)->comment('游戏作者');
