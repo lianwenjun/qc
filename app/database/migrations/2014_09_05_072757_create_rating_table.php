@@ -20,8 +20,8 @@ class CreateRatingTable extends Migration {
             $table->string('pack', 255)->comment('包名');
             $table->integer('total')->default(0)->comment('总评分');
             $table->integer('counts')->default(0)->comment('评分次数');
-            $table->float('avg')->default(0)->comment('平均分');
-            $table->integer('manual')->default(0)->comment('人工权值');          
+            $table->decimal('avg', 3, 2)->default(0)->comment('平均分');
+            $table->decimal('manual', 3, 2)->default(0)->comment('干预后得分');          
             $table->softDeletes();
             $table->timestamps();
         });
@@ -35,7 +35,7 @@ class CreateRatingTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('rating');
+        //Schema::drop('rating');
     }
 
 }

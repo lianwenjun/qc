@@ -18,10 +18,10 @@ class CreateAppsTable extends Migration {
             $table->string('icon', 255)->comment('ICON');
             $table->string('title', 255)->comment('游戏名');
             $table->string('pack', 255)->comment('包名');
-            $table->string('size', 255)->comment('游戏大小');
-            $table->string('version', 255)->comment('游戏版本');                     
+            $table->string('size', 32)->comment('游戏大小');
+            $table->string('version', 63)->comment('游戏版本');                     
             $table->string('keywords', 255)->comment('游戏关键字');
-            $table->string('author', 255)->comment('游戏作者');
+            $table->string('author', 127)->comment('游戏作者');
             $table->text('summary')->comment('游戏简介');
             $table->text('images')->comment('游戏图片');
             $table->text('changes')->comment('游戏特性');
@@ -46,7 +46,7 @@ class CreateAppsTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('apps');
+        //Schema::drop('apps');
     }
 
 }

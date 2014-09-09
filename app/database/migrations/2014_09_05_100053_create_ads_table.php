@@ -37,7 +37,7 @@ class CreateAdsTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('ads');
+        //Schema::drop('ads');
     }
 
 }

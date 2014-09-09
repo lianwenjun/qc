@@ -18,10 +18,10 @@ class CreateCommentsTable extends Migration {
             $table->integer('app_id');
             $table->string('title', 255)->comment('游戏名');
             $table->string('pack', 255)->comment('包名');
-            $table->string('IMEI', 255)->comment('用户手机IMEI');
+            $table->string('imei', 255)->comment('用户手机IMEI');
             $table->string('type', 255)->comment('用户机型');
             $table->string('ip', 255)->comment('用户IP');
-            $table->string('content', 255)->comment('包名');
+            $table->string('content', 255)->comment('内容');
             $table->integer('score')->comment('评分');
             $table->softDeletes();
             $table->timestamps();
@@ -36,7 +36,7 @@ class CreateCommentsTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('comments');
+        //Schema::drop('comments');
     }
 
 }
