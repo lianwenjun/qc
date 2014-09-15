@@ -16,9 +16,9 @@ class CreateCatesTable extends Migration {
         {
             $table->increments('id');
             $table->string('title', 255);
-            $table->integer('parent_id')->default(0)->comment('父类分类ID');
-            $table->integer('search_total')->default(0)->comment('自然搜索量');
-            $table->integer('sort')->default(0)->comment('分类排序');
+            $table->integer('parent_id')->default(0)->unsigned()->comment('父类分类ID');
+            $table->integer('search_total')->default(0)->unsigned()->comment('自然搜索量');
+            $table->integer('sort')->default(0)->unsigned()->comment('分类排序');
             $table->softDeletes();
             $table->timestamps();
         });
