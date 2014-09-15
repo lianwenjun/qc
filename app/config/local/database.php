@@ -33,5 +33,6 @@ return array(
 
 
 	),
+	'log' => true,
 
 );
