@@ -16,10 +16,10 @@ class CreateRatingTable extends Migration {
         {
             $table->increments('id');
             $table->integer('app_id');
-            $table->string('title', 127)->comment('游戏名');
-            $table->string('pack', 255)->comment('包名');
-            $table->integer('total')->default(0)->comment('总评分');
-            $table->integer('counts')->default(0)->comment('评分次数');
+            $table->string('title', 128)->comment('游戏名');
+            $table->string('pack', 128)->comment('包名');
+            $table->integer('total')->default(0)->unsigned()->comment('总评分');
+            $table->integer('counts')->default(0)->unsigned()->comment('评分次数');
             $table->decimal('avg', 3, 2)->default(0)->comment('平均分');
             $table->decimal('manual', 3, 2)->default(0)->comment('干预后得分');          
             $table->softDeletes();

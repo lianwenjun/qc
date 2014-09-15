@@ -15,9 +15,9 @@ class CreateTagsTable extends Migration {
         Schema::create('tags', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->integer('app_id')->comment('游戏ID');
-            $table->integer('cate_id')->comment('分类ID');
-            $table->integer('tag_id')->comment('标签ID');
+            $table->integer('app_id')->unsigned()->comment('游戏ID');
+            $table->integer('cate_id')->unsigned()->comment('分类ID');
+            $table->integer('tag_id')->unsigned()->comment('标签ID');
             $table->timestamps();
         });
     }
