@@ -16,13 +16,13 @@ class CreateCommentsTable extends Migration {
         {
             $table->increments('id');
             $table->integer('app_id');
-            $table->string('title', 255)->comment('游戏名');
-            $table->string('pack', 255)->comment('包名');
-            $table->string('imei', 255)->comment('用户手机IMEI');
-            $table->string('type', 255)->comment('用户机型');
-            $table->string('ip', 255)->comment('用户IP');
-            $table->string('content', 255)->comment('内容');
-            $table->integer('score')->comment('评分');
+            $table->string('title', 128)->comment('游戏名');
+            $table->string('pack', 128)->comment('包名');
+            $table->string('imei', 32)->comment('用户手机IMEI');
+            $table->string('type', 32)->comment('用户机型');
+            $table->string('ip', 16)->comment('用户IP');
+            $table->string('content', 32)->comment('内容');
+            $table->tinyInteger('rating')->comment('评分');
             $table->softDeletes();
             $table->timestamps();
         });

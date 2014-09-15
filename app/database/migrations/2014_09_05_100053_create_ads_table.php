@@ -16,10 +16,11 @@ class CreateAdsTable extends Migration {
         {
             $table->increments('id');
             $table->integer('app_id');
-            $table->string('title', 255)->comment('游戏名');
+            $table->string('title', 127)->comment('游戏名');
             $table->string('location', 255)->comment('广告区域');
             $table->string('image', 255)->comment('图片路径');
             $table->string('word', 255)->comment('广告词');
+            $table->enum('type', ['index', 'cate', 'editor', 'rank'])->comment('广告位分类');
             $table->enum('is_onshelf', ['yes', 'no'])->default('no')->comment('是否上架');
             $table->enum('is_top', ['yes', 'no'])->default('no')->comment('是否置顶');
             $table->timestamp('onshelfed_at')->comment('上架时间');
