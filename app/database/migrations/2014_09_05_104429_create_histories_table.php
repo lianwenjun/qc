@@ -21,7 +21,6 @@ class CreateHistoriesTable extends Migration {
             $table->string('pack', 128)->comment('包名');
             $table->integer('size')->unsigned()->comment('游戏大小KB');
             $table->string('version', 32)->comment('游戏版本');                     
-            $table->string('keywords', 255)->comment('游戏关键字');
             $table->string('author', 128)->comment('游戏作者');
             $table->text('summary')->comment('游戏简介');
             $table->text('images')->comment('游戏图片');
