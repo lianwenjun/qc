@@ -27,6 +27,7 @@ class CreateHistoriesTable extends Migration {
             $table->text('changes')->comment('游戏特性');
             $table->string('reason', 20)->comment('审核不过原因');           
             $table->integer('download_counts')->default(0)->unsigned()->comment('总下载量');
+            $table->string('download_manual', 32)->comment('人工用于显示下载量');
             $table->string('download_link', 255)->comment('APK下载路径');
             $table->integer('operator')->comment('操作者');
             $table->string('os', 32)->comment('系统OS');
