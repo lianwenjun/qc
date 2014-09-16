@@ -18,7 +18,7 @@ class CreateStopwordsTable extends Migration {
             $table->string('word', 16)->comment('替换词');
             $table->string('to_word', 16)->default('**')->comment('目标词');
             $table->integer('creator')->unsigned()->comment('添加人');
-            $table->integer('last_editor')->unsigned()->comment('最后修改者');
+            $table->integer('operator')->unsigned()->comment('最后修改者');
             $table->softDeletes();
             $table->timestamps();
         });

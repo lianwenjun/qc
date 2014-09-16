@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateTagsTable extends Migration {
+class CreateAppcatesTable extends Migration {
 
     /**
      * Run the migrations.
@@ -12,12 +12,11 @@ class CreateTagsTable extends Migration {
      */
     public function up()
     {
-        Schema::create('tags', function(Blueprint $table)
+        Schema::create('app_cates', function(Blueprint $table)
         {
             $table->increments('id');
             $table->integer('app_id')->unsigned()->comment('游戏ID');
             $table->integer('cate_id')->unsigned()->comment('分类ID');
-            $table->integer('tag_id')->unsigned()->comment('标签ID');
             $table->timestamps();
         });
     }
@@ -30,7 +29,7 @@ class CreateTagsTable extends Migration {
      */
     public function down()
     {
-        //Schema::drop('tags');
+        //Schema::drop('app_cates');
     }
 
 }
