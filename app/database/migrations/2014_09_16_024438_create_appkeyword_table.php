@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateTagsTable extends Migration {
+class CreateAppkeywordTable extends Migration {
 
     /**
      * Run the migrations.
@@ -12,16 +12,14 @@ class CreateTagsTable extends Migration {
      */
     public function up()
     {
-        Schema::create('tags', function(Blueprint $table)
+        Schema::create('appkeyword', function(Blueprint $table)
         {
             $table->increments('id');
             $table->integer('app_id')->unsigned()->comment('游戏ID');
-            $table->integer('cate_id')->unsigned()->comment('分类ID');
-            $table->integer('tag_id')->unsigned()->comment('标签ID');
+            $table->integer('ky_id')->unsigned()->comment('关键词ID');
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
@@ -30,7 +28,7 @@ class CreateTagsTable extends Migration {
      */
     public function down()
     {
-        //Schema::drop('tags');
+        //Schema::drop('appkeyword');
     }
 
 }
