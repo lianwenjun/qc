@@ -37,11 +37,12 @@ Route::group(['prefix' => 'admin'], function()
     Route::group(['prefix' => 'apps'], function() //游戏APP列表
     {
         //列表
-        Route::get('index', ['as' => 'apps.index', 'uses' => 'UserController@showProfile']);
+        Route::get('index', ['as' => 'apps.index', 'uses' => 'AppsController@getIndex']);
         Route::get('onshelf', ['as' => 'apps.onshelf', 'uses' => 'UserController@showProfile']);
         Route::get('offshelf', ['uses' => 'UserController@showProfile']);
         Route::get('review', ['uses' => 'UserController@showProfile']);
         Route::get('nopass', ['uses' => 'UserController@showProfile']);
+
         //操作
         Route::get('create', ['uses' => 'UserController@showProfile']);
         Route::post('create', ['uses' => 'UserController@showProfile']);
@@ -53,13 +54,17 @@ Route::group(['prefix' => 'admin'], function()
         Route::get('{id}/offshelf', ['uses' => 'UserController@showProfile']);
         Route::get('{id}/pass', ['uses' => 'UserController@showProfile']);
         Route::post('{id}/nopass', ['uses' => 'UserController@showProfile']);
+
         //全选
         Route::get('allpass', ['uses' => 'UserController@showProfile']);
         Route::get('allnopass', ['uses' => 'UserController@showProfile']);
+
         //上传
         Route::post('imageupload', ['uses' => 'UserController@showProfile']);
         Route::post('appupload', ['uses' => 'UserController@showProfile']);
     });
+
+
     Route::group(['prefix' => 'user'], function() //用户列表
     {
         Route::post('signin', ['uses' => 'UserController@showProfile']);
