@@ -7,3 +7,5 @@ tests/_output/*
 .gitignore
 .git/*
 .*
+*.sublime-project
+*.sublime-workspace
