@@ -34,7 +34,7 @@ class CreateHistoriesTable extends Migration {
             $table->string('os_version', 32)->comment('系统版本');
             $table->enum('status', ['copy', 'pass', 'nopass', 'onshelf', 'offshelf'])->default('copy')->comment('数据状态');
             $table->enum('is_verify', ['yes', 'no'])->default('no')->comment('是否安全认证');
-            $table->enum('is_ads', ['yes', 'no'])->default('no')->comment('是否无广告');
+            $table->enum('has_ad', ['yes', 'no'])->default('no')->comment('是否无广告');
             $table->timestamp('onshelfed_at')->comment('上架时间');
             $table->timestamp('offshelfed_at')->comment('下架时间');
             $table->timestamp('reviewed_at')->comment('审核时间');
