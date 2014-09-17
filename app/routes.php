@@ -48,20 +48,20 @@ Route::group(['prefix' => 'admin'], function()
         Route::get('offshelf', ['as' => 'apps.offshelf', 'uses' => 'Admin_AppsController@offshelf']);
 
         //操作
-        Route::get('create', ['uses' => 'UserController@showProfile']);
-        Route::post('create', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/edit', ['uses' => 'UserController@showProfile']);
-        Route::post('{id}/edit', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/delete', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/onshelf', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/reonshelf', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/offshelf', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/pass', ['uses' => 'UserController@showProfile']);
-        Route::post('{id}/nopass', ['uses' => 'UserController@showProfile']);
+        Route::get('create', ['uses' => 'AppsController@showProfile']);
+        Route::post('create', ['uses' => 'AppsController@showProfile']);
+        Route::get('{id}/edit', ['uses' => 'AppsController@showProfile']);
+        Route::post('{id}/edit', ['uses' => 'AppsController@showProfile']);
+        Route::get('{id}/delete', ['uses' => 'AppsController@showProfile']);
+        Route::get('{id}/onshelf', ['uses' => 'AppsController@showProfile']);
+        Route::get('{id}/reonshelf', ['uses' => 'AppsController@showProfile']);
+        Route::get('{id}/offshelf', ['uses' => 'AppsController@showProfile']);
+        Route::get('{id}/pass', ['uses' => 'AppsController@showProfile']);
+        Route::post('{id}/nopass', ['uses' => 'AppsController@showProfile']);
 
         //全选
-        Route::get('allpass', ['uses' => 'UserController@showProfile']);
-        Route::get('allnopass', ['uses' => 'UserController@showProfile']);
+        Route::get('allpass', ['uses' => 'AppsController@showProfile']);
+        Route::get('allnopass', ['uses' => 'AppsController@showProfile']);
 
         //上传
         Route::post('imageupload', ['uses' => 'UserController@showProfile']);
@@ -125,13 +125,26 @@ Route::group(['prefix' => 'admin'], function()
     });
     Route::group(['prefix' => 'appsads'], function() //游戏位推广
     {
-        Route::get('index', ['uses' => 'UserController@showProfile']);
-        Route::post('create', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/delete}', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/top}', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/notop}', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/onshelf}', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/offshelf}', ['uses' => 'UserController@showProfile']);
+        Route::get('index', ['as' => 'appsads.index', 'uses' => 'AppsAdsController@index']);
+        Route::get('create', ['as' => 'appsads.create', 'uses' => 'AppsAdsController@create']);
+        Route::post('create', ['as' => 'appsads.store', 'uses' => 'AppsAdsController@store']);
+        Route::get('{id}/edit}', ['as' => 'appsads.edit', 'uses' => 'AppsAdsController@edit']);
+        Route::post('{id}/edit}', ['as' => 'appsads.update', 'uses' => 'AppsAdsController@update']);
+        Route::get('{id}/delete}', ['as' => 'appsads.delete', 'uses' => 'AppsAdsController@delete']);
+        Route::get('{id}/top}', ['as' => 'appsads.top', 'uses' => 'AppsAdsController@top']);
+        Route::get('{id}/notop}', ['as' => 'appsads.notop', 'uses' => 'AppsAdsController@notop']);
+        Route::get('{id}/onshelf}', ['as' => 'appsads.onshelf', 'uses' => 'AppsAdsController@onshelf']);
+        Route::get('{id}/offshelf}', ['as' => 'appsads.offshelf', 'uses' => 'AppsAdsController@offshelf']);
+    });
+    Route::group(['prefix' => 'rankads'], function() //游戏位推广
+    {
+        Route::get('index', ['as' => 'appsads.index', 'uses' => 'AppsAdsController@index']);
+        Route::post('create', ['as' => 'appsads.create', 'uses' => 'AppsAdsController@showProfile']);
+        Route::get('{id}/delete}', ['as' => 'appsads.delete', 'uses' => 'AppsAdsController@showProfile']);
+        Route::get('{id}/top}', ['as' => 'appsads.index', 'uses' => 'AppsAdsController@showProfile']);
+        Route::get('{id}/notop}', ['as' => 'appsads.index', 'uses' => 'AppsAdsController@showProfile']);
+        Route::get('{id}/onshelf}', ['as' => 'appsads.index', 'uses' => 'AppsAdsController@showProfile']);
+        Route::get('{id}/offshelf}', ['as' => 'appsads.index', 'uses' => 'AppsAdsController@showProfile']);
     });
     Route::group(['prefix' => 'indexads'], function() //首页图片位推广
     {
@@ -164,33 +177,6 @@ Route::group(['prefix' => 'admin'], function()
     Route::get('lastapps', ['uses' => 'UserController@showProfile']);//近期添加列表
 });
 
-//SQL记录
-if (Config::get('database.log', false))
-{           
-    Event::listen('illuminate.query', function($query, $bindings, $time, $name)
-    {
-        $data = compact('bindings', 'time', 'name');
-
-        // Format binding data for sql insertion
-        foreach ($bindings as $i => $binding)
-        {   
-            if ($binding instanceof \DateTime)
-            {   
-                $bindings[$i] = $binding->format('\'Y-m-d H:i:s\'');
-            }
-            else if (is_string($binding))
-            {   
-                $bindings[$i] = "'$binding'";
-            }
-        }   
-
-        // Insert bindings into query
-        $query = str_replace(array('%', '?'), array('%%', '%s'), $query);
-        $query = vsprintf($query, $bindings); 
-
-        Log::info($query, $data);
-    });
-}
 // 404 跳转
 Event::listen('404', function()
 {
