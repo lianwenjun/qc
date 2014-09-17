@@ -6,7 +6,7 @@
             'status' => [
                 'new' => '新上传',
                 'draft' => '草稿',
-                'pass' => '审核通过',
+                'pending' => '待审核',
                 'nopass' => '审核不通过',
                 'onshelf' => '上架', 
                 'offshelf' => '下架',
