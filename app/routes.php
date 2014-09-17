@@ -37,11 +37,11 @@ Route::group(['prefix' => 'admin'], function()
     Route::group(['prefix' => 'apps'], function() //游戏APP列表
     {
         //列表
-        Route::get('draft', ['as' => 'apps.draft', 'uses' => 'AppsController@draft']);
-        Route::get('onshelf', ['as' => 'apps.onshelf', 'uses' => 'AppsController@showProfile']);
-        Route::get('offshelf', ['as' => 'apps.offshelf', 'uses' => 'AppsController@showProfile']);
-        Route::get('pending', ['as' => 'apps.pending', 'uses' => 'AppsController@pending']);
-        Route::get('nopass', ['as' => 'apps.nopass','uses' => 'AppsController@showProfile']);
+        Route::get('draft',    ['as' => 'apps.draft',    'uses' => 'AppsController@draft']);
+        Route::get('onshelf',  ['as' => 'apps.onshelf',  'uses' => 'AppsController@onshelf']);
+        Route::get('offshelf', ['as' => 'apps.offshelf', 'uses' => 'AppsController@offshelf']);
+        Route::get('pending',  ['as' => 'apps.pending',  'uses' => 'AppsController@pending']);
+        Route::get('nopass',   ['as' => 'apps.nopass',   'uses' => 'AppsController@nopass']);
 
         //操作
         Route::get('create', ['uses' => 'AppsController@showProfile']);
