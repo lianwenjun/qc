@@ -17,10 +17,10 @@
 */
 
 $I = new FunctionalTester($scenario);
-$I->wantTo('添加编辑游戏功能');
+$I->wantTo('添加编辑游戏列表功能');
 
 // 列表
-$I->amOnAction('AppsController@getIndex');
+$I->amOnAction('AppsController@index');
 $I->see('上传游戏A君');
 
 /* --------------------------------------------------------
@@ -70,14 +70,14 @@ $I->dontSee('可怜软件A君');
 -------------------------------------------------------- */
 
 // 分页
-$I->amOnAction('AppsController@getIndex');
-$I->click('2');
+$I->amOnAction('AppsController@index');
+$I->click('2'); // 待修改
 $I->see('分页游戏A君');
 
 // 带搜索分页
-$I->amOnAction('AppsController@getIndex');
+$I->amOnAction('AppsController@index');
 $I->fillField(['name' => 'keyword'], '游戏');
 $I->click('查询');
-$I->click('2');
+$I->click('2'); // 待修改
 $I->see('分页游戏B君');
 $I->dontSee('分页游戏A君');
