@@ -1,0 +1,1 @@
+/var/www/qc/app/views/admin/apps/pending.blade.php

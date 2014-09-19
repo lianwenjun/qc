@@ -15,7 +15,7 @@ $I->seeRecord('apps', ['id' => '9', 'status' => 'new', 'deleted_at' => null]);
 $I->amOnPage('/admin/apps/9/edit');
 $I->fillField(['name' => 'keywords'], '草稿游戏A君');
 $I->checkOption(['name' => 'cates'], '角色扮演'); // 用法未确定
-$I->fillField(['name' => 'author'], '草稿游戏有限公司');
+$I->fillField(['name' => 'author'], '草稿游戏工厂');
 $I->selectOption('form select[name=os]', 'Android');
 $I->fillField(['name' => 'os_version'], '2.3');
 $I->fillField(['name' => 'sort'], '0');
