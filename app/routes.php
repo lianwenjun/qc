@@ -16,32 +16,23 @@ Route::get('/', function()
     return View::make('hello');
 });
 
-Route::get('/routes', function()
-{
-    $routeCollection = Route::getRoutes();
-
-    foreach ($routeCollection as $value) {
-        echo $value->getActionName();
-        echo $value->getName();
-        //print_r($value->getAction());
-        //dd("<br />");
-        echo "<br />";
-        //exit;
-    }
-});
 
 // 后台处理
 Route::group(['prefix' => 'admin'], function()
 {
+    Route::get('/',        ['as' => 'admin.index',   'uses' => 'Admin_IndexController@index']);
+    Route::get('/menu',    ['as' => 'admin.menu',    'uses' => 'Admin_IndexController@menu']);
+    Route::get('/welcome', ['as' => 'admin.welcome', 'uses' => 'Admin_IndexController@welcome']);
 
-    Route::group(['prefix' => 'apps'], function() //游戏APP列表
+     // 游戏APP列表
+    Route::group(['prefix' => 'apps'], function()
     {
         //列表
-        Route::get('draft',    ['as' => 'apps.draft',    'uses' => 'AppsController@draft']);
-        Route::get('onshelf',  ['as' => 'apps.onshelf',  'uses' => 'AppsController@onshelf']);
-        Route::get('offshelf', ['as' => 'apps.offshelf', 'uses' => 'AppsController@offshelf']);
-        Route::get('pending',  ['as' => 'apps.pending',  'uses' => 'AppsController@pending']);
-        Route::get('nopass',   ['as' => 'apps.nopass',   'uses' => 'AppsController@nopass']);
+        Route::get('onshelf',  ['as' => 'apps.onshelf',  'uses' => 'Admin_AppsController@onshelf']);
+        Route::get('draft',    ['as' => 'apps.draft',    'uses' => 'Admin_AppsController@draft']);
+        Route::get('pending',  ['as' => 'apps.pending',  'uses' => 'Admin_AppsController@pending']);
+        Route::get('nopass',   ['as' => 'apps.nopass',   'uses' => 'Admin_AppsController@nopass']);
+        Route::get('offshelf', ['as' => 'apps.offshelf', 'uses' => 'Admin_AppsController@offshelf']);
 
         //操作
         Route::get('create', ['uses' => 'AppsController@showProfile']);
