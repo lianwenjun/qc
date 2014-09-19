@@ -16,26 +16,13 @@ Route::get('/', function()
     return View::make('hello');
 });
 
-Route::get('/routes', function()
-{
-    $routeCollection = Route::getRoutes();
-
-    foreach ($routeCollection as $value) {
-        echo $value->getActionName();
-        echo $value->getName();
-        //print_r($value->getAction());
-        //dd("<br />");
-        echo "<br />";
-        //exit;
-    }
-});
 
 // 后台处理
 Route::group(['prefix' => 'admin'], function()
 {
-    Route::get('/',  ['as' => 'admin.index',  'uses' => 'Admin_IndexController@index']);
-    Route::get('/menu',  ['as' => 'admin.menu',  'uses' => 'Admin_IndexController@menu']);
-    Route::get('/welcome',  ['as' => 'admin.welcome',  'uses' => 'Admin_IndexController@welcome']);
+    Route::get('/',        ['as' => 'admin.index',   'uses' => 'Admin_IndexController@index']);
+    Route::get('/menu',    ['as' => 'admin.menu',    'uses' => 'Admin_IndexController@menu']);
+    Route::get('/welcome', ['as' => 'admin.welcome', 'uses' => 'Admin_IndexController@welcome']);
 
      // 游戏APP列表
     Route::group(['prefix' => 'apps'], function()

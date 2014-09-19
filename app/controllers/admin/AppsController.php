@@ -21,7 +21,12 @@ class Admin_AppsController extends \Admin_BaseController {
      */
     public function draft()
     {
-        return View::make('admin.apps.draft');
+        $conditions['status'] = ['new', 'draft'];
+        
+        $apps_model = new Apps();
+        $apps = $apps_model -> lists($conditions);
+
+        return View::make('admin.apps.draft')->with('apps', $apps);
     }
 
     /**
