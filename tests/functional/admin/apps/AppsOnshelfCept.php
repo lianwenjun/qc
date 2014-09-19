@@ -27,7 +27,7 @@
 $I = new FunctionalTester($scenario);
 $I->wantTo('上架游戏列表功能');
 $I->amOnAction('AppsController@getIndex');
-$I->see('上架游戏A君';
+$I->see('上架游戏A君');
 
 /* --------------------------------------------------------
 | 搜索功能 begin
