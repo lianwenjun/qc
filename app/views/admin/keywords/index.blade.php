@@ -22,7 +22,7 @@
         </ul>
     </div>
                     
-    <div class="Search_cunt">共 <strong>{{ $total }}</strong> 条记录 </div>
+    <div class="Search_cunt">共 <strong>{{ $keywords->getTotal() }}</strong> 条记录 </div>
 
     <div class="Search_biao">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -51,9 +51,15 @@
                           <img src="images/xia_yes.png" width="18" height="18" />
                         @else
                           <img src="images/xia_none.png" width="18" height="18" />
-                        @endif
+                        @endif           
                     </td>
-                    <td><a href="javacript:;" class="Search_show editWord">修改</a> <a href="{{ route('keyword.delete', $keyword->id) }}" class="Search_del">删除</a></td>
+                    <td><a href="javacript:;" class="Search_show editWord">修改</a> <a href="javascript:;" class="Search_del delWord">删除</a></td>
+                    <td style="display:none">
+                        <input id="edit-url" value="{{ route('keyword.update', $keyword->id) }}" type="hidden"/>
+                        <input id="del-url" value="{{ route('keyword.delete', $keyword->id) }}" type="hidden"/>
+                        <input id="preWord" value="{{ $keyword->word }}" type="hidden"/>
+                        <input id="preSlide" value="{{ $keyword->is_slide }}" type="hidden"/>
+                    </td>
                     <!--
                         <td><a href="#" class="Search_show">确定</a> <a href="#" class="Search_show">取消</a></td>
                     !-->
@@ -65,7 +71,7 @@
 </div>
 <script>
 $(function(){
-    CREATEURL = '/admin/keyword/create';
+    CREATEURL = "{{ route('keyword.store') }}";
     
     $("#addWord").focus(function() {
         $(this).val("");
@@ -97,7 +103,7 @@ $(function(){
         });
     });
     //提交查询
-    $("#submitSearch").click(function() ß{
+    $("#submitSearch").click(function() {
         var word = $("#searchWord").val();
         if (word === "输入关键字" || word == "") {
             $("#searchWord").val("输入关键字");
@@ -107,40 +113,54 @@ $(function(){
         var url = window.location.pathname + '?word=' + word;
         window.location.href = url;
     });
-    //修改
-    $(".editWord").click(function() {
-        //alert('点击修改');
+    //删除
+    $('.delWord').live('click', function() {
         var td = $(this).parents('tr').children('td');
-        //console.log(td);
+        var delUrl = td.eq(9).find('#del-url').val();
+        window.location.href = delUrl;
+    });
+    //修改
+    $(".editWord").live('click', function() {
+        var td = $(this).parents('tr').children('td');
         var text1 = td.eq(1).html();
         var text7 = td.eq(7).html();
         var text8 = $(this).parent().html();
         var to_text1 = '<input name="textfield2" type="text" id="textfield2" value="" size="8" class="Classification_text" />';
-        to_text1 = to_text1 + '<input id="preWord" value="" type="hidden"/>';
-        to_text1 = to_text1 + '<input id="preWord" value="" type="hidden"/>';
         var to_text7 = '';
         var to_text8 = '<a href="javacript:;" class="Search_show saveWord">确定</a> <a href="javacript:;" class="Search_show chanceWord">取消</a>';
-        
-        console.log(text1);
-        console.log(text7);
         td.eq(1).html(to_text1);
         td.eq(1).find('#textfield2').val(text1);
-        td.eq(1).find('#preWord').val(text1);
         $(this).parent().html(to_text8);
     });
     //提交
     $(".saveWord").live('click', function() {
-        alert('点击保存');
+        //alert('点击保存');
         var td = $(this).parents('tr').children('td');
         var text1 = td.eq(1).find('input').val();
-        console.log();
+        var editUrl = td.eq(9).find('#edit-url').val();
+        //var is_slide = td.eq().
+        var data = {word:text1, is_slide:'yes'};
+        $.post(editUrl, data, function(res) {
+            //错误判断
+            if (res.status == 'ok') {
+                var text8 = '<a href="javacript:;" class="Search_show editWord">修改</a> <a href="javascript:;" class="Search_del delWord">删除</a>';
+                td.eq(8).html(text8);
+                td.eq(1).html(text1);
+                return;
+            }
+            return;
+        }).fail(function() {
+            alert('亲，服务器出错啦');
+        });
     });
     //取消
     $(".chanceWord").live('click', function() {
-        alert('点击保存');
         var td = $(this).parents('tr').children('td');
-        var text1 = td.eq(1).find('input').val();
-        console.log(td);
+        var text1 = td.eq(9).find('#preWord').val();
+        var text8 = '<a href="javacript:;" class="Search_show editWord">修改</a> <a href="javascript:;" class="Search_del delWord">删除</a>';
+        $(this).parent().html(text8);
+        td.eq(1).html(text1);
+        //td.eq(9).find('input').val(text1);
     });
 });
 </script>

@@ -69,20 +69,20 @@ Route::group(['prefix' => 'admin'], function()
 
     Route::group(['prefix' => 'cate'], function() //游戏分类
     {
-        Route::get('index', ['uses' => 'UserController@showProfile']);
-        Route::get('create', ['uses' => 'UserController@showProfile']);
-        Route::post('create', ['uses' => 'UserController@showProfile']);
-        Route::post('{id}/edit', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/delete', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/show', ['uses' => 'UserController@showProfile']);
+        Route::get('index', ['uses' => 'Admin_CatesController@index']);
+        Route::get('create', ['uses' => 'Admin_CatesController@showProfile']);
+        Route::post('create', ['uses' => 'Admin_CatesController@showProfile']);
+        Route::post('{id}/edit', ['uses' => 'Admin_CatesController@showProfile']);
+        Route::get('{id}/delete', ['uses' => 'Admin_CatesController@showProfile']);
+        Route::get('{id}/show', ['uses' => 'Admin_CatesController@showProfile']);
     });
     Route::group(['prefix' => 'tag'], function() //游戏标签
     {
-        Route::get('index', ['uses' => 'UserController@showProfile']);
-        Route::post('create', ['uses' => 'UserController@showProfile']);
-        Route::post('{id}/edit', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/delete', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/show', ['uses' => 'UserController@showProfile']);
+        Route::get('index', ['as' => 'tag.index', 'uses' => 'Admin_CatesController@tagIndex']);
+        Route::post('create', ['as' => 'tag.store', 'uses' => 'Admin_CatesController@store']);
+        Route::post('{id}/edit', ['as' => 'tag.update', 'uses' => 'Admin_CatesController@update']);
+        Route::get('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_CatesController@destroy']);
+        Route::get('{id}/show', ['as' => 'tag.show', 'uses' => 'Admin_CatesController@show']);
     });
     Route::group(['prefix' => 'rating'], function() //游戏评分
     {
