@@ -14,12 +14,16 @@ class Admin_KeywordsController extends \BaseController {
      * @return Response
      */
     public function index()
-    {
-        $query = ['id', '>', '0'];
+    {  
+        $ky = new Keywords;
+        $where = $ky;
+        if (Input::get('word')) {
+            $query = ['%', Input::get('word'), '%'];
+            $where = $ky->where('word', 'like', join($query));
+        }
         //查询，默认分页
-        $total = Keywords::whereNull('deleted_at')->count();
-        $keywords = Keywords::whereNull('deleted_at')->orderBy('id', 'desc')->paginate($this->pagesize);
-        $datas = ['keywords' => $keywords, 'total' => $total];
+        $keywords = $where->orderBy('id', 'desc')->paginate($this->pagesize);
+        $datas = ['keywords' => $keywords];
         $this->layout->content = View::make('admin.keywords.index', $datas);
     }
 
@@ -59,14 +63,14 @@ class Admin_KeywordsController extends \BaseController {
     {
         //检测该数据是否存在
         $ky = new Keywords;
-        $keyword = $ky->where('id', $id)->whereNull('deleted_at')->first();
+        $keyword = $ky->where('id', $id)->first();
         if(!$keyword){
             return Response::json(['status'=>'error', 'msg'=>'id is valid']);   
         }
         //检测输入
         if ($ky->validateUpate()->fails()){
             return Response::json(['status'=>'error', 'msg'=>'word is must need']);
-        } 
+        }
         //保存数据
         $keyword->operator = $this->user_id;
         $keyword->word = Input::get('word');
@@ -84,7 +88,7 @@ class Admin_KeywordsController extends \BaseController {
     public function destroy($id)
     {
         //检测是否存在该数据
-        $keyword = Keywords::where('id', $id)->whereNull('deleted_at')->first();
+        $keyword = Keywords::where('id', $id)->first();
         if(!$keyword){
             return Redirect::action('Admin_KeywordsController@index')->with('msg', '#'. $id .'不存在');   
         }
