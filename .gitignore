@@ -12,4 +12,4 @@ tests/_output/*
 apks/*
 icons/*
 pictures/*
-
+*.apk
