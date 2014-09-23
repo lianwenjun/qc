@@ -20,7 +20,7 @@ $I = new FunctionalTester($scenario);
 $I->wantTo('添加编辑游戏列表功能');
 
 // 列表
-$I->amOnAction('AppsController@index');
+$I->amOnAction('AppsController@d');
 $I->see('上传游戏A君');
 
 /* --------------------------------------------------------

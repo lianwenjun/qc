@@ -10,6 +10,8 @@ class Admin_AppsController extends \Admin_BaseController {
      */
     public function onshelf()
     {
+        $appsModel = new Apps();
+
         return View::make('admin.apps.onshelf');
     }
 
@@ -21,10 +23,14 @@ class Admin_AppsController extends \Admin_BaseController {
      */
     public function draft()
     {
-        $conditions['status'] = ['new', 'draft'];
+
+        Breadcrumbs::register('draft', function($breadcrumbs) {
+            $breadcrumbs->push('游戏管理', route('admin.index'));
+            $breadcrumbs->push('添加编辑游戏', route('apps.draft'));
+        });
         
-        $apps_model = new Apps();
-        $apps = $apps_model -> lists($conditions);
+        $appsModel = new Apps();
+        $apps = $appsModel -> lists(['new', 'draft']);
 
         return View::make('admin.apps.draft')->with('apps', $apps);
     }
@@ -60,6 +66,34 @@ class Admin_AppsController extends \Admin_BaseController {
     public function offshelf()
     {
         return View::make('admin.apps.offshelf');
+    }
+
+
+    /**
+     * 上传游戏APK
+     * POST /admin/apps/appupload
+     *
+     * @return Response
+     */
+    public function appUpload()
+    {
+        $appModel = new Apps();
+
+        return $appModel->appUpload();
+    }
+
+
+    /**
+     * 上传游戏APK
+     * POST /admin/apps/imageupload
+     *
+     * @return Response
+     */
+    public function imageUpload()
+    {
+        $appModel = new Apps();
+
+        return $appModel->imageUpload();
     }
 
     /**
