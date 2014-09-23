@@ -49,16 +49,14 @@
             
             <li id="three" class="mail"> <a href="#three">系统管理</a>
                  <ul class="sub-menu">
-                       <li><a href="Classification.html" target=BoardRight>游戏分类管理</a></li>
-                       <li><a href="Tag.html" target=BoardRight>游戏标签管理</a></li>
+                       <li><a href="{{ URL::route('cate.index') }}" target=BoardRight>游戏分类管理</a></li>
+                       <li><a href="{{ URL::route('tag.index') }}" target=BoardRight>游戏标签管理</a></li>
                        <li><a href="Score.html" target=BoardRight>游戏评分列表</a></li>
                        <li><a href="Comment.html" target=BoardRight>游戏评论列表</a></li>
                        <li><a href="Shield.html" target=BoardRight>屏蔽词管理</a></li>
-                       <li><a href="Keyword.html" target=BoardRight>关键字管理</a></li>
+                       <li><a href="{{ URL::route('keyword.index') }}" target=BoardRight>关键字管理</a></li>
                  </ul>
             </li>
-        
-            
       </ul>
 </div>
 <script type="text/javascript">
