@@ -163,15 +163,14 @@
 </div>
 <script src="/js/jquery-ui-1.8.23.custom.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-    $("#scrollDiv").textSlider({line:4,speed:500,timer:3000});
+$(function(){
+    //$("#scrollDiv").textSlider({line:4,speed:500,timer:3000});
 });
-</script>
-<script type="text/javascript">
-  $(document).ready(function(){
+$(function(){
     //JQ-add
+    TagCreateUrl = "{{ route('cate.create') }}";
     $("#Classification").click(function(){
-        $.jBox("iframe:add_Classification.html", {  
+        $.jBox("iframe:" + TagCreateUrl, {  
           title: "<div class=ask_title>分类添加</div>",  
           width: 550,  
           height:370,
@@ -188,7 +187,7 @@ $(document).ready(function(){
              $("body").css("overflow-y","auto");
            }
            
-        });  
+        });
         
     });
     
@@ -216,7 +215,7 @@ $(document).ready(function(){
   
   });
   
-    $(function() {
+$(function() {
     $( "#listdata" ).sortable({
       stop: function(event, ui) {
         var app_id='';
@@ -229,7 +228,6 @@ $(document).ready(function(){
     $( "#listdata" ).disableSelection();
     
     $('.qqtip').qtip({position: { my: 'bottom left', at: 'top center'}});
-  });
-  
+});
 </script>              
 @stop
