@@ -9,3 +9,7 @@ tests/_output/*
 .*
 *.sublime-project
 *.sublime-workspace
+apks/*
+icons/*
+pictures/*
+
