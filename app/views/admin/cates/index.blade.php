@@ -1,0 +1,1 @@
+/var/www/qc/app/views/admin/cates/index.blade.php
