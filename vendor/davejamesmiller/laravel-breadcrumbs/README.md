@@ -5,7 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/davejamesmiller/laravel-breadcrumbs/badge.png)](https://coveralls.io/r/davejamesmiller/laravel-breadcrumbs)
 
 A simple Laravel-style way to create breadcrumbs in
-[Laravel 4](http://laravel.com/).
+[Laravel 4+](http://laravel.com/).
 
 ## Installation
 
@@ -108,10 +108,7 @@ The possible values are:
 #### Creating a custom template
 
 If you want to customise the HTML, create your own view file (e.g.
-`app/views/_partials/breadcrumbs.blade.php`) and alter the config to point to
-that file (e.g. `_partials.breadcrumbs`).
-
-The view should be similar to this:
+`app/views/_partials/breadcrumbs.blade.php`) like this:
 
 ```html+php
 @if ($breadcrumbs)
@@ -134,6 +131,12 @@ breadcrumb is an object with the following keys:
 * `url` - The URL you set above
 * `first` - `true` for the first breadcrumb, `false` otherwise
 * `last` - `true` for the last breadcrumb, `false` otherwise
+
+Then update your config file with the custom view name, e.g.:
+
+```php
+'view' => '_partials.breadcrumbs',
+```
 
 ### 3. Output the breadcrumbs in your view
 
