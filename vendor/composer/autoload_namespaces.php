@@ -33,6 +33,7 @@ return array(
     'Mews\\Captcha' => array($vendorDir . '/mews/captcha/src'),
     'Math' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'Kmd\\Logviewer' => array($vendorDir . '/kmd/logviewer/src'),
+    'JildertMiedema\\LaravelPlupload' => array($vendorDir . '/jildertmiedema/laravel-plupload/src'),
     'Jeremeamia\\SuperClosure' => array($vendorDir . '/jeremeamia/SuperClosure/src'),
     'Illuminate' => array($vendorDir . '/laravel/framework/src'),
     'File' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),

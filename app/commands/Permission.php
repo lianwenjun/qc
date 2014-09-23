@@ -16,7 +16,7 @@ class permission extends Command {
      *
      * @var string
      */
-    protected $description = 'auto make permission config';
+    protected $description = '生成权限配置';
 
     /**
      * Create a new command instance.
