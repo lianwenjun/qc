@@ -69,7 +69,7 @@ Route::group(['prefix' => 'admin'], function()
 
     Route::group(['prefix' => 'cate'], function() //游戏分类
     {
-        Route::get('index', ['uses' => 'Admin_CatesController@index']);
+        Route::get('index', ['as' => 'cate.index', 'uses' => 'Admin_CatesController@index']);
         Route::get('create', ['uses' => 'Admin_CatesController@showProfile']);
         Route::post('create', ['uses' => 'Admin_CatesController@showProfile']);
         Route::post('{id}/edit', ['uses' => 'Admin_CatesController@showProfile']);
