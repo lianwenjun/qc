@@ -52,7 +52,7 @@ Route::group(['prefix' => 'admin'], function()
 
         //上传
         Route::post('imageupload', ['uses' => 'UserController@showProfile']);
-        Route::post('appupload', ['uses' => 'UserController@showProfile']);
+        Route::post('appupload', ['as' => 'apps.appupload', 'uses' => 'Admin_AppsController@appUpload']);
     });
 
 

@@ -13,10 +13,10 @@
 
 ClassLoader::addDirectories(array(
 
-	app_path().'/commands',
-	app_path().'/controllers',
-	app_path().'/models',
-	app_path().'/database/seeds',
+    app_path().'/commands',
+    app_path().'/controllers',
+    app_path().'/models',
+    app_path().'/database/seeds',
 
 ));
 
@@ -50,7 +50,7 @@ Log::useDailyFiles(storage_path().'/logs/'.$logFile);
 
 App::error(function(Exception $exception, $code)
 {
-	Log::error($exception);
+    Log::error($exception);
 });
 
 /*
@@ -66,7 +66,7 @@ App::error(function(Exception $exception, $code)
 
 App::down(function()
 {
-	return Response::make("Be right back!", 503);
+    return Response::make("Be right back!", 503);
 });
 
 /*
@@ -81,3 +81,32 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+
+/**
+ * 获得上传 hash 目录
+ * 
+ * @param $type     string 上传目录配置
+ * @param $filename string 文件名
+ *
+ * @return array 上传目录 ['dir', 'filename']
+ */
+function uploadPath($type, $filename)
+{
+
+    $config = Config::get('upload');
+    if(! in_array($type, array_keys($config))) {
+        $dir = public_path() . '/uploads';
+        return [$dir, $filename];
+    }
+
+    $hash  = md5(microtime(true));
+    $hashs = str_split($hash);
+    $dir   = public_path() . Config::get('upload.'.$type);
+
+    $dir    .=  sprintf('/%s/%s', $hashs[0], $hashs[1]);
+    $info    = pathinfo($filename);
+    $newName = sprintf('%s.%s', $hash, $info['extension']);
+
+    return [$dir, $newName];
+}
