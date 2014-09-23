@@ -15,7 +15,7 @@ class Cates extends \Eloquent {
                 'word' => Input::get('word'),
             ],
             [
-                'word' => 'required|min:1',
+                'word' => 'required',
             ]
         );
         return $validator;
@@ -25,11 +25,9 @@ class Cates extends \Eloquent {
         $validator = Validator::make(
             [
                 'word' => Input::get('word'),
-                'parent_id' => Input::get('parent_id'),
             ],
             [
-                'word' => 'required|min:1',
-                'parent_id' => 'int',
+                'word' => 'required',
             ]
         );
         return $validator;
@@ -41,7 +39,21 @@ class Cates extends \Eloquent {
                 'word' => Input::get('word'),
             ],
             [
-                'word' => 'required|min:1',
+                'word' => 'required',
+            ]
+        );
+        return $validator;
+    }
+    //过滤标签添加
+    public function validateTagsCreate(){
+        $validator = Validator::make(
+            [
+                'word' => Input::get('word'),
+                'parent_id' => Input::get('parent_id'),
+            ],
+            [
+                'word' => 'required',
+                'parent_id' => 'required|integer',
             ]
         );
         return $validator;
