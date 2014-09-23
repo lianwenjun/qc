@@ -13,7 +13,8 @@ class Admin_CatesController extends \Admin_BaseController {
      */
     public function index()
     {
-        //
+        $datas = [];
+        $this->layout->content = View::make('admin.cates.index', $datas);
     }
 
     /**
