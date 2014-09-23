@@ -73,13 +73,13 @@ Route::group(['prefix' => 'admin'], function()
         Route::get('create', ['uses' => 'Admin_CatesController@showProfile']);
         Route::post('create', ['uses' => 'Admin_CatesController@showProfile']);
         Route::post('{id}/edit', ['uses' => 'Admin_CatesController@showProfile']);
-        Route::get('{id}/delete', ['uses' => 'Admin_CatesController@showProfile']);
+        Route::get('{id}/delete', ['as' => 'cate.delete', 'uses' => 'Admin_CatesController@destroy']);
         Route::get('{id}/show', ['uses' => 'Admin_CatesController@showProfile']);
     });
     Route::group(['prefix' => 'tag'], function() //游戏标签
     {
         Route::get('index', ['as' => 'tag.index', 'uses' => 'Admin_CatesController@tagIndex']);
-        Route::post('create', ['as' => 'tag.store', 'uses' => 'Admin_CatesController@store']);
+        Route::post('create', ['as' => 'tag.store', 'uses' => 'Admin_CatesController@tagStore']);
         Route::post('{id}/edit', ['as' => 'tag.update', 'uses' => 'Admin_CatesController@update']);
         Route::get('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_CatesController@destroy']);
         Route::get('{id}/show', ['as' => 'tag.show', 'uses' => 'Admin_CatesController@show']);
