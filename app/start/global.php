@@ -82,6 +82,8 @@ App::down(function()
 
 require app_path().'/filters.php';
 
+// 面包屑
+require 'breadcrumbs.php';
 
 /**
  * 获得上传 hash 目录
