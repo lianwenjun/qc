@@ -2,10 +2,17 @@
 
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
+
+// TODO: 软删除
 
 class Apps extends \Eloquent {
 
-    protected $table = 'apps';
+    use SoftDeletingTrait;
+
+    protected $table      = 'apps';
+    protected $dates      = ['deleted_at'];
+    protected $softDelete = true;
     protected $guarded    = ['id'];
 
     /**
@@ -55,7 +62,6 @@ class Apps extends \Eloquent {
     }
 
 
-
     /**
      * 上传APK
      *
@@ -73,8 +79,9 @@ class Apps extends \Eloquent {
             $data = $this->apkParse($savePath);
             $icon = $this->apkIcon($savePath, $data['icon']);
 
-            $data['size'] = round(filesize($savePath) / 1024);
-            $data['icon'] = $icon;
+            $data['size']          = round(filesize($savePath) / 1024);
+            $data['icon']          = $icon;
+            $data['download_link'] = str_replace(public_path(), '', $savePath);
 
             $this->store($data);
 
@@ -94,7 +101,9 @@ class Apps extends \Eloquent {
             list($dir, $filename) = uploadPath('pictures', $file->getClientOriginalName());
             $file->move($dir, $filename);
 
-            return str_replace(public_path(), '', $filePath);
+            $savePath = $dir . '/' . $filename;
+
+            return str_replace(public_path(), '', $savePath);
         });
     }
 
@@ -121,8 +130,10 @@ class Apps extends \Eloquent {
 
             $lines = explode("\n", $process->getOutput());
             foreach ($lines as $line) {
+
                 // package: name='com.fontlose.tcpudp' versionCode='6' versionName='1.50'
-                preg_match('/^package: name=\'(.+)\' versionCode=\'(\d+)\' versionName=\'(.+)\'$/', $line, $matches);
+                $regex = '/^package: name=\'(.+)\' versionCode=\'(\d+)\' versionName=\'(.+)\'$/';
+                preg_match($regex, $line, $matches);
                 if(! empty($matches)) {
                     $data['pack']    = $matches[1];
                     // $data['code']    = $matches[2];
@@ -132,13 +143,13 @@ class Apps extends \Eloquent {
                 // application-label:'网络调试助手'
                 preg_match('/^application-label:\'(.+)\'$/', $line, $matches);
                 if(! empty($matches)) {
-                    $data['title']    = $matches[1];
+                    $data['title'] = $matches[1];
                 }
 
                 // application-label-zh_CN:'网络调试助手'
                 preg_match('/^application-label-zh_CN:\'(.+)\'$/', $line, $matches);
                 if(! empty($matches)) {
-                    $data['title']    = $matches[1];
+                    $data['title'] = $matches[1];
                 }
 
                 // application: label='心情调节器' icon='res/drawable-hdpi/logo.png'

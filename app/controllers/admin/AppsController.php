@@ -23,11 +23,6 @@ class Admin_AppsController extends \Admin_BaseController {
      */
     public function draft()
     {
-
-        Breadcrumbs::register('draft', function($breadcrumbs) {
-            $breadcrumbs->push('游戏管理', route('admin.index'));
-            $breadcrumbs->push('添加编辑游戏', route('apps.draft'));
-        });
         
         $appsModel = new Apps();
         $apps = $appsModel -> lists(['new', 'draft']);
@@ -127,7 +122,13 @@ class Admin_AppsController extends \Admin_BaseController {
      */
     public function edit($id)
     {
-        //
+         Breadcrumbs::register('apps.edit', function($breadcrumbs) {
+            $breadcrumbs->push('游戏管理', route('admin.index'));
+            $breadcrumbs->push('添加编辑游戏', route('apps.draft'));
+            $breadcrumbs->push('编辑', route('apps.draft'));
+        });
+
+        return View::make('admin.apps.edit');
     }
 
     /**
@@ -151,7 +152,12 @@ class Admin_AppsController extends \Admin_BaseController {
      */
     public function destroy($id)
     {
-        //
-    }
+        if(Apps::find($id)->delete()) {
+            Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经删除掉了"]);
+        } else {
+            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}删除失败了"]);
+        }
 
+        return Redirect::back();
+    }
 }

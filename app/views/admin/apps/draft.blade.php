@@ -8,8 +8,8 @@
 
     <div class="Content_right_top Content_height">
         <div class="Theme_title">
-            {{ Breadcrumbs::render('draft') }}
-            <a href="javascript:;" class="jq-upload" target=BoardRight>游戏上传</a>
+            {{ Breadcrumbs::render('apps.draft') }}
+            <a href="javascript:;" class="jq-appUpload" target="BoardRight">游戏上传</a>
         </div>
     <form action="{{ URL::route('apps.draft') }}" method="get">
         <div class="Theme_Search">
@@ -29,6 +29,13 @@
         </div>
     </form>
     <div class="Search_cunt">待编辑游戏：共 <strong>{{ $apps->count() }}</strong> 条记录 </div>
+    <!-- 提示 -->
+    @if(Session::has('tips'))
+    <div class="tips">
+        <div class="{{ Session::get('tips')['success'] ? 'success' : 'fail' }}">{{ Session::get('tips')['message'] }}</div>
+    </div>
+    @endif
+    <!-- /提示 -->
     <div class="Search_biao">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr class="Search_biao_title">
@@ -42,20 +49,20 @@
                 <td width="8%">上架时间</td>
                 <td width="12%">操作</td>
             </tr>
-            @foreach($apps as $k => $app):
+            @foreach($apps as $k => $app)
             <tr class="Search_biao_{{ $k%2 == 0 ? 'one' : 'two'}}">
-                <td>10</td>
-                <td><img src="images/u1188.png" width="28" height="28" /></td>
-                <td>植物大战僵尸</td>
-                <td>com.xxxxxxx.xxxx.xx</td>
-                <td>休闲益智</td>
-                <td>12.6 M</td>
-                <td>3.1.124</td>
-                <td>2014-7-9</td>
-                <td><a href="Editor.html" target=BoardRight class="Search_show">编辑</a> <a href="#" class="Search_del">删除</a></td>
+                <td>{{ $app->id }}</td>
+                <td><img src="{{ asset($app->icon) }}" width="28" height="28" /></td>
+                <td>{{ $app->title }}</td>
+                <td>{{ $app->pack }}</td>
+                <td> / </td>
+                <td>{{ $app->size }}</td>
+                <td>{{ $app->version }}</td>
+                <td>{{ date('Y-m-d H:i', strtotime($app->created_at)) }}</td>
+                <td><a href="{{ URL::route('apps.edit', ['id' => $app->id ]) }}" target="BoardRight" class="Search_show">编辑</a> <a href="javascript:;" class="Search_del jq-appDelete" data-url="{{ URL::route('apps.delete', $app->id) }}">删除</a></td>
             </tr>
             @endforeach
-            @if(empty($apps->count))
+            @if(empty($apps->count()))
                 <tr class="no-data"><td colspan="9">没有数据</td></tr>
             @endif
         </table>
@@ -65,7 +72,26 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        $(".jq-upload").click(function(){
+
+        // 删除游戏
+        $(".jq-appDelete").click(function() {
+            var url = $(this).attr('data-url');
+            $.jBox("<p style='margin: 10px'>您要删除此游戏吗？</p>", {
+                title: "<div class='ask_title'>是否删除？</div>",
+                showIcon: false,
+                draggable: false,
+                buttons: {'确定':true, "算了": false},
+                submit: function(v, h, f) {
+                    if(v == true) {
+                        location.href = url;
+                    }
+                }
+
+            });
+        });
+
+        // 上传游戏
+        $(".jq-appUpload").click(function(){
                 $.jBox("<div id='uploader'><p>您的浏览器不支持 html5 所以无法使用上传服务。</p></div>", {  
                     title: "<div class=ask_title>游戏上传</div>",  
                     width: 650,  
@@ -93,6 +119,7 @@
                     },
                     closed:function() {
                        $("body").css("overflow-y","auto");
+                       location.href = location.href;
                     }
                 });
         });

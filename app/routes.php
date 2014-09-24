@@ -27,30 +27,30 @@ Route::group(['prefix' => 'admin'], function()
      // 游戏APP列表
     Route::group(['prefix' => 'apps'], function()
     {
-        //列表
+        // 列表
         Route::get('onshelf',  ['as' => 'apps.onshelf',  'uses' => 'Admin_AppsController@onshelf']);
         Route::get('draft',    ['as' => 'apps.draft',    'uses' => 'Admin_AppsController@draft']);
         Route::get('pending',  ['as' => 'apps.pending',  'uses' => 'Admin_AppsController@pending']);
         Route::get('nopass',   ['as' => 'apps.nopass',   'uses' => 'Admin_AppsController@nopass']);
         Route::get('offshelf', ['as' => 'apps.offshelf', 'uses' => 'Admin_AppsController@offshelf']);
 
-        //操作
-        Route::get('create', ['uses' => 'AppsController@showProfile']);
-        Route::post('create', ['uses' => 'AppsController@showProfile']);
-        Route::get('{id}/edit', ['uses' => 'AppsController@showProfile']);
-        Route::post('{id}/edit', ['uses' => 'AppsController@showProfile']);
-        Route::get('{id}/delete', ['uses' => 'AppsController@showProfile']);
-        Route::get('{id}/onshelf', ['uses' => 'AppsController@showProfile']);
-        Route::get('{id}/reonshelf', ['uses' => 'AppsController@showProfile']);
-        Route::get('{id}/offshelf', ['uses' => 'AppsController@showProfile']);
-        Route::get('{id}/pass', ['uses' => 'AppsController@showProfile']);
-        Route::post('{id}/nopass', ['uses' => 'AppsController@showProfile']);
+        // 操作
+        Route::get('{id}/edit',      ['as' => 'apps.edit',      'uses' => 'Admin_AppsController@edit']);
+        Route::post('{id}/edit',     ['as' => 'apps.edit',      'uses' => 'Admin_AppsController@update']);
+        Route::get('{id}/delete',    ['as' => 'apps.delete',    'uses' => 'Admin_AppsController@destroy']);
+        Route::get('{id}/onshelf',   ['as' => 'apps.onshelf',   'uses' => 'Admin_AppsController@showProfile']);
+        Route::get('{id}/reonshelf', ['as' => 'apps.reonshelf', 'uses' => 'Admin_AppsController@showProfile']);
+        Route::get('{id}/offshelf',  ['as' => 'apps.offshelf',  'uses' => 'Admin_AppsController@showProfile']);
+        Route::get('{id}/pedding',   ['as' => 'apps.pedding',   'uses' => 'Admin_AppsController@showProfile']);
+        Route::post('{id}/nopass',   ['as' => 'apps.nopass',    'uses' => 'Admin_AppsController@showProfile']);
 
-        //全选
+        // 历史
+
+        // 全选
         Route::get('allpass', ['uses' => 'AppsController@showProfile']);
         Route::get('allnopass', ['uses' => 'AppsController@showProfile']);
 
-        //上传
+        // 上传
         Route::post('imageupload', ['uses' => 'UserController@showProfile']);
         Route::post('appupload', ['as' => 'apps.appupload', 'uses' => 'Admin_AppsController@appUpload']);
     });
