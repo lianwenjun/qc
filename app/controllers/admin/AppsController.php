@@ -160,7 +160,12 @@ class Admin_AppsController extends \Admin_BaseController {
      */
     public function destroy($id)
     {
-        if(Apps::find($id)->delete()) {
+        if(! $app = Apps::find($id)) {
+            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
+            return Redirect::back();
+        }
+        
+        if($app->delete()) {
             Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经删除掉了"]);
         } else {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}删除失败了"]);

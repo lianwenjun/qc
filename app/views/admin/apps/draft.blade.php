@@ -59,7 +59,7 @@
                 <td>{{ $app->size }}</td>
                 <td>{{ $app->version }}</td>
                 <td>{{ date('Y-m-d H:i', strtotime($app->created_at)) }}</td>
-                <td><a href="{{ URL::route('apps.edit', ['id' => $app->id ]) }}" target="BoardRight" class="Search_show">编辑</a> <a href="javascript:;" class="Search_del jq-appDelete" data-url="{{ URL::route('apps.delete', $app->id) }}">删除</a></td>
+                <td><a href="{{ URL::route('apps.edit', ['id' => $app->id ]) }}" target="BoardRight" class="Search_show">编辑</a> <a href="{{ URL::route('apps.delete', $app->id) }}" class="Search_del jq-delete">删除</a></td>
             </tr>
             @endforeach
             @if(empty($apps->count()))
@@ -73,21 +73,27 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
-        // 删除游戏
-        $(".jq-appDelete").click(function() {
-            var url = $(this).attr('data-url');
-            $.jBox("<p style='margin: 10px'>您要删除此游戏吗？</p>", {
+        $('.jq-delete').click(function() {
+
+            var link = $(this).attr('href');
+            $.jBox("<p style='margin: 10px'>您要删除吗？</p>", {
                 title: "<div class='ask_title'>是否删除？</div>",
                 showIcon: false,
                 draggable: false,
                 buttons: {'确定':true, "算了": false},
                 submit: function(v, h, f) {
-                    if(v == true) {
-                        location.href = url;
+                    if(v) {
+                        var f = document.createElement('form');
+                        $(this).after($(f).attr({
+                            method: 'post',
+                            action: link
+                        }).append('<input type="hidden" name="_method" value="DELETE" />'));
+                        $(f).submit();
                     }
                 }
-
             });
+
+            return false;
         });
 
         // 上传游戏
