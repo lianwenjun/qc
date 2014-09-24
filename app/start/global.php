@@ -93,22 +93,24 @@ require 'breadcrumbs.php';
  *
  * @return array 上传目录 ['dir', 'filename']
  */
-function uploadPath($type, $filename)
-{
+if(! function_exists('uploadPath')) {
+    function uploadPath($type, $filename)
+    {
 
-    $config = Config::get('upload');
-    if(! in_array($type, array_keys($config))) {
-        $dir = public_path() . '/uploads';
-        return [$dir, $filename];
+        $config = Config::get('upload');
+        if(! in_array($type, array_keys($config))) {
+            $dir = public_path() . '/uploads';
+            return [$dir, $filename];
+        }
+
+        $hash  = md5(microtime(true));
+        $hashs = str_split($hash);
+        $dir   = public_path() . Config::get('upload.'.$type);
+
+        $dir    .=  sprintf('/%s/%s', $hashs[0], $hashs[1]);
+        $info    = pathinfo($filename);
+        $newName = sprintf('%s.%s', $hash, $info['extension']);
+
+        return [$dir, $newName];
     }
-
-    $hash  = md5(microtime(true));
-    $hashs = str_split($hash);
-    $dir   = public_path() . Config::get('upload.'.$type);
-
-    $dir    .=  sprintf('/%s/%s', $hashs[0], $hashs[1]);
-    $info    = pathinfo($filename);
-    $newName = sprintf('%s.%s', $hash, $info['extension']);
-
-    return [$dir, $newName];
 }
