@@ -8,54 +8,18 @@ class Cates extends \Eloquent {
     
     protected $table = 'cates';
     protected $fillable = [];
-    //过滤分类更新
-    public function validateCatesUpate(){
-        $validator = Validator::make(
-            [
-                'word' => Input::get('word'),
-            ],
-            [
+    //过滤分类
+    public $CatesRules = [
                 'word' => 'required',
-            ]
-        );
-        return $validator;
-    }
-    //过滤分类添加
-    public function validateCatesCreate(){
-        $validator = Validator::make(
-            [
-                'word' => Input::get('word'),
-            ],
-            [
-                'word' => 'required',
-            ]
-        );
-        return $validator;
-    }
-    //过滤标签更新
-    public function validateTagsUpate(){
-        $validator = Validator::make(
-            [
-                'word' => Input::get('word'),
-            ],
-            [
-                'word' => 'required',
-            ]
-        );
-        return $validator;
-    }
-    //过滤标签添加
-    public function validateTagsCreate(){
-        $validator = Validator::make(
-            [
-                'word' => Input::get('word'),
-                'parent_id' => Input::get('parent_id'),
-            ],
-            [
+                ];
+    //过滤标签
+    public $TagsCreateRules = [
                 'word' => 'required',
                 'parent_id' => 'required|integer',
-            ]
-        );
-        return $validator;
-    }
+                ];
+    //过滤标签添加
+    public $TagsUpdateRules = [
+                'word' => 'required',
+                'sort' => '',
+                ];
 }

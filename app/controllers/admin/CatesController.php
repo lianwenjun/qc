@@ -13,7 +13,37 @@ class Admin_CatesController extends \Admin_BaseController {
      */
     public function index()
     {
-        $datas = [];
+        $cateModel = new Cates;
+        $cates = $cateModel->where('parent_id', 0)->get();
+        $cateIds = [];
+        foreach ($cates as $cate) {
+            $cateIds[] = $cate->id;
+        }
+        $tags = $cateModel->whereIn('parent_id', $cateIds)->get();
+        $cateData = [];
+        $i = 1;
+        foreach ($cates as $index => $cate) {
+            $cateData[$cate->id]['data'] = $cate->toarray();
+            $cateData[$cate->id]['appcount'] = 0;
+            $cateData[$cate->id]['one'] = 1;
+            $cateData[$cate->id]['list'] = [];
+            if ($i % 2 == 0){
+                $cateData[$cate->id]['one'] = 0;
+            }
+            $i = $i + 1;
+        }
+        foreach ($tags as $tag) {
+            $cateData[$tag->parent_id]['list'][] = $tag->toarray(); 
+        }
+        $appsCount = DB::table('app_cates')
+                     ->select(DB::raw('count(*) as app_count, cate_id'))
+                     ->whereIn('cate_id', $cateIds)
+                     ->groupBy('cate_id')
+                     ->get();
+        foreach ($appsCount as $app) {
+                $cateData[$app->cate_id]['appcount'] = $app->app_count;
+        }
+        $datas = ['cates' => $cateData];
         $this->layout->content = View::make('admin.cates.index', $datas);
     }
 
@@ -47,7 +77,7 @@ class Admin_CatesController extends \Admin_BaseController {
     }
 
     /**
-     * 添加标签
+     * 添加分类
      * @method GET
      * @param int parent_id
      * @param string word
@@ -56,7 +86,22 @@ class Admin_CatesController extends \Admin_BaseController {
     public function create()
     {
         $datas = [];
-        $this->layout = View::make('admin.cates.create', $datas);
+        $this->layout->content = View::make('admin.cates.create', $datas);
+    }
+
+    /**
+     * 添加标签
+     * @method GET
+     * @param int parent_id
+     * @param string word
+     * @return Response
+     */
+    public function tagCreate()
+    {
+        $cateModel = new Cates;
+        $cates = $cateModel->where('parent_id', 0)->get();
+        $datas = ['cates' => $cates];
+        $this->layout->content = View::make('admin.cates.tagCreate', $datas);
     }
 
     /**
@@ -68,16 +113,16 @@ class Admin_CatesController extends \Admin_BaseController {
     public function store()
     {
         //检测输入
-        Log::error(Input::all());
-        $cates = new Cates;
-        $validate = $cates->validateCatesCreate();
-        if ($validate->fails()){
-            Log::error($validate->messages());
+        //Log::error(Input::all());
+        $cateModel = new Cates;
+        $validator = Validator::make(Input::all(), $cateModel->CatesRules);
+        if ($validator->fails()){
+            Log::error($validator->messages());
             return Response::json(['status'=>'error', 'msg'=>'word is must need']);
         }
         //保存数据
-        $cates->title = Input::get('word');
-        $cates->save();
+        $cateModel->title = Input::get('word');
+        $cateModel->save();
         return Response::json(['status'=>'ok', 'msg'=>'suss']);
     }
     /**
@@ -91,29 +136,51 @@ class Admin_CatesController extends \Admin_BaseController {
     {
         //检测输入
         Log::error(Input::all());
-        $cates = new Cates;
-        $validate = $cates->validateTagsCreate();
-        if ($validate->fails()){
-            Log::error($validate->messages());
+        $cateModel = new Cates;
+        $validator = Validator::make(Input::all(), $cateModel->TagsCreateRules);
+        if ($validator->fails()){
+            Log::error($validator->messages());
             return Response::json(['status'=>'error', 'msg'=>'word is must need']);
         }
         //保存数据
-        $cates->title = Input::get('word');
-        $cates->parent_id = Input::get('parent_id');
-        $cates->save();
+        $cateModel->title = Input::get('word');
+        $cateModel->parent_id = Input::get('parent_id');
+        $cateModel->save();
         return Response::json(['status'=>'ok', 'msg'=>'suss']);
     }
 
     /**
-     * Display the specified resource.
-     * GET /admin/cates/{id}
-     *
+     * 分类获得
+     * @method GET
+     * 
      * @param  int  $id
      * @return Response
      */
     public function show($id)
     {
-        //
+        $cateModel = new Cates;
+        $cate = $cateModel->where('id', $id)->where('parent_id', 0)->first();
+        if (empty($cate)){
+            return Response::json(['status'=>'error', 'msg'=>'id is valid']);
+        }
+        $tags = $cateModel->where('parent_id', $cate->id)->get();
+        $tagIds = [];
+        $tagDatas = [];
+        foreach ($tags as $tag) {
+            $tagIds[] = $tagIds;
+            $tagDatas[$tag->id]['data'] = $tag;
+            $tagDatas[$tag->id]['count'] = 0;
+        }
+        //统计该标签游戏数量
+        $appsCount = DB::table('app_cates')
+                     ->select(DB::raw('count(*) as app_count, cate_id'))
+                     ->whereIn('cate_id', $tagIds)
+                     ->groupBy('cate_id')
+                     ->get();
+        foreach ($appsCount as $app) {
+            $tagDatas[$app->cate_id]['count'] = $app->app_count;
+        }
+        return Response::json(['status'=>'ok', 'msg'=>'suss', 'data'=>$tagDatas]);
     }
 
     /**
@@ -126,7 +193,7 @@ class Admin_CatesController extends \Admin_BaseController {
     public function edit($id)
     {
         //检测是否存在该数据
-        $cate = Cates::where('id', $id)->first();
+        $cate = Cates::find($id);
         if(!$cate){
             return ['status' => 'error', 'msg' => 'cate is valid'];   
         }
@@ -142,16 +209,16 @@ class Admin_CatesController extends \Admin_BaseController {
     public function update($id)
     {
         //检测是否存在该数据
-        $cates = new Cates;
-        $cate = $cates->where('id', $id)->first();
+        $cateModel = new Cates;
+        $cate = $cateModel->find($id);
         if(!$cate){
             return Response::json(['status' => 'error', 'msg' => 'cate is valid']);   
         }
         //检测输入
-        Log::error(Input::all());
-        $validate = $cates->validateCatesCreate();
-        if ($validate->fails()){
-            Log::error($validate->messages());
+        //Log::error(Input::all());
+        $validator = Validator::make(Input::all(), $cateModel->TagsCreateRules);
+        if ($validator->fails()){
+            Log::error($validator->messages());
             return Response::json(['status'=>'error', 'msg'=>'word is must need']);
         }
         //保存数据
@@ -173,7 +240,8 @@ class Admin_CatesController extends \Admin_BaseController {
     public function destroy($id)
     {
         //检测是否存在该数据
-        $cate = Cates::where('id', $id)->first();
+        $cateModel = new Cates;
+        $cate = $cateModel->find($id);
         if(!$cate){
             return Response::json(['status' => 'error', 'msg' => 'cate is valid']);   
         }

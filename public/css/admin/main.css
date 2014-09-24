@@ -193,6 +193,7 @@ html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅�
 .user_li{border:#ccc solid 1px; border-top:none; height:389px;}
 
 .user_width{width:1%; float:left; height:300px; display:inline-block}
+.dropdown li ul{background:#FFF;}
 
 .Push_left{width:45%; float:left; overflow:hidden; border:#457c06 solid 1px; position:relative; margin-top:20px; height:520px;}
 .Push_left_title{text-align:left; font-size:14px; color:#FFF; background:#68ae00; height:32px; line-height:34px; padding-left:10px;  border-bottom:#579200 solid 1px; }
