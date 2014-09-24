@@ -20,20 +20,48 @@
                   
                     <!--分类标签管理!-->
                     <div style="width:100%; height:390px; scrollbar-3dlight-color:#DDD; scrollbar-arrow-color:#333; scrollbar-base-color:#cfcfcf; scrollbar-darkshadow-color:#fff; scrollbar-face-color:#cfcfcf; scrollbar-highlight-color:#fff; scrollbar-shadow-color:#595959; overflow-y:auto; overflow-x:hidden">
+                        <ul class="dropdown">
+                            @foreach($cates as $index => $cate)
+                                @if ($cate['one'] == 1)                    
+                                    <li class="Push_left_one"><a href="javascript:;"><span class="Push_page">{{  $cate['data']['title'] }}</span></a>
+                                        <!--二级分类!-->
+                                        <ul>
+                                            @foreach($cate['list'] as $tag)
+                                                <li class="Push_fen"><span>{{$tag['title']}}</span></li>
+                                            @endforeach
+                                        </ul>
+                                        <!--二级分类!-->
+                                    </li>
+                                @else
+                                    <li class="Push_left_two"><a href="javascript:;"><span class="Push_page">{{  $cate['data']['title'] }}</span></a>
+                                        <!--二级分类!-->
+                                        <ul>
+                                            @foreach($cate['list'] as $tag)
+                                                <li class="Push_fen"><span>{{$tag['title']}}</span></li>
+                                            @endforeach
+                                        </ul>
+                                        <!--二级分类!-->
+                                    </li>
+                                @endif
+                            @endforeach
+                        </ul>
                         <ul id="listdata">
-                            <li class="Push_left_one"><span class="Push_page">单机专区</span></li>
-                            <li class="Push_left_tow"><span class="Push_pagezk">优质游戏</span></li>
-                           
-                               <!--二级栏目!-->
+                            
+                                    <li data-cate-id= "{{ $cate['data']['id'] }}" class="Push_left_one"><span class="Push_page">{{ $cate['data']['title'] }}</span></li>
                                 
-                                <li class="Push_fen"><span>植物大战僵尸</span></li>
-                                <li class="Push_fen"><span>全民打飞机</span>  </li>
-                                <li class="Push_fen"><span>全民打飞机</span></li>
-                                <li class="Push_fen"><span>植物大战僵尸</span></li>
-                                <li class="Push_fen"><span>全民打飞机</span></li>
-                                <li class="Push_fen"><span>植物大战僵尸</span></li> 
-                               
-                               <!--二级栏目!-->
+                                    <li data-cate-id= "{{ $cate['data']['id'] }}" class="Push_left_tow"><span class="Push_pagezk">{{ $cate['data']['title'] }}</span></li>
+                                
+                            
+                           <!--二级栏目!-->
+                            
+                            <li class="Push_fen"><span>植物大战僵尸</span></li>
+                            <li class="Push_fen"><span>全民打飞机</span>  </li>
+                            <li class="Push_fen"><span>全民打飞机</span></li>
+                            <li class="Push_fen"><span>植物大战僵尸</span></li>
+                            <li class="Push_fen"><span>全民打飞机</span></li>
+                            <li class="Push_fen"><span>植物大战僵尸</span></li> 
+                           
+                           <!--二级栏目!-->
                                
                            
                             <li class="Push_left_one"><span>卡牌休闲</span></li>
@@ -42,7 +70,7 @@
                             <li class="Push_left_one"><span class="Push_page">卡牌休闲</span></li>
                             <li class="Push_left_tow"><span class="Push_page">优质游戏   </span></li>
                             <li class="Push_left_tow"><span class="Push_page">优质游戏</span></li>
-                        </ul> 
+                        
                     </div>
                     <!--分类标签管理!-->
                 </li>
@@ -59,16 +87,21 @@
                 <!--未选择游戏分类-->
                 <div class="user_Prompt"  style="display:none">未选择游戏分类</div>
                     <!--未选择游戏分类-->
-                    <div class="user_tabler user_Lower" >
-                        <ul>
-                            <li class="user_one "><strong>分类名称：</strong>单机专区</li>
-                            <li class="user_two"><strong>游戏数量：</strong>2254</li>
-                            <li class="user_one"><strong>搜索次数：</strong>55</li>
-                            <li class="user_two"><strong>标签管理：</strong><a href="#">20（点击查看标签信息）</a></li>
-                            <li class="user_one"><strong>添加时间：</strong>2014-7-8</li>
-                            <li class="user_button"><a class="Search_show" href="#">修 改</a> <a class="Search_xiajia" href="#">删除</a></li>
-                        </ul>
-                    </div>
+                    @foreach($cates as $index => $cate)
+                        <div data-cate-id= "{{ $cate['data']['id'] }}" class="user_tabler user_Lower jq-cate-{{ $cate['data']['id'] }}" style="display">
+                            <ul>
+                                <li class="user_one "><strong>分类名称：</strong>{{ $cate['data']['title']}}</li>
+                                <li class="user_two"><strong>游戏数量：</strong>{{ $cate['appcount']}}</li>
+                                <li class="user_one"><strong>搜索次数：</strong>{{ $cate['data']['search_total'] }}</li>
+                                <li class="user_two"><strong>标签管理：</strong><a data-url="{{ URL::route('cate.show', $cate['data']['id']) }}" href="javascript:;">{{ count($cate['list']) }}（点击查看标签信息）</a></li>
+                                <li class="user_one"><strong>添加时间：</strong>{{ $cate['data']['created_at'] }}</li>
+                                <li class="user_button">
+                                    <a data-url="{{ URL::route('cate.edit', $cate['data']['id']) }}" class="Search_show jq-editCate" href="javascript:;">修 改</a>
+                                    <a data-url="{{ URL::route('cate.delete', $cate['data']['id']) }}" class="Search_xiajia jq-delCate" href="javascript:;">删除</a>
+                                </li>
+                            </ul>
+                        </div>
+                    @endforeach
                     <!--游戏分类-->
                     <!--修改游戏分类-->
                     <div class="user_tabler" style="display:none">
@@ -165,12 +198,12 @@
 <script type="text/javascript">
 $(function(){
     //$("#scrollDiv").textSlider({line:4,speed:500,timer:3000});
-});
-$(function(){
+
     //JQ-add
-    TagCreateUrl = "{{ route('cate.create') }}";
+    cateCreateUrl = "{{ route('cate.create') }}";
+    tagCreateUrl = "{{ route('tag.create') }}";
     $("#Classification").click(function(){
-        $.jBox("iframe:" + TagCreateUrl, {  
+        $.jBox("iframe:" + cateCreateUrl, {  
           title: "<div class=ask_title>分类添加</div>",  
           width: 550,  
           height:370,
@@ -192,7 +225,7 @@ $(function(){
     });
     
     $("#Tag").click(function(){
-        $.jBox("iframe:add_Tag.html", {  
+        $.jBox("iframe:" + tagCreateUrl, {  
           title: "<div class=ask_title>标签添加</div>",  
           width: 550,  
           height:370,
@@ -212,10 +245,19 @@ $(function(){
         });  
         
     });
-  
-  });
-  
-$(function() {
+    <!--分类下拉 -->
+    $('.dropdown').tendina({
+        animate: true,
+        speed: 500,
+        openCallback: function($clickedEl) {
+            console.log($clickedEl);
+        },
+        closeCallback: function($clickedEl) {
+            console.log($clickedEl);
+        }
+    });
+    <!--分类下拉 -->
+    
     $( "#listdata" ).sortable({
       stop: function(event, ui) {
         var app_id='';

@@ -7,22 +7,22 @@
         <ul>
             <li>
                 <span><b>标签名称：</b>
-                    <input id="addTag" name="" type="text" class="Search_wenben" size="20" value="请输入标签名称" /></span>
+                    <input name="addTag" type="text" class="Search_wenben" size="20" value="请输入标签名称" /></span>
                 <span>
                     <b>游戏分类：</b>
-                    <select id="cates1" name="cates1">
+                    <select name="cates1">
                         <!--option>--全部--</option!-->
                         @foreach ($cates as $index => $value )
                             <option value="{{ $index }}">{{ $value }}</option>
                         @endforeach
                     </select>
                 </span>
-                <input id="submitAdd" name="" type="submit" value="添加" class="Search_en" />
+                <input name="" type="submit" value="添加" class="Search_en jq-submitAdd" />
             </li>
             <li>
                 <span>
                     <b>查询：</b>
-                    <select id="cates2" name="cates2">
+                    <select name="cates2">
                         <option>--全部--</option>
                         @foreach ($cates as $index => $value)
                             <option value="{{ $index }}">{{ $value }}</option>
@@ -30,9 +30,9 @@
                     </select>
                 </span>
                 <span>
-                    <input id="searchTag" name="" type="text" class="Search_wenben" size="20" value="输入关键字" />
+                    <input name="searchTag" type="text" class="Search_wenben" size="20" value="输入关键字" />
                 </span>
-                <input id="submitSearch" name="" type="submit" value="搜索" class="Search_en" />
+                <input name="" type="submit" value="搜索" class="Search_en jq-submitSearch" />
             </li>       
         </ul>
     </div>
@@ -59,7 +59,7 @@
                         <td>{{ $tag->search_total }}</td>
                         <td>{{ $tag->sort }}</td>
                         <td>{{ $tag->updated_at }}</td>
-                        <td><a href="javascript:;" class="Search_show editTag">编辑</a> <a href="javascript:;" class="Search_del delTag">删除</a></td>
+                        <td><a href="javascript:;" class="Search_show jq-editTag">编辑</a> <a href="javascript:;" class="Search_del jq-delTag">删除</a></td>
                         <td style="display:none">
                             <input id="edit-url" value="{{ route('tag.update', $tag->id) }}" type="hidden"/>
                             <input id="del-url" value="{{ route('tag.delete', $tag->id) }}" type="hidden"/>
@@ -74,25 +74,25 @@
 </div>
 <script>
 $(function(){
-    $("#addTag").focus(function() {
+    $("input[name=addTag]").focus(function() {
         $(this).val("");
     });
-    $("#searchTag").focus(function() {
+    $("input[name=searchTag]").focus(function() {
         $(this).val("");
     });
     //提交添加
-    $("#submitAdd").click(function() {
+    $(".jq-submitAdd").click(function() {
         // 添加关键词
-        var word = $("#addTag").val();
+        var word = $("input[name=addTag]").val();
         if (word === "请输入标签名称" || word == "") {
-            $("#addWord").val("请输入标签名称");
+            $("input[name=addTag]").val("请输入标签名称");
             return;
         }
-        var parent_id = $("#cates1").val();
+        var parent_id = $("select[name=cates1]").val();
         if (parent_id == '--全部--' || parent_id == '' || parent_id == undefined){
             return;
         }
-        var url = "{{ route('tag.store') }}";
+        var url = "{{ route('tag.create') }}";
         var data = {word:word, parent_id:parent_id};
         // 发送数据
         $.post(url, data, function(res) {
@@ -108,13 +108,13 @@ $(function(){
         });
     });
     //提交查询
-    $("#submitSearch").click(function() {
-        var word = $("#searchTag").val();
+    $(".jq-submitSearch").click(function() {
+        var word = $("input[name=searchTag]").val();
         if (word === "输入关键字" || word == "") {
-            $("#searchWord").val("输入关键字");
+            $("input[name=searchTag]").val("输入关键字");
             return;
         }
-        var parent_id = $("#cates2").val();
+        var parent_id = $("select[name=cates2]").val();
         var query = '?word=' + word;;
         if ( parent_id != '--全部--' && parent_id != '' && parent_id != undefined){
             query = query + '&parent_id=' + parent_id;;
@@ -123,7 +123,7 @@ $(function(){
         window.location.href = url;
     });
     //删除
-    $('.delTag').live('click', function() {
+    $('.jq-delTag').live('click', function() {
         var td = $(this).parents('tr').children('td');
         var delUrl = td.eq(7).find('#del-url').val();
         $.get(delUrl, function(res) {
@@ -137,14 +137,14 @@ $(function(){
         });   
     });
     //修改
-    $(".editTag").live('click', function() {
+    $(".jq-editTag").live('click', function() {
         var td = $(this).parents('tr').children('td');
         var text1 = td.eq(1).html();
         var text4 = td.eq(4).html();
-        var text8 = $(this).parent().html();
+        //var text8 = $(this).parent().html();
         var to_text1 = '<input name="textfield" type="text" id="textfield" value="" size="8" class="Classification_text" />';
         var to_text4 = '<input name="textfield" type="text" id="textfield" value="" size="8" class="Classification_text" />';
-        var to_text8 = '<a href="javacript:;" class="Search_show saveTag">确定</a> <a href="javacript:;" class="Search_show chanceTag">取消</a>';
+        var to_text8 = '<a href="javacript:;" class="Search_show jq-saveTag">确定</a> <a href="javacript:;" class="Search_show jq-chanceTag">取消</a>';
         td.eq(1).html(to_text1);
         td.eq(1).find('#textfield').val(text1);
         td.eq(4).html(to_text4);
@@ -152,7 +152,7 @@ $(function(){
         $(this).parent().html(to_text8);
     });
     //提交
-    $(".saveTag").live('click', function() {
+    $(".jq-saveTag").live('click', function() {
         var td = $(this).parents('tr').children('td');
         var text1 = td.eq(1).find('input').val();
         var text4 = td.eq(4).find('input').val();
@@ -161,7 +161,7 @@ $(function(){
         $.post(editUrl, data, function(res) {
             //错误判断
             if (res.status == 'ok') {
-                var text6 = '<a href="javascript:;" class="Search_show editTag">编辑</a> <a href="javascript:;" class="Search_del delTag">删除</a>';
+                var text6 = '<a href="javascript:;" class="Search_show jq-editTag">编辑</a> <a href="javascript:;" class="Search_del jq-delTag">删除</a>';
                 td.eq(6).html(text6);
                 td.eq(1).html(text1);
                 td.eq(4).html(text4);
@@ -173,12 +173,11 @@ $(function(){
         });
     });
     //取消
-    $(".chanceTag").live('click', function() {
+    $(".jq-chanceTag").live('click', function() {
         var td = $(this).parents('tr').children('td');
         var text1 = td.eq(7).find('#preTag').val();
-        console.log(text1);
         var text4 = td.eq(7).find('#preSort').val();
-        var text6 = '<a href="javascript:;" class="Search_show editTag">编辑</a> <a href="javascript:;" class="Search_del delTag">删除</a>';
+        var text6 = '<a href="javascript:;" class="Search_show jq-editTag">编辑</a> <a href="javascript:;" class="Search_del jq-delTag">删除</a>';
         $(this).parent().html(text6);
         td.eq(1).html(text1);
         td.eq(4).html(text4);

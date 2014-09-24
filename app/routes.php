@@ -72,14 +72,15 @@ Route::group(['prefix' => 'admin'], function()
         Route::get('index', ['as' => 'cate.index', 'uses' => 'Admin_CatesController@index']);
         Route::get('create', ['as' => 'cate.create', 'uses' => 'Admin_CatesController@create']);
         Route::post('create', ['as' => 'cate.create', 'uses' => 'Admin_CatesController@store']);
-        Route::post('{id}/edit', ['uses' => 'Admin_CatesController@showProfile']);
+        Route::post('{id}/edit', ['as' => 'cate.edit', 'uses' => 'Admin_CatesController@update']);
         Route::get('{id}/delete', ['as' => 'cate.delete', 'uses' => 'Admin_CatesController@destroy']);
-        Route::get('{id}/show', ['uses' => 'Admin_CatesController@showProfile']);
+        Route::get('{id/show', ['as' => 'cate.show', 'uses' => 'Admin_CatesController@show']);
     });
     Route::group(['prefix' => 'tag'], function() //游戏标签
     {
         Route::get('index', ['as' => 'tag.index', 'uses' => 'Admin_CatesController@tagIndex']);
-        Route::post('create', ['as' => 'tag.store', 'uses' => 'Admin_CatesController@tagStore']);
+        Route::get('create', ['as' => 'tag.create', 'uses' => 'Admin_CatesController@tagCreate']);
+        Route::post('create', ['as' => 'tag.create', 'uses' => 'Admin_CatesController@tagStore']);
         Route::post('{id}/edit', ['as' => 'tag.update', 'uses' => 'Admin_CatesController@update']);
         Route::get('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_CatesController@destroy']);
         Route::get('{id}/show', ['as' => 'tag.show', 'uses' => 'Admin_CatesController@show']);
