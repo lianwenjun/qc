@@ -1,9 +1,9 @@
 actor: Tester
 paths:
-    tests: tests
-    log: tests/_output
-    data: tests/_data
-    helpers: tests/_support
+    tests: app/tests
+    log: app/tests/_output
+    data: app/tests/_data
+    helpers: app/tests/_support
 settings:
     bootstrap: _bootstrap.php
     suite_class: \PHPUnit_Framework_TestSuite
@@ -15,4 +15,6 @@ modules:
             dsn: 'mysql:host=127.0.0.1;dbname=qc_test'
             user: 'root'
             password: 'a'
-            dump: tests/_data/dump.sql
+            dump: app/tests/_data/dump.sql
+            populate: true
+            cleanup: true
