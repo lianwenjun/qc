@@ -3,7 +3,7 @@ Thumbs.db
 *.swp
 *.swo
 app/storage/*
-tests/_output/*
+app/tests/_output/*
 .gitignore
 .git/*
 *.sublime-project
