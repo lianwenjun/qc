@@ -1,6 +1,8 @@
 @extends('admin.layout')
 
 @section('content')
+<link href="{{ asset('css/admin/chosen.min.css') }}" rel="stylesheet" type="text/css" />
+<script src="{{ asset('js/admin/chosen.jquery.min.js') }}" type="text/javascript"></script>
 <div class="Content_right_top Content_height">
    <div class="Theme_title">
       {{ Breadcrumbs::render('apps.edit') }}
@@ -11,35 +13,45 @@
          <tbody>
             <tr class="Search_biao_one">
                <td width="101" class="Search_lei">游戏ID：</td>
-               <td width="1489">1</td>
+               <td width="1489">{{ $app->id }}</td>
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">游戏名称：</td>
-               <td>植物大战僵尸</td>
+               <td>{{ $app->title }}</td>
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">包名：</td>
-               <td>com.xxxxxxx.xxx</td>
+               <td>{{ $app->pack }}</td>
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">大小：</td>
-               <td>12.3M</td>
+               <td>{{ $app->size }}</td>
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">版本号：</td>
-               <td>3.1.12</td>
+               <td>{{ $app->version }}</td>
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">上传时间：</td>
-               <td>2014-7-9</td>
+               <td>{{ $app->created_at }}</td>
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">上传新版本：</td>
-               <td class="Search_apk"><span><a href="#" class="Search_Update">选择APK</a></span><img src="images/u1188.png" width="90" height="90"></td>
+               <td class="Search_apk"><span><a href="#" class="Search_Update">选择APK</a></span><img src="{{ $app->icon }}" width="90" height="90"></td>
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">游戏关键字：</td>
-               <td><input name="" type="text" value="僵尸 策略 益智" class="Search_text"></td>
+               <td><select data-placeholder="Your Favorite Types of Bear" multiple class="chosen-select" style="width:350px;" tabindex="18" id="multiple-label-example">
+            <option value=""></option>
+            <option>American Black Bear</option>
+            <option>Asiatic Black Bear</option>
+            <option>Brown Bear</option>
+            <option selected>Giant Panda</option>
+            <option>Sloth Bear</option>
+            <option>Sun Bear</option>
+            <option>Polar Bear</option>
+            <option>Spectacled Bear</option>
+          </select></td>
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">游戏分类：</td>

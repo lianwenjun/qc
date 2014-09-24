@@ -37,8 +37,8 @@ Route::group(['prefix' => 'admin'], function()
         // 操作
         Route::get('{id}/edit',      ['as' => 'apps.edit',      'uses' => 'Admin_AppsController@edit']);
         Route::post('{id}/edit',     ['as' => 'apps.edit',      'uses' => 'Admin_AppsController@update']);
-        Route::get('{id}/delete',    ['as' => 'apps.delete',    'uses' => 'Admin_AppsController@destroy']);
-        Route::get('{id}/onshelf',   ['as' => 'apps.onshelf',   'uses' => 'Admin_AppsController@showProfile']);
+        Route::delete('{id}/delete', ['as' => 'apps.delete',    'uses' => 'Admin_AppsController@destroy']);
+        Route::get('{id}/onshelf',   ['as' => 'apps.nonshelf',   'uses' => 'Admin_AppsController@showProfile']);
         Route::get('{id}/reonshelf', ['as' => 'apps.reonshelf', 'uses' => 'Admin_AppsController@showProfile']);
         Route::get('{id}/offshelf',  ['as' => 'apps.offshelf',  'uses' => 'Admin_AppsController@showProfile']);
         Route::get('{id}/pedding',   ['as' => 'apps.pedding',   'uses' => 'Admin_AppsController@showProfile']);

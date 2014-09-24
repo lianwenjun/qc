@@ -128,7 +128,6 @@ return array(
         'DaveJamesMiller\Breadcrumbs\ServiceProvider',
         'Kmd\Logviewer\LogviewerServiceProvider',
         'JildertMiedema\LaravelPlupload\LaravelPluploadServiceProvider',
-        // 'Netson\L4shell\L4shellServiceProvider',
 
     ),
 
@@ -201,7 +200,6 @@ return array(
         'Captcha'         => 'Mews\Captcha\Facades\Captcha',
         'Breadcrumbs'     => 'DaveJamesMiller\Breadcrumbs\Facade',
         'Plupload'        => 'JildertMiedema\LaravelPlupload\Facades\Plupload',
-        // 'L4shell'         => 'Netson\L4shell\Facades\Command',
 
     ),
 

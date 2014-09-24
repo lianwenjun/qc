@@ -122,13 +122,21 @@ class Admin_AppsController extends \Admin_BaseController {
      */
     public function edit($id)
     {
-         Breadcrumbs::register('apps.edit', function($breadcrumbs) {
-            $breadcrumbs->push('游戏管理', route('admin.index'));
-            $breadcrumbs->push('添加编辑游戏', route('apps.draft'));
-            $breadcrumbs->push('编辑', route('apps.draft'));
-        });
+        $app = Apps::find($id);
 
-        return View::make('admin.apps.edit');
+        if(empty($app)) {
+
+            $tips = ['success' => false, 'message' => "亲，ID：{$id}的游戏不存在"];
+            Session::flash('tips', $tips);
+
+            return Redirect::back();
+        }
+
+        $cates = '';
+        $tags = '';
+        $keywords = '';
+
+        return View::make('admin.apps.edit')->with('app', $app);
     }
 
     /**
