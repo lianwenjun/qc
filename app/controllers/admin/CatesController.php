@@ -13,7 +13,8 @@ class Admin_CatesController extends \Admin_BaseController {
      */
     public function index()
     {
-        //
+        $datas = [];
+        $this->layout->content = View::make('admin.cates.index', $datas);
     }
 
     /**
@@ -54,7 +55,8 @@ class Admin_CatesController extends \Admin_BaseController {
      */
     public function create()
     {
-        //
+        $datas = [];
+        $this->layout = View::make('admin.cates.create', $datas);
     }
 
     /**
@@ -74,8 +76,6 @@ class Admin_CatesController extends \Admin_BaseController {
             return Response::json(['status'=>'error', 'msg'=>'word is must need']);
         }
         //保存数据
-        $cates->operator = $this->user_id;
-        $cates->creator = $this->user_id;
         $cates->title = Input::get('word');
         $cates->save();
         return Response::json(['status'=>'ok', 'msg'=>'suss']);
