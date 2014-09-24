@@ -67,7 +67,6 @@
                             <input id="preSort" value="{{ $tag->sort }}" type="hidden"/>
                         </td>
                     </tr>
-                
             @endforeach
             </table>
         <div id="pager">{{ $tags->links() }}</div>
