@@ -20,7 +20,7 @@ class Cates extends \Eloquent {
     //过滤标签添加
     public $TagsUpdateRules = [
                 'word' => 'required',
-                'sort' => '',
+                'sort' => 'integer',
                 ];
 
 
