@@ -7,9 +7,9 @@ ul,li{ list-style:none;}
 a{ text-decoration:none; color:#333; outline:none;}
 a:hover{ text-decoration:none; color:#DC1733}
 a:active {star:expression(this.onFocus=this.blur());} 
-html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅黑"; background:url(../images/bg-body.jpg) left repeat-y #f0f0f0;} 
+html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅黑"; background:url(../../images/admin/bg-body.jpg) left repeat-y #f0f0f0;} 
 
-.Content_left{width:230px; height:100%; background:url(../images/bg-sidebar.jpg) top left no-repeat;}
+.Content_left{width:230px; height:100%; background:url(../../images/admin/bg-sidebar.jpg) top left no-repeat;}
 .Content_left .Content_left_logo{text-align:center; padding-top:30px; display:block; font-size:24px; color:#FFF; padding-top:50px; padding-bottom:20px;}
 .Content_left .Content_left_title{padding-right:10px; text-align:right; padding-top:30px; color:#ff0; font-size:12px; line-height:32px;}
 .Content_left .Content_left_title a{color:#bddeff; font-size:12px; padding-left:8px;}
@@ -17,17 +17,17 @@ html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅�
 
 /* Layout & Style */
 #wrapper-250{width:230px; float:left; margin-top:30px;}
-.accordion li a {display: block; position:relative; background:url(../images/bg-menu-item-green.gif) right top no-repeat; height:33px; margin-bottom:15px; line-height:33px; overflow:hidden;  text-align:right; padding-right:15px; color:#333; font-size:17px;}
-.accordion li a:hover{ background:url(../images/bg-menu-item-green.gif) right top no-repeat; color:#333;}
+.accordion li a {display: block; position:relative; background:url(../../images/admin/bg-menu-item-green.gif) right top no-repeat; height:33px; margin-bottom:15px; line-height:33px; overflow:hidden;  text-align:right; padding-right:15px; color:#333; font-size:17px;}
+.accordion li a:hover{ background:url(../../images/admin/bg-menu-item-green.gif) right top no-repeat; color:#333;}
 
-.accordion .mail_hover a {display: block; position:relative; background:url(../images/bg-menu-item-current.gif) top right no-repeat;  height:33px; margin-bottom:15px; overflow:hidden; line-height:33px; text-align:right; padding-right:15px; color:#333; font-size:17px; font-weight:bold;}
-.accordion .mail_hover a:hover{ background:url(../images/bg-menu-item-current.gif) right top no-repeat; color:#333;}
+.accordion .mail_hover a {display: block; position:relative; background:url(../../images/admin/bg-menu-item-current.gif) top right no-repeat;  height:33px; margin-bottom:15px; overflow:hidden; line-height:33px; text-align:right; padding-right:15px; color:#333; font-size:17px; font-weight:bold;}
+.accordion .mail_hover a:hover{ background:url(../../images/admin/bg-menu-item-current.gif) right top no-repeat; color:#333;}
 
 /* Sub Menu */
 .accordion .mail_hover li a { height:20px; line-height:20px; background-image:none; color:#fff; font-size:15px; margin-bottom:15px; font-weight:normal;}
 .accordion .mail_hover li a:hover{ background-image:none; color:#ff0;}
 
-.accordion .mail_hover .sub-menu_hover a, .accordion .mail_hover .sub-menu_hover a:hover{font-weight:bold; color:#ff0; background:url(../images/menu-current-arrow.gif) right center no-repeat;}
+.accordion .mail_hover .sub-menu_hover a, .accordion .mail_hover .sub-menu_hover a:hover{font-weight:bold; color:#ff0; background:url(../../images/admin/menu-current-arrow.gif) right center no-repeat;}
 
 .sub-menu li a { height:20px; line-height:20px; background-image:none; color:#fff; font-size:15px; margin-bottom:15px;}
 .sub-menu li a:hover{ background-image:none; color:#ff0;}

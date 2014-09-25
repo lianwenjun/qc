@@ -1,8 +1,9 @@
 @extends('admin.layout')
 
 @section('content')
-<link href="{{ asset('css/admin/chosen.min.css') }}" rel="stylesheet" type="text/css" />
-<script src="{{ asset('js/admin/chosen.jquery.min.js') }}" type="text/javascript"></script>
+<link href="{{ asset('css/admin/select2.css') }}" rel="stylesheet" type="text/css" />
+<script src="{{ asset('js/admin/select2.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/admin/select2_locale_zh-CN.js') }}" type="text/javascript"></script>
 <div class="Content_right_top Content_height">
    <div class="Theme_title">
       {{ Breadcrumbs::render('apps.edit') }}
@@ -41,40 +42,18 @@
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">游戏关键字：</td>
-               <td><select data-placeholder="Your Favorite Types of Bear" multiple class="chosen-select" style="width:350px;" tabindex="18" id="multiple-label-example">
-            <option value=""></option>
-            <option>American Black Bear</option>
-            <option>Asiatic Black Bear</option>
-            <option>Brown Bear</option>
-            <option selected>Giant Panda</option>
-            <option>Sloth Bear</option>
-            <option>Sun Bear</option>
-            <option>Polar Bear</option>
-            <option>Spectacled Bear</option>
-          </select></td>
+               <td><input name="keywords" type="text" value="" class="Search_text jq-initKeyword"></td>
             </tr>
             <tr class="Search_biao_one">
-               <td class="Search_lei">游戏分类：</td>
-               <td>
-                  <span style="float:left">
-                     <select class="Search_select">
-                        <option value="选择分类">选择分类</option>
-                        <option value="单机专区" selected="">单机专区</option>
-                        <option value="网游专区">网游专区</option>
-                        <option value="优质游戏">优质游戏</option>
-                        <option value="装机必备">装机必备</option>
-                     </select>
-                     <select class="Search_select">
-                        <option value="选择分类">选择分类</option>
-                        <option value="单机专区">单机专区</option>
-                        <option value="网游专区">网游专区</option>
-                        <option value="优质游戏" selected="">优质游戏</option>
-                        <option value="装机必备">装机必备</option>
-                     </select>
-                  </span>
-                  <span style="padding-top:2px; margin-left:3px; float:left;"><img src="images/jiahao.jpg" width="17" height="17"></span>
-               </td>
+                <td  class="Search_lei">游戏分类：</td>
+                <td>
+                    <span style="float:left; line-height:26px; padding-right:8px;">
+                             单机专区、卡牌
+                    </span>
+                    <span style=" float:left;"><input name="" id="Classification" type="submit" value="修改" class="Search_en" /></span>
+                </td>
             </tr>
+
             <tr class="Search_biao_two">
                <td class="Search_lei">游戏标签：</td>
                <td>
@@ -155,4 +134,57 @@
       </table>
    </div>
 </div>
+<script type="text/javascript">
+    $(function(){
+
+        $(".jq-initKeyword").select2({
+                      tags:["red", "green", "blue"],
+                      tokenSeparators: ["，",",", " "]});
+
+        // 默认值
+        $(".jq-initKeyword").val(["AK","CO"]).trigger("change");
+
+        var cateSelect = "<div class='add_update'>" +
+                           "<div class='add_update_title'>游戏分类</div>" +
+                           "<div class='add_update_lei'>" +
+                              "<ul>" +
+                                 "<li><input type='checkbox' name='checkbox' id='checkbox' />休闲益智</li>" +
+                              "</ul>" +
+                           "</div>" +
+                           "<div class='add_update_Label'>" +
+                              "<div class='add_update_title'>标签内容</div>" +
+                              "<div class='add_update_title_lei'>休闲益智</div>" +
+                              "<div class='add_update_lei'>" +
+                                 "<ul>" +
+                                    "<li><input type='checkbox' name='checkbox' id='checkbox' />休闲益智</li>" +
+                                 "</ul>" +
+                              "</div>" +
+                           "</div>" +
+                           "<div class='add_update_button'><input name='' type='button' value='确定' class='Search_en' /></div>" +
+                        "</div>";
+
+        $("#Classification").click(function(){
+            $.jBox(cateSelect, {  
+                title: "<div class=ask_title>游戏分类</div>",  
+                width: 650,  
+                height:450,
+                border: 5,
+                showType: 'slide', 
+                opacity: 0.3,
+                showIcon:false,
+                top: '20%',
+                loaded:function(){
+                  $("body").css("overflow-y","hidden");
+                }
+                 ,
+                 closed:function(){
+                   $("body").css("overflow-y","auto");
+                 }
+                 
+            });
+        });
+
+    });
+    
+</script>>
 @stop
