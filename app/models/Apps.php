@@ -4,8 +4,6 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
-// TODO: 软删除
-
 class Apps extends \Eloquent {
 
     use SoftDeletingTrait;
@@ -50,7 +48,7 @@ class Apps extends \Eloquent {
     }
 
     /**
-     * 新上传APK入库
+     * 新上传 APK 入库
      *
      * @param $data array 解析到的数组
      *
@@ -72,7 +70,6 @@ class Apps extends \Eloquent {
         return Plupload::receive('file', function ($file)
         {
             list($dir, $filename) = uploadPath('apks', $file->getClientOriginalName());
-
             $file->move($dir, $filename);
 
             $savePath = $dir . '/' . $filename;
@@ -107,11 +104,27 @@ class Apps extends \Eloquent {
         });
     }
 
+    /**
+     * 获取单个游戏信息
+     *
+     * @param $id int 游戏ID
+     *
+     * @return mix
+     */
+    public function info($id)
+    {
+
+        $info = Apps::find($id);
+        if(empty($info)) return false;
+
+        
+    }
+
 
     /**
-     * 解析APK包
+     * 解析 APK 包
      *
-     * @param $apkPath string APK路径
+     * @param $apkPath string APK 路径
      *
      * @return array 抓取到的数据
      */
@@ -128,37 +141,8 @@ class Apps extends \Eloquent {
             // Log::error($process->getErrorOutput());
         } else {
 
-            $lines = explode("\n", $process->getOutput());
-            foreach ($lines as $line) {
-
-                // package: name='com.fontlose.tcpudp' versionCode='6' versionName='1.50'
-                $regex = '/^package: name=\'(.+)\' versionCode=\'(\d+)\' versionName=\'(.+)\'$/';
-                preg_match($regex, $line, $matches);
-                if(! empty($matches)) {
-                    $data['pack']    = $matches[1];
-                    // $data['code']    = $matches[2];
-                    $data['version'] = $matches[3];
-                }
-
-                // application-label:'网络调试助手'
-                preg_match('/^application-label:\'(.+)\'$/', $line, $matches);
-                if(! empty($matches)) {
-                    $data['title'] = $matches[1];
-                }
-
-                // application-label-zh_CN:'网络调试助手'
-                preg_match('/^application-label-zh_CN:\'(.+)\'$/', $line, $matches);
-                if(! empty($matches)) {
-                    $data['title'] = $matches[1];
-                }
-
-                // application: label='心情调节器' icon='res/drawable-hdpi/logo.png'
-                preg_match('/^application: label=\'.+\' icon=\'(.+)\'$/', $line, $matches);
-                if(! empty($matches)) {
-                    $data['icon'] = $matches[1];
-                }
-
-            }
+            $output = explode("\n", $process->getOutput());
+            $data = $this->_outputParse($output);
         }
 
         return $data;
@@ -198,6 +182,51 @@ class Apps extends \Eloquent {
         rename($targetPath, $apkPath);
 
         return str_replace(public_path(), '', $savePath);
+    }
+
+    /**
+     * 解析 aapt 命令行输出
+     *
+     * @param $output string 输出文本
+     *
+     * @return array
+     */
+    private function _outputParse($output)
+    {
+
+        $data = [];
+        foreach ($output as $line) {
+
+            // package: name='com.fontlose.tcpudp' versionCode='6' versionName='1.50'
+            $regex = '/^package: name=\'(.+)\' versionCode=\'(\d+)\' versionName=\'(.+)\'$/';
+            preg_match($regex, $line, $matches);
+            if(! empty($matches)) {
+                $data['pack']    = $matches[1];
+                // $data['code']    = $matches[2];
+                $data['version'] = $matches[3];
+            }
+
+            // application-label:'网络调试助手'
+            preg_match('/^application-label:\'(.+)\'$/', $line, $matches);
+            if(! empty($matches)) {
+                $data['title'] = $matches[1];
+            }
+
+            // application-label-zh_CN:'网络调试助手'
+            preg_match('/^application-label-zh_CN:\'(.+)\'$/', $line, $matches);
+            if(! empty($matches)) {
+                $data['title'] = $matches[1];
+            }
+
+            // application: label='心情调节器' icon='res/drawable-hdpi/logo.png'
+            preg_match('/^application: label=\'.+\' icon=\'(.+)\'$/', $line, $matches);
+            if(! empty($matches)) {
+                $data['icon'] = $matches[1];
+            }
+
+        }
+
+        return $data;
     }
 
 }
