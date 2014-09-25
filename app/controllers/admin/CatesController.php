@@ -166,10 +166,17 @@ class Admin_CatesController extends \Admin_BaseController {
         $tags = $cateModel->where('parent_id', $cate->id)->get();
         $tagIds = [];
         $tagDatas = [];
+        $i = 0;
         foreach ($tags as $tag) {
             $tagIds[] = $tagIds;
-            $tagDatas[$tag->id]['data'] = $tag;
+            $tagDatas[$tag->id]['data'] = $tag->toarray();
             $tagDatas[$tag->id]['count'] = 0;
+            $i += 1;
+            $tagDatas[$tag->id]['one'] = 1;
+            
+            if ($i % 2 == 0) {
+                $tagDatas[$tag->id]['one'] = 0;
+            }
         }
         //统计该标签游戏数量
         $appsCount = DB::table('app_cates')
@@ -216,7 +223,7 @@ class Admin_CatesController extends \Admin_BaseController {
         }
         //检测输入
         //Log::error(Input::all());
-        $validator = Validator::make(Input::all(), $cateModel->TagsCreateRules);
+        $validator = Validator::make(Input::all(), $cateModel->TagsUpdateRules);
         if ($validator->fails()){
             Log::error($validator->messages());
             return Response::json(['status'=>'error', 'msg'=>'word is must need']);
