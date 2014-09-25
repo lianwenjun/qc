@@ -19,6 +19,10 @@ class Admin_CatesController extends \Admin_BaseController {
         foreach ($cates as $cate) {
             $cateIds[] = $cate->id;
         }
+        //为空的时候判断
+        if (empty($cateIds)){
+            $cateIds = [0];
+        }
         $tags = $cateModel->whereIn('parent_id', $cateIds)->get();
         $cateData = [];
         $i = 1;
@@ -163,6 +167,7 @@ class Admin_CatesController extends \Admin_BaseController {
         if (empty($cate)){
             return Response::json(['status'=>'error', 'msg'=>'id is valid']);
         }
+        
         $tags = $cateModel->where('parent_id', $cate->id)->get();
         $tagIds = [];
         $tagDatas = [];
@@ -173,12 +178,15 @@ class Admin_CatesController extends \Admin_BaseController {
             $tagDatas[$tag->id]['count'] = 0;
             $i += 1;
             $tagDatas[$tag->id]['one'] = 1;
-            
             if ($i % 2 == 0) {
                 $tagDatas[$tag->id]['one'] = 0;
             }
         }
         //统计该标签游戏数量
+        //空判断
+        if (empty($tagIds)){
+            $tagIds = [0];
+        }
         $appsCount = DB::table('app_cates')
                      ->select(DB::raw('count(*) as app_count, cate_id'))
                      ->whereIn('cate_id', $tagIds)

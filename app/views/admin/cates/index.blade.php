@@ -312,7 +312,7 @@ $(function(){
         li.eq(5).html(updateCate);
     });
     //点击确定修改标签
-    $(".jq-delTag").live('click', function(){
+    $(".jq-updateTag").live('click', function(){
         var li = $(this).parents('ul').children('li');
         var title = li.eq(0).find('input[name=editCate]').val();
         var data = {word:title};
