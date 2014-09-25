@@ -114,25 +114,6 @@
         </div>
     </div>            
 </div>
-<div id="jq-addCateTable" style="display:none">
-<table align="center" border="0" cellspacing="0" cellpadding="0" class="add_Classification">
-  <tr>
-    <td width="114" align="right">分类名称：</td>
-    <td height="40"><input name="cate" type="text" class="add_Classification_text"/></td>
-  </tr>
-  <tr>
-    <td align="right" valign="top">所属标签：</td>
-    <td height="40">
-    <input name="" type="text"  class="add_Classification_text"/>
-    <span><a href="#"><img src="/css/images/jiahao.jpg" width="17" height="17" /></a></span>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" style=" text-align:center; padding:15px 0px;"><input name="" type="button" value="添加" class="Search_en jq-addCate" /></td>
-  </tr>
-</table>
-</div>
-
 <!--script src="/js/jquery-ui-1.8.23.custom.min.js" type="text/javascript"></script>!-->
 <script src="/js/admin/tendina.js" type="text/javascript"></script>
 <script src="/js/admin/jQuery.textSlider.js" type="text/javascript"></script>
@@ -149,21 +130,27 @@ $(function(){
     updateTag = '<a class="Search_show jq-updateTag" href="javascript:;">确定</a>';
     buttonCate = '<a class="Search_show jq-editCate" href="javascript:;">修 改</a><a class="Search_xiajia jq-delCate" href="javascript:;">删除</a>';
     buttonTag = '<a class="Search_show jq-editTag" href="javascript:;">修 改</a><a class="Search_xiajia jq-delTag" href="javascript:;">删除</a>';
-    
+
     $("#Classification").click(function(){
-        
-        var html1 = $('#jq-addCateTable').html();
-        new jBox(html1, {
-            width: 550,
-            height: 370,
-            showType: 'slide', 
-            opacity: 0.3,
-            showIcon:false,
-            top: '20%',
-            attach: $('#Classification'),
-            title: '<div class=ask_title>分类添加</div>',
-            //content: html1,
+        $.jBox("iframe:" + cateCreateUrl, {  
+          title: "<div class=ask_title>分类添加</div>",  
+          width: 550,  
+          height:370,
+          border: 5,
+          showType: 'slide', 
+          opacity: 0.3,
+          showIcon:false,
+          top: '20%',
+          loaded:function(){
+            $("body").css("overflow-y","hidden");
+          }
+           ,
+           closed:function(){
+             $("body").css("overflow-y","auto");
+           }
+           
         });
+        
     });
     
     $("#Tag").click(function(){
@@ -295,12 +282,14 @@ $(function(){
         var title = li.eq(0).find('input[name=edit_tag]').val();
         var data = {word:title};
         var editUrl = $(this).parents().find('input[name=edit_url]').val();
+        var tagId = $(this).parents().find('input[name=tag_id]').val();
         console.log(data);
         $.post(editUrl, data, function(res) {
             if (res.status == 'ok'){
                 alert("修改标签成功");
                 li.eq(0).find('.jq-title').html(title);
                 li.find('.user_button').html(buttonTag);
+                $(".jq-tagClick-"+tagId).text(title);
             }
         });
     });

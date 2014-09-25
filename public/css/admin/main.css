@@ -152,7 +152,7 @@ html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅�
 .tankuang select{ border:#666 solid 1px; font-family:"微软雅黑"; color:#333}
 .tankuang_fan{color:#C00; font-size:14px;}
 .Search_en{ position:relative; cursor:pointer; behavior: url(css/iecss3/ie-css3.htc); z-index:1; color:#fff;  -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px;  background:url(../../images/admin/hover_img2.jpg) left top repeat-x #1b4182; border:#0e377d solid 1px; font-size:14px; padding:1px 8px 2px 8px; font-family:"微软雅黑"; display:inline-block; margin-right:5px;}
-.ask_title{text-align:center; font-size:16px; }
+.ask_title{text-align:left; font-size:16px; }
 
 
 .fileinput-button {
