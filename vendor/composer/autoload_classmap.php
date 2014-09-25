@@ -6,11 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddSortToAppsTable' => $baseDir . '/app/database/migrations/2014_09_25_074739_add_sort_to_apps_table.php',
     'Admin_AppsController' => $baseDir . '/app/controllers/admin/AppsController.php',
     'Admin_BaseController' => $baseDir . '/app/controllers/admin/BaseController.php',
     'Admin_CatesController' => $baseDir . '/app/controllers/admin/CatesController.php',
     'Admin_IndexController' => $baseDir . '/app/controllers/admin/IndexController.php',
     'Admin_KeywordsController' => $baseDir . '/app/controllers/admin/KeywordsController.php',
+    'AppCates' => $baseDir . '/app/models/AppCates.php',
     'Apps' => $baseDir . '/app/models/Apps.php',
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
     'Boris\\Boris' => $vendorDir . '/d11wtq/boris/lib/Boris/Boris.php',
