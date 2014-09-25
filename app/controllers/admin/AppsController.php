@@ -132,11 +132,13 @@ class Admin_AppsController extends \Admin_BaseController {
             return Redirect::back();
         }
 
-        $cates = '';
-        $tags = '';
-        $keywords = '';
+        $cateModel = new Cates();
+        $cates = $cateModel->xcates($id);
 
-        return View::make('admin.apps.edit')->with('app', $app);
+
+        return View::make('admin.apps.edit')
+                   ->with('app', $app)
+                   ->with('cates', $cates);
     }
 
     /**

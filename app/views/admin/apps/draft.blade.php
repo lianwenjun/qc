@@ -98,36 +98,36 @@
 
         // 上传游戏
         $(".jq-appUpload").click(function(){
-                $.jBox("<div id='uploader'><p>您的浏览器不支持 html5 所以无法使用上传服务。</p></div>", {  
-                    title: "<div class=ask_title>游戏上传</div>",  
-                    width: 650,  
-                    height: 310,
-                    border: 5,
-                    showType: 'slide', 
-                    opacity: 0.3,
-                    showIcon: false,
-                    top: '20%',
-                    loaded:function() {
-                      $("body").css("overflow-y","hidden");
-                        var uploader = $("#uploader").pluploadQueue({
-                            runtimes : 'html5',
-                            url : '{{ URL::route('apps.appupload') }}',
-                            chunk_size: '1mb',
-                            dragdrop: true,
-                            filters : {
-                                max_file_size : '2048mb',
-                                mime_types: [
-                                    {title : "apk文件", extensions : "apk"}
-                                ]
-                            },
-                            flash_swf_url : '{{ asset('js/admin/plupload/Moxie.swf') }}',
-                        });
-                    },
-                    closed:function() {
-                       $("body").css("overflow-y","auto");
-                       location.href = location.href;
-                    }
-                });
+            $.jBox("<div id='uploader'><p>您的浏览器不支持 html5 所以无法使用上传服务。</p></div>", {  
+                title: "<div class=ask_title>游戏上传</div>",  
+                width: 650,  
+                height: 310,
+                border: 5,
+                showType: 'slide', 
+                opacity: 0.3,
+                showIcon: false,
+                top: '20%',
+                loaded:function() {
+                  $("body").css("overflow-y","hidden");
+                    var uploader = $("#uploader").pluploadQueue({
+                        runtimes : 'html5',
+                        url : '{{ URL::route('apps.appupload') }}',
+                        chunk_size: '1mb',
+                        dragdrop: true,
+                        filters : {
+                            max_file_size : '2048mb',
+                            mime_types: [
+                                {title : "apk文件", extensions : "apk"}
+                            ]
+                        },
+                        flash_swf_url : '{{ asset('js/admin/plupload/Moxie.swf') }}',
+                    });
+                },
+                closed:function() {
+                   $("body").css("overflow-y","auto");
+                   location.href = location.href;
+                }
+            });
         });
     });
 </script>
