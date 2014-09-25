@@ -78,29 +78,11 @@
                             </ul>
                         </div>
                     @endforeach
-                    <!--游戏分类-->
-                    <!--修改游戏分类-->
-                    <div class="user_tabler" style="display:none">
-                            <ul>
-                              <li class="user_one"><strong>分类名称：</strong><input name="" type="text" value="单机专区" /></li>
-                              <li class="user_two"><strong>游戏数量：</strong>2254</li>
-                              <li class="user_one"><strong>搜索次数：</strong>55</li>
-                              <li class="user_two"><strong>标签管理：</strong><a href="#">20（点击查看标签信息）</a></li>
-                              <li class="user_one"><strong>添加时间：</strong>2014-7-8</li>
-                              <li class="user_button"><a class="Search_show jq-updateCate" href="javascript:;">确定</a></li>
-                            </ul>
-                    </div>
-                    <!--修改游戏分类-->
-                 
                 </li>
             </ul>
         </div>
-        <!--游戏分类-->
-                           
-        <div class="user_width"></div>
-                           
-                           
-                           
+        <!--游戏分类-->               
+        <div class="user_width"></div>                 
         <div class="user_right" style="display:none">
             <ul>
                 <li class="user_title"><span>标签管理</span></li>
@@ -113,6 +95,8 @@
                             <div class="up"></div>
                             <div class="scrollText jq-tagul">
                                 <ul>
+                                <!--标签列表开始!-->
+                                <!--标签列表结束!-->
                                 </ul>
                             </div>
                             <div class="down"></div>
@@ -120,37 +104,33 @@
 
                         <div class="user_right_width"></div> 
                         <!--标签信息-->
-                        <p class='jq-tagList'></p>
-                            <div class="user_right_title" style="display:none">
-                                <ul>
-                                    <li class="user_one"><strong>ID：</strong>1</li>
-                                    <li class="user_two"><strong>所属标签：</strong>连连看</li>
-                                    <li class="user_one"><strong>游戏数量：</strong>152</li>
-                                    <li class="user_two"><strong>自然搜索量：</strong>158</li>
-                                    <li class="user_one"><strong>添加时间：</strong>2014-7-23</li>
-                                    <li class="user_button"><a class="Search_show" href="#">修 改</a> <a class="Search_xiajia" href="#">删除</a></li>
-                                </ul>
-                            </div>
-                            <!--标签信息-->
-                                                
-                            <!--修改标签信息-->  
-                            <div class="user_right_title" style="display:none">
-                                <ul>
-                                    <li class="user_one"><strong>ID：</strong>1</li>
-                                    <li class="user_two"><strong>所属标签：</strong><input name="" type="text" value="连连看" /></li>
-                                    <li class="user_one"><strong>游戏数量：</strong>152</li>
-                                    <li class="user_two"><strong>自然搜索量：</strong>158</li>
-                                    <li class="user_one"><strong>添加时间：</strong>2014-7-23</li>
-                                    <li class="user_button"><a class="Search_show" href="#">确定</a></li>
-                                </ul>
-                            </div>
-                            <!--修改标签信息-->
+                        <p class='jq-tagList'>
+                        <!--标签列表详细开始>!-->
+                        <!--标签列表详细结束!-->
+                        </p>
                     </div>                                                  
                 </li>
             </ul>
         </div>
     </div>            
 </div>
+<table id="jq-addCateTable" align="center" border="0" cellspacing="0" cellpadding="0" class="add_Classification jq-addCateTable">
+  <tr>
+    <td width="114" align="right">分类名称：</td>
+    <td height="40"><input name="cate" type="text" class="add_Classification_text"/></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top">所属标签：</td>
+    <td height="40">
+    <input name="" type="text"  class="add_Classification_text"/>
+    <span><a href="#"><img src="/css/images/jiahao.jpg" width="17" height="17" /></a></span>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" style=" text-align:center; padding:15px 0px;"><input name="" type="button" value="添加" class="Search_en jq-addCate" /></td>
+  </tr>
+</table>
+
 <!--script src="/js/jquery-ui-1.8.23.custom.min.js" type="text/javascript"></script>!-->
 <script src="/js/admin/tendina.js" type="text/javascript"></script>
 <script src="/js/admin/jQuery.textSlider.js" type="text/javascript"></script>
@@ -163,11 +143,14 @@ $(function(){
     //JQ-add
     cateCreateUrl = "{{ route('cate.create') }}";
     tagCreateUrl = "{{ route('tag.create') }}";
-    updateCate = '<a class="Search_show jq-update" href="javascript:;">确定</a>';
-
+    updateCate = '<a class="Search_show jq-updateCate" href="javascript:;">确定</a>';
+    updateTag = '<a class="Search_show jq-updateTag" href="javascript:;">确定</a>';
     buttonCate = '<a class="Search_show jq-editCate" href="javascript:;">修 改</a><a class="Search_xiajia jq-delCate" href="javascript:;">删除</a>';
+    buttonTag = '<a class="Search_show jq-editTag" href="javascript:;">修 改</a><a class="Search_xiajia jq-delTag" href="javascript:;">删除</a>';
+
     $("#Classification").click(function(){
-        $.jBox("iframe:" + cateCreateUrl, {  
+        /*
+        new jBox("jq-addCateTable", {  
           title: "<div class=ask_title>分类添加</div>",  
           width: 550,  
           height:370,
@@ -184,6 +167,18 @@ $(function(){
              $("body").css("overflow-y","auto");
            }
            
+        });*/
+        var html = $('#jq-addCateTable').html();
+        new jBox('Modal', {
+            width: 550,
+            height: 370,
+            showType: 'slide', 
+            opacity: 0.3,
+            showIcon:false,
+            top: '20%',
+            attach: $('#Classification'),
+            title: '<div class=ask_title>分类添加</div>',
+            content: html,
         });
         
     });
@@ -262,9 +257,9 @@ $(function(){
                 for(var tag in res.data){
                     var tagdata = res.data[tag];
                     if (tagdata.one == 1) {
-                        text1 += '<li data-tag-id="'+tagdata.data.id+'" class="scrollText_one jq-tagClick">'+tagdata.data.title+'</li>';
+                        text1 += '<li data-tag-id="'+tagdata.data.id+'" class="scrollText_one jq-tagClick jq-tagClick-'+tagdata.data.id+'"">'+tagdata.data.title+'</li>';
                     } else {
-                        text1 += '<li data-tag-id="'+tagdata.data.id+'" class="scrollText_two jq-tagClick">'+tagdata.data.title+'</li>';
+                        text1 += '<li data-tag-id="'+tagdata.data.id+'" class="scrollText_two jq-tagClick jq-tagClick-'+tagdata.data.id+'"">'+tagdata.data.title+'</li>';
                     }
                     text2 += '<div class="user_right_title jq-tagDisplay jq-tagDisplay-'+tagdata.data.id+'" style="display:none">' + 
                                 '<ul>' +
@@ -273,11 +268,11 @@ $(function(){
                                     '<li class="user_two"><strong>搜索次数：</strong>'+tagdata.data.search_total+'</li>'+
                                     '<li class="user_one"><strong>游戏数量：</strong>'+tagdata.count+'</li>'+
                                     '<li class="user_one"><strong>添加时间：</strong>'+tagdata.data.created_at+'</li>'+
-                                    '<li class="user_button"><a class="Search_show jq-editTag" href="javascript:;">修 改</a> <a class="Search_xiajia" href="javascript:;">删除</a></li>'+
+                                    '<li class="user_button">'+buttonTag+'</li>'+
                                     '<input type="hidden" name="pre_title" value="'+tagdata.data.title+'"/>' + 
-                                    '' + 
-                                    '' + 
-                                '</ul>' +
+                                    '<input type="hidden" name="edit_url" value="'+tagdata.editurl+'"/>' + 
+                                    '<input type="hidden" name="del_url" value="'+tagdata.delurl+'"/>' +
+                                    '<input type="hidden" name="tag_id" value="'+tagdata.data.id+'"/>' +                                '</ul>' +
                                 '</div>';
                 }
                 $(".jq-tagul ul").html(text1);
@@ -294,7 +289,7 @@ $(function(){
         tag.removeClass('scrollText_hover');
         var tagId = tag.attr('data-tag-id');
         var title = $(".jq-tagDisplay-"+tagId+' ul input[name=pre_title]').val();
-        console.log($(".jq-tagDisplay-"+tagId+' ul li p').html());
+        //console.log($(".jq-tagDisplay-"+tagId+' ul li p').html());
         $(".jq-tagDisplay-"+tagId+' ul li p').html(title);
         //新选择
         $(this).addClass('scrollText_hover');
@@ -306,22 +301,50 @@ $(function(){
     $(".jq-editTag").live('click', function() {
         var li = $(this).parents().children('li');
         var title = li.eq(0).find('.jq-title').html();
-        var to_title = '<input name="editTag" type="text" value="" />';
+        var to_title = '<input name="edit_tag" type="text" value="" />';
         li.eq(0).find('.jq-title').html(to_title);
-        li.eq(0).find('input[name=editTag]').val(title);
-        li.eq(5).html(updateCate);
+        li.eq(0).find('input[name=edit_tag]').val(title);
+        li.eq(5).html(updateTag);
     });
     //点击确定修改标签
     $(".jq-updateTag").live('click', function(){
         var li = $(this).parents('ul').children('li');
-        var title = li.eq(0).find('input[name=editCate]').val();
+        var title = li.eq(0).find('input[name=edit_tag]').val();
         var data = {word:title};
         var editUrl = $(this).parents().find('input[name=edit_url]').val();
+        console.log(data);
         $.post(editUrl, data, function(res) {
             if (res.status == 'ok'){
                 alert("修改标签成功");
                 li.eq(0).find('.jq-title').html(title);
-                li.find('.user_button').html(buttonCate);
+                li.find('.user_button').html(buttonTag);
+            }
+        });
+    });
+    //点击删除标签
+    $(".jq-delTag").live('click', function(){
+        //alert('点击删除标签');
+        var delUrl = $(this).parents().find('input[name=del_url]').val();
+        var tagId = $(this).parents().find('input[name=tag_id]').val();
+        
+        $.get(delUrl, function(res) {
+            if (res.status == 'ok') {
+                //alert('删除成功');
+                //成功返回删除本地的
+                $(".jq-tagDisplay-"+tagId).hide();
+                $(".jq-tagClick-"+tagId).remove();
+            }
+        });
+    });
+    //点击删除分类
+    $(".jq-delCate").live('click', function(){
+        //alert('点击删除分类');
+        var delUrl = $(this).parents().find('input[name=del_url]').val();
+        $.get(delUrl, function(res) {
+            if (res.status == 'ok') {
+                //alert('删除成功');
+                //成功返回刷新页面
+                window.location.href = window.location.pathname;
             }
         });
     });

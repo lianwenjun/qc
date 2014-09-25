@@ -31,6 +31,7 @@ class CreateAppsTable extends Migration {
             $table->integer('operator')->comment('操作者');
             $table->string('os', 32)->comment('系统OS');
             $table->string('os_version', 32)->comment('系统版本');
+            $table->integer('sort')->default(0)->comment('排序');
             $table->enum('status', ['new', 'draft', 'pending', 'nopass', 'onshelf', 'offshelf'])->default('new')->comment('数据状态');
             $table->enum('is_verify', ['yes', 'no'])->default('no')->comment('是否安全认证');
             $table->enum('has_ad', ['yes', 'no'])->default('no')->comment('是否无广告');

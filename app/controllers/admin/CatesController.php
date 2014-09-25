@@ -176,6 +176,8 @@ class Admin_CatesController extends \Admin_BaseController {
             $tagIds[] = $tagIds;
             $tagDatas[$tag->id]['data'] = $tag->toarray();
             $tagDatas[$tag->id]['count'] = 0;
+            $tagDatas[$tag->id]['editurl'] = route('tag.edit', $tag->id);
+            $tagDatas[$tag->id]['delurl'] = route('tag.delete', $tag->id);
             $i += 1;
             $tagDatas[$tag->id]['one'] = 1;
             if ($i % 2 == 0) {
@@ -259,6 +261,13 @@ class Admin_CatesController extends \Admin_BaseController {
         $cate = $cateModel->find($id);
         if(!$cate){
             return Response::json(['status' => 'error', 'msg' => 'cate is valid']);   
+        }
+        //当删除的是分类的时候，属于所有的标签也删除
+        if ($cate->parent_id == 0){
+            $tags = $cateModel->where('parent_id', $cate->id)->get();
+            foreach ($tags as $tag) {
+                $tag->delete();
+            }
         }
         $cate->delete();
         return Response::json(['status' => 'ok', 'msg' => 'suss']);
