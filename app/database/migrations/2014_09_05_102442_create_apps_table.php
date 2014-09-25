@@ -19,7 +19,8 @@ class CreateAppsTable extends Migration {
             $table->string('title', 128)->comment('游戏名');
             $table->string('pack', 128)->comment('包名');
             $table->integer('size')->unsigned()->comment('游戏大小KB');
-            $table->string('version', 32)->comment('游戏版本');                     
+            $table->string('version', 32)->comment('游戏版本');
+            $table->string('version_code', 32)->comment('版本代号');
             $table->string('author', 128)->comment('游戏作者');
             $table->text('summary')->comment('游戏简介');
             $table->text('images')->comment('游戏图片');
