@@ -114,7 +114,8 @@
         </div>
     </div>            
 </div>
-<table id="jq-addCateTable" align="center" border="0" cellspacing="0" cellpadding="0" class="add_Classification jq-addCateTable">
+<div id="jq-addCateTable" style="display:none">
+<table align="center" border="0" cellspacing="0" cellpadding="0" class="add_Classification">
   <tr>
     <td width="114" align="right">分类名称：</td>
     <td height="40"><input name="cate" type="text" class="add_Classification_text"/></td>
@@ -130,6 +131,7 @@
     <td colspan="2" style=" text-align:center; padding:15px 0px;"><input name="" type="button" value="添加" class="Search_en jq-addCate" /></td>
   </tr>
 </table>
+</div>
 
 <!--script src="/js/jquery-ui-1.8.23.custom.min.js" type="text/javascript"></script>!-->
 <script src="/js/admin/tendina.js" type="text/javascript"></script>
@@ -147,29 +149,11 @@ $(function(){
     updateTag = '<a class="Search_show jq-updateTag" href="javascript:;">确定</a>';
     buttonCate = '<a class="Search_show jq-editCate" href="javascript:;">修 改</a><a class="Search_xiajia jq-delCate" href="javascript:;">删除</a>';
     buttonTag = '<a class="Search_show jq-editTag" href="javascript:;">修 改</a><a class="Search_xiajia jq-delTag" href="javascript:;">删除</a>';
-
+    
     $("#Classification").click(function(){
-        /*
-        new jBox("jq-addCateTable", {  
-          title: "<div class=ask_title>分类添加</div>",  
-          width: 550,  
-          height:370,
-          border: 5,
-          showType: 'slide', 
-          opacity: 0.3,
-          showIcon:false,
-          top: '20%',
-          loaded:function(){
-            $("body").css("overflow-y","hidden");
-          }
-           ,
-           closed:function(){
-             $("body").css("overflow-y","auto");
-           }
-           
-        });*/
-        var html = $('#jq-addCateTable').html();
-        new jBox('Modal', {
+        
+        var html1 = $('#jq-addCateTable').html();
+        new jBox(html1, {
             width: 550,
             height: 370,
             showType: 'slide', 
@@ -178,9 +162,8 @@ $(function(){
             top: '20%',
             attach: $('#Classification'),
             title: '<div class=ask_title>分类添加</div>',
-            content: html,
+            //content: html1,
         });
-        
     });
     
     $("#Tag").click(function(){

@@ -17,7 +17,13 @@ class AddSortToAppsTable extends Migration {
             if (!Schema::hasColumn('apps', 'sort'))
             {
                 $table->integer('sort')->default(0)->after('os_version');
-                //$table->integer('sort')->comment('排序'); 
+                
+                //$table->integer('sort')->comment('排序');
+            }
+            if (!Schema::hasColumn('apps', 'version_code'))
+            {
+                $table->string('version_code', 32)->after('version');
+                //$table->integer('version_code')->comment('版本代号');
             }
         });
     }
