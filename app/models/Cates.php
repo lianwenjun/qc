@@ -31,16 +31,41 @@ class Cates extends \Eloquent {
      *
      * @return array [[id=>1, titile=>xxx]]
      */
-    public function xcates($id)
+    public function appCates($id)
     {
 
         $ids = AppCates::select('cate_id')
                        ->where('app_id', $id)
-                       ->get();
+                       ->get()->toArray();
 
-        print_r($ids);
+        $data = Cates::select(['id', 'title'])
+                     ->where('parent_id', 0)
+                     ->whereIn('id', $ids)
+                     ->get()->toArray();
 
+        return $data;
+    }
 
+    /**
+     * 获取单个游戏的标签
+     *
+     * @param $id int 游戏 ID
+     *
+     * @return array [[id=>1, titile=>xxx]]
+     */
+    public function appTags($id)
+    {
+
+        $ids = AppCates::select('cate_id')
+                       ->where('app_id', $id)
+                       ->get()->toArray();
+
+        $data = Cates::select(['id', 'title'])
+                     ->where('parent_id', '!=', 0)
+                     ->whereIn('id', $ids)
+                     ->get()->toArray();
+
+        return $data;
     }
 
     /**
@@ -52,6 +77,21 @@ class Cates extends \Eloquent {
     {
         return Cates::select(['id', 'title'])
                     ->where('parent_id', 0)
+                    ->orderBy('sort', 'desc')
+                    ->get();
+    }
+
+    /**
+     * 获取分类所有标签
+     *
+     * @param $id int 分类ID 
+     *
+     * @return obj
+     */
+    public function cateTags($id)
+    {
+        return Cates::select(['id', 'title'])
+                    ->where('parent_id', $id)
                     ->orderBy('sort', 'desc')
                     ->get();
     }
