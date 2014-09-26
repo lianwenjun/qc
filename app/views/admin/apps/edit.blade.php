@@ -5,6 +5,8 @@
 <script src="{{ asset('js/admin/select2.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/admin/select2_locale_zh-CN.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/admin/plupload/plupload.full.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/admin/nicEdit.js') }}" type="text/javascript"></script>
+<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
 
 <div class="Content_right_top Content_height">
    <div class="Theme_title">
@@ -20,19 +22,19 @@
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">游戏名称：</td>
-               <td class="title-html">{{ $app->title }}</td>
+               <td class="upload-title-html">{{ $app->title }}</td>
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">包名：</td>
-               <td class="pack-html">{{ $app->pack }}</td>
+               <td class="upload-pack-html">{{ $app->pack }}</td>
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">大小：</td>
-               <td class="size-html">{{ $app->size }}</td>
+               <td class="upload-size-html">{{ friendlyFilesize($app->size) }}</td>
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">版本号：</td>
-               <td class="version-html">{{ $app->version }}</td>
+               <td class="upload-version-html">{{ $app->version }}</td>
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">上传时间：</td>
@@ -40,7 +42,7 @@
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">上传新版本：</td>
-               <td class="Search_apk"><span id="container"><a href="javascript:;" class="Search_Update" id="jq-uploadApp">选择APK</a><span id="uploadInfo"></span></span><img class="icon-src" src="{{ $app->icon }}" width="90" height="90"></td>
+               <td class="Search_apk"><span id="container"><a href="javascript:;" class="Search_Update" id="jq-uploadApp">选择APK</a><span id="uploadInfo"></span></span><img class="upload-icon-src" src="{{ $app->icon }}" width="90" height="90"></td>
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">游戏关键字：</td>
@@ -49,7 +51,7 @@
             <tr class="Search_biao_one">
                 <td  class="Search_lei">游戏分类：</td>
                 <td>
-                    <span style="float:left; line-height:26px; padding-right:8px;">
+                    <span style="float:left; line-height:26px; padding-right:8px;" class="jq-initCates">
                         <?php $split = ''; ?>
                         @foreach($app->cates as $cate)
                             {{ $split.$cate->title }}
@@ -63,7 +65,7 @@
             <tr class="Search_biao_two">
                <td class="Search_lei">游戏标签：</td>
                <td>
-                  <span style="float:left; line-height:26px; padding-right:8px;">
+                  <span style="float:left; line-height:26px; padding-right:8px;" class="jq-initTags">
                         <?php $split = ''; ?>
                         @foreach($app->tags as $tag)
                             {{ $split.$tag->title }}
@@ -97,13 +99,13 @@
             <tr class="Search_biao_two">
                <td class="Search_lei">包名：</td>
                <td>
-                  <input name="pack" type="text" value="{{ $app->pack }}" class="Search_text">
+                  <input name="pack" type="text" value="{{ $app->version_code }}" class="upload-version_code-val Search_text">
                </td>
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">排序：</td>
                <td>
-                  <input name="sort" type="text" value="{{ 1// $app->sort }}" class="Search_input">
+                  <input name="sort" type="text" value="{{ $app->sort }}" class="Search_input">
                </td>
             </tr>
             <tr class="Search_biao_two">
@@ -144,7 +146,47 @@
       </table>
    </div>
 </div>
+
+
 <script type="text/javascript">
+
+    // 初始化分类
+    function initCates() {
+        var catesText = $('.jq-initCates').text();
+        $('[id^="cate_"]').hide();
+
+        var cates = catesText.split(", ");
+        $('input[type="checkbox"]').each(function() {
+            for(i in cates) {
+                // console.log($(this).parent().text() + ' ---> ' + cates[i].trim());
+                if($(this).parent().text() == cates[i].trim()) {
+
+                    // 选中
+                    $(this).attr('checked', 'checked');
+
+                    // 显示
+                    $('#cate_' + $(this).val()).show();
+                }
+            }
+        });
+    }
+
+    // 初始化标签
+    function initTags() {
+        var tagsText = $('.jq-initTags').text();
+        
+        var tags = tagsText.split(", ");
+        $('input[type="checkbox"]').each(function() {
+            for(i in tags) {
+                // console.log($(this).parent().text() + ' ---> ' + tags[i].trim());
+                if($(this).parent().text() == tags[i].trim()) {
+                    $(this).attr('checked', 'checked');
+                }
+            }
+        });
+
+    }
+
     $(function(){
 
         // 初始化关键词
@@ -153,23 +195,31 @@
         // 默认值
         $(".jq-initKeyword").val(["AK","CO"]).trigger("change");
 
+        // 弹出内容
         var cateSelect = "<div class='add_update'>" +
                            "<div class='add_update_title'>游戏分类</div>" +
                            "<div class='add_update_lei'>" +
                               "<ul>" +
-                                 "<li><input type='checkbox' name='checkbox' id='checkbox' />休闲益智</li>" +
+                              @foreach($cates as $cate)
+                                 "<li><lable><input type='checkbox' class='jq-cateClick' value='{{ $cate->id }}' name='cates[]'/>{{ $cate->title }}</lable></li>" +
+                              @endforeach
                               "</ul>" +
                            "</div>" +
                            "<div class='add_update_Label'>" +
                               "<div class='add_update_title'>标签内容</div>" +
-                              "<div class='add_update_title_lei'>休闲益智</div>" +
-                              "<div class='add_update_lei'>" +
-                                 "<ul>" +
-                                    "<li><input type='checkbox' name='checkbox' id='checkbox' />休闲益智</li>" +
-                                 "</ul>" +
+                              @foreach($tags as $k => $cate)
+                              "<div id='cate_{{$k}}'>"+
+                                  "<div class='add_update_title_lei'>{{ $cate['title'] }}</div><div class='add_update_lei'><ul>"+
+                                     @if(isset($cate['tags']))
+                                        @foreach($cate['tags'] as $tag)
+                                        "<li><lable><input type='checkbox' name='cates[]' value='{{ $tag['id'] }}'/>{{ $tag['title'] }}</lable></li>" +
+                                        @endforeach
+                                     @endif
+                                  "</ul></div>" +
                               "</div>" +
+                              @endforeach
                            "</div>" +
-                           "<div class='add_update_button'><input name='' type='button' value='确定' class='Search_en' /></div>" +
+                           "<div class='add_update_button'><input type='button' value='确定' class='Search_en jq-cateSubmit'/></div>" +
                         "</div>";
 
 
@@ -186,20 +236,62 @@
                 top: '20%',
                 loaded:function(){
                   $("body").css("overflow-y","hidden");
-                }
-                 ,
-                 closed:function(){
+                  initCates();
+                  initTags();
+                },
+                closed:function(){
                    $("body").css("overflow-y","auto");
-                 }
+                }
                  
             });
         });
 
+        // 分类选择处理
+        $(".jq-cateClick").live('click', function() {
+            if($(this).attr('checked') == 'checked') {
+                $('#cate_' + $(this).val()).show();
+            } else {
+                $('#cate_' + $(this).val()).find('input[type="checkbox"]').attr('checked', false);
+                $('#cate_' + $(this).val()).hide();
+            }
+        });
+
+        // 确定分类
+        $(".jq-cateSubmit").live('click', function() {
+
+            // 分类提交
+            var cates = [];
+            $('.jq-cateClick').each(function() {
+                if($(this).attr('checked') == 'checked') {
+                    cates.push($(this).parent().text());
+                }
+            });
+            $('.jq-initCates').text(cates.join(", "));
+
+            // 标签提交
+            var tags = [];
+            $('[id^="cate_"]').each(function() {
+                $(this).find('input[type="checkbox"]').each(function(){
+                    if($(this).attr('checked') == 'checked') {
+                        tags.push($(this).parent().text());
+                    }
+                });
+            });
+            $('.jq-initTags').text(tags.join(", "));
+
+            $.jBox.close();
+
+            // 表单包含到提交表单 TODO
+        });
+
+
+        // APK上传
         var apkUploader = new plupload.Uploader({
             runtimes : 'html5',
             browse_button : 'jq-uploadApp',
-            container: document.getElementById('container'), // ... or DOM Element itself
+            container: document.getElementById('container'),
             url : '{{ URL::route('apps.appupload') }}/dontSave',
+            chunk_size: '1mb',
             flash_swf_url : '../js/Moxie.swf',
             
             filters : {
@@ -225,6 +317,7 @@
                 },
 
                 UploadProgress: function(up, file) {
+                    if(file.percent == 100) file.percent = 99;
                     document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
                 },
 
@@ -234,7 +327,41 @@
             }
         });
 
-        apkUploader.init()
+        apkUploader.bind('FileUploaded', function(up, file, object) {
+            var response;
+            try {
+                response = eval(object.response);
+            } catch(err) {
+                response = eval('(' + object.response + ')');
+            }
+
+            for(i in response.result) {
+                var $this = $('[class^="upload-' + i + '"]');
+
+                
+                if(typeof($this.attr('class')) != 'undefined') {
+                    var className = $this.attr('class');
+                    var regexp = /upload-\w+-\w+/gi;
+                    var matches = className.match(regexp);
+                    var dom = matches[0].replace('upload-'+i+'-', '');
+
+                    if(dom == 'html') {
+                        $this.html(response.result[i]);
+                        $this.append('<input type="hidden" name="'+ i +'" value="'+ response.result[i] +'">');
+                    } else if(dom == 'val'){
+                        $this.val(response.result[i]);
+                    } else {
+                        $this.attr(dom, response.result[i]);
+                        $this.after('<input type="hidden" name="'+ i +'" value="'+ response.result[i] +'">');
+                    }
+                }
+            }
+
+            $('#jq-uploadApp').show();
+            $('#uploadInfo').hide();
+        });
+
+        apkUploader.init();
 
 
     });

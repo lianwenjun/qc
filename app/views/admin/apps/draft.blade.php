@@ -40,13 +40,13 @@
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr class="Search_biao_title">
                 <td width="6%">游戏ID</td>
-                <td width="6%">icon</td>
+                <td width="6%">图标</td>
                 <td width="10%">游戏名称</td>
                 <td width="15%">包名</td>
                 <td width="8%">游戏分类</td>
                 <td width="8%">大小</td>
                 <td width="8%">版本号</td>
-                <td width="8%">上架时间</td>
+                <td width="8%">上传时间</td>
                 <td width="12%">操作</td>
             </tr>
             @foreach($apps as $k => $app)
@@ -121,6 +121,10 @@
                             ]
                         },
                         flash_swf_url : '{{ asset('js/admin/plupload/Moxie.swf') }}',
+                    });
+                    apkUploader.bind('UploadProgress', function(up, file) {
+                        if(file.percent == 100) file.percent = 99;
+                        document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
                     });
                 },
                 closed:function() {
