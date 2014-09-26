@@ -20,27 +20,15 @@
                     <div style="width:100%; height:390px; scrollbar-3dlight-color:#DDD; scrollbar-arrow-color:#333; scrollbar-base-color:#cfcfcf; scrollbar-darkshadow-color:#fff; scrollbar-face-color:#cfcfcf; scrollbar-highlight-color:#fff; scrollbar-shadow-color:#595959; overflow-y:auto; overflow-x:hidden">
                         <ul class="dropdown">
                             @foreach($cates as $index => $cate)
-                                @if ($cate['one'] == 1)                    
-                                    <li class="Push_left_one jq-cate" data-cate-id="{{  $cate['data']['id'] }}"><a href="javascript:;"><span class="Push_page">{{  $cate['data']['title'] }}</span></a>
-                                        <!--二级分类!-->
-                                        <ul>
-                                            @foreach($cate['list'] as $tag)
-                                                <li class="Push_fen"><span>{{$tag['title']}}</span></li>
-                                            @endforeach
-                                        </ul>
-                                        <!--二级分类!-->
-                                    </li>
-                                @else
-                                    <li class="Push_left_tow jq-cate" data-cate-id="{{  $cate['data']['id'] }}"><a href="javascript:;"><span class="Push_page">{{  $cate['data']['title'] }}</span></a>
-                                        <!--二级分类!-->
-                                        <ul>
-                                            @foreach($cate['list'] as $tag)
-                                                <li class="Push_fen"><span>{{$tag['title']}}</span></li>
-                                            @endforeach
-                                        </ul>
-                                        <!--二级分类!-->
-                                    </li>
-                                @endif
+                                <li class="jq-cate" data-cate-id="{{  $cate['data']['id'] }}"><a href="javascript:;"><span class="Push_page">{{  $cate['data']['title'] }}</span></a>
+                                    <!--二级分类!-->
+                                    <ul>
+                                        @foreach($cate['list'] as $tag)
+                                            <li class="Push_fen"><span>{{$tag['title']}}</span></li>
+                                        @endforeach
+                                    </ul>
+                                    <!--二级分类!-->
+                                </li>
                             @endforeach
                         </ul>
                     </div>
@@ -121,6 +109,8 @@
 
 <script type="text/javascript">
 $(function(){
+    $(".jq-cate:odd").addClass("Push_left_two");
+    $(".jq-cate:even").addClass("Push_left_one");
     $("#scrollDiv").textSlider({line:4,speed:500,timer:3000});
 
     //JQ-add
@@ -147,6 +137,7 @@ $(function(){
            ,
            closed:function(){
              $("body").css("overflow-y","auto");
+             location.href = location.href;
            }
            
         });
@@ -165,10 +156,12 @@ $(function(){
           top: '20%',
           loaded:function(){
             $("body").css("overflow-y","hidden");
+
           }
            ,
            closed:function(){
              $("body").css("overflow-y","auto");
+             location.href = location.href;
            }
            
         });  
@@ -226,11 +219,7 @@ $(function(){
                 var text2 = '';
                 for(var tag in res.data){
                     var tagdata = res.data[tag];
-                    if (tagdata.one == 1) {
-                        text1 += '<li data-tag-id="'+tagdata.data.id+'" class="scrollText_one jq-tagClick jq-tagClick-'+tagdata.data.id+'"">'+tagdata.data.title+'</li>';
-                    } else {
-                        text1 += '<li data-tag-id="'+tagdata.data.id+'" class="scrollText_two jq-tagClick jq-tagClick-'+tagdata.data.id+'"">'+tagdata.data.title+'</li>';
-                    }
+                    text1 += '<li data-tag-id="'+tagdata.data.id+'" class="jq-tagClick jq-tagClick-'+tagdata.data.id+'"">'+tagdata.data.title+'</li>';
                     text2 += '<div class="user_right_title jq-tagDisplay jq-tagDisplay-'+tagdata.data.id+'" style="display:none">' + 
                                 '<ul>' +
                                     '<li class="user_two"><strong>所属标签：</strong><p class="jq-title">'+tagdata.data.title+'</p></li>'+
@@ -248,6 +237,8 @@ $(function(){
                 $(".jq-tagul ul").html(text1);
                 $(".jq-tagList").html(text2);
                 $(".user_right").show();
+                $(".jq-tagClick:odd").addClass("scrollText_two");
+                $(".jq-tagClick:even").addClass("scrollText_one");
             }
         });
     });
