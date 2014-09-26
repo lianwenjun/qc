@@ -63,9 +63,11 @@ class Apps extends \Eloquent {
     /**
      * 上传APK
      *
+     * @param $dontSave string 是否要入库（空是入库）
+     *
      * @return string 上传结果
      */
-    public function appUpload() 
+    public function appUpload($dontSave = '') 
     {
         return Plupload::receive('file', function ($file)
         {
@@ -80,9 +82,9 @@ class Apps extends \Eloquent {
             $data['icon']          = $icon;
             $data['download_link'] = str_replace(public_path(), '', $savePath);
 
-            $this->store($data);
+            if(empty($dontSave)) $this->store($data);
 
-            return 'ready';
+            return $data;
         });
     }
 
@@ -114,10 +116,16 @@ class Apps extends \Eloquent {
     public function info($id)
     {
 
-        $info = Apps::find($id);
+        $info = Apps::find($id)->toArray();
+
         if(empty($info)) return false;
 
-        
+        $catesModel = new Cates;
+        $info['cates']  = $catesModel->appCates($id);
+        $info['tags']   = $catesModel->appTags($id);
+        $info['images'] = unserialize($info['images']);
+
+        return json_decode(json_encode($info), FALSE);;
     }
 
 
