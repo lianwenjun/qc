@@ -68,13 +68,15 @@ class Admin_AppsController extends \Admin_BaseController {
      * 上传游戏APK
      * POST /admin/apps/appupload
      *
+     * @param $dontSave string 是否入库（空是入库）
+     *
      * @return Response
      */
-    public function appUpload()
+    public function appUpload($dontSave = '')
     {
         $appModel = new Apps();
 
-        return $appModel->appUpload();
+        return $appModel->appUpload($dontSave);
     }
 
 
@@ -128,7 +130,8 @@ class Admin_AppsController extends \Admin_BaseController {
 
         $catesModel = new Cates;
         $cates = $catesModel->allCates();
-
+        $tags  = $catesModel->allTagsWithCate();
+        // print_r($tags);
 
         if(empty($app)) {
 
@@ -140,7 +143,8 @@ class Admin_AppsController extends \Admin_BaseController {
 
         return View::make('admin.apps.edit')
                    ->with('app', $app)
-                   ->with('cates', $cates);
+                   ->with('cates', $cates)
+                   ->with('tags', $tags);
     }
 
     /**
