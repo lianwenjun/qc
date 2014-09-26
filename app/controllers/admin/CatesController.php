@@ -25,16 +25,10 @@ class Admin_CatesController extends \Admin_BaseController {
         }
         $tags = $cateModel->whereIn('parent_id', $cateIds)->get();
         $cateData = [];
-        $i = 1;
         foreach ($cates as $index => $cate) {
             $cateData[$cate->id]['data'] = $cate->toarray();
             $cateData[$cate->id]['appcount'] = 0;
-            $cateData[$cate->id]['one'] = 1;
             $cateData[$cate->id]['list'] = [];
-            if ($i % 2 == 0){
-                $cateData[$cate->id]['one'] = 0;
-            }
-            $i = $i + 1;
         }
         foreach ($tags as $tag) {
             $cateData[$tag->parent_id]['list'][] = $tag->toarray(); 
@@ -127,6 +121,11 @@ class Admin_CatesController extends \Admin_BaseController {
         //保存数据
         $cateModel->title = Input::get('word');
         $cateModel->save();
+        //保存到分类库中
+        $cateAdsModel = new CateAds;
+        $cateAdsModel->cate_id = $cateModel->id;
+        $cateAdsModel->title = $cateModel->title;
+        $cateAdsModel->save();
         return Response::json(['status'=>'ok', 'msg'=>'suss']);
     }
     /**
@@ -171,18 +170,12 @@ class Admin_CatesController extends \Admin_BaseController {
         $tags = $cateModel->where('parent_id', $cate->id)->get();
         $tagIds = [];
         $tagDatas = [];
-        $i = 0;
         foreach ($tags as $tag) {
             $tagIds[] = $tagIds;
             $tagDatas[$tag->id]['data'] = $tag->toarray();
             $tagDatas[$tag->id]['count'] = 0;
             $tagDatas[$tag->id]['editurl'] = route('tag.edit', $tag->id);
             $tagDatas[$tag->id]['delurl'] = route('tag.delete', $tag->id);
-            $i += 1;
-            $tagDatas[$tag->id]['one'] = 1;
-            if ($i % 2 == 0) {
-                $tagDatas[$tag->id]['one'] = 0;
-            }
         }
         //统计该标签游戏数量
         //空判断
@@ -262,12 +255,18 @@ class Admin_CatesController extends \Admin_BaseController {
         if(!$cate){
             return Response::json(['status' => 'error', 'msg' => 'cate is valid']);   
         }
-        //当删除的是分类的时候，属于所有的标签也删除
+
+        //当删除的是分类的时候
         if ($cate->parent_id == 0){
+            //属于所有的标签也删除
             $tags = $cateModel->where('parent_id', $cate->id)->get();
             foreach ($tags as $tag) {
                 $tag->delete();
             }
+            //删除广告的分类
+            $cateAdsModel = new CateAds;
+            $cateAds = $cateAdsModel->where('cate_id', $id)->first();
+            isset($cateAds) ? $cateAds->delete() : '';
         }
         $cate->delete();
         return Response::json(['status' => 'ok', 'msg' => 'suss']);

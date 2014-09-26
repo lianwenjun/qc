@@ -157,7 +157,7 @@ Route::group(['prefix' => 'admin'], function()
     });
     Route::group(['prefix' => 'cateads'], function() //分类推广
     {
-        Route::get('index', ['uses' => 'UserController@showProfile']);
+        Route::get('index', ['as' => 'cateads.index', 'uses' => 'Admin_CateAdsController@index']);
         Route::post('{id}/imageupload', ['uses' => 'UserController@showProfile']);
     });
 

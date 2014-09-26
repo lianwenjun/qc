@@ -40,10 +40,12 @@
             
             <li id="two" class="mail"> <a href="#two">广告位管理</a>
                  <ul class="sub-menu">
-                       <li><a href="Game-bit.html" target=BoardRight>游戏位推广</a></li>
-                       <li><a href="img_Promotion.html" target=BoardRight>首页图片位推广</a></li>
-                       <li><a href="Featured.html" target=BoardRight>编辑精选</a></li>
-                       <li><a href="img_Classification.html" target=BoardRight>分类页图片位推广</a></li>
+                       <li><a href="img_Promotion.html" target=BoardRight>首页游戏位管理</a></li>
+                       <li><a href="Game-bit.html" target=BoardRight>排行游戏位管理</a></li>
+                       <li><a href="Featured.html" target=BoardRight>首页图片位管理</a></li>
+                       <li><a href="management.html" target=BoardRight>编辑精选管理</a></li>
+                       <li><a href="{{ URL::route('cateads.index') }}" target=BoardRight>分类页图片位推广</a></li>
+
                  </ul>
             </li>
             
@@ -57,6 +59,14 @@
                        <li><a href="{{ URL::route('keyword.index') }}" target=BoardRight>关键字管理</a></li>
                  </ul>
             </li>
+            <li id="three" class="mail"> <a href="#three">管理中心</a>
+                 <ul class="sub-menu">
+                       <li><a href="Administrators.html" target=BoardRight>管理员管理</a></li>
+                       <li><a href="Roles.html" target=BoardRight>角色管理</a></li>
+                       <li><a href="Permissions.html" target=BoardRight>权限管理</a></li>
+                 </ul>
+            </li>
+
       </ul>
 </div>
 <script type="text/javascript">
