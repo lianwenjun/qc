@@ -14,7 +14,7 @@
                 <td width="20%">操作</td>
             </tr>
             @foreach($cateads as $catead)
-                <tr class="">
+                <tr class="jq-tr">
                     <td>{{ $catead->id }}</td>
                     <td>{{ $catead->image ? $catead->image : '<img src="/images/admin/u1188.png" width="28" height="28" />' }} </td>
                     <td>{{ $catead->title }}</td>
@@ -27,8 +27,8 @@
 </div>
 <script>
 $(function(){
-    $("tr:odd").addClass("Search_biao_two");
-    $("tr:even").addClass("Search_biao_one");
+    $(".jq-tr:odd").addClass("Search_biao_two");
+    $(".jq-tr:even").addClass("Search_biao_one");
 });
 </script>
 @stop

@@ -115,26 +115,26 @@ Route::group(['prefix' => 'admin'], function()
     });
     Route::group(['prefix' => 'appsads'], function() //游戏位推广
     {
-        Route::get('index', ['as' => 'appsads.index', 'uses' => 'AppsAdsController@index']);
-        Route::get('create', ['as' => 'appsads.create', 'uses' => 'AppsAdsController@create']);
-        Route::post('create', ['as' => 'appsads.store', 'uses' => 'AppsAdsController@store']);
-        Route::get('{id}/edit', ['as' => 'appsads.edit', 'uses' => 'AppsAdsController@edit']);
-        Route::post('{id}/edit', ['as' => 'appsads.update', 'uses' => 'AppsAdsController@update']);
-        Route::get('{id}/delete', ['as' => 'appsads.delete', 'uses' => 'AppsAdsController@delete']);
-        Route::get('{id}/top', ['as' => 'appsads.top', 'uses' => 'AppsAdsController@top']);
-        Route::get('{id}/notop', ['as' => 'appsads.notop', 'uses' => 'AppsAdsController@notop']);
-        Route::get('{id}/onshelf', ['as' => 'appsads.onshelf', 'uses' => 'AppsAdsController@onshelf']);
-        Route::get('{id}/offshelf', ['as' => 'appsads.offshelf', 'uses' => 'AppsAdsController@offshelf']);
+        Route::get('index', ['as' => 'appsads.index', 'uses' => 'Admin_AppsAdsController@index']);
+        Route::get('create', ['as' => 'appsads.create', 'uses' => 'Admin_AppsAdsController@create']);
+        Route::post('create', ['as' => 'appsads.create', 'uses' => 'Admin_AppsAdsController@store']);
+        Route::get('{id}/edit', ['as' => 'appsads.edit', 'uses' => 'Admin_AppsAdsController@edit']);
+        Route::post('{id}/edit', ['as' => 'appsads.update', 'uses' => 'Admin_AppsAdsController@update']);
+        Route::get('{id}/delete', ['as' => 'appsads.delete', 'uses' => 'Admin_AppsAdsController@destroy']);
+        Route::get('{id}/top', ['as' => 'appsads.top', 'uses' => 'Admin_AppsAdsController@top']);
+        Route::get('{id}/notop', ['as' => 'appsads.notop', 'uses' => 'Admin_AppsAdsController@notop']);
+        Route::get('{id}/onshelf', ['as' => 'appsads.onshelf', 'uses' => 'Admin_AppsAdsController@onshelf']);
+        Route::get('{id}/offshelf', ['as' => 'appsads.offshelf', 'uses' => 'Admin_AppsAdsController@offshelf']);
     });
     Route::group(['prefix' => 'rankads'], function() //游戏位推广
     {
-        Route::get('index', ['as' => 'appsads.index', 'uses' => 'AppsAdsController@index']);
-        Route::post('create', ['as' => 'appsads.create', 'uses' => 'AppsAdsController@showProfile']);
-        Route::get('{id}/delete}', ['as' => 'appsads.delete', 'uses' => 'AppsAdsController@showProfile']);
-        Route::get('{id}/top}', ['as' => 'appsads.index', 'uses' => 'AppsAdsController@showProfile']);
-        Route::get('{id}/notop}', ['as' => 'appsads.index', 'uses' => 'AppsAdsController@showProfile']);
-        Route::get('{id}/onshelf}', ['as' => 'appsads.index', 'uses' => 'AppsAdsController@showProfile']);
-        Route::get('{id}/offshelf}', ['as' => 'appsads.index', 'uses' => 'AppsAdsController@showProfile']);
+        Route::get('index', ['as' => 'rankads.index', 'uses' => 'AppsAdsController@index']);
+        Route::post('create', ['as' => 'rankads.create', 'uses' => 'AppsAdsController@showProfile']);
+        Route::get('{id}/delete}', ['as' => 'rankads.delete', 'uses' => 'AppsAdsController@showProfile']);
+        Route::get('{id}/top}', ['as' => 'rankads.index', 'uses' => 'AppsAdsController@showProfile']);
+        Route::get('{id}/notop}', ['as' => 'rankads.index', 'uses' => 'AppsAdsController@showProfile']);
+        Route::get('{id}/onshelf}', ['as' => 'rankads.index', 'uses' => 'AppsAdsController@showProfile']);
+        Route::get('{id}/offshelf}', ['as' => 'rankads.index', 'uses' => 'AppsAdsController@showProfile']);
     });
     Route::group(['prefix' => 'indexads'], function() //首页图片位推广
     {
