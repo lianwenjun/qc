@@ -40,7 +40,7 @@
             
             <li id="two" class="mail"> <a href="#two">广告位管理</a>
                  <ul class="sub-menu">
-                       <li><a href="img_Promotion.html" target=BoardRight>首页游戏位管理</a></li>
+                       <li><a href="{{ URL::route('appsads.index') }}" target=BoardRight>首页游戏位管理</a></li>
                        <li><a href="Game-bit.html" target=BoardRight>排行游戏位管理</a></li>
                        <li><a href="Featured.html" target=BoardRight>首页图片位管理</a></li>
                        <li><a href="management.html" target=BoardRight>编辑精选管理</a></li>
