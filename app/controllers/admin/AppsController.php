@@ -122,7 +122,13 @@ class Admin_AppsController extends \Admin_BaseController {
      */
     public function edit($id)
     {
-        $app = Apps::find($id);
+
+        $appsModel = new Apps;
+        $app = $appsModel->info($id);
+
+        $catesModel = new Cates;
+        $cates = $catesModel->allCates();
+
 
         if(empty($app)) {
 
@@ -131,10 +137,6 @@ class Admin_AppsController extends \Admin_BaseController {
 
             return Redirect::back();
         }
-
-        $cateModel = new Cates();
-        $cates = $cateModel->xcates($id);
-
 
         return View::make('admin.apps.edit')
                    ->with('app', $app)

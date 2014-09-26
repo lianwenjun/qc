@@ -4,6 +4,8 @@
 <link href="{{ asset('css/admin/select2.css') }}" rel="stylesheet" type="text/css" />
 <script src="{{ asset('js/admin/select2.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/admin/select2_locale_zh-CN.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/admin/plupload/plupload.full.min.js') }}" type="text/javascript"></script>
+
 <div class="Content_right_top Content_height">
    <div class="Theme_title">
       {{ Breadcrumbs::render('apps.edit') }}
@@ -18,19 +20,19 @@
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">游戏名称：</td>
-               <td>{{ $app->title }}</td>
+               <td class="title-html">{{ $app->title }}</td>
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">包名：</td>
-               <td>{{ $app->pack }}</td>
+               <td class="pack-html">{{ $app->pack }}</td>
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">大小：</td>
-               <td>{{ $app->size }}</td>
+               <td class="size-html">{{ $app->size }}</td>
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">版本号：</td>
-               <td>{{ $app->version }}</td>
+               <td class="version-html">{{ $app->version }}</td>
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">上传时间：</td>
@@ -38,7 +40,7 @@
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">上传新版本：</td>
-               <td class="Search_apk"><span><a href="#" class="Search_Update">选择APK</a></span><img src="{{ $app->icon }}" width="90" height="90"></td>
+               <td class="Search_apk"><span id="container"><a href="javascript:;" class="Search_Update" id="jq-uploadApp">选择APK</a><span id="uploadInfo"></span></span><img class="icon-src" src="{{ $app->icon }}" width="90" height="90"></td>
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">游戏关键字：</td>
@@ -48,60 +50,71 @@
                 <td  class="Search_lei">游戏分类：</td>
                 <td>
                     <span style="float:left; line-height:26px; padding-right:8px;">
-                             单机专区、卡牌
+                        <?php $split = ''; ?>
+                        @foreach($app->cates as $cate)
+                            {{ $split.$cate->title }}
+                            <?php $split = ', '; ?>
+                        @endforeach
                     </span>
-                    <span style=" float:left;"><input name="" id="Classification" type="submit" value="修改" class="Search_en" /></span>
+                    <span style="float:left;"><button class="Search_en jq-cates">修改</button></span>
                 </td>
             </tr>
 
             <tr class="Search_biao_two">
                <td class="Search_lei">游戏标签：</td>
                <td>
-                  <input name="" type="text" value="卡牌" class="Search_text">
+                  <span style="float:left; line-height:26px; padding-right:8px;">
+                        <?php $split = ''; ?>
+                        @foreach($app->tags as $tag)
+                            {{ $split.$tag->title }}
+                            <?php $split = ', '; ?>
+                        @endforeach
+                  </span>
                </td>
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">游戏作者：</td>
-               <td><input type="checkbox" name="checkbox" id="checkbox" class="Search_checkbox">勾选表示无广告</td>
+               <td><input name="author" type="text" value="{{ $app->author }}" class="Search_text"></td>
+            </tr>
+            <tr class="Search_biao_one">
+               <td class="Search_lei">是否无广告：</td>
+               <td><label><input type="checkbox" name="has_ad" @if($app->has_ad == 'yes')checked="checked"@endif class="Search_checkbox">勾选表示无广告</label></td>
             </tr>
             <tr class="Search_biao_two">
-               <td class="Search_lei">是否无广告：</td>
-               <td><input type="checkbox" name="checkbox" id="checkbox" class="Search_checkbox">勾选表示无广告</td>
+               <td class="Search_lei">是否安全认证：</td>
+               <td><lable><input type="checkbox" name="is_verify" @if($app->is_verify == 'yes')checked="checked"@endif  class="Search_checkbox">勾选表示已认证</lable></td>
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">系统要求：</td>
                <td>
-                  <select class="Search_select">
+                  <select name="os" class="Search_select">
                      <option value="Android">Android</option>
                   </select>
-                  <input name="" type="text" class="Search_input" value="2.3" size="8">
+                  <input name="os_version" type="text" class="Search_input" value="" size="8">
                   以上
                </td>
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">包名：</td>
                <td>
-                  <input name="" type="text" value="wojiaoMT online" class="Search_text">
+                  <input name="pack" type="text" value="{{ $app->pack }}" class="Search_text">
                </td>
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">排序：</td>
                <td>
-                  <input name="" type="text" value="9999" class="Search_input">
+                  <input name="sort" type="text" value="{{ 1// $app->sort }}" class="Search_input">
                </td>
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">下载次数：</td>
                <td>
-                  <input name="" type="text" value="5000万+" class="Search_input">
+                  <input name="download_manual" type="text" value="{{ $app->download_manual }}" class="Search_input">
                </td>
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">游戏简介：</td>
-               <td><textarea name="" class="Search_textarea" cols="" rows="">《黑暗之光》职业介绍
-                  【狂战士——追求极致力量，心醉武道的狂战士】
-                  描述：狂战士是近距离作战的王者。他们拥有令人生畏的力量和优秀的防御能力。他们擅长使用巨剑作为自己进攻的武器。战斗中他们不畏生死，追求极致力量是他们永恒的信念。
-                  技能：重击、地裂、跳斩、风暴之锤、大地之震</textarea>
+               <td><textarea name="" class="Search_textarea" cols="" rows="">{{ $app->summary }}</textarea>
                </td>
             </tr>
             <tr class="Search_biao_two">
@@ -121,10 +134,7 @@
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">新版特性：</td>
-               <td><textarea name="" class="Search_textarea" cols="" rows="">《黑暗之光》职业介绍
-                  【狂战士——追求极致力量，心醉武道的狂战士】
-                  描述：狂战士是近距离作战的王者。他们拥有令人生畏的力量和优秀的防御能力。他们擅长使用巨剑作为自己进攻的武器。战斗中他们不畏生死，追求极致力量是他们永恒的信念。
-                  技能：重击、地裂、跳斩、风暴之锤、大地之震</textarea>
+               <td><textarea name="" class="Search_textarea" cols="" rows="">{{ $app->changes }}</textarea>
                </td>
             </tr>
             <tr class="Search_biao_one">
@@ -137,9 +147,8 @@
 <script type="text/javascript">
     $(function(){
 
-        $(".jq-initKeyword").select2({
-                      tags:["red", "green", "blue"],
-                      tokenSeparators: ["，",",", " "]});
+        // 初始化关键词
+        $(".jq-initKeyword").select2({tags: [],tokenSeparators: ["，",",", " "]});
 
         // 默认值
         $(".jq-initKeyword").val(["AK","CO"]).trigger("change");
@@ -163,7 +172,9 @@
                            "<div class='add_update_button'><input name='' type='button' value='确定' class='Search_en' /></div>" +
                         "</div>";
 
-        $("#Classification").click(function(){
+
+        // 弹出分类选择
+        $(".jq-cates").click(function(){
             $.jBox(cateSelect, {  
                 title: "<div class=ask_title>游戏分类</div>",  
                 width: 650,  
@@ -183,6 +194,48 @@
                  
             });
         });
+
+        var apkUploader = new plupload.Uploader({
+            runtimes : 'html5',
+            browse_button : 'jq-uploadApp',
+            container: document.getElementById('container'), // ... or DOM Element itself
+            url : '{{ URL::route('apps.appupload') }}/dontSave',
+            flash_swf_url : '../js/Moxie.swf',
+            
+            filters : {
+                max_file_size : '2048mb',
+                mime_types: [
+                    {title : "apk文件", extensions : "apk"}
+                ]
+            },
+
+            init: {
+                PostInit: function() {
+                    document.getElementById('uploadInfo').style.display = 'none';
+                },
+
+                FilesAdded: function(up, files) {
+                    plupload.each(files, function(file) {
+                        document.getElementById('uploadInfo').innerHTML = '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
+                    });
+
+                    document.getElementById('jq-uploadApp').style.display = 'none';
+                    document.getElementById('uploadInfo').style.display = 'block';
+                    apkUploader.start();
+                },
+
+                UploadProgress: function(up, file) {
+                    document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+                },
+
+                Error: function(up, err) {
+                    document.getElementById('console').innerHTML += "\nError #" + err.code + ": " + err.message;
+                }
+            }
+        });
+
+        apkUploader.init()
+
 
     });
     
