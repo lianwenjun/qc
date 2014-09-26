@@ -34,14 +34,17 @@ class Cates extends \Eloquent {
     public function appCates($id)
     {
 
+        $data = [];
         $ids = AppCates::select('cate_id')
                        ->where('app_id', $id)
                        ->get()->toArray();
 
-        $data = Cates::select(['id', 'title'])
-                     ->where('parent_id', 0)
-                     ->whereIn('id', $ids)
-                     ->get()->toArray();
+        if($ids) {
+            $data = Cates::select(['id', 'title'])
+                         ->where('parent_id', 0)
+                         ->whereIn('id', $ids)
+                         ->get()->toArray();
+        }
 
         return $data;
     }
@@ -56,14 +59,17 @@ class Cates extends \Eloquent {
     public function appTags($id)
     {
 
+        $data = [];
         $ids = AppCates::select('cate_id')
                        ->where('app_id', $id)
                        ->get()->toArray();
 
-        $data = Cates::select(['id', 'title'])
-                     ->where('parent_id', '!=', 0)
-                     ->whereIn('id', $ids)
-                     ->get()->toArray();
+        if($ids) {
+            $data = Cates::select(['id', 'title'])
+                         ->where('parent_id', '!=', 0)
+                         ->whereIn('id', $ids)
+                         ->get()->toArray();
+        }
 
         return $data;
     }
@@ -79,6 +85,39 @@ class Cates extends \Eloquent {
                     ->where('parent_id', 0)
                     ->orderBy('sort', 'desc')
                     ->get();
+    }
+
+    /**
+     * 获取所有标签
+     *
+     * @return obj
+     */
+    public function allTags()
+    {
+        return Cates::select(['id', 'parent_id', 'title'])
+                    ->where('parent_id', '!=', 0)
+                    ->orderBy('sort', 'desc')
+                    ->get();
+    }
+
+    /**
+     * 获取带分类结构的标签
+     *
+     * @return array
+     */
+    public function allTagsWithCate() {
+
+        $data=[];
+        foreach($this->allCates() as $cate) {
+            $data[$cate->id]['title'] = $cate->title;
+            foreach($this->allTags() as $tag) {
+                if($tag->parent_id == $cate->id) {
+                    $data[$cate->id]['tags'][] = ['id' => $tag->id, 'title' => $tag->title];
+                }
+            }
+        }
+
+        return $data;
     }
 
     /**

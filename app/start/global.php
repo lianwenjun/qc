@@ -85,6 +85,9 @@ require app_path().'/filters.php';
 // 面包屑
 require 'breadcrumbs.php';
 
+// 视图辅助
+require 'helper.php';
+
 /**
  * 获得上传 hash 目录
  * 
@@ -112,5 +115,26 @@ if(! function_exists('uploadPath')) {
         $newName = sprintf('%s.%s', $hash, $info['extension']);
 
         return [$dir, $newName];
+    }
+}
+
+/**
+ * 友好文件大小
+ *
+ * @param $size int 文件大小B
+ *
+ * @return string
+ */
+if(! function_exists('friendlyFilesize')) {
+    function friendlyFilesize($size) {
+     
+        $mod = 1024;
+     
+        $units = explode(' ','B KB MB GB TB PB');
+        for ($i = 0; $size > $mod; $i++) {
+            $size /= $mod;
+        }
+     
+        return round($size, 0) . ' ' . $units[$i];
     }
 }

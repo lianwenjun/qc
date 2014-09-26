@@ -67,9 +67,9 @@ class Apps extends \Eloquent {
      *
      * @return string 上传结果
      */
-    public function appUpload($dontSave = '') 
+    public function appUpload($dontSave) 
     {
-        return Plupload::receive('file', function ($file)
+        return Plupload::receive('file', function ($file) use ($dontSave)
         {
             list($dir, $filename) = uploadPath('apks', $file->getClientOriginalName());
             $file->move($dir, $filename);
@@ -78,7 +78,7 @@ class Apps extends \Eloquent {
             $data = $this->apkParse($savePath);
             $icon = $this->apkIcon($savePath, $data['icon']);
 
-            $data['size']          = round(filesize($savePath) / 1024);
+            $data['size']          = friendlyFilesize(filesize($savePath));
             $data['icon']          = $icon;
             $data['download_link'] = str_replace(public_path(), '', $savePath);
 
@@ -209,9 +209,9 @@ class Apps extends \Eloquent {
             $regex = '/^package: name=\'(.+)\' versionCode=\'(\d+)\' versionName=\'(.+)\'$/';
             preg_match($regex, $line, $matches);
             if(! empty($matches)) {
-                $data['pack']    = $matches[1];
-                // $data['code']    = $matches[2];
-                $data['version'] = $matches[3];
+                $data['pack']         = $matches[1];
+                $data['version_code'] = $matches[2];
+                $data['version']      = $matches[3];
             }
 
             // application-label:'网络调试助手'
