@@ -94,28 +94,6 @@ class Admin_AppsController extends \Admin_BaseController {
     }
 
     /**
-     * Show the form for creating a new resource.
-     * GET /admin/apps/create
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * POST /admin/apps
-     *
-     * @return Response
-     */
-    public function store()
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      * GET /admin/apps/{id}/edit
      *
@@ -131,10 +109,8 @@ class Admin_AppsController extends \Admin_BaseController {
         $catesModel = new Cates;
         $cates = $catesModel->allCates();
         $tags  = $catesModel->allTagsWithCate();
-        // print_r($tags);
 
         if(empty($app)) {
-
             $tips = ['success' => false, 'message' => "亲，ID：{$id}的游戏不存在"];
             Session::flash('tips', $tips);
 
@@ -152,11 +128,39 @@ class Admin_AppsController extends \Admin_BaseController {
      * PUT /admin/apps/{id}
      *
      * @param  int  $id
+     * @param  string $status
+     *
      * @return Response
      */
-    public function update($id)
+    public function update($id, $status)
     {
-        //
+
+        if(! Apps::find($id)) {
+            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
+        }
+
+        $appsModel = new Apps();
+        
+        // 验证表单
+        $validFail = false;
+        $data = Input::all();
+        if(isset($appsModel->rules[$status])) {
+            $validator = Validator::make($data, $appsModel->rules[$status]);
+            $validFail = $validator->fails();
+        }
+        
+        if(! $validFail) {
+            if( $appsModel->store($id, $status, $data) ) {
+                Session::flash('tips', ['success' => true, 'message' => "修改成功"]);
+            } else {
+                Session::flash('tips', ['success' => false, 'message' => "修改失败"]);
+            }
+        } else {
+            Session::flash('tips', ['success' => false, 'message' => "请按要求填写表单"]);
+            return Redirect::back();
+        }
+
+        return Redirect::to('admin/apps/' . $status);
     }
 
     /**
