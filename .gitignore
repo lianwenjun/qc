@@ -10,5 +10,5 @@ app/tests/_output/*
 *.sublime-workspace
 public/apks/*
 public/icons/*
-pblic/pictures/*
+public/pictures/*
 *.apk
