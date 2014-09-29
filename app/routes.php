@@ -35,23 +35,24 @@ Route::group(['prefix' => 'admin'], function()
         Route::get('offshelf', ['as' => 'apps.offshelf', 'uses' => 'Admin_AppsController@offshelf']);
 
         // 操作
-        Route::get('{id}/edit',      ['as' => 'apps.edit',      'uses' => 'Admin_AppsController@edit']);
-        Route::post('{id}/edit',     ['as' => 'apps.edit',      'uses' => 'Admin_AppsController@update']);
+        Route::get('{id}/edit',          ['as' => 'apps.edit',      'uses' => 'Admin_AppsController@edit']);
+        Route::put('{id}/edit/{status}', ['as' => 'apps.edit',      'uses' => 'Admin_AppsController@update'])
+             ->where('id', '[0-9]+')->where('status', '[A-Za-z]+');
         Route::delete('{id}/delete', ['as' => 'apps.delete',    'uses' => 'Admin_AppsController@destroy']);
         Route::get('{id}/onshelf',   ['as' => 'apps.nonshelf',   'uses' => 'Admin_AppsController@showProfile']);
         Route::get('{id}/reonshelf', ['as' => 'apps.reonshelf', 'uses' => 'Admin_AppsController@showProfile']);
         Route::get('{id}/offshelf',  ['as' => 'apps.offshelf',  'uses' => 'Admin_AppsController@showProfile']);
-        Route::get('{id}/pedding',   ['as' => 'apps.pedding',   'uses' => 'Admin_AppsController@showProfile']);
+        Route::get('{id}/pending',   ['as' => 'apps.pending',   'uses' => 'Admin_AppsController@showProfile']);
         Route::post('{id}/nopass',   ['as' => 'apps.nopass',    'uses' => 'Admin_AppsController@showProfile']);
 
         // 历史
 
         // 全选
-        Route::get('allpass', ['uses' => 'AppsController@showProfile']);
-        Route::get('allnopass', ['uses' => 'AppsController@showProfile']);
+        Route::get('allpass', ['uses' => 'Admin_AppsController@allpass']);
+        Route::get('allnopass', ['uses' => 'Admin_AppsController@allnopass']);
 
         // 上传
-        Route::post('imageupload', ['uses' => 'UserController@showProfile']);
+        Route::post('imageupload', ['as' => 'apps.imageupload', 'uses' => 'Admin_AppsController@imageUpload']);
         Route::post('appupload/{dontSave?}', ['as' => 'apps.appupload', 'uses' => 'Admin_AppsController@appUpload']);
 
     });

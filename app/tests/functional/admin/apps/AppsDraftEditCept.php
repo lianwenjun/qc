@@ -11,19 +11,38 @@
 */
 $I = new FunctionalTester($scenario);
 $I->wantTo('添加编辑游戏编辑功能');
-$I->seeRecord('apps', ['id' => '9', 'status' => 'new', 'deleted_at' => null]);
+
+// 必填验证
 $I->amOnPage('/admin/apps/9/edit');
-$I->fillField(['name' => 'keywords'], '草稿游戏A君');
-$I->checkOption(['name' => 'cates'], '角色扮演'); // 用法未确定
-$I->fillField(['name' => 'author'], '草稿游戏工厂');
-$I->selectOption('form select[name=os]', 'Android');
-$I->fillField(['name' => 'os_version'], '2.3');
-$I->fillField(['name' => 'sort'], '0');
-$I->fillField(['name' => 'summary'], '草稿游戏A君即将变成待审游戏君的自白');
-// 图片咋整
-$I->fillField(['name' => 'changes'], '主要是草稿游戏君去到了待审游戏君的星球');
-$I->click('编辑');
+$data = [
+    'cates'           => [1,2],
+    'author'          => '草稿制造厂',
+    'os_version'      => '3.0',
+    // 'version_code'    => 22,
+    'sort'            => 99,
+    'download_manual' => '1万+',
+    'summary'         => '我是即将变成审核游戏君的男人',
+    'images'          => ['/pictures/6/b/6bcfd1ee3b3dbdd58dea0e046f08ee6e.jpg'],
+    'changes'         => 'fixes bugs',
+];
+$I->sendAjaxRequest('PUT', '/admin/apps/9/edit/pending', $data);
+$I->seeInSession(['tips'=>['success' => false, 'message' => "请按要求填写表单"]]);
+
+// 提交保存
+$I->seeRecord('apps', ['id' => '9', 'status' => 'draft', 'deleted_at' => null]);
+$I->amOnPage('/admin/apps/9/edit');
+$data = [
+    'cates'           => [1,2],
+    'author'          => '草稿制造厂',
+    'os_version'      => '3.0',
+    'version_code'    => 22,
+    'sort'            => 99,
+    'download_manual' => '1万+',
+    'summary'         => '我是即将变成审核游戏君的男人',
+    'images'          => ['/pictures/6/b/6bcfd1ee3b3dbdd58dea0e046f08ee6e.jpg'],
+    'changes'         => 'fixes bugs',
+];
+$I->sendAjaxRequest('PUT', '/admin/apps/9/edit/pending', $data);
 $I->seeRecord('apps', ['id' => '9', 'status' => 'pending', 'deleted_at' => null]);
 
 
-// 必填验证

@@ -13,6 +13,21 @@ class Apps extends \Eloquent {
     protected $softDelete = true;
     protected $guarded    = ['id'];
 
+    // 验证规则
+    public $rules = [
+        'draft'   => [],
+        'pending' => [
+            'cates'           => 'required',
+            'os_version'      => 'required',
+            'version_code'    => 'required',
+            'sort'            => 'required',
+            'download_manual' => 'required',
+            'summary'         => 'required',
+            'images'          => 'required',
+            'changes'         => 'required|',
+        ],
+    ];
+
     /**
      * 游戏列表
      *
@@ -48,15 +63,48 @@ class Apps extends \Eloquent {
     }
 
     /**
-     * 新上传 APK 入库
+     * 修改入库
      *
-     * @param $data array 解析到的数组
+     * @param $id     int    游戏ID
+     * @param $status string 状态
+     * @param $data   array  put 数据
      *
-     * @return void
+     * @return boolean
      */
-    public function store($data)
+    public function store($id, $status, $data)
     {
-        Apps::create($data);
+
+        // 处理关键字
+        if(isset($data['keywords'])) {
+            $keywordsModel = new Keywords;
+            $keywordsModel->store($data['keywords'], $id);
+        }
+
+        // 处理分类/标签
+        if(isset($data['cates'])) {
+            $appCatesModel = new AppCates;
+            $appCatesModel->store($id, $data['cates']);
+        }
+
+        // 处理图片
+        if(isset($data['images'])) {
+            $data['images'] = serialize($data['images']);
+        }
+
+        // 处理状态
+        $data['status'] = $status;
+
+        $data['has_ad']    = isset($data['has_ad']) ? 'yes' : 'no';
+        $data['is_verify'] = isset($data['is_verify']) ? 'yes' : 'no';
+
+        $fields = Schema::getColumnListing('apps');
+        foreach($data as $field => $value) {
+            if(! in_array($field, $fields) ) {
+                unset($data[$field]);
+            }
+        }
+
+        return Apps::find($id)->update($data);
     }
 
 
@@ -79,10 +127,11 @@ class Apps extends \Eloquent {
             $icon = $this->apkIcon($savePath, $data['icon']);
 
             $data['size']          = friendlyFilesize(filesize($savePath));
+            $data['size_int']      = round(filesize($savePath) / 1024, 0);
             $data['icon']          = $icon;
             $data['download_link'] = str_replace(public_path(), '', $savePath);
 
-            if(empty($dontSave)) $this->store($data);
+            if(empty($dontSave)) Apps::create($data);
 
             return $data;
         });
@@ -124,6 +173,9 @@ class Apps extends \Eloquent {
         $info['cates']  = $catesModel->appCates($id);
         $info['tags']   = $catesModel->appTags($id);
         $info['images'] = unserialize($info['images']);
+
+        $keywordsModel = new Keywords;
+        $info['keywords'] = $keywordsModel->appKeywords($id);
 
         return json_decode(json_encode($info), FALSE);;
     }

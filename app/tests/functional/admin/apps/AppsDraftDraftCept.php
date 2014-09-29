@@ -14,8 +14,8 @@ $I->wantTo('添加编辑游戏草稿功能');
 
 $I->seeRecord('apps', ['id' => '8', 'status' => 'new', 'deleted_at' => null]);
 $I->amOnPage('/admin/apps/8/edit');
-$I->fillField(['name' => 'summary'], '上传游戏D君即将变成草稿游戏君的自白');
-$I->click('存为草搞件');
+$data['summary'] = '大家好，我是上传有游戏君，即将成为草稿君';
+$I->sendAjaxRequest('PUT', '/admin/apps/8/edit/draft', $data);
 $I->seeRecord('apps', ['id' => '8', 'status' => 'draft', 'deleted_at' => null]);
 
 
