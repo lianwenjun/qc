@@ -23,7 +23,6 @@ class Cates extends \Eloquent {
                 'sort' => 'integer',
                 ];
 
-
     /**
      * 获取单个游戏的分类
      *
