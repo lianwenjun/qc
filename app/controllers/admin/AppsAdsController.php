@@ -15,14 +15,19 @@ class Admin_AppsAdsController extends \BaseController {
     public function index()
     {
         $adsModel = new Ads();
-        $where = $adsModel->where('type', $this->type);
-        $ads = $where->orderBy('id', 'desc')->paginate($this->pagesize);
-        
-        $status = ['inline' => '线上展示',
+        $query = $adsModel;
+        //条件查询
+        $query = $adsModel->indexQuery($query);
+        if (Input::get('location')){
+            $query = $query->where('location', Input::get('location'));
+        }
+        $query = $query->where('type', $this->type);
+        $ads = $query->orderBy('id', 'desc')->paginate($this->pagesize);
+        $statusArray = ['online' => '线上展示',
                     'onshelf' => '上架',
                     'expired' => '已过期',
                     'offshelf' => '已下架'];
-        $datas = ['ads' => $ads, 'status' => $status, 
+        $datas = ['ads' => $ads, 'status' => $statusArray, 
                 'location' => Config::get('status.ads.applocation')];
         $this->layout->content = View::make('admin.appsads.index', $datas);
     }
@@ -64,30 +69,21 @@ class Admin_AppsAdsController extends \BaseController {
             'app_id' => Input::get('app_id'),
             'title' => Input::get('title'),
             'location' => Input::get('location'),
-            'images' => Input::get('images'),
-            'is_top' => Input::get('is_top'),
+            'image' => Input::get('image'),
+            'is_top' => Input::get('is_top', 'no'),
             'onshelfed_at' => Input::get('onshelfed_at'),
             'offshelfed_at' => Input::get('offshelfed_at'),
             'type' => $this->type,
+            'is_onshelf' => 'yes', 
             ];
-        $ads = $adsModel->create($fields);
-        if ($ads){
+        foreach ($fields as $key => $value) {
+            $adsModel->$key = $value;
+        }
+        if ($adsModel->save()) {
             $msg = "添加成功";
             return Redirect::route('appsads.index')->with('msg', $msg);
         }
         return Redirect::route('appsads.index')->with('msg', $msg);
-    }
-
-    /**
-     * Display the specified resource.
-     * GET /admin/appads/{id}
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -133,23 +129,24 @@ class Admin_AppsAdsController extends \BaseController {
         $ads = $adsModel->where('id', $id)->where('type', $this->type)->first();
         if (!$ads) {
             $msg = '亲，数据不存在';
-            return Redirect::back();
+            return Redirect::back()->with('msg', $msg);
         }
         $validator = Validator::make(Input::all(), $adsModel->adsUpdateRules);
         if ($validator->fails()){
             Log::error($validator->messages());
             $msg = "添加失败";
-            return Redirect::route('appsads.create')->with('msg', $msg);
+            return Redirect::back()->with('msg', $msg);
         }
-        $ads->location = Input::get('location');
-        $ads->image = Input::get('image');
-        $ads->is_top = Input::get('is_top');
-        $ads->onshelfed_at = Input::get('onshelfed_at');
-        $ads->offshelfed_at = Input::get('offshelfed_at');
-        if ($adsModel->save()){
+        $ads->location = Input::get('location', $ads->location);
+        $ads->image = Input::get('image', $ads->image);
+        $ads->is_top = Input::get('is_top', 'no');
+        $ads->onshelfed_at = Input::get('onshelfed_at', $ads->onshelfed_at);
+        $ads->offshelfed_at = Input::get('offshelfed_at', $ads->offshelfed_at);
+        if ($ads->save()){
             $msg = "添加成功";
             return Redirect::route('appsads.index')->with('msg', $msg);
         }
+        $msg = "没什么改变";
         return Redirect::route('appsads.index')->with('msg', $msg);
     }
 
@@ -165,13 +162,13 @@ class Admin_AppsAdsController extends \BaseController {
         $adsModel = new Ads();
         $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
         if (!$ad) {
-            $msg = '亲，你要下架的数据不存在';
+            $msg = '亲，你要下架的' . $id . '数据不存在';
             return Redirect::back();
         }
         $msg = '亲，下架失败了';
         $ad->is_onshelf = 'no';
         if (!$ad->save()){
-            $msg = '亲，下架成功了';
+            $msg = '亲，#' . $id . '下架成功了';
         }
         return Redirect::back();
     }
@@ -200,6 +197,14 @@ class Admin_AppsAdsController extends \BaseController {
         }
         return Request::header('referrer') ? Redirect::back()
             ->with('msg', $msg) : Redirect::route('appsads.index')->with('msg', $msg);
+    }
+
+    /**
+    * 上传图片
+    */
+    public function upload(){
+        $adsModel = new Ads();
+        return $adsModel->imageUpload();
     }
 
 }

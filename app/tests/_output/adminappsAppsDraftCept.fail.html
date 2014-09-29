@@ -49,13 +49,13 @@
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr class="Search_biao_title">
                 <td width="6%">游戏ID</td>
-                <td width="6%">icon</td>
+                <td width="6%">图标</td>
                 <td width="10%">游戏名称</td>
                 <td width="15%">包名</td>
                 <td width="8%">游戏分类</td>
                 <td width="8%">大小</td>
                 <td width="8%">版本号</td>
-                <td width="8%">上架时间</td>
+                <td width="8%">上传时间</td>
                 <td width="12%">操作</td>
             </tr>
                         <tr class="Search_biao_one">
@@ -67,7 +67,7 @@
                 <td>27</td>
                 <td>1.0.2</td>
                 <td>2014-09-03 08:04</td>
-                <td><a href="http://localhost/admin/apps/1/edit" target="BoardRight" class="Search_show">编辑</a> <a href="javascript:;" class="Search_del jq-appDelete" data-url="http://localhost/admin/apps/1/delete">删除</a></td>
+                <td><a href="http://localhost/admin/apps/1/edit" target="BoardRight" class="Search_show">编辑</a> <a href="http://localhost/admin/apps/1/delete" class="Search_del jq-delete">删除</a></td>
             </tr>
                         <tr class="Search_biao_two">
                 <td>2</td>
@@ -78,7 +78,7 @@
                 <td>157</td>
                 <td>1.0</td>
                 <td>2014-09-01 09:24</td>
-                <td><a href="http://localhost/admin/apps/2/edit" target="BoardRight" class="Search_show">编辑</a> <a href="javascript:;" class="Search_del jq-appDelete" data-url="http://localhost/admin/apps/2/delete">删除</a></td>
+                <td><a href="http://localhost/admin/apps/2/edit" target="BoardRight" class="Search_show">编辑</a> <a href="http://localhost/admin/apps/2/delete" class="Search_del jq-delete">删除</a></td>
             </tr>
                         <tr class="Search_biao_one">
                 <td>3</td>
@@ -89,7 +89,7 @@
                 <td>350</td>
                 <td>1.50</td>
                 <td>2014-09-23 09:24</td>
-                <td><a href="http://localhost/admin/apps/3/edit" target="BoardRight" class="Search_show">编辑</a> <a href="javascript:;" class="Search_del jq-appDelete" data-url="http://localhost/admin/apps/3/delete">删除</a></td>
+                <td><a href="http://localhost/admin/apps/3/edit" target="BoardRight" class="Search_show">编辑</a> <a href="http://localhost/admin/apps/3/delete" class="Search_del jq-delete">删除</a></td>
             </tr>
                         <tr class="Search_biao_two">
                 <td>4</td>
@@ -100,7 +100,7 @@
                 <td>350</td>
                 <td>1.50</td>
                 <td>2014-09-23 09:24</td>
-                <td><a href="http://localhost/admin/apps/4/edit" target="BoardRight" class="Search_show">编辑</a> <a href="javascript:;" class="Search_del jq-appDelete" data-url="http://localhost/admin/apps/4/delete">删除</a></td>
+                <td><a href="http://localhost/admin/apps/4/edit" target="BoardRight" class="Search_show">编辑</a> <a href="http://localhost/admin/apps/4/delete" class="Search_del jq-delete">删除</a></td>
             </tr>
                         <tr class="Search_biao_one">
                 <td>444</td>
@@ -111,7 +111,7 @@
                 <td>350</td>
                 <td>1.50</td>
                 <td>2014-09-23 09:24</td>
-                <td><a href="http://localhost/admin/apps/444/edit" target="BoardRight" class="Search_show">编辑</a> <a href="javascript:;" class="Search_del jq-appDelete" data-url="http://localhost/admin/apps/444/delete">删除</a></td>
+                <td><a href="http://localhost/admin/apps/444/edit" target="BoardRight" class="Search_show">编辑</a> <a href="http://localhost/admin/apps/444/delete" class="Search_del jq-delete">删除</a></td>
             </tr>
                                 </table>
         <div id="pager"></div>
@@ -121,55 +121,65 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
-        // 删除游戏
-        $(".jq-appDelete").click(function() {
-            var url = $(this).attr('data-url');
-            $.jBox("<p style='margin: 10px'>您要删除此游戏吗？</p>", {
+        $('.jq-delete').click(function() {
+
+            var link = $(this).attr('href');
+            $.jBox("<p style='margin: 10px'>您要删除吗？</p>", {
                 title: "<div class='ask_title'>是否删除？</div>",
                 showIcon: false,
                 draggable: false,
                 buttons: {'确定':true, "算了": false},
                 submit: function(v, h, f) {
-                    if(v == true) {
-                        location.href = url;
+                    if(v) {
+                        var f = document.createElement('form');
+                        $(this).after($(f).attr({
+                            method: 'post',
+                            action: link
+                        }).append('<input type="hidden" name="_method" value="DELETE" />'));
+                        $(f).submit();
                     }
                 }
-
             });
+
+            return false;
         });
 
         // 上传游戏
         $(".jq-appUpload").click(function(){
-                $.jBox("<div id='uploader'><p>您的浏览器不支持 html5 所以无法使用上传服务。</p></div>", {  
-                    title: "<div class=ask_title>游戏上传</div>",  
-                    width: 650,  
-                    height: 310,
-                    border: 5,
-                    showType: 'slide', 
-                    opacity: 0.3,
-                    showIcon: false,
-                    top: '20%',
-                    loaded:function() {
-                      $("body").css("overflow-y","hidden");
-                        var uploader = $("#uploader").pluploadQueue({
-                            runtimes : 'html5',
-                            url : 'http://localhost/admin/apps/appupload',
-                            chunk_size: '1mb',
-                            dragdrop: true,
-                            filters : {
-                                max_file_size : '2048mb',
-                                mime_types: [
-                                    {title : "apk文件", extensions : "apk"}
-                                ]
-                            },
-                            flash_swf_url : 'http://localhost/js/admin/plupload/Moxie.swf',
-                        });
-                    },
-                    closed:function() {
-                       $("body").css("overflow-y","auto");
-                       location.href = location.href;
-                    }
-                });
+            $.jBox("<div id='uploader'><p>您的浏览器不支持 html5 所以无法使用上传服务。</p></div>", {  
+                title: "<div class=ask_title>游戏上传</div>",  
+                width: 650,  
+                height: 310,
+                border: 5,
+                showType: 'slide', 
+                opacity: 0.3,
+                showIcon: false,
+                top: '20%',
+                loaded:function() {
+                  $("body").css("overflow-y","hidden");
+                    var uploader = $("#uploader").pluploadQueue({
+                        runtimes : 'html5',
+                        url : 'http://localhost/admin/apps/appupload',
+                        chunk_size: '1mb',
+                        dragdrop: true,
+                        filters : {
+                            max_file_size : '2048mb',
+                            mime_types: [
+                                {title : "apk文件", extensions : "apk"}
+                            ]
+                        },
+                        flash_swf_url : 'http://localhost/js/admin/plupload/Moxie.swf',
+                    });
+                    apkUploader.bind('UploadProgress', function(up, file) {
+                        if(file.percent == 100) file.percent = 99;
+                        document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+                    });
+                },
+                closed:function() {
+                   $("body").css("overflow-y","auto");
+                   location.href = location.href;
+                }
+            });
         });
     });
 </script>
