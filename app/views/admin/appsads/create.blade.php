@@ -1,98 +1,175 @@
 @extends('admin.layout')
 
-@section('content') 
+@section('content')
+<link href="{{ asset('css/admin/timepicker/jquery-ui-1.11.0.custom.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/admin/timepicker/jquery-ui-timepicker-addon.css') }}" rel="stylesheet" type="text/css" />
+<style>
+.autocomplete-suggestions { border: 1px solid #999; background: #FFF; cursor: default; overflow: auto; -webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); -moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); }
+.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+.autocomplete-no-suggestion { padding: 2px 5px;}
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: bold; color: #000; }
+.autocomplete-group { padding: 2px 5px; }
+.autocomplete-group strong { font-weight: bold; font-size: 16px; color: #000; display: block; border-bottom: 1px solid #000; }
+</style>
 <div class="Content_right_top Content_height">
     <div class="Theme_title"><h1>广告位管理 <span>首页游戏位管理</span><b>添加游戏</b></h1></div>                 
     <div class="Search_title">游戏信息</div>
         <div class="Search_biao">
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr class="Search_biao_one">
+            <form action="{{ Request::url('appsads.create') }}" method="post">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
                         <td width="134" class="Search_lei">请输入游戏名称：</td>
-                        <td><input name="" type="text" class="Search_text" value="应用名称输入时自动匹配" style="width:25%" />　或　从最近新增的游戏添加　<a href="#" class="Search_Update">选择</a></td>
+                        <td><input id="autocomplete" type="text" class="Search_text jq-searchapps" value="" placeholder="应用名称输入时自动匹配" style="width:25%" />　或　从最近新增的游戏添加　<a href="#" class="Search_Update">选择</a></td>
                     </tr>
+                    <input name="app_id" type="hidden" val="">
                     <!--数据选择区开始-->
-                    <tr class="Search_biao_two">
-                        <td  class="Search_lei">游戏ID：</td>
-                        <td>1</td>
-                    </tr>
-
-                    <tr class="Search_biao_one">
-                        <td  class="Search_lei">游戏名称：</td>
-                        <td>植物大战僵尸</td>
-                    </tr>
-
-                    <tr class="Search_biao_two">
-                        <td  class="Search_lei">包名：</td>
-                        <td>com.xxxxxxx.xxx</td>
-                    </tr>
-
-                    <tr class="Search_biao_one">
-                        <td  class="Search_lei">大小：</td>
-                        <td>12.3M</td>
-                    </tr>
-
-                    <tr class="Search_biao_two">
-                        <td  class="Search_lei">版本号：</td>
-                        <td>3.1.12</td>
-                    </tr>
-
-                    <tr class="Search_biao_one">
-                        <td  class="Search_lei">上传时间：</td>
-                        <td class="Search_apk">2014-7-9</td>
-                    </tr>
-
-                    <tr class="Search_biao_two">
-                        <td  class="Search_lei">ICON：</td>
-                        <td><span class="Search_apk"><img src="images/u1188.png" width="90" height="90" /></span></td>
-                    </tr>
-                    <!--数据选择区结束-->
-                    <tr class="Search_biao_one">
+                    <input name="title" type="hidden" val="">
+                    <tr>
                         <td  class="Search_lei">广告区域：</td>
                         <td>
                         <span style="float:left">
-                            <select class="Search_select">
-                                <option value="广告区域" selected="">广告区域</option>
-                                <option value="热门下载（首页）">热门下载（首页）</option>
-                                <option value="新品抢玩（首页）">新品抢玩（首页）</option>
-                                <option value="精品推荐（搜索页）">精品推荐（搜索页）</option>
+                            <select class="Search_select" name="location">
+                                @foreach($location as $k => $v)
+                                    <option value="{{ $k }}"> {{ $v }} </option>
+                                @endforeach
                             </select>
                          </span>
                        </td>
                     </tr>
 
-                    <tr class="Search_biao_two">
+                    <tr>
                         <td  class="Search_lei">游戏截图：</td>
-                        <td><a href="#" class="Search_Update">图片上传</a> <span style="color:#C00">（焦点图480*200，专题图230*120）</span></td>
+                        <td><a id="browse" href="javascrip:;" class="Search_Update">图片上传</a> <span style="color:#C00">（焦点图480*200，专题图230*120）</span></td>
                     </tr>
 
-                    <tr class="Search_biao_one">
+                    <tr>
                         <td  class="Search_lei">截图预览：</td>
                         <td class="Search_img">
                         <div class="Update_img">
                             <ul id="listdata">
-                                <li><img src="images/1.jpg" /><a href="#">删除</a></li>
+                                <li><img src="/images/admin/1.jpg" />
+                                    <!--a href="javascript">删除</a-->
+                                </li>
+                                <input name="image" type="hidden" value="" />
                             </ul>
                         </div>
 
                         </td>
                     </tr>
 
-                    <tr class="Search_biao_two">
+                    <tr>
                         <td  class="Search_lei">广告置顶：</td>
-                        <td><input name="input" type="checkbox" value="" />
+                        <td><input name="is_top" type="checkbox" value="yes"/>
                           是　<span style=" color:#C00">（选中后无论上架广告数量，该广告均会在轮播中出现）</span></td>
                     </tr>
 
-                    <tr class="Search_biao_one">
+                    <tr>
                         <td  class="Search_lei">上线时间：</td>
-                        <td><h6>从 </h6> <h6><img src="images/darte.jpg" width="156" height="22" /></h6> <h6> 到 </h6> <h6><img src="images/darte.jpg" width="156" height="22" /></h6></td>
+                        <td>    
+                            <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="jq-ui-timepicker" value=""></h6>
+                            <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="jq-ui-timepicker" value=""></h6></td>
                     </tr>
 
-                    <tr class="Search_biao_two">
-                        <td colspan="2" align="center"  class="Search_submit"><input name="" type="submit" value="提 交" /> <a href="img_Promotion.html" target=BoardRight>返回列表</a></td>
+                    <tr>
+                        <td colspan="2" align="center"  class="Search_submit"><input name="" type="submit" value="提 交" /> <a href="{{ URL::route('appsads.index') }}" target=BoardRight>返回列表</a></td>
                     </tr>
                 </table>
+            </form>
         </div>                 
     </div>
 </div>
+
+
+<script type="text/javascript" src="{{ asset('js/jquery-ui-1.8.23.custom.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-addon.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-zh-CN.js') }}"></script>
+<script src="{{ asset('js/admin/plupload/plupload.full.min.js') }}" type="text/javascript"></script>
+<script type="text/javascript" src="{{ asset('js/admin/jquery.autocomplete.js') }}"></script>
+<script type="text/javascript">
+function uploadToHtml(img){
+    $("#listdata li img").src(img);
+}
+function getAppInfo(url){
+    $.get(url, function(res){
+        if (res.status == 'ok' ){
+            var data1 = ['游戏ID：', '游戏名称：', '包名：', '大小：', '版本号：', '上传时间：', 'ICON：'];
+            var data2 = [res.data.id, res.data.title, res.data.pack, res.data.size, res.data.version,
+                res.data.created_at, '<span class="Search_apk"><img src="'+res.data.icon+'" width="90" height="90" /></span>'];
+            var text = '';
+
+            for(var i=0; i<data1.length; i++){
+                    text += '<tr class="jq-appinfo-tr">'+
+                            '<td  class="Search_lei">'+data1[i]+'</td>'+
+                            '<td>'+data2[i]+'</td>'+'</tr>';
+            }
+            $(".jq-appinfo-tr").remove();
+            $("input[name=app_id]").after(text);
+            $("input[name=app_id]").val(res.data.id);
+            $("input[name=title]").val(res.data.title);
+
+            $("tr").removeClass("Search_biao_two");
+            $("tr").removeClass("Search_biao_one");
+            $("tr:odd").addClass("Search_biao_two");
+            $("tr:even").addClass("Search_biao_one");
+        }
+    });
+}
+$(function(){
+    $("tr:odd").addClass("Search_biao_two");
+    $("tr:even").addClass("Search_biao_one");
+    //自动匹配
+    $('#autocomplete').autocomplete({
+        serviceUrl: '{{ route("searchapps") }}',
+        onSelect: function (suggestion) {
+            getAppInfo(suggestion.data );
+        }
+    });
+    //时间插件
+    $(".jq-ui-timepicker").datetimepicker({
+            showSecond: true,
+            timeFormat: 'hh:mm:ss',
+            stepHour: 1,
+            stepMinute: 1,
+            stepSecond: 1
+    });
+    //图片上传
+    UPLOADURL = '{{ route("appsads.upload") }}';
+    
+    var uploader = new plupload.Uploader({ //实例化一个plupload上传对象
+        browse_button : 'browse',
+        url : UPLOADURL,
+        runtimes: 'html5,flash',
+        max_file_size : '1mb',
+        flash_swf_url : '{{ asset("js/admin/plupload/Moxie.swf") }}',
+        filters: { 
+            mime_types : [ //只允许上传图片文件
+                { title : "图片文件", extensions : "jpg,gif,png" }
+            ]
+        }
+    });
+    uploader.init(); //初始化
+
+    //绑定文件添加进队列事件
+    uploader.bind('FilesAdded',function(uploader,files){
+        for(var i = 0, len = files.length; i<len; i++){
+            uploader.start();
+        }
+    });
+    //文件上传完后
+    uploader.bind('FileUploaded', function(up, file, object) {
+        var myData;
+        try {
+            myData = eval(object.response);
+        } catch(err) {
+            myData = eval('(' + object.response + ')');
+        }
+        if (myData.result){
+            console.log( $("#listdata li img"));
+            $("#listdata li img").attr('src', myData.result);
+            $("#listdata input[name=image]").val(myData.result);
+        }
+    });
+});
+</script>
 @stop

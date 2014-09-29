@@ -1,7 +1,6 @@
 @extends('admin.layout')
 
 @section('content')
-<script src="{{ asset('js/admin/plupload/plupload.full.min.js') }}" type="text/javascript"></script>
 <div class="Content_right_top Content_height">
     <div class="Theme_title"><h1>广告位管理 <span>分类页图片位推广</span></h1></div>                
     <div class="Search_cunt" style="padding-top:15px;">共 <strong>{{ $cateads->getTotal() }}</strong> 条信息 </div>
@@ -28,9 +27,8 @@
         <div id="pager">{{ $cateads->links() }}</div>
     </div>               
 </div>
-
+<script src="{{ asset('js/admin/plupload/plupload.full.min.js') }}" type="text/javascript"></script>
 <script>
-
 $(function(){
     $(".jq-tr:odd").addClass("Search_biao_two");
     $(".jq-tr:even").addClass("Search_biao_one");
