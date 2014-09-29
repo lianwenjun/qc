@@ -160,11 +160,12 @@ Route::group(['prefix' => 'admin'], function()
     Route::group(['prefix' => 'cateads'], function() //分类推广
     {
         Route::get('index', ['as' => 'cateads.index', 'uses' => 'Admin_CateAdsController@index']);
-        Route::post('{id}/imageupload', ['uses' => 'UserController@showProfile']);
+        Route::post('imageupload', ['as' => 'cateads.upload', 'uses' => 'Admin_CateAdsController@upload']);
+        Route::post('{id}/edit', ['as' => 'cateads.edit', 'uses' => 'Admin_CateAdsController@update']);
     });
 
 
-    Route::get('searchapps', ['uses' => 'UserController@showProfile']);//智能匹配列表
+    Route::get('searchapps', ['uses' => 'Admin_IndexController@searchApps']);//智能匹配列表
     Route::get('lastapps', ['uses' => 'UserController@showProfile']);//近期添加列表
 });
 

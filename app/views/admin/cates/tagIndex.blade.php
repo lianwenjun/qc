@@ -61,7 +61,7 @@
                         <td>{{ $tag->updated_at }}</td>
                         <td><a href="javascript:;" class="Search_show jq-editTag">编辑</a> <a href="javascript:;" class="Search_del jq-delTag">删除</a></td>
                         <td style="display:none">
-                            <input id="edit-url" value="{{ route('tag.update', $tag->id) }}" type="hidden"/>
+                            <input id="edit-url" value="{{ route('tag.edit', $tag->id) }}" type="hidden"/>
                             <input id="del-url" value="{{ route('tag.delete', $tag->id) }}" type="hidden"/>
                             <input id="preTag" value="{{ $tag->title }}" type="hidden"/>
                             <input id="preSort" value="{{ $tag->sort }}" type="hidden"/>

@@ -11,4 +11,6 @@ app/tests/_output/*
 public/apks/*
 public/icons/*
 public/pictures/*
+public/cateads/*
+public/ads/*
 *.apk
