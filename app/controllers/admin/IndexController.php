@@ -35,4 +35,26 @@ class Admin_IndexController extends \Admin_BaseController {
         return View::make('admin.welcome');
     }
 
+    /**
+    * 后台搜索关键字
+    * GET 
+    * @return Response
+    */
+    public function searchApps() {
+        $appsModel = new Apps();
+        $query = '%' . Input::get('word') . '%';
+        $apps = $appsModel->select('id', 'title')->where('status', 'onshelf')->where('title', 'like', $query)
+                    ->orderBy('id', 'desc')->get()->toarray();
+        return ['data' => $apps];
+    }
+
+    /**
+    * 后台搜索最近添加
+    * GET 
+    * @return Response
+    */
+    public function lastApp() {
+        
+    }
+
 }

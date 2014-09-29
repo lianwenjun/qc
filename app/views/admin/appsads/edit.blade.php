@@ -1,13 +1,16 @@
 @extends('admin.layout')
 
-@section('content') 
+@section('content')
+<link href="{{ asset('css/admin/timepicker/jquery-ui-1.11.0.custom.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/admin/timepicker/jquery-ui-timepicker-addon.css') }}" rel="stylesheet" type="text/css" />
 <div class="Content_right_top Content_height">
     <div class="Theme_title"><h1>广告位管理 <span>首页游戏位管理</span><b>添加游戏</b></h1></div>                 
     <div class="Search_title">游戏信息</div>
         <div class="Search_biao">
+            <form action="{{ Request::url() }}" method="post">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 
-                <form action="{{ URL::route('appsads.edit') }}" method="post">
+                
                     <!--数据选择区开始-->
                     <tr class="Search_biao_two">
                         <td  class="Search_lei">游戏ID：</td>
@@ -78,15 +81,32 @@
 
                     <tr class="Search_biao_one">
                         <td  class="Search_lei">上线时间：</td>
-                        <td><h6>从 </h6> <h6><img src="images/darte.jpg" width="156" height="22" /></h6> <h6> 到 </h6> <h6><img src="images/darte.jpg" width="156" height="22" /></h6></td>
+                        <td>
+                            <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="jq-ui-timepicker" value=""></h6>
+                             <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="jq-ui-timepicker" value=""></h6></td>
                     </tr>
 
                     <tr class="Search_biao_two">
-                        <td colspan="2" align="center"  class="Search_submit"><input name="" type="submit" value="提 交" /> <a href="img_Promotion.html" target=BoardRight>返回列表</a></td>
+                        <td colspan="2" align="center"  class="Search_submit"><input type="submit" value="提 交" /> <a href="{{ URL::route('appsads.index') }}" target=BoardRight>返回列表</a></td>
                     </tr>
-                </form>
+                
                 </table>
+                </form>
         </div>                 
     </div>
 </div>
+<script type="text/javascript" src="{{ asset('js/jquery-ui-1.8.23.custom.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-addon.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-zh-CN.js') }}"></script>
+<script type="text/javascript">
+$(function(){
+    $(".jq-ui-timepicker").datetimepicker({
+            showSecond: true,
+            timeFormat: 'hh:mm:ss',
+            stepHour: 1,
+            stepMinute: 1,
+            stepSecond: 1
+        })
+});
+</script>
 @stop

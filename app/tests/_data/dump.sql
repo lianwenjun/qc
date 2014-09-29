@@ -43,3 +43,78 @@ VALUES
     (3,'/icons/f/e/febeb565db27cf439b414798fdc7a5a6.png','填充游戏A君','',350,'1.50','','','','','',0,'','/apks/a/9/a94fb9264643673fa6b54fb996cc0d70.apk',0,'','','new','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-23 09:24:46','2014-09-24 02:35:37'),
     (4,'/icons/f/e/febeb565db27cf439b414798fdc7a5a6.png','可怜软件A君','',350,'1.50','','','','','',0,'','/apks/a/9/a94fb9264643673fa6b54fb996cc0d70.apk',0,'','','new','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-23 09:24:46','2014-09-24 02:35:37'),
     (444,'/icons/f/e/febeb565db27cf439b414798fdc7a5a6.png','删除游戏A君','',350,'1.50','','','','','',0,'','/apks/a/9/a94fb9264643673fa6b54fb996cc0d70.apk',0,'','','new','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-23 09:24:46','2014-09-24 02:35:37');
+
+
+CREATE TABLE `ads` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `app_id` int(11) NOT NULL,
+  `title` varchar(127) COLLATE utf8_unicode_ci NOT NULL COMMENT '游戏名',
+  `location` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '广告区域',
+  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '图片路径',
+  `word` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '广告词',
+  `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `type` enum('index','app','editor','rank') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'app' COMMENT '广告位分类',
+  `is_onshelf` enum('yes','no','1') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no' COMMENT '是否上架',
+  `is_top` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no' COMMENT '是否置顶',
+  `onshelfed_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上架时间',
+  `offshelfed_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '下架时间',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `ads` (`id`, `app_id`, `title`, `location`, `image`, `word`, `sort`, `type`, `is_onshelf`, `is_top`, `onshelfed_at`, `offshelfed_at`, `deleted_at`, `created_at`, `updated_at`)
+VALUES
+  (1, 1, '植物大战僵尸', 'hotdown', '', '', 0, 'app', 'yes', 'no', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, '0000-00-00 00:00:00', '2014-09-26 09:06:32'),
+  (2, 0, '', '', '', '', 0, 'app', 'no', 'no', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, '0000-00-00 00:00:00', '2014-09-26 09:20:23'),
+  (3, 1, '植物大战僵尸', 'hotdown', '', '', 1, 'app', 'yes', 'no', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, '0000-00-00 00:00:00', '2014-09-26 09:05:42'),
+  (4, 1, '植物大战僵尸', 'hotdown', '', '', 0, 'app', 'no', 'no', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, '0000-00-00 00:00:00', '2014-09-26 09:05:44'),
+  (5, 1, '植物大战僵尸', '', '', '', 0, 'app', 'no', 'no', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2014-09-28 02:09:04', '0000-00-00 00:00:00', '2014-09-28 02:09:04'),
+  (6, 1, '植物大战僵尸', 'hotdown', '', '', 100, 'app', 'no', 'yes', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2014-09-28 02:09:01', '0000-00-00 00:00:00', '2014-09-28 02:09:01');
+
+
+CREATE TABLE `cates` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父类分类ID',
+  `search_total` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '自然搜索量',
+  `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '分类排序',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+INSERT INTO `cates` (`id`, `title`, `parent_id`, `search_total`, `sort`, `deleted_at`, `created_at`, `updated_at`)
+VALUES
+  (24, '单机游戏', 0, 0, 0, NULL, '2014-09-26 02:42:10', '2014-09-26 02:42:10'),
+  (25, '横版游戏', 0, 0, 0, NULL, '2014-09-26 02:42:24', '2014-09-26 02:42:24'),
+  (26, '飞升游戏', 0, 0, 0, NULL, '2014-09-26 02:42:34', '2014-09-26 02:42:34'),
+  (27, '来点东西', 0, 0, 0, NULL, '2014-09-26 05:35:36', '2014-09-26 05:35:36');
+
+
+CREATE TABLE `cate_ads` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cate_id` int(10) unsigned NOT NULL COMMENT '分类ID',
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '分类名',
+  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '分类图片',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+INSERT INTO `cate_ads` (`id`, `cate_id`, `title`, `image`, `deleted_at`, `created_at`, `updated_at`)
+VALUES
+  (2, 24, '单机游戏', '', NULL, '2014-09-26 02:42:10', '2014-09-26 02:42:10'),
+  (3, 25, '横版游戏', '', NULL, '2014-09-26 02:42:24', '2014-09-26 02:42:24'),
+  (4, 26, '飞升游戏', '', NULL, '2014-09-26 02:42:34', '2014-09-26 02:42:34'),
+  (5, 27, '来点东西', '', NULL, '2014-09-26 05:35:36', '2014-09-26 05:35:36');
+
+
+
+
+
