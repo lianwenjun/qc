@@ -88,7 +88,8 @@ class Admin_KeywordsController extends \BaseController {
     public function destroy($id)
     {
         //检测是否存在该数据
-        $keyword = Keywords::where('id', $id)->first();
+        $keywordModel = new Keywords();
+        $keyword = $keywordModel->find($id);
         if(!$keyword){
             return Redirect::action('Admin_KeywordsController@index')->with('msg', '#'. $id .'不存在');   
         }
