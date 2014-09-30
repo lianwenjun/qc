@@ -250,7 +250,6 @@ ul.ui-sortable li.placeholder:before {
                 }
             }
         });
-
     }
 
     $(function(){
