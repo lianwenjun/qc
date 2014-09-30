@@ -46,16 +46,32 @@
                 <td width="7%">是否置顶</td>
                 <td width="15%">操作</td>
             </tr>
-            @foreach($ads as $ad)
-                <tr class="jq-tr">
+            @forelse($ads as $ad)
+                
+                @if (($ad->is_onshelf == 'yes') && (strtotime($ad->offshelfed_at) < time()))
+                    <tr class="jq-tr centent_Expired">
+                @else
+                    <tr class="jq-tr ">
+                @endif
                     <td>{{ $ad->id }}</td>
-                    <td><img src="images/u1188.png" width="28" height="28" /></td>
+                    <td><img src="{{ $ad->image }}" width="28" height="28" /></td>
                     <td>{{ $ad->title }}</td>
                     <td>{{ isset($location[$ad->location]) ? $location[$ad->location] : '' }}</td>
                     <td>{{ $ad->sort }}</td>
                     <td>{{ $ad->onshelfed_at }}</td>
                     <td>{{ $ad->offshelfed_at }}</td>
-                    <td>{{ Config::get('status.ads.is_onshelf')[$ad->is_onshelf] }}</td>
+                    <!--应该整理这块-->
+                    @if ($ad->is_onshelf == 'yes')
+                        @if (strtotime($ad->offshelfed_at) < time())
+                            <td>已过期</td>
+                        @elseif (strtotime($ad->onshelfed_at) > time())
+                            <td>线上展示</td>
+                        @else
+                            <td>{{ Config::get('status.ads.is_onshelf')[$ad->is_onshelf] }}</td>
+                        @endif
+                    @else
+                        <td>{{ Config::get('status.ads.is_onshelf')[$ad->is_onshelf] }}</td>
+                    @endif
                     <td>{{ Config::get('status.ads.is_top')[$ad->is_top] }}</td>
                     <td>
                         @if($ad->is_onshelf == 'yes')
@@ -65,7 +81,11 @@
                         <a href="{{ URL::route('appsads.delete', $ad->id) }}" class="Search_del">删除</a>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr class="jq-tr">
+                    <td>没数据</td>
+                <tr>
+            @endforelse
         </table>
         <div id="pager">{{ $ads->links() }}</div>
     </div>            
