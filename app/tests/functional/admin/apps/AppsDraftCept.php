@@ -64,6 +64,6 @@ $I->amOnPage('/admin/apps/draft?page=2');
 $I->see('分页游戏A君');
 
 // 带搜索分页
-$I->amOnPage('/admin/apps/draft?page=2&title=游戏');
+$I->amOnPage('/admin/apps/draft?cate_id=&title=游戏&start-created_at=&end-created_at=&page=2');
 $I->see('分页游戏B君');
 $I->dontSee('分页游戏A君');

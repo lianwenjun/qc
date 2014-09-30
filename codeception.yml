@@ -12,7 +12,7 @@ settings:
 modules:
     config:
         Db:
-            dsn: 'mysql:host=127.0.0.1;dbname=qc_test'
+            dsn: 'mysql:host=127.0.0.1;dbname=qc_test;charset=UTF8'
             user: 'root'
             password: 'a'
             dump: app/tests/_data/dump.sql
