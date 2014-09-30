@@ -28,38 +28,69 @@ class Apps extends \Eloquent {
         ],
     ];
 
+    // 可以搜索字段
+    public $searchEnable = [
+        'title',
+        'start-created_at',
+        'end-created_at',
+        'cate_id',
+    ];
+
+
+
     /**
      * 游戏列表
      *
      * @param $status array 状态
+     * @param $data   array 条件数据
      *
      * @return obj 游戏列表对象
      */
-    public function lists($status)
+    public function lists($status, $data)
     {
         $query = Apps::whereIn('status', $status);
 
-        return $query->get();
-        // $this->queryParse($query);
+        return $this->queryParse($query, $data);
     }
 
     /**
      * 解析条件
      *
+     * @param $query obj   query
+     * @param $data  array 条件数据
+     *
+     * @return obj query
      */
-    public function queryParse($query)
+    public function queryParse($query, $data)
     {
 
-        $title = Input::get('title');
-        if(! empty($title) ) {
-            $query->where('title', 'like', '%' . $title . '%');;
+        foreach($data as $key => $value) {
+
+            if(! in_array($key, $this->searchEnable)) break;
+
+            if($key == 'title' && !empty($value)) {
+                $query->where('title', 'like', '%' . $value . '%');
+            }
+
+            if($key == 'cate_id' && !empty($value)) {
+                $query->whereRaw("`id` in (select `app_id` from `app_cates` where `cate_id` = '{$value}')");
+            }
+
+            if(strpos($key, 'start') === 0 && !empty($value)) {
+                $field = str_replace('start-', '', $key);
+                $query->where($field, '>=', $value);
+            }
+
+            if(strpos($key, 'end') === 0 && !empty($value)) {
+                $field = str_replace('end-', '', $key);
+                $query->where($field, '<=', date('Y-m-d', strtotime($value) + 24 * 3600));
+            }
+
         }
 
-        $startime = Input::get('start');
+        $query->orderBy('sort', 'desc');
 
-        // TODO:
-
-
+        return $query;
     }
 
     /**

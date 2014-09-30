@@ -34,16 +34,11 @@ Route::group(['prefix' => 'admin'], function()
         Route::get('nopass',   ['as' => 'apps.nopass',   'uses' => 'Admin_AppsController@nopass']);
         Route::get('offshelf', ['as' => 'apps.offshelf', 'uses' => 'Admin_AppsController@offshelf']);
 
-        // 操作
+        // 编辑
         Route::get('{id}/edit',          ['as' => 'apps.edit',      'uses' => 'Admin_AppsController@edit']);
         Route::put('{id}/edit/{status}', ['as' => 'apps.edit',      'uses' => 'Admin_AppsController@update'])
              ->where('id', '[0-9]+')->where('status', '[A-Za-z]+');
         Route::delete('{id}/delete', ['as' => 'apps.delete',    'uses' => 'Admin_AppsController@destroy']);
-        Route::get('{id}/onshelf',   ['as' => 'apps.nonshelf',   'uses' => 'Admin_AppsController@showProfile']);
-        Route::get('{id}/reonshelf', ['as' => 'apps.reonshelf', 'uses' => 'Admin_AppsController@showProfile']);
-        Route::get('{id}/offshelf',  ['as' => 'apps.offshelf',  'uses' => 'Admin_AppsController@showProfile']);
-        Route::get('{id}/pending',   ['as' => 'apps.pending',   'uses' => 'Admin_AppsController@showProfile']);
-        Route::post('{id}/nopass',   ['as' => 'apps.nopass',    'uses' => 'Admin_AppsController@showProfile']);
 
         // 历史
 
