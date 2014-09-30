@@ -82,7 +82,7 @@ ul.ui-sortable li.placeholder:before {
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">大小：</td>
-               <td class="upload-size-html">{{ friendlyFilesize($app->size) }}</td>
+               <td class="upload-size-html">{{ $app->size }}</td>
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">版本号：</td>
