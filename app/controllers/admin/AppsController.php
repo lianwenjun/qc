@@ -25,9 +25,14 @@ class Admin_AppsController extends \Admin_BaseController {
     {
         
         $appsModel = new Apps();
-        $apps = $appsModel -> lists(['new', 'draft']);
+        $apps = $appsModel -> lists(['new', 'draft'], Input::all())->paginate(20);
 
-        return View::make('admin.apps.draft')->with('apps', $apps);
+        $catesModel = new Cates;
+        $cates = $catesModel->allCates();
+
+        return View::make('admin.apps.draft')
+                   ->with('apps', $apps)
+                   ->with('cates', $cates);
     }
 
     /**
