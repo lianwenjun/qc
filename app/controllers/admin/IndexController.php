@@ -42,12 +42,31 @@ class Admin_IndexController extends \Admin_BaseController {
     */
     public function searchApps() {
         $appsModel = new Apps();
-        $query = '%' . Input::get('word') . '%';
+        $query = '%' . Input::get('query') . '%';
         $apps = $appsModel->select('id', 'title')->where('status', 'onshelf')->where('title', 'like', $query)
-                    ->orderBy('id', 'desc')->get()->toarray();
-        return ['data' => $apps];
+                    ->orderBy('id', 'desc')->get();
+        $data = [];
+        foreach ($apps as $app) {
+            $data[] = ['data' => URL::route('appsinfo', $app->id), 
+                        'value' => $app->title];
+        }
+        return Response::json(["query" => "Unit", "suggestions" => $data]);
     }
 
+    /**
+    * 后台APP单个
+    * GET 
+    * @return Response
+    */
+    public function appsinfo($id) {
+        $appsModel = new Apps();
+        $app = $appsModel->select('id', 'title', 'icon', 'pack', 'size', 'version', 'created_at')
+                    ->where('status', 'onshelf')->where('id', $id)->first();
+        if (!empty($app)) {
+            return Response::json(['data' => $app, 'status'=>'ok']);
+        }
+        return Response::json(['status' => 'error']);
+    }
     /**
     * 后台搜索最近添加
     * GET 

@@ -121,6 +121,7 @@ Route::group(['prefix' => 'admin'], function()
         Route::get('{id}/notop', ['as' => 'appsads.notop', 'uses' => 'Admin_AppsAdsController@notop']);
         Route::get('{id}/onshelf', ['as' => 'appsads.onshelf', 'uses' => 'Admin_AppsAdsController@onshelf']);
         Route::get('{id}/offshelf', ['as' => 'appsads.offshelf', 'uses' => 'Admin_AppsAdsController@offshelf']);
+        Route::post('imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_AppsAdsController@upload']);
     });
     Route::group(['prefix' => 'rankads'], function() //游戏位推广
     {
@@ -160,8 +161,8 @@ Route::group(['prefix' => 'admin'], function()
     });
 
 
-    Route::get('searchapps', ['uses' => 'Admin_IndexController@searchApps']);//智能匹配列表
-    Route::get('lastapps', ['uses' => 'UserController@showProfile']);//近期添加列表
+    Route::get('searchapps', ['as' => 'searchapps', 'uses' => 'Admin_IndexController@searchApps']);//智能匹配列表
+    Route::get('appsinfo/{id}', ['as' => 'appsinfo', 'uses' => 'Admin_IndexController@appsinfo']);//近期添加列表
 });
 
 // 404 跳转
