@@ -1,29 +1,37 @@
 @extends('admin.layout')
 
 @section('content')
-    <link href="{{ asset('css/admin/plupload/jquery.plupload.queue.css') }}" rel="stylesheet" type="text/css" />
-    <script src="{{ asset('js/admin/plupload/plupload.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/admin/plupload/jquery.plupload.queue.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/admin/plupload/i18n/zh_CN.js') }}" type="text/javascript"></script>
+<link href="{{ asset('css/admin/plupload/jquery.plupload.queue.css') }}" rel="stylesheet" type="text/css" />
+<script src="{{ asset('js/admin/plupload/plupload.full.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/admin/plupload/jquery.plupload.queue.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/admin/plupload/i18n/zh_CN.js') }}" type="text/javascript"></script>
 
-    <div class="Content_right_top Content_height">
-        <div class="Theme_title">
-            {{ Breadcrumbs::render('apps.draft') }}
-            <a href="javascript:;" class="jq-appUpload" target="BoardRight">游戏上传</a>
-        </div>
+<link href="{{ asset('css/admin/timepicker/jquery-ui-1.11.0.custom.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/admin/timepicker/jquery-ui-timepicker-addon.css') }}" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{{ asset('js/jquery-ui-1.8.23.custom.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-addon.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-zh-CN.js') }}"></script>
+
+<div class="Content_right_top Content_height">
+    <div class="Theme_title">
+        {{ Breadcrumbs::render('apps.draft') }}
+        <a href="javascript:;" class="jq-appUpload" target="BoardRight">游戏上传</a>
+    </div>
     <form action="{{ URL::route('apps.draft') }}" method="get">
         <div class="Theme_Search">
             <ul>
                 <li>
                     <span><b>查询：</b>
-                    <select name="">
-                        <option>--全部--</option>
-                        <option>1</option>
+                    <select name="cate_id">
+                        <option value="">--全部--</option>
+                        @foreach($cates as $cate)
+                        <option value="{{ $cate->id }}" @if(Input::get('cate_id') == $cate->id)selected="selected"@endif>{{ $cate->title }}</option>
+                        @endforeach
                     </select>
                     </span>
-                    <span><input name="" type="text" class="Search_wenben" size="20" value="请输入关键词" /></span>
-                    <span>　<b>日期：</b><img src="images/darte.jpg" width="156" height="22" /><b>-</b><img src="images/darte.jpg" width="156" height="22" /></span>
-                    <input name="" type="submit" value="搜索" class="Search_en" />
+                    <span><input name="title" type="text" class="Search_wenben" size="20" placeholder="请输入关键词" value="{{ Input::get('title') }}"/></span>
+                    <span>　<b>日期：</b><input name="start-created_at" type="text" class="Search_wenben" value="{{ Input::get('start-created_at') }}"/><b>-</b><input name="end-created_at" type="text" class="Search_wenben" value="{{ Input::get('end-created_at') }}"/></span>
+                    <input type="submit" value="搜索" class="Search_en" />
                 </li>
             </ul>
         </div>
@@ -66,12 +74,14 @@
                 <tr class="no-data"><td colspan="9">没有数据</td></tr>
             @endif
         </table>
-        <div id="pager"></div>
+        <div id="pager">{{ $apps->appends(Input::all())->links() }}</div>
     </div>
 </div>
 
 <script type="text/javascript">
     $(document).ready(function(){
+
+        $('input[name="start-created_at"], input[name="end-created_at"]').datepicker({dateFormat: 'yy-mm-dd'});
 
         $('.jq-delete').click(function() {
 

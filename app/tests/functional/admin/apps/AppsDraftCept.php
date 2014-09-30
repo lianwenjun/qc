@@ -4,10 +4,10 @@
 
 上传游戏君: 刚上传并成功读取了APK数据的游戏
 
-    上传游戏A君:  分类 休闲益智 上传时间 2014-09-03
-    上传游戏B君:  分类 角色扮演 上传时间 2014-09-01
+    上传游戏A君:  分类 休闲益智 上传时间 2014-09-03 10:00:00
+    上传游戏B君:  分类 角色扮演 上传时间 2014-09-01 10:00:00
 
-可怜软件君: 非游戏，异类
+可怜软件君: 非游戏，异类 上传时间 2014-09-02 10:00:00
 
 标签君: 游戏君的小荣誉标签
 
@@ -28,39 +28,29 @@ $I->see('上传游戏A君');
 -------------------------------------------------------- */
 
 // 模糊搜索
-$I->fillField(['name' => 'keyword'], '游戏');
-$I->click('查询');
+$I->amOnPage('/admin/apps/draft?cate_id=&title=游戏&start-created_at=&end-created_at=');
 $I->see('上传游戏A君');
 $I->see('上传游戏B君');
 $I->dontSee('可怜软件A君');
 
 
 // 精准搜索
-$I->fillField(['name' => 'keyword'], '上传游戏A君');
-$I->click('查询');
+$I->amOnPage('/admin/apps/draft?cate_id=&title=上传游戏A君&start-created_at=&end-created_at=');
 $I->see('上传游戏A君');
 $I->dontSee('上传游戏B君');
 
 // 分类搜索
-$I->selectOption('form select[name=cate]', '角色扮演');
-$I->click('查询');
+$I->amOnPage('/admin/apps/draft?cate_id=2&title=&start-created_at=&end-created_at=');
 $I->see('上传游戏B君');
 $I->dontSee('上传游戏A君');
 
 // 时间搜索
-$I->selectOption('form select[name=cate]', '全部');
-$I->fillField(['name' => 'stime'], '2014-09-01');
-$I->fillField(['name' => 'etime'], '2014-09-02');
-$I->click('查询');
-$I->see('上传游戏A君');
-$I->dontSee('上传游戏B君');
+$I->amOnPage('/admin/apps/draft?cate_id=&title=&start-created_at=2014-09-01&end-created_at=2014-09-02');
+$I->see('上传游戏B君');
+$I->dontSee('上传游戏A君');
 
 // 联合搜索
-$I->selectOption('form select[name=cate]', '休闲益智');
-$I->fillField(['name' => 'keyword'], '游戏');
-$I->fillField(['name' => 'stime'], '2014-09-02');
-$I->fillField(['name' => 'etime'], '2014-09-03');
-$I->click('查询');
+$I->amOnPage('/admin/apps/draft?cate_id=1&title=游戏&start-created_at=2014-09-02&end-created_at=2014-09-03');
 $I->see('上传游戏A君');
 $I->dontSee('上传游戏B君');
 $I->dontSee('可怜软件A君');
@@ -70,14 +60,10 @@ $I->dontSee('可怜软件A君');
 -------------------------------------------------------- */
 
 // 分页
-$I->amOnAction('Admin_AppsController@draft');
-$I->click('2'); // 待修改
+$I->amOnPage('/admin/apps/draft?page=2');
 $I->see('分页游戏A君');
 
 // 带搜索分页
-$I->amOnAction('Admin_AppsController@draft');
-$I->fillField(['name' => 'keyword'], '游戏');
-$I->click('查询');
-$I->click('2'); // 待修改
+$I->amOnPage('/admin/apps/draft?page=2&title=游戏');
 $I->see('分页游戏B君');
 $I->dontSee('分页游戏A君');
