@@ -28,7 +28,8 @@ class Admin_AppsAdsController extends \BaseController {
                     'expired' => '已过期',
                     'offshelf' => '已下架'];
         $datas = ['ads' => $ads, 'status' => $statusArray, 
-                'location' => Config::get('status.ads.applocation')];
+                'location' => Config::get('status.ads.applocation'),
+                'is_top' => Config::get('status.ads.is_top')];
         $this->layout->content = View::make('admin.appsads.index', $datas);
     }
 
@@ -142,8 +143,8 @@ class Admin_AppsAdsController extends \BaseController {
         $ads->is_top = Input::get('is_top', 'no');
         $ads->onshelfed_at = Input::get('onshelfed_at', $ads->onshelfed_at);
         $ads->offshelfed_at = Input::get('offshelfed_at', $ads->offshelfed_at);
-        if ($ads->save()){
-            $msg = "添加成功";
+        if ($ads->save()) {
+            $msg = "修改成功";
             return Redirect::route('appsads.index')->with('msg', $msg);
         }
         $msg = "没什么改变";
@@ -162,15 +163,11 @@ class Admin_AppsAdsController extends \BaseController {
         $adsModel = new Ads();
         $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
         if (!$ad) {
-            $msg = '亲，你要下架的' . $id . '数据不存在';
-            return Redirect::back();
+            $msg = '亲，#'.$id.'下架失败了';
+            return Redirect::back()->with('msg', $msg);
         }
-        $msg = '亲，下架失败了';
-        $ad->is_onshelf = 'no';
-        if (!$ad->save()){
-            $msg = '亲，#' . $id . '下架成功了';
-        }
-        return Redirect::back();
+        $msg = '亲，#'.$id.'下架失败了';
+        return Redirect::back()->with('msg', $msg);
     }
 
     /**
