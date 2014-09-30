@@ -36,7 +36,7 @@
             </ul>
         </div>
     </form>
-    <div class="Search_cunt">待编辑游戏：共 <strong>{{ $apps->count() }}</strong> 条记录 </div>
+    <div class="Search_cunt">待编辑游戏：共 <strong>{{ $apps->getTotal() }}</strong> 条记录 </div>
     <!-- 提示 -->
     @if(Session::has('tips'))
     <div class="tips">
@@ -74,7 +74,7 @@
                 <tr class="no-data"><td colspan="9">没有数据</td></tr>
             @endif
         </table>
-        <div id="pager">{{ $apps->appends(Input::all())->links() }}</div>
+        <div id="pager">{{ $apps->appends(Input::all())->links() }} 共: {{ $apps->getLastPage() }} 页 当前<input name="page" value="{{ $apps->getCurrentPage() }}" /><span class="jq-jump">GO</span></div>
     </div>
 </div>
 
@@ -82,6 +82,21 @@
     $(document).ready(function(){
 
         $('input[name="start-created_at"], input[name="end-created_at"]').datepicker({dateFormat: 'yy-mm-dd'});
+
+        // 跳转页码
+        $('.jq-jump').click(function() {
+            var url = $(location).attr('href');;
+            var pageNum = $('input[name="page"]').val();
+
+            var sp = '?';
+            if(/\?/.test(url)) {
+                sp = '&';
+            }
+
+            var jumpUrl = url.replace(/&page=\d+/, "") + sp +'page=' + pageNum;
+
+            location.href = jumpUrl;
+        });
 
         $('.jq-delete').click(function() {
 
