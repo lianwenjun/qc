@@ -9,8 +9,6 @@
         <div class="Search_biao">
             <form action="{{ Request::url() }}" method="post">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                
-                
                     <!--数据选择区开始-->
                     <tr class="Search_biao_two">
                         <td  class="Search_lei">游戏ID：</td>
@@ -82,7 +80,8 @@
                         <td  class="Search_lei">上线时间：</td>
                         <td>
                             <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="jq-ui-timepicker" value="{{ $ad->onshelfed_at }}"></h6>
-                             <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="jq-ui-timepicker" value="{{ $ad->offshelfed_at }}"></h6></td>
+                             <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="jq-ui-timepicker" value="{{ $ad->offshelfed_at }}"></h6>
+                         </td>
                     </tr>
 
                     <tr class="Search_biao_two">

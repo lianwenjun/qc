@@ -1,15 +1,15 @@
 <?php
 
-class Admin_AppsAdsController extends \BaseController {
+class Admin_indexAdsController extends \BaseController {
 
     protected $user_id = 1;
     protected $layout = 'admin.layout';
     protected $pagesize = 5;
-    protected $type = 'app';
+    protected $type = 'index';
     /**
-     * 首页游戏位广告列表
-     * 
-     * @method GET
+     * 显示首页图片位管理
+     * GET /admin/ads
+     *
      * @return Response
      */
     public function index()
@@ -29,42 +29,42 @@ class Admin_AppsAdsController extends \BaseController {
                     'offshelf' => '已下架'];
         $datas = ['ads' => $ads, 'status' => $statusArray, 
                 'location' => Config::get('status.ads.applocation'),
-                'is_top' => Config::get('status.ads.is_top')];
-        $this->layout->content = View::make('admin.appsads.index', $datas);
+                'is_top' => Config::get('status.ads.is_top') ];
+        $this->layout->content = View::make('admin.indexads.index', $datas);
     }
 
     /**
-     * 首页游戏位广告添加页面
-     * GET /admin/appads/create
+     * 打开添加首页图片位管理广告
+     * GET /admin/ads/create
      *
      * @return Response
      */
     public function create()
     {
         $datas = ['location' => Config::get('status.ads.applocation')];
-        $this->layout->content = View::make('admin.appsads.create', $datas);
+        $this->layout->content = View::make('admin.indexads.create', $datas);
     }
 
     /**
-     * 增加首页游戏位广告
-     * POST /admin/appads
-     * @param int app_id
-     * @param string title
-     * @param string location
-     * @param string image
-     * @param string is_top
-     * @param string onshelfed_at
-     * @param string offshelfed_at
+     * 保存新添加的首页图片位广告
+     * POST /admin/ads
+     *
      * @return Response
      */
     public function store()
     {
         $adsModel = new Ads();
+        $msg = "添加失败";
         $validator = Validator::make(Input::all(), $adsModel->adsCreateRules);
         if ($validator->fails()){
             Log::error($validator->messages());
-            $msg = "添加失败";
-            return Redirect::route('appsads.create')->with('msg', $msg);
+            return Redirect::route('indexads.create')->with('msg', $msg);
+        }
+        //检测游戏是否存在
+        $appsModel = new Apps;
+        $app = $appsModel->find(Input::get('app_id'));
+        if (!$app) {
+            return Redirect::route('indexads.index');
         }
         $fields = [
             'app_id' => Input::get('app_id'),
@@ -82,14 +82,13 @@ class Admin_AppsAdsController extends \BaseController {
         }
         if ($adsModel->save()) {
             $msg = "添加成功";
-            return Redirect::route('appsads.index')->with('msg', $msg);
+            return Redirect::route('indexads.index')->with('msg', $msg);
         }
-        return Redirect::route('appsads.index')->with('msg', $msg);
+        return Redirect::route('indexads.index')->with('msg', $msg);
     }
-
     /**
-     * 首页游戏广告位编辑页面
-     * GET /admin/appads/{id}/edit
+     * 编辑选定的首页图片位广告
+     * GET /admin/ads/{id}/edit
      *
      * @param  int  $id
      * @return Response
@@ -100,28 +99,25 @@ class Admin_AppsAdsController extends \BaseController {
         $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
         //检测广告是否存在
         if (!$ad) {
-            return Redirect::route('appsads.index');
+            return Redirect::route('indexads.index');
         }
         //检测游戏是否存在
         $appsModel = new Apps;
         $app = $appsModel->find($ad->app_id);
         if (!$app) {
-            return Redirect::route('appsads.index');
+            return Redirect::route('indexads.index');
         }
         $datas = ['ad' => $ad, 
             'location' => Config::get('status.ads.applocation'),
             'app' => $app];
-        $this->layout->content = View::make('admin.appsads.edit', $datas);
+        $this->layout->content = View::make('admin.indexads.edit', $datas);
     }
 
     /**
-     * 修改首页游戏位广告
-     * POST /admin/appads/1
-     * @param string location
-     * @param string image
-     * @param string is_top
-     * @param string onshelfed_at
-     * @param string offshelfed_at
+     * 更新首页图片位广告
+     * PUT /admin/ads/{id}
+     *
+     * @param  int  $id
      * @return Response
      */
     public function update($id)
@@ -143,17 +139,17 @@ class Admin_AppsAdsController extends \BaseController {
         $ads->is_top = Input::get('is_top', 'no');
         $ads->onshelfed_at = Input::get('onshelfed_at', $ads->onshelfed_at);
         $ads->offshelfed_at = Input::get('offshelfed_at', $ads->offshelfed_at);
-        if ($ads->save()) {
+        if ($ads->save()){
             $msg = "修改成功";
-            return Redirect::route('appsads.index')->with('msg', $msg);
+            return Redirect::route('indexads.index')->with('msg', $msg);
         }
         $msg = "没什么改变";
-        return Redirect::route('appsads.index')->with('msg', $msg);
+        return Redirect::route('indexads.index')->with('msg', $msg);
     }
 
     /**
-     * 下架首页游戏位广告
-     * DELETE /admin/appads/{id}
+     * 下架首页图片位广告
+     * DELETE /admin/ads/{id}
      *
      * @param  int  $id
      * @return Response
@@ -161,18 +157,20 @@ class Admin_AppsAdsController extends \BaseController {
     public function offshelf($id)
     {
         $adsModel = new Ads();
-        $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
+        $ad = $adsModel->offshelf($id, $this->type);
         if (!$ad) {
             $msg = '亲，#'.$id.'下架失败了';
-            return Redirect::back()->with('msg', $msg);
+            return Request::header('referrer') ? Redirect::back()
+                ->with('msg', $msg) : Redirect::route('indexads.index')->with('msg', $msg);
         }
-        $msg = '亲，#'.$id.'下架失败了';
-        return Redirect::back()->with('msg', $msg);
+        $msg = '亲，#'.$id.'下架成功';
+        return Request::header('referrer') ? Redirect::back()
+                ->with('msg', $msg) : Redirect::route('indexads.index')->with('msg', $msg);
     }
 
     /**
-     * 删除首页游戏位广告
-     * DELETE /admin/appads/{id}
+     * 删除首页图片位广告
+     * DELETE /admin/ads/{id}
      *
      * @param  int  $id
      * @return Response
@@ -186,16 +184,16 @@ class Admin_AppsAdsController extends \BaseController {
         if (!$ad) {
             $msg = '#' . $id . '不存在';
             return Request::header('referrer') ? Redirect::back()
-                ->with('msg', $msg) : Redirect::route('appsads.index')->with('msg', $msg);
+                ->with('msg', $msg) : Redirect::route('indexads.index')->with('msg', $msg);
         }
         $msg = '#' . $id . '删除失败';
         if ($ad->delete()){
             $msg = '#' . $id . '删除成功';
         }
         return Request::header('referrer') ? Redirect::back()
-            ->with('msg', $msg) : Redirect::route('appsads.index')->with('msg', $msg);
+            ->with('msg', $msg) : Redirect::route('indexads.index')->with('msg', $msg);
     }
-
+    
     /**
     * 上传图片
     */
@@ -203,5 +201,4 @@ class Admin_AppsAdsController extends \BaseController {
         $adsModel = new Ads();
         return $adsModel->imageUpload();
     }
-
 }

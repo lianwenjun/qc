@@ -17,9 +17,21 @@ class Ads extends \Eloquent {
                 'onshelfed_at' => 'required',
                 'offshelfed_at' => 'required'
             ];
-            
+    
+           
     public $adsUpdateRules = [
                 'is_top' => 'in:yes,no',
+            ];
+    public $rankadsCreateRules = [
+                'app_id' => 'required|integer',
+                'title' => 'required',
+                'location' => 'required',
+                'sort' => 'integer',
+                'onshelfed_at' => 'required',
+                'offshelfed_at' => 'required'
+            ];
+    public $rankadsUpateRules = [
+                'sort' => 'integer',
             ];
     //搜索条件过滤
     public function indexQuery($query) {
@@ -47,6 +59,18 @@ class Ads extends \Eloquent {
             }
         }
         return $query;
+    }
+    // 下架
+    public function offshelf($id, $type){
+        $ad = Ads::where('id', $id)->where('type', $type)->first();
+        if (!$ad) {
+            return false;
+        }
+        $ad->is_onshelf = 'no';
+        if (!$ad->save()){
+            return false;
+        }
+        return true;
     }
     //广告图片上传     
     public function imageUpload() {
