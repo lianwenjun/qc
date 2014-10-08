@@ -60,7 +60,7 @@ class Ads extends \Eloquent {
         }
         return $query;
     }
-    // 下架
+    // 下架广告
     public function offshelf($id, $type){
         $ad = Ads::where('id', $id)->where('type', $type)->first();
         if (!$ad) {
@@ -68,6 +68,17 @@ class Ads extends \Eloquent {
         }
         $ad->is_onshelf = 'no';
         if (!$ad->save()){
+            return false;
+        }
+        return true;
+    }
+    // 删除广告
+    public function deleteAds($id, $type, $userId = false){
+        $ad = Ads::where('id', $id)->where('type', $type)->first();
+        if (!$ad) {
+            return false;
+        }
+        if (!$ad->delete()){
             return false;
         }
         return true;

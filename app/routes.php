@@ -88,20 +88,20 @@ Route::group(['prefix' => 'admin'], function()
     });
     Route::group(['prefix' => 'rating'], function() //游戏评分
     {
-        Route::get('index', ['as' => 'rating', 'uses' => 'Admin_RatingsController@index']);
-        Route::post('{id}/edit', ['uses' => 'Admin_RatingsController@update']);
+        Route::get('index', ['as' => 'rating.index', 'uses' => 'Admin_RatingsController@index']);
+        Route::post('{id}/edit', ['as' => 'rating.edit', 'uses' => 'Admin_RatingsController@update']);
     });
     Route::group(['prefix' => 'comment'], function() //游戏评论
     {
         Route::get('index', ['as' => 'comment.index', 'uses' => 'Admin_CommentsController@index']);
-        Route::post('{id}/edit', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/delete}', ['uses' => 'UserController@showProfile']);
+        Route::post('{id}/edit', ['uses' => 'Admin_CommentsController@update']);
+        Route::get('{id}/delete}', ['uses' => 'Admin_CommentsController@delete']);
     });
     Route::group(['prefix' => 'stopword'], function() //游戏屏蔽词
     {
-        Route::get('index', ['uses' => 'Admin_StopwordsController@index']);
-        Route::post('{id}/edit', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/delete', ['uses' => 'UserController@showProfile']);
+        Route::get('index', ['as' => 'stopword.index', 'uses' => 'Admin_StopwordsController@index']);
+        Route::post('{id}/edit', ['as' => 'stopword.edit', 'uses' => 'Admin_StopwordsController@update']);
+        Route::get('{id}/delete', ['as' => 'stopword.delete', 'uses' => 'Admin_StopwordsController@delete']);
     });
     Route::group(['prefix' => 'keyword'], function() //游戏关键词
     {
@@ -143,13 +143,13 @@ Route::group(['prefix' => 'admin'], function()
     });
     Route::group(['prefix' => 'editorads'], function() //编辑推荐
     {
-        Route::get('index', ['uses' => 'UserController@showProfile']);
-        Route::post('create', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/delete}', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/top}', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/notop}', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/onshelf}', ['uses' => 'UserController@showProfile']);
-        Route::get('{id}/offshelf}', ['uses' => 'UserController@showProfile']);
+        Route::get('index', ['as'=>'editorads.index', 'uses' => 'Admin_EditorAdsController@index']);
+        Route::get('create', ['as'=>'editorads.create', 'uses' => 'Admin_EditorAdsController@create']);
+        Route::post('create', ['as'=>'editorads.create', 'uses' => 'Admin_EditorAdsController@store']);
+        Route::get('{id}/edit', ['as'=>'editorads.edit', 'uses' => 'Admin_EditorAdsController@edit']);
+        Route::post('{id}/edit', ['as'=>'editorads.edit', 'uses' => 'Admin_EditorAdsController@update']);
+        Route::get('{id}/delete', ['as'=>'editorads.delete', 'uses' => 'Admin_EditorAdsController@destroy']);
+        Route::get('{id}/offshelf', ['as'=>'editorads.offshelf', 'uses' => 'Admin_EditorAdsController@offshelf']);
     });
     Route::group(['prefix' => 'cateads'], function() //分类推广
     {
