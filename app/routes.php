@@ -92,8 +92,8 @@ Route::group(['prefix' => 'admin'], function()
     Route::group(['prefix' => 'comment'], function() //游戏评论
     {
         Route::get('index', ['as' => 'comment.index', 'uses' => 'Admin_CommentsController@index']);
-        Route::post('{id}/edit', ['uses' => 'Admin_CommentsController@update']);
-        Route::get('{id}/delete}', ['uses' => 'Admin_CommentsController@delete']);
+        Route::post('{id}/edit', ['as' => 'comment.edit', 'uses' => 'Admin_CommentsController@update']);
+        Route::get('{id}/delete', ['as' => 'comment.delete', 'uses' => 'Admin_CommentsController@destroy']);
     });
     Route::group(['prefix' => 'stopword'], function() //游戏屏蔽词
     {
