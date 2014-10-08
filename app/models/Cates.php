@@ -28,7 +28,7 @@ class Cates extends \Eloquent {
      *
      * @param $id int 游戏 ID
      *
-     * @return array [[id=>1, titile=>xxx]]
+     * @return array [[id=>1, title=>xxx]]
      */
     public function appCates($id)
     {
@@ -53,7 +53,7 @@ class Cates extends \Eloquent {
      *
      * @param $id int 游戏 ID
      *
-     * @return array [[id=>1, titile=>xxx]]
+     * @return array [[id=>1, title=>xxx]]
      */
     public function appTags($id)
     {
@@ -97,6 +97,29 @@ class Cates extends \Eloquent {
                     ->where('parent_id', '!=', 0)
                     ->orderBy('sort', 'desc')
                     ->get();
+    }
+
+    /**
+     * 往APP数据里面添加分类数据
+     *
+     * @param $apps array APP查询到的数据
+     *
+     * @return array
+     */
+    public function addCatesInfo($apps)
+    {
+        foreach($apps['data'] as $key => $app) {
+            $cates = $this->appCates($app['id']);
+
+            $cateNames = [];
+            foreach($cates as $cate) {
+                $cateNames[] = $cate['title'];
+            }
+
+            $apps['data'][$key] += [ 'cate_name' => implode(', ', $cateNames)];
+        }
+
+        return $apps;
     }
 
     /**
