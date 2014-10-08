@@ -42,6 +42,8 @@ Route::group(['prefix' => 'admin'], function()
 
         Route::put('{id}/dopass', ['as' => 'apps.dopass',    'uses' => 'Admin_AppsController@dopass']);
         Route::put('{id}/donopass', ['as' => 'apps.donopass',    'uses' => 'Admin_AppsController@donopass']);
+
+        Route::get('{id}/preveiw', ['as' => 'apps.preview',      'uses' => 'Admin_AppsController@preview']);
         // 历史
 
         // 全选
