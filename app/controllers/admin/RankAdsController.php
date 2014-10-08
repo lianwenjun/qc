@@ -1,15 +1,15 @@
 <?php
 
-class Admin_AppsAdsController extends \BaseController {
+class Admin_rankAdsController extends \BaseController {
 
     protected $user_id = 1;
     protected $layout = 'admin.layout';
     protected $pagesize = 5;
-    protected $type = 'app';
+    protected $type = 'rank';
     /**
-     * 首页游戏位广告列表
-     * 
-     * @method GET
+     * Display a listing of the resource.
+     * GET /admin/rankads
+     *
      * @return Response
      */
     public function index()
@@ -28,55 +28,50 @@ class Admin_AppsAdsController extends \BaseController {
                     'expired' => '已过期',
                     'offshelf' => '已下架'];
         $datas = ['ads' => $ads, 'status' => $statusArray, 
-                'location' => Config::get('status.ads.applocation'),
+                'location' => Config::get('status.ads.ranklocation'),
                 'is_top' => Config::get('status.ads.is_top')];
-        $this->layout->content = View::make('admin.appsads.index', $datas);
+        $this->layout->content = View::make('admin.rankads.index', $datas);
     }
 
     /**
-     * 首页游戏位广告添加页面
-     * GET /admin/appads/create
+     * 打开排行游戏广告页面
+     * GET /admin/rankads/create
      *
      * @return Response
      */
     public function create()
     {
-        $datas = ['location' => Config::get('status.ads.applocation')];
-        $this->layout->content = View::make('admin.appsads.create', $datas);
+        $datas = ['location' => Config::get('status.ads.ranklocation')];
+        $this->layout->content = View::make('admin.rankads.create', $datas);
     }
 
     /**
-     * 增加首页游戏位广告
-     * POST /admin/appads
-     * @param int app_id
-     * @param string title
-     * @param string location
-     * @param string image
-     * @param string is_top
-     * @param string onshelfed_at
-     * @param string offshelfed_at
+     * 添加游戏到排行广告
+     * POST /admin/rankads
+     *
      * @return Response
      */
     public function store()
     {
         $adsModel = new Ads();
-        $validator = Validator::make(Input::all(), $adsModel->adsCreateRules);
+        $validator = Validator::make(Input::all(), $adsModel->rankadsCreateRules);
         if ($validator->fails()){
             Log::error($validator->messages());
             $msg = "添加失败";
-            return Redirect::route('appsads.create')->with('msg', $msg);
+            return Redirect::route('rankads.create')->with('msg', $msg);
         }
         $fields = [
             'app_id' => Input::get('app_id'),
             'title' => Input::get('title'),
             'location' => Input::get('location'),
-            'image' => Input::get('image'),
-            'is_top' => Input::get('is_top', 'no'),
+            'sort' => Input::get('sort'),
+            //'is_top' => Input::get('is_top', 'no'),
             'onshelfed_at' => Input::get('onshelfed_at'),
             'offshelfed_at' => Input::get('offshelfed_at'),
             'type' => $this->type,
-            'is_onshelf' => 'yes', 
+            'is_onshelf' => 'yes',
             ];
+        //creater用法出错了？？？
         foreach ($fields as $key => $value) {
             $adsModel->$key = $value;
         }
@@ -84,12 +79,13 @@ class Admin_AppsAdsController extends \BaseController {
             $msg = "添加成功";
             return Redirect::route('appsads.index')->with('msg', $msg);
         }
-        return Redirect::route('appsads.index')->with('msg', $msg);
+        return Redirect::route('rankads.index')->with('msg', $msg);
     }
 
+
     /**
-     * 首页游戏广告位编辑页面
-     * GET /admin/appads/{id}/edit
+     * 打开排行游戏编辑页面
+     * GET /admin/rankads/{id}/edit
      *
      * @param  int  $id
      * @return Response
@@ -100,28 +96,25 @@ class Admin_AppsAdsController extends \BaseController {
         $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
         //检测广告是否存在
         if (!$ad) {
-            return Redirect::route('appsads.index');
+            return Redirect::route('rankads.index');
         }
         //检测游戏是否存在
         $appsModel = new Apps;
         $app = $appsModel->find($ad->app_id);
         if (!$app) {
-            return Redirect::route('appsads.index');
+            return Redirect::route('rankads.index');
         }
         $datas = ['ad' => $ad, 
-            'location' => Config::get('status.ads.applocation'),
+            'location' => Config::get('status.ads.ranklocation'),
             'app' => $app];
-        $this->layout->content = View::make('admin.appsads.edit', $datas);
+        $this->layout->content = View::make('admin.rankads.edit', $datas);
     }
 
     /**
-     * 修改首页游戏位广告
-     * POST /admin/appads/1
-     * @param string location
-     * @param string image
-     * @param string is_top
-     * @param string onshelfed_at
-     * @param string offshelfed_at
+     * 编辑修改排行游戏广告位
+     * PUT /admin/rankads/{id}
+     *
+     * @param  int  $id
      * @return Response
      */
     public function update($id)
@@ -132,27 +125,27 @@ class Admin_AppsAdsController extends \BaseController {
             $msg = '亲，数据不存在';
             return Redirect::back()->with('msg', $msg);
         }
-        $validator = Validator::make(Input::all(), $adsModel->adsUpdateRules);
+        $validator = Validator::make(Input::all(), $adsModel->rankadsUpateRules);
         if ($validator->fails()){
             Log::error($validator->messages());
             $msg = "添加失败";
             return Redirect::back()->with('msg', $msg);
         }
         $ads->location = Input::get('location', $ads->location);
-        $ads->image = Input::get('image', $ads->image);
         $ads->is_top = Input::get('is_top', 'no');
+        $ads->sort = Input::get('sort', $ads->sort);
         $ads->onshelfed_at = Input::get('onshelfed_at', $ads->onshelfed_at);
         $ads->offshelfed_at = Input::get('offshelfed_at', $ads->offshelfed_at);
-        if ($ads->save()) {
-            $msg = "修改成功";
-            return Redirect::route('appsads.index')->with('msg', $msg);
+        if ($ads->save()){
+            $msg = "添加成功";
+            return Redirect::route('rankads.index')->with('msg', $msg);
         }
         $msg = "没什么改变";
-        return Redirect::route('appsads.index')->with('msg', $msg);
+        return Redirect::route('rankads.index')->with('msg', $msg);
     }
 
     /**
-     * 下架首页游戏位广告
+     * 下架排行游戏位广告
      * DELETE /admin/appads/{id}
      *
      * @param  int  $id
@@ -163,16 +156,20 @@ class Admin_AppsAdsController extends \BaseController {
         $adsModel = new Ads();
         $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
         if (!$ad) {
-            $msg = '亲，#'.$id.'下架失败了';
-            return Redirect::back()->with('msg', $msg);
+            $msg = '亲，你要下架的' . $id . '数据不存在';
+            return Redirect::back();
         }
-        $msg = '亲，#'.$id.'下架失败了';
-        return Redirect::back()->with('msg', $msg);
+        $msg = '亲，下架失败了';
+        $ad->is_onshelf = 'no';
+        if (!$ad->save()){
+            $msg = '亲，#' . $id . '下架成功了';
+        }
+        return Redirect::back();
     }
-
+    
     /**
-     * 删除首页游戏位广告
-     * DELETE /admin/appads/{id}
+     * 删除排行游戏广告
+     * DELETE /admin/rankads/{id}
      *
      * @param  int  $id
      * @return Response
@@ -186,22 +183,14 @@ class Admin_AppsAdsController extends \BaseController {
         if (!$ad) {
             $msg = '#' . $id . '不存在';
             return Request::header('referrer') ? Redirect::back()
-                ->with('msg', $msg) : Redirect::route('appsads.index')->with('msg', $msg);
+                ->with('msg', $msg) : Redirect::route('rankads.index')->with('msg', $msg);
         }
         $msg = '#' . $id . '删除失败';
         if ($ad->delete()){
             $msg = '#' . $id . '删除成功';
         }
         return Request::header('referrer') ? Redirect::back()
-            ->with('msg', $msg) : Redirect::route('appsads.index')->with('msg', $msg);
-    }
-
-    /**
-    * 上传图片
-    */
-    public function upload(){
-        $adsModel = new Ads();
-        return $adsModel->imageUpload();
+            ->with('msg', $msg) : Redirect::route('rankads.index')->with('msg', $msg);
     }
 
 }
