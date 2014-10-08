@@ -227,8 +227,34 @@ VALUES
   (4, 26, '飞升游戏', '', NULL, '2014-09-26 02:42:34', '2014-09-26 02:42:34'),
   (5, 27, '来点东西', '', NULL, '2014-09-26 05:35:36', '2014-09-26 05:35:36');
 
+/*----------------------------------------------------------
+| 测试 stopword 数据库
+----------------------------------------------------------*/
+
+CREATE TABLE `stopwords` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `word` varchar(16) COLLATE utf8_unicode_ci NOT NULL COMMENT '替换词',
+  `to_word` varchar(16) COLLATE utf8_unicode_ci NOT NULL DEFAULT '**' COMMENT '目标词',
+  `creator` int(10) unsigned NOT NULL COMMENT '添加人',
+  `operator` int(10) unsigned NOT NULL COMMENT '最后修改者',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `stopwords` (`id`, `word`, `to_word`, `creator`, `operator`, `deleted_at`, `created_at`, `updated_at`)
+VALUES
+  (1, '暴力', '**', 1, 1, NULL, '0000-00-00 00:00:00', '2014-10-08 16:12:42'),
+  (2, '植物', '**', 1, 1, NULL, '2014-10-08 16:09:02', '2014-10-08 16:12:40'),
+  (3, 'TG', '**', 1, 1, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+  (4, '来点新东西', '**', 1, 1, NULL, '2014-10-08 16:13:26', '2014-10-08 16:13:26'),
+  (5, '国军', '**', 1, 1, NULL, '2014-10-08 16:23:37', '2014-10-08 16:23:37'),
+  (6, '蛤蛤', '**', 1, 1, NULL, '2014-10-08 16:24:03', '2014-10-08 16:24:03'),
+  (7, '汽狗', '**', 1, 1, NULL, '2014-10-08 16:24:48', '2014-10-08 16:29:11'),
+  (8, '测试1', '**', 1, 1, '2014-10-08 16:29:05', '2014-10-08 16:25:03', '2014-10-08 16:29:05');
 
 
-
-
-
+/*----------------------------------------------------------
+| 测试 comment 数据库
+----------------------------------------------------------*/
