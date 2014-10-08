@@ -98,8 +98,9 @@ Route::group(['prefix' => 'admin'], function()
     Route::group(['prefix' => 'stopword'], function() //游戏屏蔽词
     {
         Route::get('index', ['as' => 'stopword.index', 'uses' => 'Admin_StopwordsController@index']);
+        Route::post('create', ['as' => 'stopword.create', 'uses' => 'Admin_StopwordsController@store']);
         Route::post('{id}/edit', ['as' => 'stopword.edit', 'uses' => 'Admin_StopwordsController@update']);
-        Route::get('{id}/delete', ['as' => 'stopword.delete', 'uses' => 'Admin_StopwordsController@delete']);
+        Route::get('{id}/delete', ['as' => 'stopword.delete', 'uses' => 'Admin_StopwordsController@destroy']);
     });
     Route::group(['prefix' => 'keyword'], function() //游戏关键词
     {

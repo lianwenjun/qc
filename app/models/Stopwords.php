@@ -6,4 +6,8 @@ class Stopwords extends \Eloquent {
     protected $softDelete = true;
     protected $table = 'stopwords';
     protected $fillable = [];
+
+    public $createRules = [
+            'word' => 'required'
+            ];
 }
