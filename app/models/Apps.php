@@ -31,12 +31,10 @@ class Apps extends \Eloquent {
     // 可以搜索字段
     public $searchEnable = [
         'title',
-        'start-created_at',
-        'end-created_at',
+        'created_at',
+        'updated_at',
         'cate_id',
     ];
-
-
 
     /**
      * 游戏列表
@@ -76,16 +74,16 @@ class Apps extends \Eloquent {
                 $query->whereRaw("`id` in (select `app_id` from `app_cates` where `cate_id` = '{$value}')");
             }
 
-            if(strpos($key, 'start') === 0 && !empty($value)) {
-                $field = str_replace('start-', '', $key);
-                $query->where($field, '>=', $value);
-            }
+            if(is_array($value) && count($value) == 2) {
+                $unique = array_unique($value);
 
-            if(strpos($key, 'end') === 0 && !empty($value)) {
-                $field = str_replace('end-', '', $key);
-                $query->where($field, '<=', date('Y-m-d', strtotime($value) + 24 * 3600));
+                if(isset($unique[0]) && !empty($unique[0])) {
+                    if(substr($key, -3) == '_at') {
+                        $value[1] = date('Y-m-d', strtotime($value[1]) + 24 * 3600);
+                    }
+                    $query->whereBetween($key, $value);
+                }
             }
-
         }
 
         $query->orderBy('sort', 'desc');

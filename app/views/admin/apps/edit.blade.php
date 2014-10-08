@@ -82,7 +82,7 @@ ul.ui-sortable li.placeholder:before {
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">大小：</td>
-               <td class="upload-size-html">{{ friendlyFilesize($app->size) }}</td>
+               <td class="upload-size-html">{{ $app->size }}</td>
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">版本号：</td>
@@ -538,7 +538,7 @@ ul.ui-sortable li.placeholder:before {
 
         // 图片
         jQuery.validator.addMethod("images", function(value, element) {
-            return $('input[name="images[]"]').length > 2;
+            return $('input[name="images[]"]').length > 1;
         }, "图片必须上传");
 
         // 提交审核

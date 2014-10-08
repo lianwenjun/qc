@@ -11,6 +11,8 @@
 <script type="text/javascript" src="{{ asset('js/jquery-ui-1.8.23.custom.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-addon.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-zh-CN.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.pager.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin/common.js') }}"></script>
 
 <div class="Content_right_top Content_height">
     <div class="Theme_title">
@@ -30,13 +32,13 @@
                     </select>
                     </span>
                     <span><input name="title" type="text" class="Search_wenben" size="20" placeholder="请输入关键词" value="{{ Input::get('title') }}"/></span>
-                    <span>　<b>日期：</b><input name="start-created_at" type="text" class="Search_wenben" value="{{ Input::get('start-created_at') }}"/><b>-</b><input name="end-created_at" type="text" class="Search_wenben" value="{{ Input::get('end-created_at') }}"/></span>
+                    <span>　<b>日期：</b><input name="created_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('created_at')[0]) ? Input::get('created_at')[0] : '' }}"/><b>-</b><input name="created_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('created_at')[1]) ? Input::get('created_at')[1] : '' }}"/></span>
                     <input type="submit" value="搜索" class="Search_en" />
                 </li>
             </ul>
         </div>
     </form>
-    <div class="Search_cunt">待编辑游戏：共 <strong>{{ $apps->count() }}</strong> 条记录 </div>
+    <div class="Search_cunt">待编辑游戏：共 <strong>{{ $apps['total'] }}</strong> 条记录 </div>
     <!-- 提示 -->
     @if(Session::has('tips'))
     <div class="tips">
@@ -57,54 +59,32 @@
                 <td width="8%">上传时间</td>
                 <td width="12%">操作</td>
             </tr>
-            @foreach($apps as $k => $app)
+            @foreach($apps['data'] as $k => $app)
             <tr class="Search_biao_{{ $k%2 == 0 ? 'one' : 'two'}}">
-                <td>{{ $app->id }}</td>
-                <td><img src="{{ asset($app->icon) }}" width="28" height="28" /></td>
-                <td>{{ $app->title }}</td>
-                <td>{{ $app->pack }}</td>
-                <td> / </td>
-                <td>{{ $app->size }}</td>
-                <td>{{ $app->version }}</td>
-                <td>{{ date('Y-m-d H:i', strtotime($app->created_at)) }}</td>
-                <td><a href="{{ URL::route('apps.edit', ['id' => $app->id ]) }}" target="BoardRight" class="Search_show">编辑</a> <a href="{{ URL::route('apps.delete', $app->id) }}" class="Search_del jq-delete">删除</a></td>
+                <td>{{ $app['id'] }}</td>
+                <td><img src="{{ asset($app['icon']) }}" width="28" height="28" /></td>
+                <td>{{ $app['title'] }}</td>
+                <td>{{ $app['pack'] }}</td>
+                <td> {{ !empty($app['cate_name']) ? $app['cate_name'] : '/' }}</td>
+                <td>{{ $app['size'] }}</td>
+                <td>{{ $app['version'] }}</td>
+                <td>{{ date('Y-m-d H:i', strtotime($app['created_at'])) }}</td>
+                <td><a href="{{ URL::route('apps.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a> <a href="{{ URL::route('apps.delete', $app['id']) }}" class="Search_del jq-delete">删除</a></td>
             </tr>
             @endforeach
-            @if(empty($apps->count()))
+            @if(empty($apps))
                 <tr class="no-data"><td colspan="9">没有数据</td></tr>
             @endif
         </table>
-        <div id="pager">{{ $apps->appends(Input::all())->links() }}</div>
+        <div id="pager"></div>
     </div>
 </div>
 
 <script type="text/javascript">
     $(document).ready(function(){
 
-        $('input[name="start-created_at"], input[name="end-created_at"]').datepicker({dateFormat: 'yy-mm-dd'});
-
-        $('.jq-delete').click(function() {
-
-            var link = $(this).attr('href');
-            $.jBox("<p style='margin: 10px'>您要删除吗？</p>", {
-                title: "<div class='ask_title'>是否删除？</div>",
-                showIcon: false,
-                draggable: false,
-                buttons: {'确定':true, "算了": false},
-                submit: function(v, h, f) {
-                    if(v) {
-                        var f = document.createElement('form');
-                        $(this).after($(f).attr({
-                            method: 'post',
-                            action: link
-                        }).append('<input type="hidden" name="_method" value="DELETE" />'));
-                        $(f).submit();
-                    }
-                }
-            });
-
-            return false;
-        });
+        // 时间输入框
+        $('input[name="created_at[]"]').datepicker({dateFormat: 'yy-mm-dd'});
 
         // 上传游戏
         $(".jq-appUpload").click(function(){
@@ -143,6 +123,10 @@
                 }
             });
         });
+
+        // 分页
+        pageInit({{ $apps['current_page'] }}, {{ $apps['last_page'] }}, {{ $apps['total'] }});
+
     });
 </script>
 @stop
