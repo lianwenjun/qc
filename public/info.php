@@ -25,3 +25,7 @@ $data = [
 $t = ['id' => 2, 'title' => 'xxx'];
 
 var_dump(in_array($t, $data));
+
+
+$key = 'dfsdfsd_at';
+var_dump(substr($key, -3) == '_at');

@@ -25,9 +25,13 @@ class Admin_AppsController extends \Admin_BaseController {
     {
         
         $appsModel = new Apps();
-        $apps = $appsModel -> lists(['new', 'draft'], Input::all())->paginate(20);
+        $apps = $appsModel->lists(['new', 'draft'], Input::all())
+                          ->paginate(20)
+                          ->toArray();
 
         $catesModel = new Cates;
+        $apps = $catesModel->addCatesInfo($apps);
+
         $cates = $catesModel->allCates();
 
         return View::make('admin.apps.draft')
@@ -43,7 +47,16 @@ class Admin_AppsController extends \Admin_BaseController {
      */
     public function pending()
     {
-        return View::make('admin.apps.pending');
+
+        $appsModel = new Apps();
+        $apps = $appsModel -> lists(['pending'], Input::all())->paginate(20);
+
+        $catesModel = new Cates;
+        $cates = $catesModel->allCates();
+
+        return View::make('admin.apps.pending')
+                   ->with('apps', $apps)
+                   ->with('cates', $cates);
     }
 
     /**
@@ -86,7 +99,7 @@ class Admin_AppsController extends \Admin_BaseController {
 
 
     /**
-     * 上传游戏APK
+     * 上传游戏图片
      * POST /admin/apps/imageupload
      *
      * @return Response
@@ -99,10 +112,11 @@ class Admin_AppsController extends \Admin_BaseController {
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 游戏编辑页面
      * GET /admin/apps/{id}/edit
      *
-     * @param  int  $id
+     * @param  int  $id 游戏ID
+     *
      * @return Response
      */
     public function edit($id)
@@ -129,7 +143,7 @@ class Admin_AppsController extends \Admin_BaseController {
     }
 
     /**
-     * Update the specified resource in storage.
+     * 更新游戏
      * PUT /admin/apps/{id}
      *
      * @param  int  $id
@@ -169,10 +183,11 @@ class Admin_AppsController extends \Admin_BaseController {
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 删除游戏
      * DELETE /admin/apps/{id}
      *
      * @param  int  $id
+     *
      * @return Response
      */
     public function destroy($id)
@@ -186,6 +201,54 @@ class Admin_AppsController extends \Admin_BaseController {
             Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经删除掉了"]);
         } else {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}删除失败了"]);
+        }
+
+        return Redirect::back();
+    }
+
+    /**
+     * 审核通过
+     * PUT /admin/apps/{id}/dopass
+     *
+     * @param $id int 游戏ID
+     *
+     * @return Response
+     */
+    public function dopass($id)
+    {
+        if(! $app = Apps::find($id)) {
+            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
+            return Redirect::back();
+        }
+        
+        if($app->update(['status' => 'onshelf'])) {
+            Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经审核通过"]);
+        } else {
+            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}审核失败了"]);
+        }
+
+        return Redirect::back();
+    }
+
+    /**
+     * 审核不通过
+     * PUT /admin/apps/{id}/donopass
+     *
+     * @param $id int 游戏ID
+     *
+     * @return Response
+     */
+    public function donopass($id)
+    {
+        if(! $app = Apps::find($id)) {
+            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
+            return Redirect::back();
+        }
+        
+        if($app->update(['status' => 'nopass', 'reason' => Input::get('reason')])) {
+            Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经审核不通过"]);
+        } else {
+            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}审核失败了"]);
         }
 
         return Redirect::back();

@@ -38,8 +38,10 @@ Route::group(['prefix' => 'admin'], function()
         Route::get('{id}/edit',          ['as' => 'apps.edit',      'uses' => 'Admin_AppsController@edit']);
         Route::put('{id}/edit/{status}', ['as' => 'apps.edit',      'uses' => 'Admin_AppsController@update'])
              ->where('id', '[0-9]+')->where('status', '[A-Za-z]+');
-        Route::delete('{id}/delete', ['as' => 'apps.delete',    'uses' => 'Admin_AppsController@destroy']);
+        Route::delete('{id}/delete',     ['as' => 'apps.delete',    'uses' => 'Admin_AppsController@destroy']);
 
+        Route::put('{id}/dopass', ['as' => 'apps.dopass',    'uses' => 'Admin_AppsController@dopass']);
+        Route::put('{id}/donopass', ['as' => 'apps.donopass',    'uses' => 'Admin_AppsController@donopass']);
         // 历史
 
         // 全选
