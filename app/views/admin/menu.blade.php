@@ -41,9 +41,9 @@
             <li id="two" class="mail"> <a href="#two">广告位管理</a>
                  <ul class="sub-menu">
                        <li><a href="{{ URL::route('appsads.index') }}" target=BoardRight>首页游戏位管理</a></li>
-                       <li><a href="Game-bit.html" target=BoardRight>排行游戏位管理</a></li>
-                       <li><a href="Featured.html" target=BoardRight>首页图片位管理</a></li>
-                       <li><a href="management.html" target=BoardRight>编辑精选管理</a></li>
+                       <li><a href="{{ URL::route('rankads.index') }}" target=BoardRight>排行游戏位管理</a></li>
+                       <li><a href="{{ URL::route('indexads.index') }}" target=BoardRight>首页图片位管理</a></li>
+                       <li><a href="{{ URL::route('editorads.index') }}" target=BoardRight>编辑精选管理</a></li>
                        <li><a href="{{ URL::route('cateads.index') }}" target=BoardRight>分类页图片位推广</a></li>
 
                  </ul>
@@ -53,9 +53,9 @@
                  <ul class="sub-menu">
                        <li><a href="{{ URL::route('cate.index') }}" target=BoardRight>游戏分类管理</a></li>
                        <li><a href="{{ URL::route('tag.index') }}" target=BoardRight>游戏标签管理</a></li>
-                       <li><a href="Score.html" target=BoardRight>游戏评分列表</a></li>
-                       <li><a href="Comment.html" target=BoardRight>游戏评论列表</a></li>
-                       <li><a href="Shield.html" target=BoardRight>屏蔽词管理</a></li>
+                       <li><a href="{{ URL::route('rating.index') }}" target=BoardRight>游戏评分列表</a></li>
+                       <li><a href="{{ URL::route('comment.index') }}" target=BoardRight>游戏评论列表</a></li>
+                       <li><a href="{{ URL::route('stopword.index') }}" target=BoardRight>屏蔽词管理</a></li>
                        <li><a href="{{ URL::route('keyword.index') }}" target=BoardRight>关键字管理</a></li>
                  </ul>
             </li>

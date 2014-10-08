@@ -13,7 +13,7 @@
                 <td width="25%">分类名称</td>
                 <td width="20%">操作</td>
             </tr>
-            @foreach($cateads as $catead)
+            @forelse($cateads as $catead)
                 <tr class="jq-tr">
                     <td>{{ $catead->id }}</td>
                     <td><img src="{{ $catead->image ? $catead->image : '/images/admin/u1188.png' }}" width="28" height="28" /></td>
@@ -22,7 +22,11 @@
                     <input value="{{ URL::route('cateads.edit', $catead->id) }}" name="edit-url" type="hidden">
                     <input value="" name="upload-image" type="hidden">
                 </tr>
-            @endforeach
+            @empty
+                <tr class="jq-tr">
+                    <td colspan="9">没数据</td>
+                <tr>
+            @endforelse
         </table>
         <div id="pager">{{ $cateads->links() }}</div>
     </div>               
