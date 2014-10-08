@@ -258,3 +258,29 @@ VALUES
 /*----------------------------------------------------------
 | 测试 comment 数据库
 ----------------------------------------------------------*/
+CREATE TABLE `comments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `app_id` int(11) NOT NULL,
+  `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL COMMENT '游戏名',
+  `pack` varchar(128) COLLATE utf8_unicode_ci NOT NULL COMMENT '包名',
+  `imei` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '用户手机IMEI',
+  `type` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '用户机型',
+  `ip` varchar(16) COLLATE utf8_unicode_ci NOT NULL COMMENT '用户IP',
+  `content` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '内容',
+  `rating` tinyint(4) NOT NULL COMMENT '评分',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `comments` (`id`, `app_id`, `title`, `pack`, `imei`, `type`, `ip`, `content`, `rating`, `deleted_at`, `created_at`, `updated_at`)
+VALUES
+  (1, 1, '植物大战僵尸啦', 'xxxooo.com.zhiwu', 'ABSDEDEDCHAYFSS', 'htc', '127.0.0.1', '非常老行', 5, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+  (2, 1, '植物大战僵尸啦', 'xxxooo.com.zhiwu', 'ABSDEDEDCHAYFSS', 'htc', '127.0.0.1', '非常老行', 5, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+  (3, 1, '植物大战僵尸啦', 'xxxooo.com.zhiwu', 'ABSDEDEDCHAYFSS', 'htc', '127.0.0.1', '非常老行', 5, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+  (4, 1, '植物大战僵尸啦', 'xxxooo.com.zhiwu', 'ABSDEDEDCHAYFSS', 'htc', '127.0.0.1', '非常老行', 5, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+  (5, 1, '植物大战僵尸啦', 'xxxooo.com.zhiwu', 'ABSDEDEDCHAYFSS', 'htc', '127.0.0.1', '非常老行', 5, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+  (6, 1, '植物大战僵尸啦', 'xxxooo.com.zhiwu', 'ABSDEDEDCHAYFSS', 'htc', '127.0.0.1', '非常老行', 5, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+

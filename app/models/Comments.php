@@ -6,4 +6,6 @@ class Comments extends \Eloquent {
     protected $softDelete = true;
     protected $table = 'comments';
     protected $fillable = [];
+
+    public $rules = ['content' => 'required'];
 }
