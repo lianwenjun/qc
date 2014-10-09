@@ -8,9 +8,9 @@
         <ul>
             <li>
                  <span><b>屏蔽添加：</b>
-                 <input name="" type="text" class="Search_wenben" size="60" value="添加屏蔽词" />
+                 <input name="word" type="text" class="Search_wenben" size="60" value="" placeholder="添加屏蔽词" />
                  </span>
-                 <input name="" type="submit" value="添加" class="Search_en" />
+                 <input type="submit" value="添加" class="jq-submitWord Search_en" />
             </li>
                
         </ul>
@@ -30,97 +30,126 @@
                 <td width="12%">最后更新时间</td>
                 <td width="12%">操作</td>
             </tr>
-                                
-            <tr class="Search_biao_one">
-                <td>1</td>
-                <td>植物大战僵尸</td>
-                <td>com.ltyx.anxy</td>
-                <td>唐吉坷德</td>
-                <td>2014-6-23 15:12:29</td>
-                <td>唐吉坷德</td>
-                <td>2014-6-23 15:12:29</td>
-                <td><a href="#" class="Search_show">修改</a> <a href="#" class="Search_del">删除</a></td>
-            </tr>
-            <tr class="Search_biao_two">
-                <td>2</td>
-                <td><input name="textfield" type="text" id="textfield" value="这个游戏太难玩了，难度好高" size="8" class="Classification_text" /></td>
-                <td><input name="textfield2" type="text" id="textfield2" value="这个游戏太难玩了，难度好高" size="8" class="Classification_text" /></td>
-                 <td>唐吉坷德</td>
-                <td>2014-6-23 15:12:29</td>
-                <td>唐吉坷德</td>
-                <td>2014-6-23 15:12:29</td>
-            <td><a href="#" class="Search_show">确定</a> <a href="#" class="Search_show">取消</a></td>
-            </tr>
-
-            <tr class="Search_biao_one">
-                <td>1</td>
-                <td>植物大战僵尸</td>
-                <td>com.ltyx.anxy</td>
-                 <td>唐吉坷德</td>
-                <td>2014-6-23 15:12:29</td>
-                <td>唐吉坷德</td>
-                <td>2014-6-23 15:12:29</td>
-                <td><a href="#" class="Search_show">修改</a> <a href="#" class="Search_del">删除</a></td>
-            </tr>
-
-            <tr class="Search_biao_two">
-                <td>1</td>
-                <td>植物大战僵尸</td>
-                <td>com.ltyx.anxy</td>
-                 <td>唐吉坷德</td>
-                <td>2014-6-23 15:12:29</td>
-                <td>唐吉坷德</td>
-                <td>2014-6-23 15:12:29</td>
-                <td><a href="#" class="Search_show">修改</a> <a href="#" class="Search_del">删除</a></td>
-            </tr>
-
-            <tr class="Search_biao_one">
-                <td>1</td>
-                <td>植物大战僵尸</td>
-                <td>com.ltyx.anxy</td>
-                 <td>唐吉坷德</td>
-                <td>2014-6-23 15:12:29</td>
-                <td>唐吉坷德</td>
-                <td>2014-6-23 15:12:29</td>
-                <td><a href="#" class="Search_show">修改</a> <a href="#" class="Search_del">删除</a></td>
-            </tr>
-
-            <tr class="Search_biao_two">
-                <td>1</td>
-                <td>植物大战僵尸</td>
-                <td>com.ltyx.anxy</td>
-                 <td>唐吉坷德</td>
-                <td>2014-6-23 15:12:29</td>
-                <td>唐吉坷德</td>
-                <td>2014-6-23 15:12:29</td>
-                <td><a href="#" class="Search_show">修改</a> <a href="#" class="Search_del">删除</a></td>
-            </tr>
-
-            <tr class="Search_biao_one">
-                <td>1</td>
-                <td>植物大战僵尸</td>
-                <td>com.ltyx.anxy</td>
-                 <td>唐吉坷德</td>
-                <td>2014-6-23 15:12:29</td>
-                <td>唐吉坷德</td>
-                <td>2014-6-23 15:12:29</td>
-                <td><a href="#" class="Search_show">修改</a> <a href="#" class="Search_del">删除</a></td>
-            </tr>
-
-            <tr class="Search_biao_two">
-                <td>1</td>
-                <td>植物大战僵尸</td>
-                <td>com.ltyx.anxy</td>
-                 <td>唐吉坷德</td>
-                <td>2014-6-23 15:12:29</td>
-                <td>唐吉坷德</td>
-                <td>2014-6-23 15:12:29</td>
-                <td><a href="#" class="Search_show">修改</a> <a href="#" class="Search_del">删除</a></td>
-            </tr>
-                                
-                                
+            @forelse($stopwords as $stopword)
+                <tr class="jq-tr">
+                    <td>{{ $stopword->id }}</td>
+                    <td>{{ $stopword->word }}</td>
+                    <td>{{ $stopword->to_word }}</td>
+                    <td>{{ $stopword->creator }}</td>
+                    <td>{{ $stopword->created_at }}</td>
+                    <td>{{ $stopword->operator }}</td>
+                    <td>{{ $stopword->updated_at }}</td>
+                    <td><a href="javascript:;" class="Search_show jq-editWord">修改</a>
+                        <a href="{{ URL::route('stopword.delete', $stopword->id) }}" class="Search_del">删除</a>
+                    </td>
+                    <td style="display:none">
+                        <input id="edit-url" value="{{ route('stopword.edit', $stopword->id) }}" type="hidden"/>
+                        <input id="del-url" value="{{ route('stopword.delete', $stopword->id) }}" type="hidden"/>
+                        <input id="preWord" value="{{ $stopword->word }}" type="hidden"/>
+                        <input id="preToword" value="{{ $stopword->to_word }}" type="hidden"/>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colson="9">没数据</td>
+                </tr>
+            @endforelse                  
         </table>
         <div id="pager">{{ $stopwords->links() }}</div>
     </div>                   
 </div>
+<script>
+$(function(){
+    CREATEURL = "{{ route('stopword.create') }}";
+    $(".jq-tr:odd").addClass("Search_biao_two");
+    $(".jq-tr:even").addClass("Search_biao_one");
+    $("input[name=word]").focus(function() {
+        $(this).val("");
+    });
+    //提交添加
+    $(".jq-submitWord").click(function() {
+        var word = $("input[name=word]").val();
+        if (word == "" || word == undefined) {
+            return;
+        }
+        // 添加关键词
+        var url = CREATEURL;
+        var data = {word:word};
+        // 发送数据
+        $.post(url, data, function(res) {
+            //错误判断
+            if (res.status != 'ok') {
+                alert('添加' + word + '失败');
+                return;
+            }
+            //成功返回刷新页面
+            window.location.href = window.location.pathname;
+        }).fail(function() {
+            alert('亲，服务器出错啦');
+        });
+    });
+    //提交查询
+    $(".jq-submitSearch").click(function() {
+        var word = $("input[name=searchWord]").val();
+        if (word === "输入关键字" || word == "") {
+            $("input[name=searchWord]").val("输入关键字");
+            return;
+        }
+        // 查询
+        var url = window.location.pathname + '?word=' + word;
+        window.location.href = url;
+    });
+    //修改
+    $(".jq-editWord").live('click', function() {
+        var td = $(this).parents('tr').children('td');
+        var text1 = td.eq(1).html();
+        var text2 = td.eq(2).html();
+        var to_text1 = '<input name="textfield2" type="text" id="textfield2" value="" size="8" class="Classification_text" />';
+        var to_text2 = '<input name="textfield2" type="text" id="textfield2" value="" size="8" class="Classification_text" />';
+        var to_text8 = '<a href="javacript:;" class="Search_show jq-saveWord">确定</a> <a href="javacript:;" class="Search_show jq-chanceWord">取消</a>';
+        td.eq(1).html(to_text1);
+        td.eq(1).find('#textfield2').val(text1);
+        td.eq(2).html(to_text1);
+        td.eq(2).find('#textfield2').val(text2);
+        $(this).parent().html(to_text8);
+    });
+    //提交
+    $(".jq-saveWord").live('click', function() {
+        //alert('点击保存');
+        var td = $(this).parents('tr').children('td');
+        var text1 = td.eq(1).find('input').val();
+        var text2 = td.eq(2).find('input').val();
+        var editUrl = td.find('#edit-url').val();
+        var delUrl = td.find('#del-url').val();
+        //var is_slide = td.eq().
+        var data = {word:text1, to_word:text2};
+        $.post(editUrl, data, function(res) {
+            //错误判断
+            if (res.status == 'ok') {
+                var text8 = '<a href="javacript:;" class="Search_show jq-editWord">修改</a>'+
+                            '<a href="'+delUrl+'" class="Search_del jq-delWord">删除</a>';
+                td.eq(7).html(text8);
+                td.eq(1).html(text1);
+                td.eq(2).html(text2);
+                return;
+            }
+            return;
+        }).fail(function() {
+            alert('亲，服务器出错啦');
+        });
+    });
+    //取消
+    $(".jq-chanceWord").live('click', function() {
+        var td = $(this).parents('tr').children('td');
+        var text1 = td.find('#preWord').val();
+        var text2 = td.find('#preToword').val();
+        var delUrl = td.find('#del-url').val();
+        var text8 = '<a href="javacript:;" class="Search_show jq-editWord">修改</a> ' + 
+                    '<a href="'+delUrl+'" class="Search_del jq-delWord">删除</a>';
+        $(this).parent().html(text8);
+        td.eq(1).html(text1);
+        td.eq(2).html(text2);
+    });
+});
+</script>
 @stop
