@@ -1,6 +1,9 @@
 <?php
+
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
+
 class Cates extends \Eloquent {
+
     //这部分假删除部分能做成个头部不呢
     use SoftDeletingTrait;
     protected $dates = ['deleted_at'];
@@ -134,7 +137,8 @@ class Cates extends \Eloquent {
             $data[$cate->id]['title'] = $cate->title;
             foreach($this->allTags() as $tag) {
                 if($tag->parent_id == $cate->id) {
-                    $data[$cate->id]['tags'][] = ['id' => $tag->id, 'title' => $tag->title];
+                    $tagData = ['id' => $tag->id, 'title' => $tag->title];
+                    $data[$cate->id]['tags'][] = $tagData;
                 }
             }
         }
