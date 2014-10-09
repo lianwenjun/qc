@@ -39,8 +39,13 @@ CREATE TABLE `apps` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+/* 测试上架 */
+INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size_int`, `size`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `onshelfed_at`, `offshelfed_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
+VALUES
+    (100,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','上架游戏A君','','27 KB',27,'1.0.2','','','','','',0,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46');
 
-/* 测试草稿*/
+
+/* 测试草稿 */
 INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size_int`, `size`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `onshelfed_at`, `offshelfed_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
     (1,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','上传游戏A君','','27 KB',27,'1.0.2','','','','','',0,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'new','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
@@ -156,8 +161,6 @@ INSERT INTO `app_cates` (`id`, `app_id`, `cate_id`, `created_at`, `updated_at`)
 VALUES
   (1,1,1,'2014-09-29 09:22:39','2014-09-29 09:22:39'),
   (2,2,2,'2014-09-29 09:22:39','2014-09-29 09:22:39');
-
-
 
 
 /*----------------------------------------------------------

@@ -42,6 +42,10 @@ $(function() {
             success: function(data) {
                 if(data.success) {
                     renderPreview('preview', data.data);
+                    $(".jq-previewWindow, .Browse").show();
+                    $(".Browse_centent").animate({
+                      scrollTop: 0
+                    }, 300);
                 } else {
                     alert('拉取游戏信息失败');
                 }
@@ -50,7 +54,6 @@ $(function() {
                 alert('获取预览数据失败');
             }
         });
-        $(".jq-previewWindow, .Browse").show();
     });
 
 });
@@ -93,7 +96,7 @@ function goPage(page)
 // 初始化预览的图片切换
 function initCarousel()
 {
-    console.log(initOwl);
+
     if(! initOwl ) {
         $('.owl-carousel').owlCarousel({
             items:2,

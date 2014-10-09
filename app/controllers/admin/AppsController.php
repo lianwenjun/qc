@@ -11,8 +11,17 @@ class Admin_AppsController extends \Admin_BaseController {
     public function onshelf()
     {
         $appsModel = new Apps();
+        $apps = $appsModel->lists(['onshelf'], Input::all())
+                          ->paginate(20)
+                          ->toArray();
 
-        return View::make('admin.apps.onshelf');
+        $catesModel = new Cates;
+        $apps  = $catesModel->addCatesInfo($apps);
+        $cates = $catesModel->allCates();
+
+        return View::make('admin.apps.onshelf')
+                   ->with('apps', $apps)
+                   ->with('cates', $cates);
     }
 
     /**
@@ -103,6 +112,20 @@ class Admin_AppsController extends \Admin_BaseController {
         return View::make('admin.apps.offshelf')
                    ->with('apps', $apps)
                    ->with('cates', $cates);
+    }
+
+    /**
+     * 游戏历史
+     * GET /admin/apps/{id}/history
+     *
+     * @param $id int 游戏ID
+     *
+     * @return Response
+     */
+    public function history($id)
+    {
+        
+
     }
 
 
@@ -230,9 +253,9 @@ class Admin_AppsController extends \Admin_BaseController {
 
     /**
      * 删除游戏
-     * DELETE /admin/apps/{id}
+     * DELETE /admin/apps/{id}/delete
      *
-     * @param  int  $id
+     * @param int $id
      *
      * @return Response
      */
@@ -253,6 +276,27 @@ class Admin_AppsController extends \Admin_BaseController {
     }
 
     /**
+     * 下架游戏
+     * DELETE /admin/apps/{id}/dooffshelf
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function dooffshelf($id)
+    {
+        if(! $app = Apps::find($id)) {
+            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
+        } elseif ($app->update(['status' => 'offshelf', 'offshelfed_at' => date('Y-m-d H:i:s')])) {
+            Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经下架"]);
+        } else {
+            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}下架操作失败了"]);
+        }
+   
+        return Redirect::back();
+    }
+
+    /**
      * 审核通过
      * PUT /admin/apps/{id}/dopass
      *
@@ -264,7 +308,7 @@ class Admin_AppsController extends \Admin_BaseController {
     {
         if(! $app = Apps::find($id)) {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
-        } elseif ($app->update(['status' => 'onshelf'])) {
+        } elseif ($app->update(['status' => 'onshelf', 'onshelfed_at' => date('Y-m-d H:i:s')])) {
             Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经审核通过"]);
         } else {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}审核操作失败了"]);
