@@ -68,6 +68,26 @@ VALUES
     (444,'/icons/f/e/febeb565db27cf439b414798fdc7a5a6.png','删除游戏A君','','350 KB',350,'1.50','','','','','',0,'','/apks/a/9/a94fb9264643673fa6b54fb996cc0d70.apk',0,'','',76,'new','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-23 09:24:46','2014-09-24 02:35:37');
 
 /*----------------------------------------------------------
+| 测试 rating 数据库
+----------------------------------------------------------*/
+CREATE TABLE `ratings` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `app_id` int(11) NOT NULL,
+  `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL COMMENT '游戏名',
+  `pack` varchar(128) COLLATE utf8_unicode_ci NOT NULL COMMENT '包名',
+  `total` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '总评分',
+  `counts` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '评分次数',
+  `avg` decimal(3,2) NOT NULL DEFAULT '0.00' COMMENT '平均分',
+  `manual` decimal(3,2) NOT NULL DEFAULT '0.00' COMMENT '干预后得分',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+insert into ratings (app_id, title, pack) select id as appid, title, pack from apps;
+
+/*----------------------------------------------------------
 | 测试 cates 数据库
 ----------------------------------------------------------*/
 DROP TABLE IF EXISTS `cates`;

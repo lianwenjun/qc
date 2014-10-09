@@ -39,7 +39,7 @@
                 <td width="10%">操作</td>
             </tr>
             @forelse($comments as $comment)
-                <tr class="Search_biao_one">
+                <tr class="jq-tr">
                     <td>{{ $comment->id }}</td>
                     <td>{{ $comment->title }}</td>
                     <td>{{ $comment->pack }}</td>
@@ -67,7 +67,9 @@
 </div>
 <script>
 $(function(){
-//修改
+    $(".jq-tr:odd").addClass("Search_biao_two");
+    $(".jq-tr:even").addClass("Search_biao_one");
+    //修改
     $(".jq-editWord").live('click', function() {
         var td = $(this).parents('tr').children('td');
         var text6 = td.eq(6).html();
