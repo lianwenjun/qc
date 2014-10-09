@@ -6,4 +6,5 @@ class Ratings extends \Eloquent {
     protected $softDelete = true;
     protected $table = 'ratings';
     protected $fillable = [];
+    public $rules = ['manual' => 'required|numeric|min:1|max:5'];
 }

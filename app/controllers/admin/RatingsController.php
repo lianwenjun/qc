@@ -15,13 +15,13 @@ class Admin_RatingsController extends \BaseController {
         $query = [];
         $ratingModel = new Ratings();
         $where = $ratingModel;
-        if (Input::get('title')) {
-            $query = ['%', Input::get('title'), '%'];
-            $where = $ky->where('title', 'like', join($query));
+        if (Input::get('cate') == 'title') {
+            $query = ['%', Input::get('word'), '%'];
+            $where = $ratingModel->where('title', 'like', join($query));
         }
-        if (Input::get('pack')) {
-            $query = ['%', Input::get('pack'), '%'];
-            $where = $ky->where('pack', 'like', join($query));
+        if (Input::get('cate' == 'pack')) {
+            $query = ['%', Input::get('word'), '%'];
+            $where = $ratingModel->where('pack', 'like', join($query));
         }
         //查询，默认分页
         $ratings = $where->orderBy('id', 'desc')->paginate($this->pagesize);
@@ -41,19 +41,24 @@ class Admin_RatingsController extends \BaseController {
         //检测是否存在该数据
         $ratingModel = new Ratings();
         $rating = $ratingModel->find($id);
+        $res = ['status'=>'ok', 'msg'=>'suss'];
         if(!$rating){
-            return Redirect::back()->with('msg', '#'. $id .'不存在');   
+            $res['msg'] = '#' . $id . ' is valid';
+            $res['status'] = 'error';
+            return Response::json($res);   
         }
-        $validator = '';
+        $validator = Validator::make(Input::all(), $ratingModel->rules);
         if ($validator->fails()) {
-            //
-            return Redirect::back()->with('数据格式不对');
+            $res['msg'] = '#' . $id . ' data is wrong';
+            $res['status'] = 'error';
+            return Response::json($res); 
         }
         $rating->manual = Input::get('manual');
-        if ($rating->save()) {
-            //返回当前页面
-            return Redirect::back()->with('修改成功');
+        if (!$rating->save()) {
+            $res['msg'] = '保存失败';
+            $res['status'] = 'error';
+            return Response::json($res);
         }
-        return ['修改失败'];
+        return Response::json($res);
     }
 }
