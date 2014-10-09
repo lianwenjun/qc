@@ -39,8 +39,13 @@ CREATE TABLE `apps` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+/* 测试上架 */
+INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size_int`, `size`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `onshelfed_at`, `offshelfed_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
+VALUES
+    (100,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','上架游戏A君','','27 KB',27,'1.0.2','','','','','',0,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46');
 
-/* 测试草稿*/
+
+/* 测试草稿 */
 INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size_int`, `size`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `onshelfed_at`, `offshelfed_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
     (1,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','上传游戏A君','','27 KB',27,'1.0.2','','','','','',0,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'new','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
@@ -66,6 +71,29 @@ VALUES
     (21,'/icons/f/e/febeb565db27cf439b414798fdc7a5a6.png','分页游戏A君','','350 KB',350,'1.50','','','','','',0,'','/apks/a/9/a94fb9264643673fa6b54fb996cc0d70.apk',0,'','',78,'new','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-23 09:24:46','2014-09-24 02:35:37'),
     (22,'/icons/f/e/febeb565db27cf439b414798fdc7a5a6.png','分页游戏B君','','350 KB',350,'1.50','','','','','',0,'','/apks/a/9/a94fb9264643673fa6b54fb996cc0d70.apk',0,'','',77,'new','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-23 09:24:46','2014-09-24 02:35:37'),
     (444,'/icons/f/e/febeb565db27cf439b414798fdc7a5a6.png','删除游戏A君','','350 KB',350,'1.50','','','','','',0,'','/apks/a/9/a94fb9264643673fa6b54fb996cc0d70.apk',0,'','',76,'new','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-23 09:24:46','2014-09-24 02:35:37');
+
+/* 测试待审核 */
+INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size_int`, `size`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `onshelfed_at`, `offshelfed_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
+VALUES
+    (30,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','待审游戏A君','','27 KB',27,'1.0.2','','','','','',0,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'pending','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (31,'/icons/6/8/68745070802f9b8addf6db640d86eeff.png','待审游戏B君','','157 KB',157,'1.0','','','','','',0,'','/apks/3/9/3934bc5f9504a26baf546483b595f45a.apk',0,'','',98,'pending','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-01 10:00:00','2014-09-23 09:24:02'),
+    (32,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','待审游戏C君','','27 KB',27,'1.0.2','','','','','',0,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'pending','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (33,'/icons/6/8/68745070802f9b8addf6db640d86eeff.png','待审游戏D君','','157 KB',157,'1.0','','','','','',0,'','/apks/3/9/3934bc5f9504a26baf546483b595f45a.apk',0,'','',98,'pending','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-01 10:00:00','2014-09-23 09:24:02'),
+    (34,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','待审游戏E君','','27 KB',27,'1.0.2','','','','','',0,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'pending','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (35,'/icons/6/8/68745070802f9b8addf6db640d86eeff.png','待审游戏F君','','157 KB',157,'1.0','','','','','',0,'','/apks/3/9/3934bc5f9504a26baf546483b595f45a.apk',0,'','',98,'pending','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-01 10:00:00','2014-09-23 09:24:02'),
+    (36,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','待审游戏G君','','27 KB',27,'1.0.2','','','','','',0,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'pending','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (37,'/icons/6/8/68745070802f9b8addf6db640d86eeff.png','待审游戏H君','','157 KB',157,'1.0','','','','','',0,'','/apks/3/9/3934bc5f9504a26baf546483b595f45a.apk',0,'','',98,'pending','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-01 10:00:00','2014-09-23 09:24:02');
+
+/* 测试审核不通过 */
+INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size_int`, `size`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `onshelfed_at`, `offshelfed_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
+VALUES
+    (40,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','不通过游戏A君','','27 KB',27,'1.0.2','','','','','',0,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'nopass','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46');
+
+/* 测试下架 */
+INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size_int`, `size`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `onshelfed_at`, `offshelfed_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
+VALUES
+    (50,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','下架游戏A君','','27 KB',27,'1.0.2','','','','','',0,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'offshelf','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46');
+
 
 /*----------------------------------------------------------
 | 测试 rating 数据库
@@ -155,6 +183,7 @@ CREATE TABLE `cate_ads` (
 
 
 insert into cate_ads (cate_id, title) select id as cate_id, title from cates where deleted_at is not null;
+
 /*----------------------------------------------------------
 | 测试 keywords 数据库
 ----------------------------------------------------------*/
