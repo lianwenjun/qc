@@ -1,11 +1,11 @@
 @extends('admin.layout')
 
 @section('content')
+
 <link href="{{ asset('css/admin/timepicker/jquery-ui-1.11.0.custom.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/admin/timepicker/jquery-ui-timepicker-addon.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/owl.carousel.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/owl.theme.css') }}" rel="stylesheet" type="text/css" />
-
 
 <script type="text/javascript" src="{{ asset('js/jquery-ui-1.8.23.custom.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-addon.min.js') }}"></script>
@@ -160,8 +160,9 @@
 </div>
 
 <script type="text/javascript">
-    PREVIEW_URL = '{{ URL::route('apps.preview') }}';
 
+    // 预览图片滑动初始化
+    PREVIEW_URL = '{{ URL::route('apps.preview') }}';
     var initOwl = false;
 
     $(document).ready(function(){

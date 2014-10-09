@@ -34,10 +34,15 @@ Route::group(['prefix' => 'admin'], function()
         Route::get('nopass',   ['as' => 'apps.nopass',   'uses' => 'Admin_AppsController@nopass']);
         Route::get('offshelf', ['as' => 'apps.offshelf', 'uses' => 'Admin_AppsController@offshelf']);
 
+        // 历史
+        Route::get('{id}/history', ['as' => 'apps.history', 'uses' => 'Admin_AppsController@history']);
+
         // 编辑
         Route::get('{id}/edit',          ['as' => 'apps.edit',      'uses' => 'Admin_AppsController@edit']);
         Route::put('{id}/edit/{status}', ['as' => 'apps.edit',      'uses' => 'Admin_AppsController@update'])
              ->where('id', '[0-9]+')->where('status', '[A-Za-z]+');
+
+        // 删除
         Route::delete('{id}/delete',     ['as' => 'apps.delete',    'uses' => 'Admin_AppsController@destroy']);
 
         // 审核
@@ -46,12 +51,11 @@ Route::group(['prefix' => 'admin'], function()
         Route::put('doallpass', ['as' => 'apps.doallpass',    'uses' => 'Admin_AppsController@doallpass']);
         Route::put('doallnopass', ['as' => 'apps.doallnopass',    'uses' => 'Admin_AppsController@doallnopass']);
 
-        Route::get('{id}/preveiw', ['as' => 'apps.preview',      'uses' => 'Admin_AppsController@preview']);
-        // 历史
+        // 下架
+        Route::put('{id}/dooffshelf', ['as' => 'apps.dooffshelf',    'uses' => 'Admin_AppsController@dooffshelf']);
 
-        // 全选
-        Route::get('allpass', ['uses' => 'Admin_AppsController@allpass']);
-        Route::get('allnopass', ['uses' => 'Admin_AppsController@allnopass']);
+        // 预览
+        Route::get('{id}/preveiw', ['as' => 'apps.preview',      'uses' => 'Admin_AppsController@preview']);
 
         // 上传
         Route::post('imageupload', ['as' => 'apps.imageupload', 'uses' => 'Admin_AppsController@imageUpload']);
