@@ -40,8 +40,11 @@ Route::group(['prefix' => 'admin'], function()
              ->where('id', '[0-9]+')->where('status', '[A-Za-z]+');
         Route::delete('{id}/delete',     ['as' => 'apps.delete',    'uses' => 'Admin_AppsController@destroy']);
 
+        // 审核
         Route::put('{id}/dopass', ['as' => 'apps.dopass',    'uses' => 'Admin_AppsController@dopass']);
         Route::put('{id}/donopass', ['as' => 'apps.donopass',    'uses' => 'Admin_AppsController@donopass']);
+        Route::put('doallpass', ['as' => 'apps.doallpass',    'uses' => 'Admin_AppsController@doallpass']);
+        Route::put('doallnopass', ['as' => 'apps.doallnopass',    'uses' => 'Admin_AppsController@doallnopass']);
 
         Route::get('{id}/preveiw', ['as' => 'apps.preview',      'uses' => 'Admin_AppsController@preview']);
         // 历史

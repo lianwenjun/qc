@@ -30,8 +30,7 @@ class Admin_AppsController extends \Admin_BaseController {
                           ->toArray();
 
         $catesModel = new Cates;
-        $apps = $catesModel->addCatesInfo($apps);
-
+        $apps  = $catesModel->addCatesInfo($apps);
         $cates = $catesModel->allCates();
 
         return View::make('admin.apps.draft')
@@ -49,9 +48,12 @@ class Admin_AppsController extends \Admin_BaseController {
     {
 
         $appsModel = new Apps();
-        $apps = $appsModel -> lists(['pending'], Input::all())->paginate(20);
+        $apps = $appsModel->lists(['pending'], Input::all())
+                          ->paginate(20)
+                          ->toArray();
 
         $catesModel = new Cates;
+        $apps  = $catesModel->addCatesInfo($apps);
         $cates = $catesModel->allCates();
 
         return View::make('admin.apps.pending')
@@ -67,7 +69,18 @@ class Admin_AppsController extends \Admin_BaseController {
      */
     public function nopass()
     {
-        return View::make('admin.apps.nopass');
+        $appsModel = new Apps();
+        $apps = $appsModel->lists(['nopass'], Input::all())
+                          ->paginate(20)
+                          ->toArray();
+
+        $catesModel = new Cates;
+        $apps  = $catesModel->addCatesInfo($apps);
+        $cates = $catesModel->allCates();
+
+        return View::make('admin.apps.nopass')
+                   ->with('apps', $apps)
+                   ->with('cates', $cates);
     }
 
     /**
@@ -78,7 +91,18 @@ class Admin_AppsController extends \Admin_BaseController {
      */
     public function offshelf()
     {
-        return View::make('admin.apps.offshelf');
+        $appsModel = new Apps();
+        $apps = $appsModel->lists(['offshelf'], Input::all())
+                          ->paginate(20)
+                          ->toArray();
+
+        $catesModel = new Cates;
+        $apps  = $catesModel->addCatesInfo($apps);
+        $cates = $catesModel->allCates();
+
+        return View::make('admin.apps.offshelf')
+                   ->with('apps', $apps)
+                   ->with('cates', $cates);
     }
 
 
@@ -95,6 +119,28 @@ class Admin_AppsController extends \Admin_BaseController {
         $appModel = new Apps();
 
         return $appModel->appUpload($dontSave);
+    }
+
+    /**
+     * 预览游戏数据
+     * GET /admin/apps/{id}/preview
+     *
+     * @param $id int APPID
+     *
+     * @return Response
+     */
+    public function preview($id)
+    {
+        $appModel = new Apps();
+        $app = $appModel->preview($id);
+
+        if($app) {
+            $info = ['success' => true, 'data' => $app];
+        } else {
+            $info = ['success' => false];
+        }
+
+        return json_encode($info);
     }
 
 
@@ -218,13 +264,35 @@ class Admin_AppsController extends \Admin_BaseController {
     {
         if(! $app = Apps::find($id)) {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
-            return Redirect::back();
-        }
-        
-        if($app->update(['status' => 'onshelf'])) {
+        } elseif ($app->update(['status' => 'onshelf'])) {
             Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经审核通过"]);
         } else {
-            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}审核失败了"]);
+            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}审核操作失败了"]);
+        }
+   
+        return Redirect::back();
+    }
+
+    /**
+     * 批量审核通过
+     * PUT /admin/apps/doallpass
+     *
+     * @return Response
+     */
+    public function doallpass() {
+        $ids = Input::get('ids');
+
+        if(empty($ids)) {
+            Session::flash('tips', ['success' => false, 'message' => "参数不正确"]);
+            return Redirect::back();
+        }
+
+        if(! $apps = Apps::whereIn('id', $ids)) {
+            Session::flash('tips', ['success' => false, 'message' => "亲，找不到游戏"]);
+        } elseif ($apps->update(['status' => 'onshelf'])) {
+            Session::flash('tips', ['success' => true, 'message' => "亲，全部已经审核通过"]);
+        } else {
+            Session::flash('tips', ['success' => false, 'message' => "亲，操作失败了"]);
         }
 
         return Redirect::back();
@@ -248,7 +316,33 @@ class Admin_AppsController extends \Admin_BaseController {
         if($app->update(['status' => 'nopass', 'reason' => Input::get('reason')])) {
             Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经审核不通过"]);
         } else {
-            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}审核失败了"]);
+            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}审核操作失败了"]);
+        }
+
+        return Redirect::back();
+    }
+
+    /**
+     * 批量审核不通过
+     * PUT /admin/apps/doallnopass
+     *
+     * @return Response
+     */
+    public function doallnopass() {
+        $ids = Input::get('ids');
+        $reason = Input::get('reason');
+
+        if(empty($ids) || empty($reason)) {
+            Session::flash('tips', ['success' => false, 'message' => "参数不正确"]);
+            return Redirect::back();
+        }
+
+        if(! $apps = Apps::whereIn('id', $ids)) {
+            Session::flash('tips', ['success' => false, 'message' => "亲，找不到游戏"]);
+        } elseif ($apps->update(['status' => 'nopass', 'reason' => $reason])) {
+            Session::flash('tips', ['success' => true, 'message' => "亲，全部已经审核不通过"]);
+        } else {
+            Session::flash('tips', ['success' => false, 'message' => "亲，操作失败了"]);
         }
 
         return Redirect::back();

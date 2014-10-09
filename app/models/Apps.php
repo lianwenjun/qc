@@ -86,7 +86,7 @@ class Apps extends \Eloquent {
             }
         }
 
-        $query->orderBy('sort', 'desc');
+        // $query->orderBy('id', 'desc');
 
         return $query;
     }
@@ -144,7 +144,7 @@ class Apps extends \Eloquent {
      *
      * @return string 上传结果
      */
-    public function appUpload($dontSave) 
+    public function appUpload($dontSave)
     {
         return Plupload::receive('file', function ($file) use ($dontSave)
         {
@@ -160,7 +160,16 @@ class Apps extends \Eloquent {
             $data['icon']          = $icon;
             $data['download_link'] = str_replace(public_path(), '', $savePath);
 
-            if(empty($dontSave)) Apps::create($data);
+            if(empty($dontSave)) {
+                $app = Apps::create($data);
+
+                $rating = [
+                        'app_id' => $app->id, 
+                        'title'  => $data['title'], 
+                        'pack'   => $data['pack']
+                    ];
+                Ratings::create($rating);
+            }
 
             return $data;
         });
@@ -206,9 +215,76 @@ class Apps extends \Eloquent {
         $keywordsModel = new Keywords;
         $info['keywords'] = $keywordsModel->appKeywords($id);
 
-        return json_decode(json_encode($info), FALSE);;
+        return json_decode(json_encode($info), FALSE);
     }
 
+    /**
+     * 预览游戏 
+     *
+     * @param $id int 游戏ID
+     *
+     * @return mix
+     */
+    public function preview($id)
+    {
+        $info = $this->info($id);
+
+        if(empty($info)) return false;
+
+        // 同作者游戏
+        $info->sameAuthor = $this->sameAuthor($id, $info->author);
+
+        // 同类游戏
+        $info->sameCate = $this->sameCate($id, $info->cates);
+
+        return json_decode(json_encode($info), TRUE);;
+    }
+
+    /**
+     * 作者游戏
+     *
+     * @param $id     int    游戏id
+     * @param $author string 游戏作者
+     * @param $limit  int    数量
+     *
+     * @return array
+     */
+    public function sameAuthor($id, $author, $limit = 3)
+    {
+        $apps = Apps::where('author', $author)
+                    ->where('id', '!=', $id)
+                    ->limit($limit)
+                    ->select(['id', 'title', 'icon'])
+                    ->get()
+                    ->toArray();
+
+        return $apps;
+    }
+
+    /**
+     * 同分类游戏
+     *
+     * @param $id    int   游戏id
+     * @param $cates array 分类信息
+     * @param $limit int   数量
+     *
+     * @return array
+     */
+    public function sameCate($id, $cates, $limit = 3)
+    {
+
+        $appCatesModel = new AppCates;
+        $ids = $appCatesModel->sameCateAppId($id, $cates, $limit);
+
+        if(empty($ids)) return [];
+
+        $apps = Apps::whereIn('id', $ids)
+                    ->select(['id', 'title', 'icon'])
+                    ->get()
+                    ->toArray();
+
+        return $apps;
+    }
 
     /**
      * 解析 APK 包

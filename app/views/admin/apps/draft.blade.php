@@ -2,12 +2,12 @@
 
 @section('content')
 <link href="{{ asset('css/admin/plupload/jquery.plupload.queue.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/admin/timepicker/jquery-ui-1.11.0.custom.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/admin/timepicker/jquery-ui-timepicker-addon.css') }}" rel="stylesheet" type="text/css" />
+
 <script src="{{ asset('js/admin/plupload/plupload.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/admin/plupload/jquery.plupload.queue.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/admin/plupload/i18n/zh_CN.js') }}" type="text/javascript"></script>
-
-<link href="{{ asset('css/admin/timepicker/jquery-ui-1.11.0.custom.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('css/admin/timepicker/jquery-ui-timepicker-addon.css') }}" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="{{ asset('js/jquery-ui-1.8.23.custom.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-addon.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-zh-CN.js') }}"></script>
@@ -65,18 +65,20 @@
                 <td><img src="{{ asset($app['icon']) }}" width="28" height="28" /></td>
                 <td>{{ $app['title'] }}</td>
                 <td>{{ $app['pack'] }}</td>
-                <td> {{ !empty($app['cate_name']) ? $app['cate_name'] : '/' }}</td>
+                <td>{{ !empty($app['cate_name']) ? $app['cate_name'] : '/' }}</td>
                 <td>{{ $app['size'] }}</td>
                 <td>{{ $app['version'] }}</td>
                 <td>{{ date('Y-m-d H:i', strtotime($app['created_at'])) }}</td>
                 <td><a href="{{ URL::route('apps.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a> <a href="{{ URL::route('apps.delete', $app['id']) }}" class="Search_del jq-delete">删除</a></td>
             </tr>
             @endforeach
-            @if(empty($apps))
+            @if(empty($apps['total']))
                 <tr class="no-data"><td colspan="9">没有数据</td></tr>
             @endif
         </table>
+        @if($apps['last_page'] > 1)
         <div id="pager"></div>
+        @endif
     </div>
 </div>
 
