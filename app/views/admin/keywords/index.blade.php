@@ -37,7 +37,7 @@
                 <td width="8%">是否轮播</td>
                 <td width="12%">操作</td>
             </tr>
-            @foreach ($keywords as $keyword)
+            @forelse ($keywords as $keyword)
                 <tr class="jq-tr">
                     <td>{{ $keyword->id }}</td>
                     <td>{{ $keyword->word }}</td>
@@ -64,7 +64,11 @@
                         <td><a href="#" class="Search_show">确定</a> <a href="#" class="Search_show">取消</a></td>
                     !-->
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td>没数据</td>
+                </tr>
+            @endforelse
        </table>
        <div id="pager">{{ $keywords->links() }}</div>
       </div>                   
@@ -72,6 +76,8 @@
 <script>
 $(function(){
     CREATEURL = "{{ route('keyword.store') }}";
+    $(".jq-tr:odd").addClass("Search_biao_two");
+    $(".jq-tr:even").addClass("Search_biao_one");
     $("input[name=word]").focus(function() {
         $(this).val("");
     });
