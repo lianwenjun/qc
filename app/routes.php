@@ -97,14 +97,15 @@ Route::group(['prefix' => 'admin'], function()
     Route::group(['prefix' => 'comment'], function() //游戏评论
     {
         Route::get('index', ['as' => 'comment.index', 'uses' => 'Admin_CommentsController@index']);
-        Route::post('{id}/edit', ['uses' => 'Admin_CommentsController@update']);
-        Route::get('{id}/delete}', ['uses' => 'Admin_CommentsController@delete']);
+        Route::post('{id}/edit', ['as' => 'comment.edit', 'uses' => 'Admin_CommentsController@update']);
+        Route::get('{id}/delete', ['as' => 'comment.delete', 'uses' => 'Admin_CommentsController@destroy']);
     });
     Route::group(['prefix' => 'stopword'], function() //游戏屏蔽词
     {
         Route::get('index', ['as' => 'stopword.index', 'uses' => 'Admin_StopwordsController@index']);
+        Route::post('create', ['as' => 'stopword.create', 'uses' => 'Admin_StopwordsController@store']);
         Route::post('{id}/edit', ['as' => 'stopword.edit', 'uses' => 'Admin_StopwordsController@update']);
-        Route::get('{id}/delete', ['as' => 'stopword.delete', 'uses' => 'Admin_StopwordsController@delete']);
+        Route::get('{id}/delete', ['as' => 'stopword.delete', 'uses' => 'Admin_StopwordsController@destroy']);
     });
     Route::group(['prefix' => 'keyword'], function() //游戏关键词
     {

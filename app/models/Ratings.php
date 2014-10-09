@@ -10,4 +10,6 @@ class Ratings extends \Eloquent {
     protected $table = 'ratings';
     protected $guarded    = ['id'];
 
+    public $rules = ['manual' => 'required|numeric|min:1|max:5'];
+    
 }

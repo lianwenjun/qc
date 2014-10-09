@@ -38,7 +38,7 @@
                 <td width="12%">操作</td>
             </tr>
             @foreach ($keywords as $keyword)
-                <tr class="Search_biao_one">
+                <tr class="jq-tr">
                     <td>{{ $keyword->id }}</td>
                     <td>{{ $keyword->word }}</td>
                     <td>{{ $keyword->search_total }}</td>
