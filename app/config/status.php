@@ -27,6 +27,27 @@
         ],
         // 广告
         'ads' => [
+            //状态名称
+            'status' =>[
+                'expired' => '已过期',
+                'noexpire' => '线上展示',
+                'onshelf' => '上架',
+                'offshelf' => '下架',
+            ],
+            //状态颜色
+            'statusColor' => [
+                'expired' => 'class="Red"',
+                'noexpire' => 'class="Green"',
+                'onshelf' => '',
+                'offshelf' => '',
+            ],
+            //时间颜色
+            'timeColor' => [
+                'expired' => 'class="Red"',
+                'noexpire' => '',
+                'onshelf' => '',
+                'offshelf' => '',
+            ],
             //是否上架
             'is_onshelf' => [
                 'yes' => '上架', 'no' => '下架',

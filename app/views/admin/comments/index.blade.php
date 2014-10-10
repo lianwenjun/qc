@@ -62,13 +62,19 @@
                 </tr>
             @endforelse
         </table>
-        <div id="pager">{{ $comments->links() }}</div>
+        @if($comments->getLastPage() > 1)
+            <div id="pager"></div>
+        @endif
     </div>            
 </div>
+<script type="text/javascript" src="{{ asset('js/jquery.pager.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin/common.js') }}"></script>
 <script>
 $(function(){
     $(".jq-tr:odd").addClass("Search_biao_two");
     $(".jq-tr:even").addClass("Search_biao_one");
+    //分页
+    pageInit({{ $comments->getCurrentPage() }}, {{ $comments->getLastPage() }}, {{ $comments->getTotal() }});
     //修改
     $(".jq-editWord").live('click', function() {
         var td = $(this).parents('tr').children('td');
