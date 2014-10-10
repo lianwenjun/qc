@@ -92,5 +92,6 @@ $(function(){
             stepMinute: 1,
             stepSecond: 1
     });
+});
 </script>
 @stop

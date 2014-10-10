@@ -29,7 +29,7 @@
                <span>
                   <input name="title" type="text" class="Search_wenben" size="20" placeholder="请输入关键词" value="{{ Input::get('title') }}"/>
                </span>
-               <span>　<b>日期：</b><input name="updated_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('updated_at')[0]) ? Input::get('updated_at')[0] : '' }}"/><b>-</b><input name="updated_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('updated_at')[1]) ? Input::get('updated_at')[1] : '' }}"/></span>
+               <span>　<b>日期：</b><input name="offshelfed_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('offshelfed_at')[0]) ? Input::get('offshelfed_at')[0] : '' }}"/><b>-</b><input name="offshelfed_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('offshelfed_at')[1]) ? Input::get('offshelfed_at')[1] : '' }}"/></span>
                <input type="submit" value="搜索" class="Search_en" />
             </li>
          </ul>
@@ -85,7 +85,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
       // 日期控件
-      $('input[name="updated_at[]"]').datepicker({dateFormat: 'yy-mm-dd'});
+      $('input[name="offshelfed_at[]"]').datepicker({dateFormat: 'yy-mm-dd'});
 
       // 分页
       pageInit({{ $apps['current_page'] }}, {{ $apps['last_page'] }}, {{ $apps['total'] }});

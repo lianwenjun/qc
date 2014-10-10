@@ -65,20 +65,9 @@
                     <td>{{ $ad->title }}</td>
                     <td>{{ isset($location[$ad->location]) ? $location[$ad->location] : '' }}</td>
                     <td>{{ $ad->sort }}</td>
-                    <td>{{ $ad->onshelfed_at }}</td>
-                    <td>{{ $ad->offshelfed_at }}</td>
-                    <!--应该整理这块-->
-                    @if ($ad->is_onshelf == 'yes')
-                        @if (strtotime($ad->offshelfed_at) < time())
-                            <td>已过期</td>
-                        @elseif (strtotime($ad->onshelfed_at) > time())
-                            <td>线上展示</td>
-                        @else
-                            <td>{{ Config::get('status.ads.is_onshelf')[$ad->is_onshelf] }}</td>
-                        @endif
-                    @else
-                        <td>{{ Config::get('status.ads.is_onshelf')[$ad->is_onshelf] }}</td>
-                    @endif
+                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->onshelfed_at }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->offshelfed_at }}</td>
+                    <td {{ Config::get('status.ads.statusColor')[adsStatus($ad)] }}>{{ Config::get('status.ads.status')[adsStatus($ad)] }}</td>
                     <td>{{ Config::get('status.ads.is_top')[$ad->is_top] }}</td>
                     <td>
                         @if($ad->is_onshelf == 'yes')
@@ -94,13 +83,20 @@
                 <tr>
             @endforelse
         </table>
-        <div id="pager">{{ $ads->links() }}</div>
+        @if($ads->getLastPage() > 1)
+            <div id="pager"></div>
+        @endif
     </div>
 </div>
+<script type="text/javascript" src="{{ asset('js/jquery.pager.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin/common.js') }}"></script>
 <script>
 $(function(){
     $(".jq-tr:odd").addClass("Search_biao_two");
     $(".jq-tr:even").addClass("Search_biao_one");
+    //分页
+    pageInit({{ $ads->getCurrentPage() }}, {{ $ads->getLastPage() }}, {{ $ads->getTotal() }});
+    
 });
 </script>
 @stop

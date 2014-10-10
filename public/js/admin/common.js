@@ -102,14 +102,7 @@ function initCarousel()
             items:2,
             loop:false,
             margin:10,
-            lazyLoad:true, //in this example only applied on video thumbnails
-            merge: true, 
-            video: true,
-            responsive:{    
-                480:{items:2},
-                678:{items:2},
-                960:{items:2}
-            }
+            lazyLoad : false,
         });
 
         initOwl = true;
@@ -117,7 +110,7 @@ function initCarousel()
     } else {
         initOwl = false;
         $('.owl-carousel').data('owlCarousel').reinit({
-            singleItem : initOwl
+            items: 2
         });
 
         initOwl = true;
