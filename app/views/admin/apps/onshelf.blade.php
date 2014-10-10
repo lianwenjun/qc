@@ -10,6 +10,7 @@
 <script type="text/javascript" src="{{ asset('js/jquery-ui-1.8.23.custom.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-addon.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-zh-CN.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jurlp.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/owl.carousel.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.pager.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/admin/common.js') }}"></script>
@@ -93,17 +94,17 @@
                   <b>查询：</b>
                   <select name="type">
                      <option value="">--全部--</option>
-                     <option value="title">游戏名称</option>
-                     <option value="pack">游戏包名</option>
-                     <option value="tag">游戏标签</option>
-                     <option value="cate">游戏分类</option>
-                     <option value="version">游戏版本号</option>
+                     <option value="title" @if(Input::get('type') == 'title')selected="selected"@endif>游戏名称</option>
+                     <option value="pack" @if(Input::get('type') == 'pack')selected="selected"@endif>游戏包名</option>
+                     <option value="tag" @if(Input::get('type') == 'tag')selected="selected"@endif>! 游戏标签</option>
+                     <option value="cate" @if(Input::get('type') == 'cate')selected="selected"@endif>! 游戏分类</option>
+                     <option value="version" @if(Input::get('type') == 'version')selected="selected"@endif>游戏版本号</option>
                   </select>
                </span>
                <span>
                   <input name="keyword" type="text" class="Search_wenben" size="20" placeholder="请输入关键词" value="{{ Input::get('keyword') }}"/>
                </span>
-               <span>　<b>安装包大小：</b><input name="size_int[]" type="text" style="width: 80px" class="Search_wenben" value="{{ isset(Input::get('size_int')[0]) ? Input::get('size_int')[0] : '' }}"/><b>-</b><input name="size_int[]" type="text" style="width: 80px" class="Search_wenben" value="{{ isset(Input::get('size_int')[1]) ? Input::get('size_int')[1] : '' }}"/></span>
+               <span>　<b>安装包大小：</b><input name="size_int[]" type="text" placeholder="10k" style="width: 80px" class="Search_wenben" value="{{ isset(Input::get('size_int')[0]) ? Input::get('size_int')[0] : '' }}"/><b>-</b><input name="size_int[]" type="text" placeholder="10m" style="width: 80px" class="Search_wenben" value="{{ isset(Input::get('size_int')[1]) ? Input::get('size_int')[1] : '' }}"/></span>
                <span>　<b>日期：</b><input name="onshelfed_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('onshelfed_at')[0]) ? Input::get('onshelfed_at')[0] : '' }}"/><b>-</b><input name="onshelfed_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('onshelfed_at')[1]) ? Input::get('onshelfed_at')[1] : '' }}"/></span>
                <input type="submit" value="搜索" class="Search_en" />
             </li>
@@ -126,11 +127,11 @@
             <td width="8%">游戏名称</td>
             <td width="12%">包名</td>
             <td width="7%">游戏分类</td>
-            <td width="5%" style="cursor:pointer">大小 ↑</td>
+            <td width="5%" style="cursor:pointer" class="jq-sort" data-field='size_int' data-order='' data-title="大小">大小↑↓</td>
             <td width="6%">版本号</td>
             <td width="7%">预览</td>
-            <td width="7%" style="cursor:pointer">下载量 ↑</td>
-            <td width="8%" style="cursor:pointer">上架时间 ↑</td>
+            <td width="7%" style="cursor:pointer" class="jq-sort" data-field='download_counts' data-order='' data-title="下载量">下载量↑↓</td>
+            <td width="8%" style="cursor:pointer" class="jq-sort" data-field='onshelfed_at' data-order='' data-title="上架时间">上架时间↑↓</td>
             <td width="18%">操作</td>
          </tr>
          @foreach($apps['data'] as $k => $app)
@@ -168,32 +169,98 @@
       $('input[name="onshelfed_at[]"]').datepicker({dateFormat: 'yy-mm-dd'});
 
       // 下架
-     $('.jq-dooffshelf').click(function() {
-         var link = $(this).attr('href');
-         $.jBox("<p style='margin: 10px'>您要下架吗？</p>", {
-             title: "<div class='ask_title'>下架游戏</div>",
-             showIcon: false,
-             draggable: false,
-             buttons: {'确定':true, "算了": false},
-             submit: function(v, h, f) {
+      $('.jq-dooffshelf').click(function() {
+        var link = $(this).attr('href');
+        $.jBox("<p style='margin: 10px'>您要下架吗？</p>", {
+          title: "<div class='ask_title'>下架游戏</div>",
+          showIcon: false,
+          draggable: false,
+          buttons: {'确定':true, "算了": false},
+          submit: function(v, h, f) {
 
-                 if(v) {
-                     var form = document.createElement('form');
+            if(v) {
+              var form = document.createElement('form');
 
-                     $(this).after($(form).attr({
-                         method: 'post',
-                         action: link
-                     }).append('<input type="hidden" name="_method" value="PUT" />'));
-                     $(form).submit();
-                 }
-             }
-         });
+              $(this).after($(form).attr({
+                method: 'post',
+                action: link
+              }).append('<input type="hidden" name="_method" value="PUT" />'));
+              $(form).submit();
+            }
+          }
+        });
 
-         return false;
-     });
+        return false;
+      });
 
-      // 分页
-      pageInit({{ $apps['current_page'] }}, {{ $apps['last_page'] }}, {{ $apps['total'] }});
+      // 排序
+      $('.jq-sort').click(function() {
+        // initSort();
+
+        var order = '';
+        if($(this).attr('data-order') == '') {
+          order = 'desc';
+        } else {
+          order = $(this).attr('data-order');
+        }
+
+        var field = $(this).attr('data-field');
+
+
+        var url = $.jurlp($(location).attr('href'));
+
+        var orderStr = url.query().orderby;
+        if(typeof(orderStr) != 'undefined') {
+           var newurl = $(location).attr('href').replace('/[\?|\&]orderby='+orderStr, '');
+        }
+
+        // var t = url.qurey().toString();
+        console.log(location.search);
+
+        var singleQuery = false;
+
+
+        var url = '?orderby=ddd.xxx';
+        console.log(/\?orderby/.test(url));
+        return;
+        
+
+        url.query('orderby=' + field + '.' + order);
+
+        console.log(url.query());
+        return ;
+        location.href = url.url();
+      });
+
+    // 分页
+    pageInit({{ $apps['current_page'] }}, {{ $apps['last_page'] }}, {{ $apps['total'] }});
+
+    initSort();
    });
+
+   /**
+    * 初始化排序dom
+    */
+   function initSort()
+   {
+      var url = $.jurlp($(location).attr('href'));
+
+      var orderStr = url.query().orderby;
+
+      if(typeof(orderStr) != 'undefined') {
+        var orderArr = orderStr.split('.');
+        $('.jq-sort').each(function() {
+          if($(this).attr('data-field') == orderArr[0]) {
+              if(orderArr[1] == 'desc') {
+                $(this).attr('data-order', 'asc');
+                $(this).html($(this).attr('data-title') + '↓');
+              } else {
+                $(this).attr('data-order', 'desc');
+                $(this).html($(this).attr('data-title') + '↑');
+              }
+          }
+        });
+      }
+   }
 </script>
 @stop
