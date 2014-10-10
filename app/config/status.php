@@ -32,7 +32,7 @@
                 'expired' => '已过期',
                 'noexpire' => '线上展示',
                 'onshelf' => '上架',
-                'offshelf' => '下架',
+                'offshelf' => '已下架',
             ],
             //状态颜色
             'statusColor' => [
