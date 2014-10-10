@@ -17,11 +17,9 @@ class Admin_AppsController extends \Admin_BaseController {
 
         $catesModel = new Cates;
         $apps  = $catesModel->addCatesInfo($apps);
-        $cates = $catesModel->allCates();
 
         return View::make('admin.apps.onshelf')
-                   ->with('apps', $apps)
-                   ->with('cates', $cates);
+                   ->with('apps', $apps);
     }
 
     /**
@@ -124,7 +122,7 @@ class Admin_AppsController extends \Admin_BaseController {
      */
     public function history($id)
     {
-        
+
 
     }
 
@@ -156,6 +154,8 @@ class Admin_AppsController extends \Admin_BaseController {
     {
         $appModel = new Apps();
         $app = $appModel->preview($id);
+
+        $app['updated_at'] = date('Y-m-d', strtotime($app['updated_at']));
 
         if($app) {
             $info = ['success' => true, 'data' => $app];
