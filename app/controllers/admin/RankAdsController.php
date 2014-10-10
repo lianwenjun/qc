@@ -55,9 +55,10 @@ class Admin_rankAdsController extends \BaseController {
     {
         $adsModel = new Ads();
         $validator = Validator::make(Input::all(), $adsModel->rankadsCreateRules);
+        $msg = "添加失败";
         if ($validator->fails()){
             Log::error($validator->messages());
-            $msg = "添加失败";
+            
             return Redirect::route('rankads.create')->with('msg', $msg);
         }
         $fields = [
@@ -72,12 +73,14 @@ class Admin_rankAdsController extends \BaseController {
             'is_onshelf' => 'yes',
             ];
         //creater用法出错了？？？
+        //检测游戏是否存在
         foreach ($fields as $key => $value) {
             $adsModel->$key = $value;
         }
         if ($adsModel->save()) {
             $msg = "添加成功";
-            return Redirect::route('appsads.index')->with('msg', $msg);
+            Log::error($msg);
+            return Redirect::route('rankads.index')->with('msg', $msg);
         }
         return Redirect::route('rankads.index')->with('msg', $msg);
     }
@@ -154,17 +157,21 @@ class Admin_rankAdsController extends \BaseController {
     public function offshelf($id)
     {
         $adsModel = new Ads();
-        $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
+        $ad = $adsModel->where('id', $id)->where('type', $this->type)->where('is_onshelf', 'yes')->first();
         if (!$ad) {
             $msg = '亲，你要下架的' . $id . '数据不存在';
-            return Redirect::back();
+            return Request::header('referrer') ? Redirect::back()
+                ->with('msg', $msg) : Redirect::route('rankads.index')->with('msg', $msg);
         }
-        $msg = '亲，下架失败了';
+        $msg = '亲，#' . $id . '下架失败了';
         $ad->is_onshelf = 'no';
-        if (!$ad->save()){
+        if ($ad->save()){
             $msg = '亲，#' . $id . '下架成功了';
+            return Request::header('referrer') ? Redirect::back()
+                ->with('msg', $msg) : Redirect::route('rankads.index')->with('msg', $msg);
         }
-        return Redirect::back();
+        return Request::header('referrer') ? Redirect::back()
+                ->with('msg', $msg) : Redirect::route('rankads.index')->with('msg', $msg);
     }
     
     /**
