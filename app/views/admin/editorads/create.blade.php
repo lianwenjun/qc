@@ -129,11 +129,11 @@ $(function(){
     });
     //时间插件
     $(".jq-ui-timepicker").datetimepicker({
-            //showSecond: true,
-            //timeFormat: 'HH:mm:ss',
-            //stepHour: 1,
-            //stepMinute: 10,
-            //stepSecond: 10
+            showSecond: true,
+            timeFormat: 'HH:mm:ss',
+            stepHour: 1,
+            stepMinute: 10,
+            stepSecond: 10
     });
     //图片上传
     UPLOADURL = '{{ route("appsads.upload") }}';

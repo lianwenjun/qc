@@ -11,8 +11,6 @@ a:hover{ text-decoration:none; color:#C00}
 html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅黑"; background:#f0f0f0} 
 
 
-
-
 .Content_right_title{ background:#FFF; border:#ccc solid 1px; margin-right:20px; margin-top:20px; height:auto;}
 .Content_right_bottom{ background:#FFF; border:#ccc solid 1px;margin-right:20px; margin-top:20px; height:auto;}
 
@@ -60,12 +58,12 @@ html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅�
 .Search_biao_font{background:#e2e2e2; color:#333; cursor:pointer; font-weight:bold ;}
 .Search_biao_one{background:#e2e2e2; color:#333; cursor:pointer}
 .Search_biao_one:hover{padding:7px 0; padding-left:10px; background:#e3f0ff; color:#333; font-size:12px; border-top:#fff 1px solid; cursor:pointer}
-.Search_biao_one td{padding:7px 0; padding-left:10px; color:#333; font-size:12px; border-top:#fff 1px solid; }
+.Search_biao_one td{padding:7px 0; padding-left:10px; font-size:12px; border-top:#fff 1px solid; }
 
 
 .Search_biao_two{background:#f3f4f6; color:#333; cursor:pointer}
 .Search_biao_two:hover{padding:7px 0; padding-left:10px; background:#e3f0ff; color:#333; font-size:12px; border-top:#fff 1px solid; cursor:pointer}
-.Search_biao_two td{padding:7px 0; padding-left:10px; color:#333; font-size:12px; border-top:#fff 1px solid; }
+.Search_biao_two td{padding:7px 0; padding-left:10px; font-size:12px; border-top:#fff 1px solid; }
 
 .Search_biao_one td h6{float:left; font-size:12px; font-weight:normal; padding:0px 2px;}
 .Search_biao_two td h6{float:left; font-size:12px; font-weight:normal; padding:0px 2px;}
@@ -400,3 +398,6 @@ filter:Alpha(opacity=60);}
 .Content_bottom{ height:36px; line-height:36px; margin-top:1px; padding-left:15px; font-size:12px; color:#666; overflow:hidden; text-align:right; padding-right:10px;}
 .Content_bottom a{margin:0 5px;}
 /*版权*/
+/*全局颜色变量*/
+.Red{ color:#FF0000;}
+.Green{ color:#00CC33;}
