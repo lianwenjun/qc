@@ -31,9 +31,14 @@ class Apps extends \Eloquent {
     // 可以搜索字段
     public $searchEnable = [
         'title',
+        'cate_id',
+        'pack',
+        'version',
+        'size_int',
         'created_at',
         'updated_at',
-        'cate_id',
+        'onshelfed_at',
+        'offshelfed_at'
     ];
 
     /**
@@ -52,6 +57,35 @@ class Apps extends \Eloquent {
     }
 
     /**
+     * 解析前处理
+     *
+     * 可选字段预处理，$data数据里面 type 索引必须放在 keyword 前面
+     *
+     * @param $data array 条件数据
+     *
+     * @return array
+     */
+    public function beforeQueryParse($data)
+    {
+        $field = '';
+        foreach ($data as $key => $value) {
+            if($key == 'type' && !empty($value)) {
+                $data[$value] = '';
+                $field = $value;
+            }
+
+            if($key == 'keyword' && !empty($value) && !empty($field)) {
+                $data[$field] = $value;
+            }
+        }
+
+        if(isset($data['type'])) unset($data['type']);
+        if(isset($data['keyword'])) unset($data['keyword']);
+
+        return $data;
+    }
+
+    /**
      * 解析条件
      *
      * @param $query obj   query
@@ -62,30 +96,49 @@ class Apps extends \Eloquent {
     public function queryParse($query, $data)
     {
 
+        $data = $this->beforeQueryParse($data);
+
         foreach($data as $key => $value) {
 
             if(! in_array($key, $this->searchEnable)) break;
 
             if($key == 'title' && !empty($value)) {
                 $query->where('title', 'like', '%' . $value . '%');
-            }
-
-            if($key == 'cate_id' && !empty($value)) {
+            } elseif($key == 'cate_id' && !empty($value)) {
                 $query->whereRaw("`id` in (select `app_id` from `app_cates` where `cate_id` = '{$value}')");
-            }
+            } elseif(is_array($value) && count($value) == 2) { // 查询范围
 
-            if(is_array($value) && count($value) == 2) {
+                // 处理空值
                 $unique = array_unique($value);
-
                 if(isset($unique[0]) && !empty($unique[0])) {
+
+                    // 时间处理
                     if(substr($key, -3) == '_at') {
                         $value[1] = date('Y-m-d', strtotime($value[1]) + 24 * 3600);
                     }
+
+                    // 占空间大小处理
+                    if($key == 'size_int') {
+                        foreach($value as $k => $v) {
+                            if(substr($v, -1) == 'm' || substr($v, -1) == 'm') {
+                                $value[$k] = intval($v) * 1024;
+                            } elseif(substr($v, -1) == 'g' || substr($v, -1) == 'g') {
+                                $value[$k] = intval($v) * 1024 * 1024;
+                            } else {
+                                $value[$k] = intval($v);
+                            }
+                        }
+                    }
+                    // print_r($value);
                     $query->whereBetween($key, $value);
                 }
+
+            } else {
+                $query->where($key, $value);
             }
         }
 
+        // 排序
         // $query->orderBy('id', 'desc');
 
         return $query;
