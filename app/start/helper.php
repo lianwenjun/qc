@@ -2,7 +2,7 @@
 /**
  * 视图辅助函数
  */
-
+//广告列表的状态判断
 function adsStatus($ad) {
     $res = '';
     if ($ad->is_onshelf == 'yes'){
