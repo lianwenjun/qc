@@ -53,7 +53,7 @@
                 <td width="13%">上架时间</td>
                 <td width="13%">下线时间</td>
                 <td width="7%">状态</td>
-                <td width="7%">排列序号</td>
+                <!--td width="7%">排列序号</td>-->
                 <td width="20%">广告词</td>
                 <td width="15%">操作</td>
             </tr>
@@ -62,10 +62,10 @@
                     <td>{{ $ad->id }}</td>
                     <td><img src="{{ $ad->image }}" width="28" height="28" /></td>
                     <td>{{ $ad->title }}</td>
-                    <td>{{ $ad->onshelfed_at }}</td>
-                    <td>{{ $ad->offshelfed_at }}</td>
-                    <td>{{ $ad->is_onshelf }}</td>
-                    <td>{{ $ad->sort }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->onshelfed_at }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->offshelfed_at }}</td>
+                    <td {{ Config::get('status.ads.statusColor')[adsStatus($ad)] }}>{{ Config::get('status.ads.status')[adsStatus($ad)] }}</td>
+                    <!--<td>{{ $ad->sort }}</td>-->
                     <td>{{ $ad->word }}</td>
                     <td>
                         @if($ad->is_onshelf == 'yes')
@@ -81,15 +81,20 @@
                 <tr>
             @endforelse
         </table>
-        <div id="pager">{{ $ads->links() }}</div>
+        @if($ads->getLastPage() > 1)
+            <div id="pager"></div>
+        @endif
     </div>            
                      
 </div>
-
+<script type="text/javascript" src="{{ asset('js/jquery.pager.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin/common.js') }}"></script>
 <script>
 $(function(){
     $(".jq-tr:odd").addClass("Search_biao_two");
     $(".jq-tr:even").addClass("Search_biao_one");
+    //分页
+    pageInit({{ $ads->getCurrentPage() }}, {{ $ads->getLastPage() }}, {{ $ads->getTotal() }});
 });
 </script>
 @stop

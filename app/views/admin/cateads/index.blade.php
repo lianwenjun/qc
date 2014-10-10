@@ -28,14 +28,21 @@
                 <tr>
             @endforelse
         </table>
-        <div id="pager">{{ $cateads->links() }}</div>
+        @if($cateads->getLastPage() > 1)
+            <div id="pager"></div>
+        @endif
     </div>               
 </div>
 <script src="{{ asset('js/admin/plupload/plupload.full.min.js') }}" type="text/javascript"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.pager.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin/common.js') }}"></script>
 <script>
 $(function(){
     $(".jq-tr:odd").addClass("Search_biao_two");
     $(".jq-tr:even").addClass("Search_biao_one");
+
+    //分页
+    pageInit({{ $cateads->getCurrentPage() }}, {{ $cateads->getLastPage() }}, {{ $cateads->getTotal() }});
     $(".jq-cateads-upload").click(function() {
         //alert("更新图片");
         var tr = $(this).parents('tr');

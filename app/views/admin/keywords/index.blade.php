@@ -69,15 +69,22 @@
                     <td>没数据</td>
                 </tr>
             @endforelse
-       </table>
-       <div id="pager">{{ $keywords->links() }}</div>
+        </table>
+        @if($keywords->getLastPage() > 1)
+            <div id="pager"></div>
+        @endif
       </div>                   
 </div>
+<script type="text/javascript" src="{{ asset('js/jquery.pager.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin/common.js') }}"></script>
 <script>
 $(function(){
     CREATEURL = "{{ route('keyword.store') }}";
     $(".jq-tr:odd").addClass("Search_biao_two");
     $(".jq-tr:even").addClass("Search_biao_one");
+    //分页
+    pageInit({{ $keywords->getCurrentPage() }}, {{ $keywords->getLastPage() }}, {{ $keywords->getTotal() }});
+
     $("input[name=word]").focus(function() {
         $(this).val("");
     });
