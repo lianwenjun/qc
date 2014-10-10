@@ -98,6 +98,8 @@ VALUES
 /*----------------------------------------------------------
 | 测试 rating 数据库
 ----------------------------------------------------------*/
+DROP TABLE IF EXISTS `ratings`;
+
 CREATE TABLE `ratings` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `app_id` int(11) NOT NULL,
@@ -164,6 +166,25 @@ VALUES
 
 
 /*----------------------------------------------------------
+| 测试 cate_ads 数据库
+----------------------------------------------------------*/
+DROP TABLE IF EXISTS `cate_ads`;
+
+CREATE TABLE `cate_ads` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cate_id` int(10) unsigned NOT NULL COMMENT '分类ID',
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '分类名',
+  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '分类图片',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+insert into cate_ads (cate_id, title) select id as cate_id, title from cates where deleted_at is not null;
+
+/*----------------------------------------------------------
 | 测试 keywords 数据库
 ----------------------------------------------------------*/
 DROP TABLE IF EXISTS `keywords`;
@@ -180,6 +201,17 @@ CREATE TABLE `keywords` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+INSERT INTO `keywords` (`id`, `word`, `search_total`, `is_slide`, `creator`, `operator`, `deleted_at`, `created_at`, `updated_at`)
+VALUES
+  (1, '无聊', 0, 'yes', 0, 1, NULL, '0000-00-00 00:00:00', '2014-09-19 07:55:20'),
+  (3, '飞机', 0, 'no', 0, 1, NULL, '0000-00-00 00:00:00', '2014-09-19 07:55:55'),
+  (4, '坦克', 0, 'no', 0, 1, NULL, '0000-00-00 00:00:00', '2014-09-19 07:59:07'),
+  (5, '辽宁号', 0, 'no', 0, 0, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+  (6, '我是测试', 0, 'no', 1, 1, NULL, '2014-09-18 17:31:29', '2014-09-18 17:31:29'),
+  (7, '我是测试', 0, 'no', 1, 1, NULL, '2014-09-18 17:31:42', '2014-09-18 17:31:42'),
+  (8, '我是测试', 0, 'no', 1, 1, NULL, '2014-09-18 17:31:43', '2014-09-18 17:31:43');
 
 
 /*----------------------------------------------------------
@@ -249,29 +281,14 @@ VALUES
   (28, 3, '填充游戏A君', 'new', '/ads/f/5/f54a84f41128eb877ec408ec40d82515.jpg', '输入游戏名称检测222', 0, 'editor', 'yes', 'no', '2014-10-06 11:08:44', '2014-10-08 12:00:00', NULL, '2014-09-30 05:11:21', '2014-10-08 03:31:46'),
   (29, 2, '上传游戏B君', 'hotdown', '/ads/9/e/9e70c11bb130005555bfe1cfa3b78ccf.jpg', '来点新东西', 0, 'editor', 'yes', 'yes', '2014-10-09 12:00:00', '2014-10-31 12:00:00', NULL, '2014-10-08 03:46:55', '2014-10-08 03:47:02');
 
-
-/*----------------------------------------------------------
-| 测试 cate_ads 数据库
-----------------------------------------------------------*/
-
-CREATE TABLE `cate_ads` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `cate_id` int(10) unsigned NOT NULL COMMENT '分类ID',
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '分类名',
-  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '分类图片',
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-INSERT INTO `cate_ads` (`id`, `cate_id`, `title`, `image`, `deleted_at`, `created_at`, `updated_at`)
+INSERT INTO `ads` (`id`, `app_id`, `title`, `location`, `image`, `word`, `sort`, `type`, `is_onshelf`, `is_top`, `onshelfed_at`, `offshelfed_at`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
-  (2, 24, '单机游戏', '', NULL, '2014-09-26 02:42:10', '2014-09-26 02:42:10'),
-  (3, 25, '横版游戏', '', NULL, '2014-09-26 02:42:24', '2014-09-26 02:42:24'),
-  (4, 26, '飞升游戏', '', NULL, '2014-09-26 02:42:34', '2014-09-26 02:42:34'),
-  (5, 27, '来点东西', '', NULL, '2014-09-26 05:35:36', '2014-09-26 05:35:36');
+  (13, 4, '可怜软件A君', 'suggest', '/ads/3/e/3ee1125c624089a91a0d50695f3c17c4.jpg', '', 0, 'rank', 'yes', 'yes', '2014-09-29 12:00:00', '2014-09-30 12:00:00', '2014-09-29 16:17:12', '2014-09-29 10:00:07', '2014-09-29 16:17:12'),
+  (14, 4, '可怜软件A君', 'suggest', '/ads/3/e/3ee1125c624089a91a0d50695f3c17c4.jpg', '', 0, 'rank', 'yes', 'yes', '2014-09-29 12:00:00', '2014-09-30 12:00:00', '2014-09-29 16:16:38', '2014-09-29 10:00:07', '2014-09-29 16:16:38'),
+  (15, 4, '可怜软件A君', 'suggest', '/ads/3/e/3ee1125c624089a91a0d50695f3c17c4.jpg', '', 0, 'rank', 'no', 'yes', '2014-09-29 12:00:00', '2014-09-30 12:00:00', NULL, '2014-09-29 10:00:07', '2014-09-29 16:40:04'),
+  (16, 4, '可怜软件A君', 'suggest', '/ads/3/e/3ee1125c624089a91a0d50695f3c17c4.jpg', '', 0, 'rank', 'no', 'yes', '2014-09-29 12:00:00', '2014-09-30 12:00:00', NULL, '2014-09-29 10:00:07', '2014-09-29 16:40:13'),
+  (17, 4, '可怜软件A君', 'suggest', '/ads/3/e/3ee1125c624089a91a0d50695f3c17c4.jpg', '', 0, 'rank', 'yes', 'yes', '2014-09-29 12:00:00', '2014-09-30 12:00:00', NULL, '2014-09-29 10:00:07', '2014-09-29 16:14:02');
+
 
 /*----------------------------------------------------------
 | 测试 stopword 数据库

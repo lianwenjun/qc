@@ -1,17 +1,10 @@
 @extends('admin.layout')
 
 @section('content')
-<link href="{{ asset('css/admin/timepicker/jquery-ui-1.11.0.custom.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/admin/timepicker/jquery-ui-timepicker-addon.css') }}" rel="stylesheet" type="text/css" />
-<style>
-.autocomplete-suggestions { border: 1px solid #999; background: #FFF; cursor: default; overflow: auto; -webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); -moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); }
-.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
-.autocomplete-no-suggestion { padding: 2px 5px;}
-.autocomplete-selected { background: #F0F0F0; }
-.autocomplete-suggestions strong { font-weight: bold; color: #000; }
-.autocomplete-group { padding: 2px 5px; }
-.autocomplete-group strong { font-weight: bold; font-size: 16px; color: #000; display: block; border-bottom: 1px solid #000; }
-</style>
+<link href="{{ asset('css/admin/timepicker/jquery-ui-1.11.0.custom.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/admin/autocomplete/jquery-autocomplete.css') }}" rel="stylesheet" type="text/css" />
+
 <div class="Content_right_top Content_height">
     <div class="Theme_title"><h1>广告位管理 <span>编辑精选管理</span><b>添加</b></h1></div>                
     <div class="Search_title">游戏信息</div>
@@ -63,7 +56,7 @@
           
             <tr>
                 <td  class="Search_lei">广告词：</td>
-                <td><input name="word" type="text" class="Search_text" value="" placeholder="应用名称输入时自动匹配" style="width:60%" /></td>
+                <td><input name="word" type="text" class="Search_text" value="" placeholder="" style="width:60%" /></td>
             </tr>
           
             <tr>
@@ -75,8 +68,8 @@
             <tr>
                 <td  class="Search_lei">上线时间：</td>
                 <td>
-                    <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="jq-ui-timepicker" value=""></h6>
-                    <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="jq-ui-timepicker" value=""></h6>
+                    <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="Search_text jq-ui-timepicker" value=""></h6>
+                    <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="Search_text jq-ui-timepicker" value=""></h6>
                 </td>
             </tr>
           
@@ -136,11 +129,11 @@ $(function(){
     });
     //时间插件
     $(".jq-ui-timepicker").datetimepicker({
-            showSecond: true,
-            timeFormat: 'hh:mm:ss',
-            stepHour: 1,
-            stepMinute: 1,
-            stepSecond: 1
+            //showSecond: true,
+            //timeFormat: 'HH:mm:ss',
+            //stepHour: 1,
+            //stepMinute: 10,
+            //stepSecond: 10
     });
     //图片上传
     UPLOADURL = '{{ route("appsads.upload") }}';
