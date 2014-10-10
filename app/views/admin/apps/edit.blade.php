@@ -22,7 +22,7 @@ tinymce.init({
          "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
          "save table contextmenu directionality emoticons template paste textcolor"
    ],
-   toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor ", 
+   toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor ",
    style_formats: [
         {title: 'Bold text', inline: 'b'},
         {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
@@ -32,7 +32,7 @@ tinymce.init({
         {title: 'Table styles'},
         {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
     ]
- }); 
+ });
 </script>
 <style>
 body.dragging, body.dragging * {
@@ -240,7 +240,7 @@ ul.ui-sortable li.placeholder:before {
     // 初始化标签
     function initTags() {
         var tagsText = $('.jq-initTags').text();
-        
+
         var tags = tagsText.split(", ");
         $('input[type="checkbox"]').each(function() {
             for(i in tags) {
@@ -273,7 +273,7 @@ ul.ui-sortable li.placeholder:before {
                            "<div class='add_update_Label'>" +
                               "<div class='add_update_title'>标签内容</div>" +
                               @foreach($tags as $k => $cate)
-                              "<div id='cate_{{$k}}'>"+
+                              "<div class='tags-list' id='cate_{{$k}}'>"+
                                   "<div class='add_update_title_lei'>{{ $cate['title'] }}</div><div class='add_update_lei'><ul>"+
                                      @if(isset($cate['tags']))
                                         @foreach($cate['tags'] as $tag)
@@ -290,12 +290,12 @@ ul.ui-sortable li.placeholder:before {
 
         // 弹出分类选择
         $(".jq-cates").click(function(){
-            $.jBox(cateSelect, {  
-                title: "<div class=ask_title>游戏分类</div>",  
-                width: 650,  
+            $.jBox(cateSelect, {
+                title: "<div class=ask_title>游戏分类</div>",
+                width: 650,
                 height:450,
                 border: 5,
-                showType: 'slide', 
+                showType: 'slide',
                 opacity: 0.3,
                 showIcon:false,
                 top: '20%',
@@ -307,7 +307,7 @@ ul.ui-sortable li.placeholder:before {
                 closed:function(){
                     $("body").css("overflow-y","auto");
                 }
-                 
+
             });
         });
 
@@ -359,7 +359,7 @@ ul.ui-sortable li.placeholder:before {
             url : '{{ URL::route('apps.appupload') }}/dontSave',
             chunk_size: '1mb',
             flash_swf_url : '../js/Moxie.swf',
-            
+
             filters : {
                 max_file_size : '2048mb',
                 mime_types: [
@@ -404,7 +404,7 @@ ul.ui-sortable li.placeholder:before {
             for(i in response.result) {
                 var $this = $('[class^="upload-' + i + '"]');
 
-                
+
                 if(typeof($this.attr('class')) != 'undefined') {
                     var className = $this.attr('class');
                     var regexp = /upload-\w+-\w+/gi;
@@ -436,7 +436,7 @@ ul.ui-sortable li.placeholder:before {
             url : '{{ URL::route('apps.imageupload') }}',
             chunk_size: '1mb',
             flash_swf_url : '../js/Moxie.swf',
-            
+
             filters : {
                 max_file_size : '10mb',
                 file_pixel_size: '220x370',
@@ -466,7 +466,7 @@ ul.ui-sortable li.placeholder:before {
 
                 img.destroy();
                 img = null;
-             
+
                 if (!result) {
                     self.trigger('Error', {
                         code : plupload.IMAGE_DIMENSIONS_ERROR,
@@ -560,7 +560,7 @@ ul.ui-sortable li.placeholder:before {
                     summary: "required",
                     "images[]": "images",
                     changes: "required"
-                    
+
                 },
                 messages: {
                     checkCate: {required: '分类为必填'},
@@ -580,11 +580,11 @@ ul.ui-sortable li.placeholder:before {
                 $('input[name="images[]"][value=""]').remove();
                 $('#form').attr('action', $(this).attr('data-action')).submit();
             } else {
-              $.jBox("<center style='margin: 10px'>带<span class='required'>*</span>号为必填项</center>", {  
+              $.jBox("<center style='margin: 10px'>带<span class='required'>*</span>号为必填项</center>", {
                   title: "<div class=ask_title>温馨提示</div>",
                   height: 30,
                   border: 5,
-                  showType: 'slide', 
+                  showType: 'slide',
                   opacity: 0.3,
                   showIcon:false,
                   top: '20%',
@@ -612,6 +612,6 @@ ul.ui-sortable li.placeholder:before {
         });
 
     });
-    
+
 </script>
 @stop
