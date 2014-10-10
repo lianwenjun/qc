@@ -8,7 +8,7 @@ select{font-family:"微软雅黑";}
 option{padding-right:10px;}
 a{ text-decoration:none; color:#333}
 a:hover{ text-decoration:none; color:#C00}
-html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅黑"; background:#f0f0f0} 
+html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅黑"; background:#f0f0f0}
 
 
 .Content_right_title{ background:#FFF; border:#ccc solid 1px; margin-right:20px; margin-top:20px; height:auto;}
@@ -30,7 +30,7 @@ html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅�
 .Theme_title a:hover{font-size:12px;  padding:2px 10px; color:#ff0;}
 
 .Theme_title .breadcrumb{float: left; overflow:hidden;}
-.Theme_title .breadcrumb li{float:left; line-height: 38px;} 
+.Theme_title .breadcrumb li{float:left; line-height: 38px;}
 .Theme_title .breadcrumb a{font-size: 16px; background: none; border: none; color:#333; margin: 0px;}
 .Theme_title .breadcrumb .active{ color:#555;}
 
@@ -73,7 +73,7 @@ html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅�
 .Search_title{font-size:16px; font-weight:bold; line-height:40px; margin:0px 15px; padding-top:10px;}
 
 .Search_lei{ font-weight:bold; line-height:22px; text-align:right; }
-.Search_text{height:20px; line-height:20px; border:#666 solid 1px; font-family:"微软雅黑"; padding-left:5px; width:80%; font-size:12px;}
+.Search_text{line-height:20px; border:#666 solid 1px; font-family:"微软雅黑"; padding-left:3px; width:80%; font-size:12px;}
 .Search_select{height:21px; line-height:22px; border:#666 solid 1px; font-family:"微软雅黑";   font-size:12px; margin-right:5px;}
 .Search_select option{padding-right:10px;}
 .Search_textarea{height:150px; line-height:18px; border:#666 solid 1px; font-family:"微软雅黑"; padding-left:5px; width:80%; font-size:12px;}
@@ -150,7 +150,12 @@ html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅�
 .tankuang select{ border:#666 solid 1px; font-family:"微软雅黑"; color:#333}
 .tankuang_fan{color:#C00; font-size:14px;}
 .Search_en{ position:relative; cursor:pointer; behavior: url(css/iecss3/ie-css3.htc); z-index:1; color:#fff;  -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px;  background:url(../../images/admin/hover_img2.jpg) left top repeat-x #1b4182; border:#0e377d solid 1px; font-size:14px; padding:1px 8px 2px 8px; font-family:"微软雅黑"; display:inline-block; margin-right:5px;}
-.ask_title{text-align:left; font-size:16px; }
+.ask_title{text-align:left;  font-size:14px; font-family:"微软雅黑"; }
+
+.no-data{text-align: center; font-size: 14px; line-height: 40px;}
+.required{padding-right: 3px}
+.fail{padding-left: 15px; font-size: 14px; font-family: "微软雅黑";  line-height: 40px; color: red;}
+.success{padding-left: 15px; font-size: 14px; font-family: "微软雅黑";  line-height: 40px; color: red;}
 
 
 .fileinput-button {
@@ -161,7 +166,7 @@ html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅�
   background:#e4e4e4; padding:5px 10px; font-size:14px;
   behavior: url(css/iecss3/ie-css3.htc); z-index:1; color:#333;  -moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px; border:#797979 solid 1px; font-family:"微软雅黑"; cursor:pointer;
    }
-   
+
  .fileinput{background:#fbfbfb; border:#d0d0d0 solid 1px; width:480px; margin-top:20px; height:205px; scrollbar-3dlight-color:#DDD; scrollbar-arrow-color:#333; scrollbar-base-color:#cfcfcf; scrollbar-darkshadow-color:#fff; scrollbar-face-color:#cfcfcf; scrollbar-highlight-color:#fff; scrollbar-shadow-color:#595959; overflow-y:auto; overflow-x:hidden}
 .fileinput ul{padding:5px 15px;}
 .fileinput li{border-bottom:#dedede solid 1px; padding:8px 0px; text-align:right; overflow:hidden; color:#999}
@@ -249,7 +254,7 @@ html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅�
 .user_one input{width:50%; height:24px; line-height:24px; border:#8c8c8c solid 1px; padding-left:5px; margin-top:12px; font-family:"微软雅黑"; }
 .user_two input{width:50%; height:24px; line-height:24px; border:#8c8c8c solid 1px; padding-left:5px;  margin-top:12px; font-family:"微软雅黑"; }
 .user_one select{ height:24px; line-height:24px; border:#8c8c8c solid 1px; font-size:12px; margin-right:5px; font-family:"微软雅黑";  margin-top:7px;}
-.user_two select{height:24px; line-height:24px; border:#8c8c8c solid 1px; font-size:12px; margin-right:5px; font-family:"微软雅黑";  margin-top:7px;} 
+.user_two select{height:24px; line-height:24px; border:#8c8c8c solid 1px; font-size:12px; margin-right:5px; font-family:"微软雅黑";  margin-top:7px;}
 .user_one .user_xia{width:40px; margin-right:8px;}
 .user_two .user_xia{width:40px; margin-right:8px;}
 .user_one span{ color:#666;}
