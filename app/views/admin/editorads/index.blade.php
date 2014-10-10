@@ -53,7 +53,7 @@
                 <td width="13%">上架时间</td>
                 <td width="13%">下线时间</td>
                 <td width="7%">状态</td>
-                <td width="7%">排列序号</td>
+                <!--td width="7%">排列序号</td>-->
                 <td width="20%">广告词</td>
                 <td width="15%">操作</td>
             </tr>
@@ -62,10 +62,10 @@
                     <td>{{ $ad->id }}</td>
                     <td><img src="{{ $ad->image }}" width="28" height="28" /></td>
                     <td>{{ $ad->title }}</td>
-                    <td>{{ $ad->onshelfed_at }}</td>
-                    <td>{{ $ad->offshelfed_at }}</td>
-                    <td>{{ $ad->is_onshelf }}</td>
-                    <td>{{ $ad->sort }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->onshelfed_at }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->offshelfed_at }}</td>
+                    <td {{ Config::get('status.ads.statusColor')[adsStatus($ad)] }}>{{ Config::get('status.ads.status')[adsStatus($ad)] }}</td>
+                    <!--<td>{{ $ad->sort }}</td>-->
                     <td>{{ $ad->word }}</td>
                     <td>
                         @if($ad->is_onshelf == 'yes')

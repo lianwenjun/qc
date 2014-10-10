@@ -39,7 +39,7 @@
                 <td width="4%">图片</td>
                 <td width="9%">游戏名称</td>
                 <td width="6%">所属类别</td>
-                <td width="7%">排列序号</td>
+                <!--<td width="7%">排列序号</td>-->
                 <td width="13%">上架时间</td>
                 <td width="13%">下线时间</td>
                 <td width="7%">状态</td>
@@ -48,30 +48,17 @@
             </tr>
             @forelse($ads as $ad)
                 
-                @if (($ad->is_onshelf == 'yes') && (strtotime($ad->offshelfed_at) < time()))
-                    <tr class="jq-tr centent_Expired">
-                @else
-                    <tr class="jq-tr ">
-                @endif
+                
+                <tr class="jq-tr">
                     <td>{{ $ad->id }}</td>
                     <td><img src="{{ $ad->image }}" width="28" height="28" /></td>
                     <td>{{ $ad->title }}</td>
                     <td>{{ isset($location[$ad->location]) ? $location[$ad->location] : '' }}</td>
-                    <td>{{ $ad->sort }}</td>
-                    <td>{{ $ad->onshelfed_at }}</td>
-                    <td>{{ $ad->offshelfed_at }}</td>
-                    <!--应该整理这块-->
-                    @if ($ad->is_onshelf == 'yes')
-                        @if (strtotime($ad->offshelfed_at) < time())
-                            <td>已过期</td>
-                        @elseif (strtotime($ad->onshelfed_at) > time())
-                            <td>线上展示</td>
-                        @else
-                            <td>{{ Config::get('status.ads.is_onshelf')[$ad->is_onshelf] }}</td>
-                        @endif
-                    @else
-                        <td>{{ Config::get('status.ads.is_onshelf')[$ad->is_onshelf] }}</td>
-                    @endif
+                    <!--<td>{{ $ad->sort }}</td>-->
+                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->onshelfed_at }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->offshelfed_at }}</td>
+                    <td {{ Config::get('status.ads.statusColor')[adsStatus($ad)] }}>{{ Config::get('status.ads.status')[adsStatus($ad)] }}</td>
+                    
                     <td>{{ Config::get('status.ads.is_top')[$ad->is_top] }}</td>
                     <td>
                         @if($ad->is_onshelf == 'yes')
