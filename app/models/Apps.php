@@ -31,9 +31,13 @@ class Apps extends \Eloquent {
     // 可以搜索字段
     public $searchEnable = [
         'title',
+        'cate_id',
+        'type',
+        'keyword',
         'created_at',
         'updated_at',
-        'cate_id',
+        'onshelfed_at',
+        'offshelfed_at'
     ];
 
     /**
