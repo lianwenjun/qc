@@ -3,15 +3,8 @@
 @section('content')
 <link href="{{ asset('css/admin/timepicker/jquery-ui-1.11.0.custom.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/admin/timepicker/jquery-ui-timepicker-addon.css') }}" rel="stylesheet" type="text/css" />
-<style>
-.autocomplete-suggestions { border: 1px solid #999; background: #FFF; cursor: default; overflow: auto; -webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); -moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); }
-.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
-.autocomplete-no-suggestion { padding: 2px 5px;}
-.autocomplete-selected { background: #F0F0F0; }
-.autocomplete-suggestions strong { font-weight: bold; color: #000; }
-.autocomplete-group { padding: 2px 5px; }
-.autocomplete-group strong { font-weight: bold; font-size: 16px; color: #000; display: block; border-bottom: 1px solid #000; }
-</style>
+<link href="{{ asset('css/admin/autocomplete/jquery-autocomplete.css') }}" rel="stylesheet" type="text/css" />
+
 <div class="Content_right_top Content_height">
     <div class="Theme_title"><h1>广告位管理 <span>编辑精选管理</span><b>编辑</b></h1></div>                
     <div class="Search_title">游戏信息</div>
@@ -86,7 +79,7 @@
               
                 <tr>
                     <td  class="Search_lei">广告词：</td>
-                    <td><input name="word" type="text" class="Search_text" value="{{ $ad->word }}" style="width:60%"/></td>
+                    <td><input name="word" type="text" class="Search_text" value="{{ $ad->word }}" style="width:60%" /></td>
                 </tr>
               
                 <tr>
@@ -98,8 +91,8 @@
                 <tr>
                     <td  class="Search_lei">上线时间：</td>
                     <td>
-                        <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="jq-ui-timepicker" value="{{ $ad->onshelfed_at }}"></h6>
-                        <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="jq-ui-timepicker" value="{{ $ad->offshelfed_at }}"></h6>
+                        <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="jq-ui-timepicker" value="{{ $ad->onshelfed_at }}" /></h6>
+                        <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="jq-ui-timepicker" value="{{ $ad->offshelfed_at }}" /></h6>
                     </td>
                 </tr>
               
@@ -118,7 +111,7 @@
 <script src="{{ asset('js/admin/plupload/plupload.full.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript" src="{{ asset('js/admin/jquery.autocomplete.js') }}"></script>
 <script type="text/javascript">
-    function uploadToHtml(img){
+function uploadToHtml(img){
     $("#listdata li img").src(img);
 }
 
