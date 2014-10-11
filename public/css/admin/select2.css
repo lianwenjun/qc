@@ -550,7 +550,7 @@ html[dir="rtl"] .select2-container-multi .select2-choices li
 }
 
 .select2-container-multi .select2-choices .select2-search-choice {
-    padding: 3px 5px 3px 18px;
+    padding: 3px  5px 3px 15px;
     margin: 3px 0 3px 5px;
     position: relative;
 
@@ -596,8 +596,8 @@ html[dir="rtl"] .select2-container-multi .select2-choices .select2-search-choice
     width: 12px;
     height: 13px;
     position: absolute;
-    right: 3px;
-    top: 4px;
+    left: -25px;
+    top: 3px;
 
     font-size: 1px;
     outline: none;

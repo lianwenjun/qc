@@ -33,15 +33,15 @@
                          <span class="preview-star-loop" data-time="">
                             <img src="{{ asset('images/star.jpg') }}"/>
                         </span>
-                        <span class="preview-version-html"></span>
+                        <span class="preview-version-html"></span>版本
                         <span class="preview-size-html"></span>
                      </li>
                      <li class="Browse_centent_text_shuo">
                         <span>
-                        总下载<span class="preview-download_manual-html"></span><span class="preview-updated_at-html"></span>更新</span>
+                        总下载：<span class="preview-download_manual-html"></span><span class="preview-updated_at-html"></span>更新</span>
                      </li>
                      <li class="Browse_centent_text_guan">
-                        <span><img class="preview-has_ad-src" src="" data-template="{{ asset('images/{val}.jpg') }}"/>无广告</span> <img src="" data-template="{{ asset('images/{val}.jpg') }}" class="preview-is_verify-src" />安全认证
+                        <span><img class="preview-has_ad-src" src="" data-template="{{ asset('images/{val}.jpg') }}"/>无广告</span> <img src="" data-template="{{ asset('images/{val}.jpg') }}" class="preview-is_verify-src"/>安全认证
                      </li>
                   </ul>
                </div>
@@ -63,12 +63,12 @@
             </li>
             <li class="Browse_centent_about">
                <b>同作者游戏</b>
-               <div class="preview-sameAuthor-loop" data-template="<div class='Browse_centent_Browse'><ul><li class='Browse_centent_Browse_apk'><img src='{icon}' width='60' height='60' /></li><li>{title}</li></ul></div>" data-fields="['icon', 'title']">
+               <div class="preview-sameAuthor-loop" data-template="<div class='Browse_centent_Browse'><ul><li class='Browse_centent_Browse_apk'><img src='{icon}' width='60' height='60' /></li><li class='Browse_centent_text'>{title}</li></ul></div>" data-fields="['icon', 'title']">
                </div>
             </li>
             <li class="Browse_centent_about">
                <b>同类游戏</b>
-               <div class="preview-sameCate-loop" data-template="<div class='Browse_centent_Browse'><ul><li class='Browse_centent_Browse_apk'><img src='{icon}' width='60' height='60' /></li><li>{title}</li></ul></div>" data-fields="['icon', 'title']">
+               <div class="preview-sameCate-loop" data-template="<div class='Browse_centent_Browse'><ul><li class='Browse_centent_Browse_apk'><img src='{icon}' width='60' height='60' /></li><li class='Browse_centent_text'>{title}</li></ul></div>" data-fields="['icon', 'title']">
                </div>
             </li>
             <li class="Browse_centent_about">
@@ -181,7 +181,7 @@
                 action: link
             }).append('<input type="hidden" name="_method" value="PUT" />'));
             $(f).submit();
-   
+
             return false;
         });
 
