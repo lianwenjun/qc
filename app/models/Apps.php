@@ -127,9 +127,9 @@ class Apps extends \Eloquent {
                     // 占空间大小处理
                     if($key == 'size_int') {
                         foreach($value as $k => $v) {
-                            if(substr($v, -1) == 'm' || substr($v, -1) == 'm') {
+                            if(substr($v, -1) == 'm' || substr($v, -1) == 'M') {
                                 $value[$k] = intval($v) * 1024;
-                            } elseif(substr($v, -1) == 'g' || substr($v, -1) == 'g') {
+                            } elseif(substr($v, -1) == 'g' || substr($v, -1) == 'G') {
                                 $value[$k] = intval($v) * 1024 * 1024;
                             } else {
                                 $value[$k] = intval($v);
@@ -140,7 +140,7 @@ class Apps extends \Eloquent {
                     $query->whereBetween($key, $value);
                 }
 
-            } else {
+            } elseif (!empty($value)) {
                 $query->where($key, $value);
             }
         }
