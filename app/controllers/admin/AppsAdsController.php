@@ -130,13 +130,13 @@ class Admin_AppsAdsController extends \BaseController {
         $ads = $adsModel->where('id', $id)->where('type', $this->type)->first();
         if (!$ads) {
             $msg = '亲，数据不存在';
-            return Redirect::back()->with('msg', $msg);
+            return Redirect::route('appsads.index')->with('msg', $msg);
         }
         $validator = Validator::make(Input::all(), $adsModel->adsUpdateRules);
         if ($validator->fails()){
             Log::error($validator->messages());
             $msg = "添加失败";
-            return Redirect::back()->with('msg', $msg);
+            return Redirect::route('appsads.index')->with('msg', $msg);
         }
         $ads->location = Input::get('location', $ads->location);
         $ads->image = Input::get('image', $ads->image);
