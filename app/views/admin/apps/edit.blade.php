@@ -206,8 +206,11 @@ ul.ui-sortable li.placeholder:before {
                <td colspan="2" align="center" class="Search_submit">
                   @if($app->status == 'new')
                   <a href="javascript:;" class="jq-submitDraft" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'draft']) }}">存为草搞件</a>
-                  @endif
+                  @elseif($app->status == 'onshelf')
+                  <a href="javascript:;" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'onshelf']) }}" class="jq-submitPending">提 交</a>
+                  @else
                   <a href="javascript:;" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'pending']) }}" class="jq-submitPending">提 交</a>
+                  @endif
                   <a href="{{ Request::header('referer') }}" target="BoardRight">返回列表</a></td>
             </tr>
          </tbody>
@@ -543,7 +546,7 @@ ul.ui-sortable li.placeholder:before {
 
         // 图片
         jQuery.validator.addMethod("images", function(value, element) {
-            return $('input[name="images[]"]').length > 1;
+            return $('input[name="images[]"]').length > 0;
         }, "图片必须上传");
 
         // 提交审核
