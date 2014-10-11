@@ -164,6 +164,10 @@ VALUES
   (26, '飞升游戏', 0, 0, 0, NULL, '2014-09-26 02:42:34', '2014-09-26 02:42:34'),
   (27, '来点东西', 0, 0, 0, NULL, '2014-09-26 05:35:36', '2014-09-26 05:35:36');
 
+INSERT INTO `cates` (`id`, `title`, `parent_id`, `search_total`, `sort`, `deleted_at`, `created_at`, `updated_at`)
+VALUES
+  (3, '围棋', 1, 0, 0, NULL, '2014-09-26 02:42:10', '2014-09-26 02:42:10'),
+  (4, '象棋', 1, 0, 0, NULL, '2014-09-26 02:42:10', '2014-09-26 02:42:10');
 
 /*----------------------------------------------------------
 | 测试 app_cates 数据库
@@ -199,10 +203,10 @@ CREATE TABLE `cate_ads` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-insert into cate_ads (cate_id, title) select id as cate_id, title from cates where deleted_at is not null;
+insert into cate_ads (cate_id, title) select id , title from cates where deleted_at is null and parent_id = 0;
 
 /*----------------------------------------------------------
 | 测试 keywords 数据库
