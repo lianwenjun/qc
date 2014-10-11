@@ -18,6 +18,8 @@ class Admin_AppsController extends \Admin_BaseController {
         $catesModel = new Cates;
         $apps  = $catesModel->addCatesInfo($apps);
 
+        // TODO 空提示
+
         return View::make('admin.apps.onshelf')
                    ->with('apps', $apps);
     }

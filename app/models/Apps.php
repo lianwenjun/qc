@@ -136,7 +136,7 @@ class Apps extends \Eloquent {
                             }
                         }
                     }
-                    // print_r($value);
+
                     $query->whereBetween($key, $value);
                 }
 
