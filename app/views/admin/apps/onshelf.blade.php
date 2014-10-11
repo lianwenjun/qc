@@ -206,30 +206,20 @@
 
         var field = $(this).attr('data-field');
 
+        var sp = '&';
+        if(/\?orderby/.test($(location).attr('href')) || !/\?/.test($(location).attr('href'))) {
+          var sp = '?';
+        }
 
         var url = $.jurlp($(location).attr('href'));
 
         var orderStr = url.query().orderby;
+        var newurl = $(location).attr('href');
         if(typeof(orderStr) != 'undefined') {
-           var newurl = $(location).attr('href').replace('/[\?|\&]orderby='+orderStr, '');
+           newurl = $(location).attr('href').replace(sp+'orderby='+orderStr, '');
         }
 
-        // var t = url.qurey().toString();
-        console.log(location.search);
-
-        var singleQuery = false;
-
-
-        var url = '?orderby=ddd.xxx';
-        console.log(/\?orderby/.test(url));
-        return;
-        
-
-        url.query('orderby=' + field + '.' + order);
-
-        console.log(url.query());
-        return ;
-        location.href = url.url();
+        location.href = newurl + sp + 'orderby=' + field + '.' + order;
       });
 
     // 分页
