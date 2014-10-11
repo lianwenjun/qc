@@ -124,7 +124,7 @@ Route::group(['prefix' => 'admin'], function()
         Route::get('create', ['as' => 'appsads.create', 'uses' => 'Admin_AppsAdsController@create']);
         Route::post('create', ['as' => 'appsads.create', 'uses' => 'Admin_AppsAdsController@store']);
         Route::get('{id}/edit', ['as' => 'appsads.edit', 'uses' => 'Admin_AppsAdsController@edit']);
-        Route::post('{id}/edit', ['as' => 'appsads.update', 'uses' => 'Admin_AppsAdsController@update']);
+        Route::post('{id}/edit', ['as' => 'appsads.edit', 'uses' => 'Admin_AppsAdsController@update']);
         Route::get('{id}/delete', ['as' => 'appsads.delete', 'uses' => 'Admin_AppsAdsController@destroy']);
         Route::get('{id}/offshelf', ['as' => 'appsads.offshelf', 'uses' => 'Admin_AppsAdsController@offshelf']);
         Route::post('imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_AppsAdsController@upload']);

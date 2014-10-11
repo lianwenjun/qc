@@ -131,7 +131,7 @@ class Admin_rankAdsController extends \BaseController {
         $validator = Validator::make(Input::all(), $adsModel->rankadsUpateRules);
         if ($validator->fails()){
             Log::error($validator->messages());
-            $msg = "添加失败";
+            $msg = "修改失败";
             return Redirect::back()->with('msg', $msg);
         }
         $ads->location = Input::get('location', $ads->location);
@@ -140,7 +140,7 @@ class Admin_rankAdsController extends \BaseController {
         $ads->onshelfed_at = Input::get('onshelfed_at', $ads->onshelfed_at);
         $ads->offshelfed_at = Input::get('offshelfed_at', $ads->offshelfed_at);
         if ($ads->save()){
-            $msg = "添加成功";
+            $msg = "修改成功";
             return Redirect::route('rankads.index')->with('msg', $msg);
         }
         $msg = "没什么改变";
