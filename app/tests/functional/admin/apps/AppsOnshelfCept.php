@@ -28,7 +28,7 @@
 $I = new FunctionalTester($scenario);
 $I->wantTo('上架游戏列表功能');
 $I->amOnAction('Admin_AppsController@onshelf');
-$I->see('上架游戏A君');
+$I->see('上架游戏C君');
 
 /* --------------------------------------------------------
 | 搜索功能 begin
@@ -51,8 +51,8 @@ $I->dontSee('上架游戏B君');
 
 // 大小搜索 1m
 $I->sendAjaxRequest('GET', '/admin/apps/onshelf?type=&keyword=&size_int%5B%5D=1m&size_int%5B%5D=1m&onshelfed_at%5B%5D=&onshelfed_at%5B%5D=');
-$I->see('上架游戏A君');
-$I->dontSee('上架游戏B君');
+$I->see('上架游戏B君');
+$I->dontSee('上架游戏A君');
 
 // 日期搜索 2014-09-01
 $I->sendAjaxRequest('GET', '/admin/apps/onshelf?type=&keyword=&size_int%5B%5D=1m&size_int%5B%5D=1m&onshelfed_at%5B%5D=2014-09-01&onshelfed_at%5B%5D=2014-09-01');
