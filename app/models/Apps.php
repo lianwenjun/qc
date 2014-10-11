@@ -41,6 +41,13 @@ class Apps extends \Eloquent {
         'offshelfed_at'
     ];
 
+    // 可以排序的字段
+    public $orderEnable = [
+        'size_int',
+        'download_counts',
+        'onshelfed_at'
+    ];
+
     /**
      * 游戏列表
      *
@@ -139,7 +146,18 @@ class Apps extends \Eloquent {
         }
 
         // 排序
-        // $query->orderBy('id', 'desc');
+        if(isset($data['orderby'])) {
+            $orderby = explode('.', $data['orderby']);
+            if(
+                in_array($orderby[0], $this->orderEnable)
+                && isset($orderby[1])
+                && !empty($orderby[1])
+              ) {
+                $query->orderBy($orderby[0], $orderby[1]);
+            }
+        } else {
+            $query->orderBy('id', 'desc');
+        }
 
         return $query;
     }
