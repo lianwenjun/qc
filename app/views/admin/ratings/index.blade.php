@@ -54,8 +54,8 @@
                 </tr>
             @empty
                 <tr class="no-data">
-                    <td>没数据</td>
-                </tr>
+                    <td colspan="9">没数据</td>
+                <tr>
             @endforelse
         </table>
         @if($ratings->getLastPage() > 1)

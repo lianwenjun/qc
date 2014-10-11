@@ -50,9 +50,9 @@
                     </td>
                 </tr>
             @empty
+                <tr class="no-data">
+                    <td colspan="9">没数据</td>
                 <tr>
-                    <td colson="9">没数据</td>
-                </tr>
             @endforelse                  
         </table>
         @if($stopwords->getLastPage() > 1)
