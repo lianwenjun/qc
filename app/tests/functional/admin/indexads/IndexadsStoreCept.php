@@ -10,4 +10,4 @@ $data = ['app_id' => '4',
         'onshelfed_at' => '2014-09-29 12:00:00',
         'offshelfed_at' => '2014-09-30 12:00:00',];
 $I->sendAjaxPostRequest($url, $data);
-$I->seeSessionHasValues('添加成功');
+$I->seeSessionHasValues(['msg' => '添加成功']);
