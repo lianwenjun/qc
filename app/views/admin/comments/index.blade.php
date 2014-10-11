@@ -57,9 +57,9 @@
                     </td>
                 </tr>
             @empty
+                <tr class="no-data">
+                    <td colspan="9">没数据</td>
                 <tr>
-                    <td>没数据</td>
-                </tr>
             @endforelse
         </table>
         @if($comments->getLastPage() > 1)

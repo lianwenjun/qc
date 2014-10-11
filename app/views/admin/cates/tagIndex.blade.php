@@ -68,9 +68,9 @@
                         </td>
                     </tr>
             @empty
-                <tr class="jq-tr">
-                    <td>没数据</td>
-                </tr>
+                <tr class="no-data">
+                    <td colspan="9">没数据</td>
+                <tr>
             @endforelse
         </table>
         @if($tags->getLastPage() > 1)
