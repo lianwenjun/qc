@@ -23,7 +23,7 @@
                     <input value="" name="upload-image" type="hidden">
                 </tr>
             @empty
-                <tr class="jq-tr">
+                <tr class="no-data">
                     <td colspan="9">没数据</td>
                 <tr>
             @endforelse
