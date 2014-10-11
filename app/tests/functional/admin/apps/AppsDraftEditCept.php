@@ -4,7 +4,7 @@
 
 草稿游戏君: 刚上传并成功读取了APK数据的游戏
 
-    草稿游戏A君 ID 9 状态 draft 
+    草稿游戏A君 ID 14 状态 draft 
 
 待审游戏君: 待审游戏君
 
@@ -13,7 +13,7 @@ $I = new FunctionalTester($scenario);
 $I->wantTo('添加编辑游戏编辑功能');
 
 // 必填验证
-$I->amOnPage('/admin/apps/9/edit');
+$I->amOnPage('/admin/apps/14/edit');
 $data = [
     'cates'           => [1,2],
     'author'          => '草稿制造厂',
@@ -25,12 +25,12 @@ $data = [
     'images'          => ['/pictures/6/b/6bcfd1ee3b3dbdd58dea0e046f08ee6e.jpg'],
     'changes'         => 'fixes bugs',
 ];
-$I->sendAjaxRequest('PUT', '/admin/apps/9/edit/pending', $data);
+$I->sendAjaxRequest('PUT', '/admin/apps/14/edit/pending', $data);
 $I->seeInSession(['tips'=>['success' => false, 'message' => "请按要求填写表单"]]);
 
 // 提交保存
-$I->seeRecord('apps', ['id' => '9', 'status' => 'draft', 'deleted_at' => null]);
-$I->amOnPage('/admin/apps/9/edit');
+$I->seeRecord('apps', ['id' => '14', 'status' => 'draft', 'deleted_at' => null]);
+$I->amOnPage('/admin/apps/14/edit');
 $data = [
     'cates'           => [1,2],
     'author'          => '草稿制造厂',
@@ -42,7 +42,7 @@ $data = [
     'images'          => ['/pictures/6/b/6bcfd1ee3b3dbdd58dea0e046f08ee6e.jpg'],
     'changes'         => 'fixes bugs',
 ];
-$I->sendAjaxRequest('PUT', '/admin/apps/9/edit/pending', $data);
-$I->seeRecord('apps', ['id' => '9', 'status' => 'pending', 'deleted_at' => null]);
+$I->sendAjaxRequest('PUT', '/admin/apps/14/edit/pending', $data);
+$I->seeRecord('apps', ['id' => '14', 'status' => 'pending', 'deleted_at' => null]);
 
 
