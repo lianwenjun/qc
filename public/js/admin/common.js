@@ -35,10 +35,15 @@ $(function() {
         var id = $(this).attr('data-id');
         var url = PREVIEW_URL.replace('%7Bid%7D', id);
 
+        var type = $(this).attr('data-type');
+
+        console.log(type);
+
         $.ajax({
             url: url,
             type: 'get',
             dataType: 'json',
+            data:{type:type},
             success: function(data) {
                 if(data.success) {
                     renderPreview('preview', data.data);

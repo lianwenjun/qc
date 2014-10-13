@@ -204,7 +204,34 @@ class Apps extends \Eloquent {
             }
         }
 
+        // 处理历史
+        if($status == 'onshelf') {
+            $this->history($id);
+        }
+
         return Apps::find($id)->update($data);
+    }
+
+    /**
+     * 保存到历史
+     *
+     * @param $id int 游戏ID
+     *
+     * @return void
+     */
+    public function history($id) {
+        $app = Apps::find($id)->toArray();
+
+        $app['app_id'] = $id;
+        unset($app['id']);
+        
+        $catesModel = new Cates;
+        $app['cates'] = serialize($catesModel->appCates($id));
+        $app['tags'] = serialize($catesModel->appTags($id));
+
+        // TODO 处理操作人
+
+        Histories::create($app);
     }
 
 

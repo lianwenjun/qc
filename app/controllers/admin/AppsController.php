@@ -125,7 +125,18 @@ class Admin_AppsController extends \Admin_BaseController {
     public function history($id)
     {
 
+        $appsModel = new Histories();
+        $apps = $appsModel->lists($id, Input::all())
+                          ->paginate(20)
+                          ->toArray();
 
+        $historyModel = new Histories;
+        $apps = $historyModel->addCatesInfo($apps);
+
+
+        return View::make('admin.apps.history')
+                   ->with('apps', $apps)
+                   ->with('id', $id);
     }
 
 
@@ -154,8 +165,16 @@ class Admin_AppsController extends \Admin_BaseController {
      */
     public function preview($id)
     {
-        $appModel = new Apps();
-        $app = $appModel->preview($id);
+
+        if(Input::get('type') == 'history') {
+            $historyModel = new Histories();
+            $app = $historyModel->preview($id);
+
+        } else {
+            $appModel = new Apps();
+            $app = $appModel->preview($id);
+        }
+
 
         $app['updated_at'] = date('Y-m-d', strtotime($app['updated_at']));
 
