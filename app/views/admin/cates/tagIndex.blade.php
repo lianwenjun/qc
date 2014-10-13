@@ -59,7 +59,7 @@
                         <td>{{ $tag->search_total }}</td>
                         <td>{{ $tag->sort }}</td>
                         <td>{{ $tag->updated_at }}</td>
-                        <td><a href="javascript:;" class="Search_show jq-editTag">编辑</a> <a href="javascript:;" class="Search_del jq-delTag">删除</a></td>
+                        <td><a href="javascript:;" class="Search_show jq-editTag">编辑</a> <a href="{{ route('tag.delete', $tag->id) }}" class="Search_del jq-delete">删除</a></td>
                         <td style="display:none">
                             <input id="edit-url" value="{{ route('tag.edit', $tag->id) }}" type="hidden"/>
                             <input id="del-url" value="{{ route('tag.delete', $tag->id) }}" type="hidden"/>
@@ -135,26 +135,11 @@ $(function(){
         var url = window.location.pathname + query;
         window.location.href = url;
     });
-    //删除
-    $('.jq-delTag').live('click', function() {
-        var td = $(this).parents('tr').children('td');
-        var delUrl = td.eq(7).find('#del-url').val();
-        $.get(delUrl, function(res) {
-            //错误判断
-            if (res.status == 'ok') {
-                window.location.href = window.location.pathname;
-            }
-            return;
-        }).fail(function() {
-            alert('亲，服务器出错啦');
-        });   
-    });
     //修改
     $(".jq-editTag").live('click', function() {
         var td = $(this).parents('tr').children('td');
         var text1 = td.eq(1).html();
         var text4 = td.eq(4).html();
-        //var text8 = $(this).parent().html();
         var to_text1 = '<input name="textfield" type="text" id="textfield" value="" size="8" class="Classification_text" />';
         var to_text4 = '<input name="textfield" type="text" id="textfield" value="" size="8" class="Classification_text" />';
         var to_text8 = '<a href="javacript:;" class="Search_show jq-saveTag">确定</a> <a href="javacript:;" class="Search_show jq-chanceTag">取消</a>';
@@ -170,11 +155,13 @@ $(function(){
         var text1 = td.eq(1).find('input').val();
         var text4 = td.eq(4).find('input').val();
         var editUrl = td.eq(7).find('#edit-url').val();
+        var delUrl = td.eq(7).find('#del-url').val();
         var data = {word:text1, sort:text4};
         $.post(editUrl, data, function(res) {
             //错误判断
             if (res.status == 'ok') {
-                var text6 = '<a href="javascript:;" class="Search_show jq-editTag">编辑</a> <a href="javascript:;" class="Search_del jq-delTag">删除</a>';
+                var text6 = '<a href="javascript:;" class="Search_show jq-editTag">编辑</a> '+
+                '<a href="'+delUrl+'" class="Search_del jq-delete">删除</a>';
                 td.eq(6).html(text6);
                 td.eq(1).html(text1);
                 td.eq(4).html(text4);
@@ -190,7 +177,8 @@ $(function(){
         var td = $(this).parents('tr').children('td');
         var text1 = td.eq(7).find('#preTag').val();
         var text4 = td.eq(7).find('#preSort').val();
-        var text6 = '<a href="javascript:;" class="Search_show jq-editTag">编辑</a> <a href="javascript:;" class="Search_del jq-delTag">删除</a>';
+        var delUrl = td.eq(7).find('#del-url').val();
+        var text6 = '<a href="javascript:;" class="Search_show jq-editTag">编辑</a> <a href="'+delUrl+'" class="Search_del jq-delete">删除</a>';
         $(this).parent().html(text6);
         td.eq(1).html(text1);
         td.eq(4).html(text4);
