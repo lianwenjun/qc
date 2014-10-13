@@ -109,6 +109,9 @@ class Admin_AppsController extends \Admin_BaseController {
         $apps  = $catesModel->addCatesInfo($apps);
         $cates = $catesModel->allCates();
 
+        $userModel = new User;
+        $apps = $userModel->addOperator($apps);
+
         return View::make('admin.apps.offshelf')
                    ->with('apps', $apps)
                    ->with('cates', $cates);
@@ -133,6 +136,8 @@ class Admin_AppsController extends \Admin_BaseController {
         $historyModel = new Histories;
         $apps = $historyModel->addCatesInfo($apps);
 
+        $userModel = new User;
+        $apps = $userModel->addOperator($apps);
 
         return View::make('admin.apps.history')
                    ->with('apps', $apps)

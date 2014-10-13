@@ -67,9 +67,9 @@
             <td>{{ !empty($app['cate_name']) ? $app['cate_name'] : '/' }}</td>
             <td>{{ $app['size'] }}</td>
             <td>{{ $app['version'] }}</td>
-            <td>{{ date('Y-m-d H:i', strtotime($app['onshelfed_at'])) }}</td>
-            <td>{{ date('Y-m-d H:i', strtotime($app['offshelfed_at'])) }}</td>
-            <td>罗伟健</td>
+            <td>{{ $app['onshelfed_at'] != '0000-00-00 00:00:00' ? date('Y-m-d H:i', strtotime($app['onshelfed_at'])) : '' }}</td>
+            <td>{{ $app['offshelfed_at'] != '0000-00-00 00:00:00' ? date('Y-m-d H:i', strtotime($app['offshelfed_at'])) : '' }}</td>
+            <td>{{ isset($app['operator']) && !empty($app['operator']) ? $app['operator'] : '' }}</td>
             <td><a href="{{ URL::route('apps.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a></td>
          </tr>
          @endforeach

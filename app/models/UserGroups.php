@@ -17,7 +17,7 @@ class UserGroups extends \Eloquent {
 
         $userGroups = UserGroups::where('user_id', $userId)->get();
 
-        $ids = [];
+        $ids = [0];
         foreach($userGroups as $userGroup) {
             $ids[] = $userGroup->group_id;
         }

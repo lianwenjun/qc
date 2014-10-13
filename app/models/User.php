@@ -67,7 +67,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
                 $query->where('username', 'like', '%' . $value . '%');
             } elseif($key == 'group_id' && !empty($value)) {
                 $query->whereRaw("`id` in (select `user_id` from `users_groups` where `group_id` = '{$value}')");
-            } elseif (!empty($value) || $value === 0) {
+            } elseif (!empty($value) || $value === '0') {
                 $query->where($key, $value);
             }
         }
@@ -93,7 +93,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
                 'password'  => $data['password'],
                 'username'  => $data['username'],
                 'realname'  => $data['realname'],
-                'activated' => $data['activated'] === 1 ? 1 : 0,
+                'activated' => $data['activated'] == '1' ? 1 : 0,
             ));
 
             $adminGroup = Sentry::findGroupById($data['group_id']);
@@ -108,6 +108,39 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         } catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e) {
             Session::flash('tips', ['success' => false, 'message' => "亲，角色不存在"]);
         }
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param $id          int    管理员ID
+     * @param $newpassword string 新密码
+     *
+     * @return void
+     */
+    public function changePwd($id, $newpassword)
+    {
+        $user = Sentry::findUserById($id);
+        $user->attemptResetPassword($user->getResetPasswordCode(), $newpassword);
+    }
+
+    /**
+     * 添加操作人
+     *
+     * @param $data array 添加操作人数据
+     *
+     * @return array
+     */
+    public function addOperator($data)
+    {
+
+        foreach($data['data'] as $k => $item) {
+            if(empty($item['operator'])) break;
+            $user = Sentry::findUserById($item['operator']);
+            $data['data'][$k]['operator'] = $user->username;
+        }
+
+        return $data;
     }
 
 }
