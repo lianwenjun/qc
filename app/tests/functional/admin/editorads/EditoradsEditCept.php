@@ -2,7 +2,11 @@
 $I = new FunctionalTester($scenario);
 $I->wantTo('编辑编辑精选广告页面测试');
 //打开添加页面
+//游戏不存在
 $I->amOnpage('/admin/editorads/25/edit');
+$I->seeSessionHasValues(['msg' => '没发现游戏数据']);
+//正常数据
+$I->amOnpage('/admin/editorads/29/edit');
 $I->see('编辑');
 $I->click('返回列表');
 
