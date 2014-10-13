@@ -78,7 +78,7 @@ Route::group(['prefix' => 'admin', 'before' => 'IE10'], function()
     Route::group(['prefix' => 'cate'], function() //游戏分类
     {
         Route::get('index', ['as' => 'cate.index', 'uses' => 'Admin_CatesController@index']);
-        Route::get('create', ['as' => 'cate.create', 'uses' => 'Admin_CatesController@create']);
+        //Route::get('create', ['as' => 'cate.create', 'uses' => 'Admin_CatesController@create']);
         Route::post('create', ['as' => 'cate.create', 'uses' => 'Admin_CatesController@store']);
         Route::post('{id}/edit', ['as' => 'cate.edit', 'uses' => 'Admin_CatesController@update']);
         Route::get('{id}/delete', ['as' => 'cate.delete', 'uses' => 'Admin_CatesController@destroy']);

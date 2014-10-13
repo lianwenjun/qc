@@ -41,7 +41,7 @@ class Admin_CatesController extends \Admin_BaseController {
         foreach ($appsCount as $app) {
                 $cateData[$app->cate_id]['appcount'] = $app->app_count;
         }
-        $datas = ['cates' => $cateData];
+        $datas = ['cates' => $cateData, 'allcates' => $cates];
         $this->layout->content = View::make('admin.cates.index', $datas);
     }
 
@@ -81,11 +81,11 @@ class Admin_CatesController extends \Admin_BaseController {
      * @param string word
      * @return Response
      */
-    public function create()
+    /*public function create()
     {
         $datas = [];
         $this->layout->content = View::make('admin.cates.create', $datas);
-    }
+    }*/
 
     /**
      * 添加标签
