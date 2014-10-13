@@ -83,7 +83,7 @@ class Cates extends \Eloquent {
      */
     public function allCates()
     {
-        return Cates::select(['id', 'title'])
+        return Cates::select(['id', 'title', 'search_total', 'created_at'])
                     ->where('parent_id', 0)
                     ->orderBy('sort', 'desc')
                     ->get();
