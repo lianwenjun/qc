@@ -2,9 +2,6 @@
 
 class Admin_CatesController extends \Admin_BaseController {
 
-    protected $user_id = 1;
-    protected $layout = 'admin.layout';
-    protected $pagesize = 5;
     /**
      * 
      * GET /admin/cates
