@@ -90,7 +90,7 @@ Route::group(['prefix' => 'admin', 'before' => 'IE10'], function()
         Route::get('create', ['as' => 'tag.create', 'uses' => 'Admin_CatesController@tagCreate']);
         Route::post('create', ['as' => 'tag.create', 'uses' => 'Admin_CatesController@tagStore']);
         Route::post('{id}/edit', ['as' => 'tag.edit', 'uses' => 'Admin_CatesController@update']);
-        Route::get('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_CatesController@destroy']);
+        Route::delete('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_CatesController@tagDestroy']);
         Route::get('{id}/show', ['as' => 'tag.show', 'uses' => 'Admin_CatesController@show']);
     });
     Route::group(['prefix' => 'rating'], function() //游戏评分
@@ -125,7 +125,7 @@ Route::group(['prefix' => 'admin', 'before' => 'IE10'], function()
         Route::post('create', ['as' => 'appsads.create', 'uses' => 'Admin_AppsAdsController@store']);
         Route::get('{id}/edit', ['as' => 'appsads.edit', 'uses' => 'Admin_AppsAdsController@edit']);
         Route::post('{id}/edit', ['as' => 'appsads.edit', 'uses' => 'Admin_AppsAdsController@update']);
-        Route::get('{id}/delete', ['as' => 'appsads.delete', 'uses' => 'Admin_AppsAdsController@destroy']);
+        Route::delete('{id}/delete', ['as' => 'appsads.delete', 'uses' => 'Admin_AppsAdsController@destroy']);
         Route::get('{id}/offshelf', ['as' => 'appsads.offshelf', 'uses' => 'Admin_AppsAdsController@offshelf']);
         Route::post('imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_AppsAdsController@upload']);
     });
@@ -136,7 +136,7 @@ Route::group(['prefix' => 'admin', 'before' => 'IE10'], function()
         Route::post('create', ['as' => 'rankads.create', 'uses' => 'Admin_rankAdsController@store']);
         Route::get('{id}/edit', ['as' => 'rankads.edit', 'uses' => 'Admin_rankAdsController@edit']);
         Route::post('{id}/edit', ['as' => 'rankads.edit', 'uses' => 'Admin_rankAdsController@update']);
-        Route::get('{id}/delete', ['as' => 'rankads.delete', 'uses' => 'Admin_rankAdsController@destroy']);
+        Route::delete('{id}/delete', ['as' => 'rankads.delete', 'uses' => 'Admin_rankAdsController@destroy']);
         Route::get('{id}/offshelf', ['as' => 'rankads.offshelf', 'uses' => 'Admin_rankAdsController@offshelf']);
     });
     Route::group(['prefix' => 'indexads'], function() //首页图片位推广
@@ -146,7 +146,7 @@ Route::group(['prefix' => 'admin', 'before' => 'IE10'], function()
         Route::post('create', ['as' => 'indexads.create', 'uses' => 'Admin_indexAdsController@store']);
         Route::get('{id}/edit', ['as' => 'indexads.edit', 'uses' => 'Admin_indexAdsController@edit']);
         Route::post('{id}/edit', ['as' => 'indexads.edit', 'uses' => 'Admin_indexAdsController@update']);
-        Route::get('{id}/delete', ['as' => 'indexads.delete', 'uses' => 'Admin_indexAdsController@destroy']);
+        Route::delete('{id}/delete', ['as' => 'indexads.delete', 'uses' => 'Admin_indexAdsController@destroy']);
         Route::get('{id}/offshelf', ['as' => 'indexads.offshelf', 'uses' => 'Admin_indexAdsController@offshelf']);
     });
     Route::group(['prefix' => 'editorads'], function() //编辑推荐
@@ -156,7 +156,7 @@ Route::group(['prefix' => 'admin', 'before' => 'IE10'], function()
         Route::post('create', ['as'=>'editorads.create', 'uses' => 'Admin_EditorAdsController@store']);
         Route::get('{id}/edit', ['as'=>'editorads.edit', 'uses' => 'Admin_EditorAdsController@edit']);
         Route::post('{id}/edit', ['as'=>'editorads.edit', 'uses' => 'Admin_EditorAdsController@update']);
-        Route::get('{id}/delete', ['as'=>'editorads.delete', 'uses' => 'Admin_EditorAdsController@destroy']);
+        Route::delete('{id}/delete', ['as'=>'editorads.delete', 'uses' => 'Admin_EditorAdsController@destroy']);
         Route::get('{id}/offshelf', ['as'=>'editorads.offshelf', 'uses' => 'Admin_EditorAdsController@offshelf']);
     });
     Route::group(['prefix' => 'cateads'], function() //分类推广

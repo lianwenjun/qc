@@ -14,7 +14,7 @@ class Admin_CatesController extends \Admin_BaseController {
     public function index()
     {
         $cateModel = new Cates;
-        $cates = $cateModel->where('parent_id', 0)->get();
+        $cates = $cateModel->allCates();
         $cateIds = [];
         foreach ($cates as $cate) {
             $cateIds[] = $cate->id;
@@ -53,11 +53,11 @@ class Admin_CatesController extends \Admin_BaseController {
      */
     public function tagIndex()
     {
-        $C = new Cates;
-        $query = $C;
+        $cateModel = new Cates;
+        $query = $cateModel;
         if (Input::get('word')) {
             $words = ['%', Input::get('word'), '%'];
-            $query = $C->where('title', 'like', join($words));
+            $query = $cateModel->where('title', 'like', join($words));
         }
         if (Input::get('parent_id')) {
             $query = $query->where('parent_id', '=', Input::get('parent_id'));
@@ -65,7 +65,7 @@ class Admin_CatesController extends \Admin_BaseController {
             $query = $query->where('parent_id', '!=', 0);
         }
         $tags = $query->orderBy('id', 'desc')->paginate($this->pagesize);
-        $cates = Cates::where('parent_id', 0)->get();
+        $cates = $cateModel->allCates();
         $catesArr = [];
         foreach ($cates as $cate) {
             $catesArr[$cate->id] = $cate->title;
@@ -242,7 +242,7 @@ class Admin_CatesController extends \Admin_BaseController {
 
     /**
      * 
-     * 删除标签
+     * 删除分类
      *
      * @param  int  $id
      * @return Response
@@ -271,5 +271,23 @@ class Admin_CatesController extends \Admin_BaseController {
         $cate->delete();
         return Response::json(['status' => 'ok', 'msg' => 'suss']);
     }
-
+    
+    /**
+     * 
+     * 删除标签
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function tagDestroy($id)
+    {
+        //检测是否存在该数据
+        $cateModel = new Cates;
+        $tag = $cateModel->where('id', $id)->where('parent_id', '!=', 0)->first();
+        if(!$tag){
+            return Redirect::route('tag.index')->with('msg', 'tag #' . $id . 'is valid');  
+        }
+        $tag->delete();
+        return Redirect::route('tag.index')->with('msg', 'suss delete');
+    }
 }

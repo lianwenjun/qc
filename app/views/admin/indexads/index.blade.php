@@ -74,7 +74,7 @@
                             <a href="{{ URL::route('indexads.offshelf', $ad->id) }}" target=BoardRight class="Search_show">下架</a>
                         @endif
                         <a href="{{ URL::route('indexads.edit', $ad->id) }}" target=BoardRight class="Search_show">编辑</a>
-                        <a href="{{ URL::route('indexads.delete', $ad->id) }}" class="Search_del">删除</a>
+                        <a href="{{ URL::route('indexads.delete', $ad->id) }}" class="Search_del jq-delete">删除</a>
                     </td>
                 </tr>
             @empty
