@@ -11,13 +11,13 @@
                <span><b>关键词添加：</b>
                <input name="word" type="text" class="Search_wenben" size="30" value="添加关键词" />
                </span>
-               <input name="" type="submit" value="添加" class="Search_en jq-submitWord" />
+               <input type="submit" value="添加" class="Search_en jq-submitWord" />
             </li>
             <li>
                <span><b>查询：</b>
                <input name="searchWord" type="text" class="Search_wenben" size="30" value="输入关键字" />
                </span>
-               <input name="" type="submit" value="搜索" class="Search_en jq-submitSearch" />
+               <input type="submit" value="搜索" class="Search_en jq-submitSearch" />
             </li>
         </ul>
     </div>
@@ -47,18 +47,21 @@
                     <td>{{ $keyword->operator }}</td>
                     <td>{{ $keyword->updated_at }}</td>
                     <td>
+                        <a href='javascript:;' class="jq-changeSlide" data-slide="{{ $keyword->is_slide }}">
                         @if ($keyword->is_slide == 'yes')
-                          <img src="/css/images/xia_yes.png" width="18" height="18" />
+                           <img src="/images/yes.jpg" width="18" height="18" />
                         @else
-                          <img src="/css/images/xia_none.png" width="18" height="18" />
-                        @endif           
+                          <img src="/images/no.jpg" width="18" height="18" />
+                        @endif 
                     </td>
-                    <td><a href="javacript:;" class="Search_show jq-editWord">修改</a> <a href="javascript:;" class="Search_del jq-delWord">删除</a></td>
+                    
+                    <td><a href="javacript:;" class="Search_show jq-editWord">修改</a> <a href="{{ route('keyword.delete', $keyword->id) }}" class="Search_del jq-delete">删除</a></td>
                     <td style="display:none">
                         <input id="edit-url" value="{{ route('keyword.update', $keyword->id) }}" type="hidden"/>
                         <input id="del-url" value="{{ route('keyword.delete', $keyword->id) }}" type="hidden"/>
                         <input id="preWord" value="{{ $keyword->word }}" type="hidden"/>
                         <input id="preSlide" value="{{ $keyword->is_slide }}" type="hidden"/>
+                        <input id="Slide" value="{{ $keyword->is_slide }}" type="hidden"/>
                     </td>
                     <!--
                         <td><a href="#" class="Search_show">确定</a> <a href="#" class="Search_show">取消</a></td>
@@ -125,20 +128,11 @@ $(function(){
         var url = window.location.pathname + '?word=' + word;
         window.location.href = url;
     });
-    //删除
-    $('.jq-delWord').live('click', function() {
-        var td = $(this).parents('tr').children('td');
-        var delUrl = td.eq(9).find('#del-url').val();
-        window.location.href = delUrl;
-    });
     //修改
     $(".jq-editWord").live('click', function() {
         var td = $(this).parents('tr').children('td');
         var text1 = td.eq(1).html();
-        var text7 = td.eq(7).html();
-        var text8 = $(this).parent().html();
         var to_text1 = '<input name="textfield2" type="text" id="textfield2" value="" size="8" class="Classification_text" />';
-        var to_text7 = '';
         var to_text8 = '<a href="javacript:;" class="Search_show jq-saveWord">确定</a> <a href="javacript:;" class="Search_show jq-chanceWord">取消</a>';
         td.eq(1).html(to_text1);
         td.eq(1).find('#textfield2').val(text1);
@@ -150,12 +144,13 @@ $(function(){
         var td = $(this).parents('tr').children('td');
         var text1 = td.eq(1).find('input').val();
         var editUrl = td.eq(9).find('#edit-url').val();
-        //var is_slide = td.eq().
-        var data = {word:text1, is_slide:'yes'};
+        var delUrl = td.find('#del-url').val();
+        var data = {word:text1};
         $.post(editUrl, data, function(res) {
             //错误判断
             if (res.status == 'ok') {
-                var text8 = '<a href="javacript:;" class="Search_show jq-editWord">修改</a> <a href="javascript:;" class="Search_del jq-delWord">删除</a>';
+                var text8 = '<a href="javacript:;" class="Search_show jq-editWord">修改</a>' + 
+                            ' <a href="'+delUrl+'" class="Search_del jq-delete">删除</a>';
                 td.eq(8).html(text8);
                 td.eq(1).html(text1);
                 return;
@@ -169,10 +164,40 @@ $(function(){
     $(".jq-chanceWord").live('click', function() {
         var td = $(this).parents('tr').children('td');
         var text1 = td.eq(9).find('#preWord').val();
-        var text8 = '<a href="javacript:;" class="Search_show jq-editWord">修改</a> <a href="javascript:;" class="Search_del jq-delWord">删除</a>';
+        var delUrl = td.find('#del-url').val();
+        var text8 = '<a href="javacript:;" class="Search_show jq-editWord">修改</a>'+
+                    ' <a href="'+delUrl+'" class="Search_del jq-delete">删除</a>';
         $(this).parent().html(text8);
         td.eq(1).html(text1);
-        //td.eq(9).find('input').val(text1);
+    });
+    //修改轮播
+    $(".jq-changeSlide").click(function(){
+        var changeSlide = $(this);
+        var td = changeSlide.parents('tr').children('td');
+        var editUrl = td.eq(9).find('#edit-url').val();
+        var slide = changeSlide.attr("data-slide");
+        if (slide == 'yes'){
+            var is_slide = 'no';
+        }else{
+            var is_slide = 'yes';
+        }
+        var data = {is_slide : is_slide};
+        $.post(editUrl, data, function(res) {
+            //错误判断
+            if (res.status == 'ok') {
+                if (slide == 'yes'){
+                    var text = '<img src="/images/no.jpg" width="18" height="18" />';
+                }else{
+                    var text = '<img src="/images/yes.jpg" width="18" height="18" />';
+                }
+                changeSlide.attr("data-slide", is_slide);
+                changeSlide.html(text);
+                return;
+            }
+            return;
+        }).fail(function() {
+            alert('亲，服务器出错啦');
+        });
     });
 });
 </script>
