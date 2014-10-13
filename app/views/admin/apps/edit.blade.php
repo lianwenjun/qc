@@ -208,6 +208,8 @@ ul.ui-sortable li.placeholder:before {
                   <a href="javascript:;" class="jq-submitDraft" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'draft']) }}">存为草搞件</a>
                   @elseif($app->status == 'onshelf')
                   <a href="javascript:;" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'onshelf']) }}" class="jq-submitPending">提 交</a>
+                  @elseif($app->status == 'nopass' || $app->status == 'offshelf')
+                  <a href="javascript:;" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'pending']) }}" class="jq-submitPending">提交待审核列表</a>
                   @else
                   <a href="javascript:;" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'pending']) }}" class="jq-submitPending">提 交</a>
                   @endif

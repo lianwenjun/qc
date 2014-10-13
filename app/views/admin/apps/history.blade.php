@@ -122,7 +122,7 @@
             <td><a href="javascript:;" data-id="{{ $app['id'] }}" data-type="history" class="Search_Look jq-preview">点击预览</a></td>
             <td>{{ $app['onshelfed_at'] != '0000-00-00 00:00:00' ? date('Y-m-d H:i', strtotime($app['onshelfed_at'])) : '' }}</td>
             <td>{{ $app['offshelfed_at'] != '0000-00-00 00:00:00' ? date('Y-m-d H:i', strtotime($app['offshelfed_at'])) : '' }}</td>
-            <td> xxx </td>
+            <td> {{ isset($app['operator']) ? $app['operator'] : '' }} </td>
          </tr>
          @endforeach
          @if(empty($apps['total']))

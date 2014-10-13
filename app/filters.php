@@ -48,6 +48,24 @@ Route::filter('auth', function()
     }
 });
 
+Route::filter('adminAuth', function()
+{
+    if (! Sentry::check())
+    {
+        return Redirect::route('users.signin');
+    }
+});
+
+Route::filter('hasPermissions', function()
+{
+    // if(
+    //     !Sentry::getUser()->hasAccess(Route::current()->getName())
+    //     &&  Route::current()->getName() != 'accessDenied'
+    //   ) {
+    //     return Redirect::route('accessDenied');
+    // }
+});
+
 
 Route::filter('auth.basic', function()
 {

@@ -24,8 +24,8 @@
                 <span>
                     <select name="activated">
                         <option value="">--状态--</option>
-                        <option value="1" @if(Input::get('activated') === 1)selected="selected"@endif>正常</option>
-                        <option value="0" @if(Input::get('activated') === 0)selected="selected"@endif>禁止</option>
+                        <option value="1" @if(Input::get('activated') === '1')selected="selected"@endif>正常</option>
+                        <option value="0" @if(Input::get('activated') === '0')selected="selected"@endif>禁止</option>
                     </select>
                 </span>
                 <span>
@@ -56,16 +56,16 @@
                 <td width="6%">状态</td>
                 <td width="10%">操作</td>
             </tr>
-            @foreach($users['data'] as $user)
-            <tr class="Search_biao_one">
+            @foreach($users['data'] as $k => $user)
+            <tr class="Search_biao_{{ $k%2 == 0 ? 'one' : 'two'}}">
                 <td>{{ $user['id'] }}</td>
                 <td>{{ $user['username'] }}</td>
-                <td>{{ $user['username'] }}</td>
+                <td>{{ $user['role'] }}</td>
                 <td>{{ $user['realname'] }}</td>
                 <td>{{ $user['email'] }}</td>
                 <td>{{ $user['created_at'] }}</td>
-                <td><img src="images/xia_yes.png" width="18" height="18" /></td>
-                <td><a href="#" class="Search_show">编辑</a><a href="#" class="Search_del">删除</a></td>
+                <td><img src="@if($user['activated']) {{ asset('images/xia_yes.png') }} @else {{ asset('images/xia_none.png') }} @endif" width="18" height="18" /></td>
+                <td><a href="{{ URL::route('users.edit', ['id' => $user['id']]) }}" class="Search_show">编辑</a><a href="{{ URL::route('users.delete', ['id' => $user['id']]) }}" class="Search_del jq-delete">删除</a></td>
             </tr>
             @endforeach
             @if(empty($users['total']))
