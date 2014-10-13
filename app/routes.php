@@ -102,21 +102,21 @@ Route::group(['prefix' => 'admin', 'before' => 'IE10'], function()
     {
         Route::get('index', ['as' => 'comment.index', 'uses' => 'Admin_CommentsController@index']);
         Route::post('{id}/edit', ['as' => 'comment.edit', 'uses' => 'Admin_CommentsController@update']);
-        Route::get('{id}/delete', ['as' => 'comment.delete', 'uses' => 'Admin_CommentsController@destroy']);
+        Route::delete('{id}/delete', ['as' => 'comment.delete', 'uses' => 'Admin_CommentsController@destroy']);
     });
     Route::group(['prefix' => 'stopword'], function() //游戏屏蔽词
     {
         Route::get('index', ['as' => 'stopword.index', 'uses' => 'Admin_StopwordsController@index']);
         Route::post('create', ['as' => 'stopword.create', 'uses' => 'Admin_StopwordsController@store']);
         Route::post('{id}/edit', ['as' => 'stopword.edit', 'uses' => 'Admin_StopwordsController@update']);
-        Route::get('{id}/delete', ['as' => 'stopword.delete', 'uses' => 'Admin_StopwordsController@destroy']);
+        Route::delete('{id}/delete', ['as' => 'stopword.delete', 'uses' => 'Admin_StopwordsController@destroy']);
     });
     Route::group(['prefix' => 'keyword'], function() //游戏关键词
     {
         Route::get('index', ['as' => 'keyword.index', 'uses' => 'Admin_KeywordsController@index']);
         Route::post('create', ['as' => 'keyword.store', 'uses' => 'Admin_KeywordsController@store']);
         Route::post('{id}/edit', ['as' =>'keyword.update', 'uses' => 'Admin_KeywordsController@update']);
-        Route::get('{id}/delete', ['as' =>'keyword.delete', 'uses' => 'Admin_KeywordsController@destroy']);
+        Route::delete('{id}/delete', ['as' =>'keyword.delete', 'uses' => 'Admin_KeywordsController@destroy']);
     });
     Route::group(['prefix' => 'appsads'], function() //游戏位推广
     {
@@ -174,5 +174,15 @@ Route::group(['prefix' => 'admin', 'before' => 'IE10'], function()
 // 404 跳转
 Event::listen('404', function()
 {
-    return Response::error('404');
+    echo '找不到该路径。';
+    return;
+    //return Response::error('404');
+});
+
+// 500 跳转
+Event::listen('500', function()
+{   
+    echo '亲，服务器私奔了，工程狮们正在努力寻回。';
+    return;
+    //return Response::error('404');
 });

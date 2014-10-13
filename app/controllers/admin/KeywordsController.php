@@ -73,8 +73,8 @@ class Admin_KeywordsController extends \BaseController {
         }
         //保存数据
         $keyword->operator = $this->user_id;
-        $keyword->word = Input::get('word');
-        $keyword->is_slide = Input::get('is_slide');
+        $keyword->word = Input::get('word', $keyword->word);
+        $keyword->is_slide = Input::get('is_slide', $keyword->is_slide);
         $keyword->save();
         return Response::json(['status'=>'ok', 'msg'=>'suss']);
     }
