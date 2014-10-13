@@ -1,10 +1,7 @@
 <?php
 
-class Admin_indexAdsController extends \BaseController {
+class Admin_indexAdsController extends \Admin_BaseController {
 
-    protected $user_id = 1;
-    protected $layout = 'admin.layout';
-    protected $pagesize = 5;
     protected $type = 'index';
     /**
      * 显示首页图片位管理

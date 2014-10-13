@@ -1,10 +1,10 @@
 <?php
 
-class Admin_KeywordsController extends \BaseController {
+class Admin_KeywordsController extends \Admin_BaseController {
 
-    protected $user_id = 1;
-    protected $layout = 'admin.layout';
-    protected $pagesize = 5;
+    //protected $this->userId = Sentry::getUser()->id;
+    //protected $layout = 'admin.layout';
+    //protected $pagesize = 5;
     /**
      * 
      * 获得关键字的列表
@@ -23,7 +23,18 @@ class Admin_KeywordsController extends \BaseController {
         }
         //查询，默认分页
         $keywords = $where->orderBy('id', 'desc')->paginate($this->pagesize);
-        $datas = ['keywords' => $keywords];
+        $userIds = [0];
+        foreach ($keywords as $keyword) {
+            if (!isset($userIds[$keyword->creator])){
+                $userIds[] = $keyword->creator;
+            }
+            if (!isset($userIds[$keyword->operator])){
+                $userIds[] = $keyword->operator;
+            }
+        }
+        $userModel = new User;
+        $userDatas = $userModel->getUserNameByIds($userIds);
+        $datas = ['keywords' => $keywords, 'userDatas' => $userDatas];
         $this->layout->content = View::make('admin.keywords.index', $datas);
     }
 
@@ -43,8 +54,8 @@ class Admin_KeywordsController extends \BaseController {
             return Response::json(['status'=>'error', 'msg'=>'word is must need']);
         }
         //保存数据
-        $keyword->operator = $this->user_id;
-        $keyword->creator = $this->user_id;
+        $keyword->operator = $this->userId;
+        $keyword->creator = $this->userId;
         $keyword->word = Input::get('word');
         $keyword->save();
         return Response::json(['status'=>'ok', 'msg'=>'suss']);
@@ -72,7 +83,7 @@ class Admin_KeywordsController extends \BaseController {
             return Response::json(['status'=>'error', 'msg'=>'word is must need']);
         }
         //保存数据
-        $keyword->operator = $this->user_id;
+        $keyword->operator = $this->userId;
         $keyword->word = Input::get('word', $keyword->word);
         $keyword->is_slide = Input::get('is_slide', $keyword->is_slide);
         $keyword->save();
@@ -93,7 +104,7 @@ class Admin_KeywordsController extends \BaseController {
         if(!$keyword){
             return Redirect::action('Admin_KeywordsController@index')->with('msg', '#'. $id .'不存在');   
         }
-        $keyword->operator = $this->user_id;
+        $keyword->operator = $this->userId;
         $keyword->save();
         //两个动作放一起很怪异
         $keyword->delete();

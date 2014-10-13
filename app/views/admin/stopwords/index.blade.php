@@ -35,9 +35,9 @@
                     <td>{{ $stopword->id }}</td>
                     <td>{{ $stopword->word }}</td>
                     <td>{{ $stopword->to_word }}</td>
-                    <td>{{ $stopword->creator }}</td>
+                    <td>{{ isset($userDatas[$stopword->creator]) ? $userDatas[$stopword->creator] : '' }}</td>
                     <td>{{ $stopword->created_at }}</td>
-                    <td>{{ $stopword->operator }}</td>
+                    <td>{{ isset($userDatas[$stopword->operator]) ? $userDatas[$stopword->operator] : '' }}</td>
                     <td>{{ $stopword->updated_at }}</td>
                     <td><a href="javascript:;" class="Search_show jq-editWord">修改</a>
                         <a href="{{ URL::route('stopword.delete', $stopword->id) }}" class="Search_del jq-delete">删除</a>
