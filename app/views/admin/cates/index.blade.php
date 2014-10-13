@@ -120,49 +120,111 @@ $(function(){
     updateTag = '<a class="Search_show jq-updateTag" href="javascript:;">确定</a>';
     buttonCate = '<a class="Search_show jq-editCate" href="javascript:;">修 改</a><a class="Search_xiajia jq-delCate" href="javascript:;">删除</a>';
     buttonTag = '<a class="Search_show jq-editTag" href="javascript:;">修 改</a><a class="Search_xiajia jq-delTag" href="javascript:;">删除</a>';
+    var cateText = '<table align="center" border="0" cellspacing="0" cellpadding="0" class="add_Classification">' +
+                    '<tr>' + 
+                        '<td width="114" align="right">分类名称：</td>' + 
+                        '<td height="40"><input name="cate" type="text" class="add_Classification_text"/></td>' + 
+                    '</tr><tr>' + 
+                        '<td colspan="2" style=" text-align:center; padding:15px 0px;">'+
+                        '<input name="" type="button" value="添加" class="Search_en jq-addCate" /></td>'+
+                    '</tr></table>';
+    var tagText =   '<table align="center" border="0" cellspacing="0" cellpadding="0" class="add_Classification">' +
+                        '<tr>'+
+                        '<td width="114" align="right">所属分类：</td>' + 
+                        '<td height="40">' + 
+                            '<select id="u117_input" name="parent_id">' +
+                                @foreach($allcates as $cate)
+                                    '<option value="{{ $cate->id }}">{{ $cate->title }}</option>' +
+                                @endforeach
+                            '</select>' + 
+                        '</td></tr><tr>' + 
+                        '<td align="right" valign="top">标签名称：</td>' +
+                        '<td height="40">' + 
+                            '<input name="tag" type="text"  class="add_Classification_text"/>' +
+                            '<span>' + 
+                                '<a href="#"><img src="/css/images/jiahao.jpg" width="17" height="17" /></a>' +
+                            '</span>' +
+                        '</td></tr><tr>' +
+                        '<td colspan="2" style=" text-align:center; padding:15px 0px;">' +
+                            '<input name="" type="button" value="添加" class="Search_en jq-addTag" />' +
+                        '</td></tr></table>';
+    //添加分类
+    function addCate(){
+        $('.jq-addCate').click(function(){
+            
+            var cate = $('input[name=cate]').val();
+            var createUrl = "{{ route('cate.create') }}";
+            $.post(createUrl, {word:cate}, function(res){
+                if ( res.status == 'ok' ){
+                    alert('添加分类成功');
+                    $.jBox.close();
+                    return;
+                }
+            });
+        });
+    }
+    //添加便签
+    function addTag(){
+        $('.jq-addTag').click(function(){
+            var parent_id = $('select[name=parent_id]').val();
+            var tag = $('input[name=tag]').val();
+            if (tag == '' || tag == undefined){
+                return;
+            }
+            var createUrl = "{{ route('tag.create') }}";
 
+            $.post(createUrl, {parent_id:parent_id,word:tag}, function(res){
+                if ( res.status == 'ok' ){
+                    alert('添加成功');
+                    $.jBox.close();
+                    return;
+                }
+            });
+        });
+    }
     $("#Classification").click(function(){
-        $.jBox("iframe:" + cateCreateUrl, {  
-          title: "<div class=ask_title>分类添加</div>",  
-          width: 550,  
-          height:370,
-          border: 5,
-          showType: 'slide', 
-          opacity: 0.3,
-          showIcon:false,
-          top: '20%',
-          loaded:function(){
-            $("body").css("overflow-y","hidden");
-          }
-           ,
-           closed:function(){
-             $("body").css("overflow-y","auto");
-             location.href = location.href;
-           }
+        $.jBox(cateText, {  
+            title: "<div class=ask_title>分类添加</div>",  
+            width: 550,  
+            height:370,
+            border: 5,
+            showType: 'slide', 
+            opacity: 0.3,
+            showIcon:false,
+            top: '20%',
+            loaded:function(){
+                $("body").css("overflow-y","hidden");
+                addCate();
+            }
+            ,
+            closed:function(){
+                $("body").css("overflow-y","auto");
+                location.href = location.href;
+            }
            
         });
         
     });
     
     $("#Tag").click(function(){
-        $.jBox("iframe:" + tagCreateUrl, {  
-          title: "<div class=ask_title>标签添加</div>",  
-          width: 550,  
-          height:370,
-          border: 5,
-          showType: 'slide', 
-          opacity: 0.3,
-          showIcon:false,
-          top: '20%',
-          loaded:function(){
-            $("body").css("overflow-y","hidden");
-
-          }
-           ,
-           closed:function(){
-             $("body").css("overflow-y","auto");
-             location.href = location.href;
-           }
+        $.jBox(tagText, {  
+            title: "<div class=ask_title>标签添加</div>",  
+            width: 550,  
+            height:370,
+            border: 5,
+            showType: 'slide', 
+            opacity: 0.3,
+            showIcon:false,
+            top: '20%',
+            loaded:function(){
+                $("body").css("overflow-y","hidden");
+                addTag();
+            }
+            ,
+            closed:function(){
+                $("body").css("overflow-y","auto");
+                location.href = location.href;
+            }
            
         });  
         
@@ -190,7 +252,6 @@ $(function(){
     $(".jq-editCate").live('click', function() {
         var li = $(this).parents('ul').children('li');
         var title = li.eq(0).find('.jq-title').html();
-        //var button = li.find('.user_button').html();
         var to_title = '<input name="editCate" type="text" value="" />';
         li.eq(0).find('.jq-title').html(to_title);
         li.eq(0).find('input[name=editCate]').val(title);

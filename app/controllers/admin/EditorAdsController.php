@@ -101,13 +101,13 @@ class Admin_EditorAdsController extends \BaseController {
         $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
         //检测广告是否存在
         if (!$ad) {
-            return Redirect::route('editorads.index');
+            return Redirect::route('editorads.index')->with('msg', '没发现数据');
         }
         //检测游戏是否存在
         $appsModel = new Apps;
         $app = $appsModel->find($ad->app_id);
         if (!$app) {
-            return Redirect::route('editorads.index');
+            return Redirect::route('editorads.index')->with('msg', '没发现游戏数据');
         }
         $datas = ['ad' => $ad, 
             'location' => Config::get('status.ads.applocation'),

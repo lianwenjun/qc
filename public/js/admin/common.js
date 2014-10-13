@@ -6,7 +6,7 @@ $(function() {
      * 使用例子 <a href="{{ URL::route('apps.delete', $app['id']) }}" class="Search_del jq-delete">删除</a>
      *
      */
-    $('.jq-delete').click(function() {
+    $('.jq-delete').live('click', function() {
 
         var link = $(this).attr('href');
         $.jBox("<p style='margin: 10px'>您要删除吗？</p>", {

@@ -40,7 +40,7 @@
                     <td>{{ $stopword->operator }}</td>
                     <td>{{ $stopword->updated_at }}</td>
                     <td><a href="javascript:;" class="Search_show jq-editWord">修改</a>
-                        <a href="{{ URL::route('stopword.delete', $stopword->id) }}" class="Search_del">删除</a>
+                        <a href="{{ URL::route('stopword.delete', $stopword->id) }}" class="Search_del jq-delete">删除</a>
                     </td>
                     <td style="display:none">
                         <input id="edit-url" value="{{ route('stopword.edit', $stopword->id) }}" type="hidden"/>
@@ -135,7 +135,7 @@ $(function(){
             //错误判断
             if (res.status == 'ok') {
                 var text8 = '<a href="javacript:;" class="Search_show jq-editWord">修改</a>'+
-                            '<a href="'+delUrl+'" class="Search_del jq-delWord">删除</a>';
+                            '<a href="'+delUrl+'" class="Search_del jq-delWord jq-delete">删除</a>';
                 td.eq(7).html(text8);
                 td.eq(1).html(text1);
                 td.eq(2).html(text2);

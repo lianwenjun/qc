@@ -11,16 +11,16 @@
 |
 */
 Route::pattern('id', '[0-9]+');
-Route::get('/', function()
+Route::get('/', ['before' => 'IE10', function()
 {
     return View::make('hello');
-});
+}]);
 
 Route::get('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_UsersController@signin']);
 Route::put('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_UsersController@doSignin']);
 
 // 后台处理
-Route::group(['prefix' => 'admin'], function()
+Route::group(['prefix' => 'admin', 'before' => 'IE10'], function()
 {
     Route::get('/',        ['as' => 'admin.index',   'uses' => 'Admin_IndexController@index']);
     Route::get('/menu',    ['as' => 'admin.menu',    'uses' => 'Admin_IndexController@menu']);
@@ -92,7 +92,7 @@ Route::group(['prefix' => 'admin'], function()
     Route::group(['prefix' => 'cate'], function() //游戏分类
     {
         Route::get('index', ['as' => 'cate.index', 'uses' => 'Admin_CatesController@index']);
-        Route::get('create', ['as' => 'cate.create', 'uses' => 'Admin_CatesController@create']);
+        //Route::get('create', ['as' => 'cate.create', 'uses' => 'Admin_CatesController@create']);
         Route::post('create', ['as' => 'cate.create', 'uses' => 'Admin_CatesController@store']);
         Route::post('{id}/edit', ['as' => 'cate.edit', 'uses' => 'Admin_CatesController@update']);
         Route::get('{id}/delete', ['as' => 'cate.delete', 'uses' => 'Admin_CatesController@destroy']);
@@ -104,7 +104,7 @@ Route::group(['prefix' => 'admin'], function()
         Route::get('create', ['as' => 'tag.create', 'uses' => 'Admin_CatesController@tagCreate']);
         Route::post('create', ['as' => 'tag.create', 'uses' => 'Admin_CatesController@tagStore']);
         Route::post('{id}/edit', ['as' => 'tag.edit', 'uses' => 'Admin_CatesController@update']);
-        Route::get('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_CatesController@destroy']);
+        Route::delete('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_CatesController@tagDestroy']);
         Route::get('{id}/show', ['as' => 'tag.show', 'uses' => 'Admin_CatesController@show']);
     });
     Route::group(['prefix' => 'rating'], function() //游戏评分
@@ -116,21 +116,21 @@ Route::group(['prefix' => 'admin'], function()
     {
         Route::get('index', ['as' => 'comment.index', 'uses' => 'Admin_CommentsController@index']);
         Route::post('{id}/edit', ['as' => 'comment.edit', 'uses' => 'Admin_CommentsController@update']);
-        Route::get('{id}/delete', ['as' => 'comment.delete', 'uses' => 'Admin_CommentsController@destroy']);
+        Route::delete('{id}/delete', ['as' => 'comment.delete', 'uses' => 'Admin_CommentsController@destroy']);
     });
     Route::group(['prefix' => 'stopword'], function() //游戏屏蔽词
     {
         Route::get('index', ['as' => 'stopword.index', 'uses' => 'Admin_StopwordsController@index']);
         Route::post('create', ['as' => 'stopword.create', 'uses' => 'Admin_StopwordsController@store']);
         Route::post('{id}/edit', ['as' => 'stopword.edit', 'uses' => 'Admin_StopwordsController@update']);
-        Route::get('{id}/delete', ['as' => 'stopword.delete', 'uses' => 'Admin_StopwordsController@destroy']);
+        Route::delete('{id}/delete', ['as' => 'stopword.delete', 'uses' => 'Admin_StopwordsController@destroy']);
     });
     Route::group(['prefix' => 'keyword'], function() //游戏关键词
     {
         Route::get('index', ['as' => 'keyword.index', 'uses' => 'Admin_KeywordsController@index']);
         Route::post('create', ['as' => 'keyword.store', 'uses' => 'Admin_KeywordsController@store']);
         Route::post('{id}/edit', ['as' =>'keyword.update', 'uses' => 'Admin_KeywordsController@update']);
-        Route::get('{id}/delete', ['as' =>'keyword.delete', 'uses' => 'Admin_KeywordsController@destroy']);
+        Route::delete('{id}/delete', ['as' =>'keyword.delete', 'uses' => 'Admin_KeywordsController@destroy']);
     });
     Route::group(['prefix' => 'appsads'], function() //游戏位推广
     {
@@ -139,7 +139,7 @@ Route::group(['prefix' => 'admin'], function()
         Route::post('create', ['as' => 'appsads.create', 'uses' => 'Admin_AppsAdsController@store']);
         Route::get('{id}/edit', ['as' => 'appsads.edit', 'uses' => 'Admin_AppsAdsController@edit']);
         Route::post('{id}/edit', ['as' => 'appsads.edit', 'uses' => 'Admin_AppsAdsController@update']);
-        Route::get('{id}/delete', ['as' => 'appsads.delete', 'uses' => 'Admin_AppsAdsController@destroy']);
+        Route::delete('{id}/delete', ['as' => 'appsads.delete', 'uses' => 'Admin_AppsAdsController@destroy']);
         Route::get('{id}/offshelf', ['as' => 'appsads.offshelf', 'uses' => 'Admin_AppsAdsController@offshelf']);
         Route::post('imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_AppsAdsController@upload']);
     });
@@ -150,7 +150,7 @@ Route::group(['prefix' => 'admin'], function()
         Route::post('create', ['as' => 'rankads.create', 'uses' => 'Admin_rankAdsController@store']);
         Route::get('{id}/edit', ['as' => 'rankads.edit', 'uses' => 'Admin_rankAdsController@edit']);
         Route::post('{id}/edit', ['as' => 'rankads.edit', 'uses' => 'Admin_rankAdsController@update']);
-        Route::get('{id}/delete', ['as' => 'rankads.delete', 'uses' => 'Admin_rankAdsController@destroy']);
+        Route::delete('{id}/delete', ['as' => 'rankads.delete', 'uses' => 'Admin_rankAdsController@destroy']);
         Route::get('{id}/offshelf', ['as' => 'rankads.offshelf', 'uses' => 'Admin_rankAdsController@offshelf']);
     });
     Route::group(['prefix' => 'indexads'], function() //首页图片位推广
@@ -160,7 +160,7 @@ Route::group(['prefix' => 'admin'], function()
         Route::post('create', ['as' => 'indexads.create', 'uses' => 'Admin_indexAdsController@store']);
         Route::get('{id}/edit', ['as' => 'indexads.edit', 'uses' => 'Admin_indexAdsController@edit']);
         Route::post('{id}/edit', ['as' => 'indexads.edit', 'uses' => 'Admin_indexAdsController@update']);
-        Route::get('{id}/delete', ['as' => 'indexads.delete', 'uses' => 'Admin_indexAdsController@destroy']);
+        Route::delete('{id}/delete', ['as' => 'indexads.delete', 'uses' => 'Admin_indexAdsController@destroy']);
         Route::get('{id}/offshelf', ['as' => 'indexads.offshelf', 'uses' => 'Admin_indexAdsController@offshelf']);
     });
     Route::group(['prefix' => 'editorads'], function() //编辑推荐
@@ -170,7 +170,7 @@ Route::group(['prefix' => 'admin'], function()
         Route::post('create', ['as'=>'editorads.create', 'uses' => 'Admin_EditorAdsController@store']);
         Route::get('{id}/edit', ['as'=>'editorads.edit', 'uses' => 'Admin_EditorAdsController@edit']);
         Route::post('{id}/edit', ['as'=>'editorads.edit', 'uses' => 'Admin_EditorAdsController@update']);
-        Route::get('{id}/delete', ['as'=>'editorads.delete', 'uses' => 'Admin_EditorAdsController@destroy']);
+        Route::delete('{id}/delete', ['as'=>'editorads.delete', 'uses' => 'Admin_EditorAdsController@destroy']);
         Route::get('{id}/offshelf', ['as'=>'editorads.offshelf', 'uses' => 'Admin_EditorAdsController@offshelf']);
     });
     Route::group(['prefix' => 'cateads'], function() //分类推广
@@ -188,5 +188,15 @@ Route::group(['prefix' => 'admin'], function()
 // 404 跳转
 Event::listen('404', function()
 {
-    return Response::error('404');
+    echo '找不到该路径。';
+    return;
+    //return Response::error('404');
+});
+
+// 500 跳转
+Event::listen('500', function()
+{   
+    echo '亲，服务器私奔了，工程狮们正在努力寻回。';
+    return;
+    //return Response::error('404');
 });
