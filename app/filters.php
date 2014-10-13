@@ -88,3 +88,17 @@ Route::filter('csrf', function()
         throw new Illuminate\Session\TokenMismatchException;
     }
 });
+
+//过滤浏览器IE10以下
+Route::filter('IE10', function()
+{
+    $userAgent = Request::header('User-Agent');
+    $userAgentRegx = '/MSIE/i';
+    $versionRegx = '/MSIE\s[5|6|7|8|9].\d*/i';
+    $isIE = preg_match($userAgentRegx, $userAgent);
+    $isLowIE10 = preg_match($versionRegx, $userAgent);
+    if ($isIE && $isLowIE10){
+        return '由于使用了HTML5功能，请使用不低于IE10版本的IE浏览器或者其他支持HTML5的浏览器';
+
+    }
+});

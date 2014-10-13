@@ -11,14 +11,14 @@
 |
 */
 Route::pattern('id', '[0-9]+');
-Route::get('/', function()
+Route::get('/', ['before' => 'IE10', function()
 {
     return View::make('hello');
-});
+}]);
 
 
 // 后台处理
-Route::group(['prefix' => 'admin'], function()
+Route::group(['prefix' => 'admin', 'before' => 'IE10'], function()
 {
     Route::get('/',        ['as' => 'admin.index',   'uses' => 'Admin_IndexController@index']);
     Route::get('/menu',    ['as' => 'admin.menu',    'uses' => 'Admin_IndexController@menu']);
