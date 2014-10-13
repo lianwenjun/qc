@@ -20,7 +20,9 @@
 <div class="Content_left">
       <ul>
             <li class="Content_left_logo">游戏商店系统</li>
-            <li class="Content_left_title">Hi，地下铁的猫<br><a href="#">修改密码</a>　<a href="#">退出系统</a></li>
+            @if( Sentry::check() )
+            <li class="Content_left_title">Hi，{{ Sentry::getUser()->username }}<br><a href="#">修改密码</a>　<a href="#">退出系统</a></li>
+            @endif
       </ul>
 </div>
 
@@ -59,11 +61,10 @@
                        <li><a href="{{ URL::route('keyword.index') }}" target=BoardRight>关键字管理</a></li>
                  </ul>
             </li>
-            <li id="three" class="mail"> <a href="#three">管理中心</a>
+            <li id="three" class="mail"><a href="#three">管理中心</a>
                  <ul class="sub-menu">
-                       <li><a href="Administrators.html" target=BoardRight>管理员管理</a></li>
-                       <li><a href="Roles.html" target=BoardRight>角色管理</a></li>
-                       <li><a href="Permissions.html" target=BoardRight>权限管理</a></li>
+                       <li><a href="{{ URL::route('users.index') }}" target=BoardRight>管理员管理</a></li>
+                       <li><a href="{{ URL::route('roles.index') }}" target=BoardRight>角色管理</a></li></li>
                  </ul>
             </li>
 
