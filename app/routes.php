@@ -16,6 +16,8 @@ Route::get('/', function()
     return View::make('hello');
 });
 
+Route::get('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_UsersController@signin']);
+Route::put('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_UsersController@doSignin']);
 
 // 后台处理
 Route::group(['prefix' => 'admin'], function()
@@ -63,16 +65,28 @@ Route::group(['prefix' => 'admin'], function()
 
     });
 
-
-    Route::group(['prefix' => 'user'], function() //用户列表
+     // 管理员
+    Route::group(['prefix' => 'users'], function()
     {
-        Route::post('signin', ['uses' => 'UserController@showProfile']);
-        Route::get('signout', ['uses' => 'UserController@showProfile']);
+        Route::get('index', ['as' => 'users.index', 'uses' => 'Admin_UsersController@index']);
+        // Route::post('signin', ['uses' => 'Admin_UserController@index']);
+        // Route::get('signout', ['uses' => 'Admin_UserController@showProfile']);
 
-        Route::get('create', ['uses' => 'UserController@showProfile']);
-        Route::post('create', ['uses' => 'UserController@showProfile']);
-        Route::get('delete', ['uses' => 'UserController@showProfile']);
-        Route::post('repassword', ['uses' => 'UserController@showProfile']);
+        Route::get('create', ['as' => 'users.create', 'uses' => 'Admin_UsersController@create']);
+        Route::post('create', ['as' => 'users.create', 'uses' => 'Admin_UsersController@store']);
+        Route::get('delete', ['uses' => 'Admin_UserController@showProfile']);
+        Route::post('repassword', ['uses' => 'Admin_UserController@showProfile']);
+    });
+
+    // 角色组
+    Route::group(['prefix' => 'roles'], function()
+    {
+        Route::get('index', ['as' => 'roles.index', 'uses' => 'Admin_RolesController@index']);
+        Route::get('create', ['as' => 'roles.create', 'uses' => 'Admin_RolesController@create']);
+        Route::post('create', ['as' => 'roles.create', 'uses' => 'Admin_RolesController@store']);
+        Route::get('{id}/edit', ['as' => 'roles.edit', 'uses' => 'Admin_RolesController@edit']);
+        Route::put('{id}/edit', ['as' => 'roles.edit', 'uses' => 'Admin_RolesController@update']);
+        Route::delete('{id}/delete', ['as' => 'roles.delete',    'uses' => 'Admin_RolesController@destroy']);
     });
 
     Route::group(['prefix' => 'cate'], function() //游戏分类
