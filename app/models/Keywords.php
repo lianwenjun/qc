@@ -17,7 +17,7 @@ class Keywords extends \Eloquent {
                 'is_slide' => Input::get('is_slide'),
             ],
             [
-                'word' => 'required|min:1',
+                'word' => 'min:1',
                 'is_slide' => 'in:yes,no',
             ]
         );
