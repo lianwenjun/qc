@@ -39,14 +39,17 @@
                 <td>权限</td>
             </tr>
             <?php $i = 0; ?>
-            <?php $hasPermissions = unserialize($group->permissions); ?>
+            <?php 
+                $permissionArray = json_decode($group->permissions, true);
+                $hasPermissions = !empty($permissionArray) ? array_keys($permissionArray) : [];
+            ?>
             @foreach($permissions as $k => $permission)
             <?php $i ++; ?>
             <tr class="Search_user_{{ $i%2 == 0 ? 'one' : 'two'}}">
                 <td><strong>{{ $k }}</strong></td>
                 <td>
                     @foreach($permission as $key => $title)
-                    <span><lable><input name="permissions[]" type="checkbox" value="{{$key}}" @if(in_array($key, $hasPermissions))checked="checked"@endif/>{{ $title }}</lable></span>
+                    <span><lable><input name="permissions[]" type="checkbox" value="{{$key}}" @if(!empty($hasPermissions) && in_array($key, $hasPermissions))checked="checked"@endif/>{{ $title }}</lable></span>
                     @endforeach
                 </td>
             </tr>

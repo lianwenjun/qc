@@ -49,12 +49,12 @@ class Admin_RolesController extends \Admin_BaseController {
     {
         $groupModel = new Groups;
         if($groupModel->store(Input::all())) {
-            Session::flash('tips', ['success' => false, 'message' => "亲，角色添加成功了"]);
+            Session::flash('tips', ['success' => true, 'message' => "亲，角色添加成功了"]);
 
             return Redirect::route('roles.index');
         } else {
             Session::flash('tips', ['success' => false, 'message' => "亲，角色添加失败了"]);
-            
+
             return Redirect::back();
         }
     }
@@ -92,10 +92,15 @@ class Admin_RolesController extends \Admin_BaseController {
     public function update($id)
     {
 
+        $permissions = [];
+        foreach(Input::get('permissions', []) as $permission) {
+            $permissions[$permission] = 1;
+        }
+
         $data = [
             'name' => Input::get('name'),
             'department' => Input::get('department'),
-            'permissions' => serialize(Input::get('permissions'))
+            'permissions' => json_encode($permissions)
         ];
 
         // TODO 验证
@@ -123,15 +128,13 @@ class Admin_RolesController extends \Admin_BaseController {
      */
     public function destroy($id)
     {
-        if(! $group = Groups::find($id)) {
-            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
-            return Redirect::back();
-        }
-        
-        if($group->delete()) {
+        try {
+            $group = Sentry::findGroupById($id);
+            $group->delete();
+
             Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经删除掉了"]);
-        } else {
-            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}删除失败了"]);
+        } catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e) {
+            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
         }
 
         return Redirect::back();

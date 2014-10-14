@@ -36,6 +36,15 @@ class Admin_IndexController extends \Admin_BaseController {
     }
 
     /**
+     * 没有权限页
+     * GET /admin/accessDenied
+     */
+    public function accessDenied()
+    {
+        return '没有权限';
+    }
+
+    /**
     * 后台搜索关键字
     * GET 
     * @return Response

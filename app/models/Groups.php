@@ -63,7 +63,12 @@ class Groups extends \Eloquent {
     public function store($data)
     {
         if(isset($data['permissions'])) {
-            $data['permissions'] = serialize($data['permissions']);
+            $permissions = [];
+            foreach(Input::get('permissions', []) as $permission) {
+                $permissions[$permission] = 1;
+            }
+
+            $data['permissions'] = json_encode($permissions);
         }
 
         return Groups::create($data);
@@ -78,9 +83,8 @@ class Groups extends \Eloquent {
      */
     public function addGroupName($users)
     {
-        foreach($users as $key => $user) {
+        foreach($users['data'] as $key => $user) {
             $userGroupModel = new UserGroups;
-            echo $user['id'];die;
             $ids = $userGroupModel->userGroupIds($user['id']);
 
             $groups = Groups::whereIn('id', $ids)->get();
@@ -94,10 +98,9 @@ class Groups extends \Eloquent {
                 $name = implode(', ', $groupNames);
             }
 
-            echo $users[$key]['group'] = $name;
+            $users['data'][$key]['role'] = $name;
         }
 
         return $users;
-
     }
 }
