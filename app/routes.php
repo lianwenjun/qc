@@ -20,7 +20,7 @@ Route::get('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_User
 Route::put('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_UsersController@doSignin']);
 
 // 后台处理
-Route::group(['prefix' => 'admin'], function()
+Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 
 {
     Route::get('/',        ['as' => 'admin.index',   'uses' => 'Admin_IndexController@index']);
