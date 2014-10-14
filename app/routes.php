@@ -11,16 +11,16 @@
 |
 */
 Route::pattern('id', '[0-9]+');
-Route::get('/', ['before' => 'IE10', function()
+Route::get('/', function()
 {
     return View::make('hello');
-}]);
+});
 
 Route::get('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_UsersController@signin']);
 Route::put('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_UsersController@doSignin']);
 
 // 后台处理
-Route::group(['prefix' => 'admin', 'before' => 'IE10'], function()
+Route::group(['prefix' => 'admin'], function()
 {
     Route::get('/',        ['as' => 'admin.index',   'uses' => 'Admin_IndexController@index']);
     Route::get('/menu',    ['as' => 'admin.menu',    'uses' => 'Admin_IndexController@menu']);
