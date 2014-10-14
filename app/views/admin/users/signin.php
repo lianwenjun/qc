@@ -10,12 +10,24 @@
         <!--/ 弹窗 -->
         <script type="text/javascript">
             $(document).ready(function () {
-         
-                if (!Modernizr.canvas) {
-                    alert('对不起，您的浏览器不支持HTML5，推荐使用CHROM、火狐浏览器或者IE10以上版本的浏览器');
+                function target(){
+                    if (FLAG){
+                        window.open('/nohtml5.html', "_blank");
+                        FLAG = false;
+                    }
                 }
-                if (!Modernizr.localstorage) {
-                    alert('对不起，您的浏览器不支持HTML5，推荐使用CHROM、火狐浏览器或者IE10以上版本的浏览器'); 
+                FLAG = true;
+                if (!Modernizr.canvas) {
+                    //alert('对不起，您的浏览器不支持HTML5，推荐使用CHROME、火狐浏览器或者IE10以上版本的浏览器');
+                    document.onclick = function () {
+                        target()
+                    }  
+                }
+                else if (!Modernizr.localstorage) {
+                    //alert('对不起，您的浏览器不支持HTML5，推荐使用CHROME、火狐浏览器或者IE10以上版本的浏览器');
+                    document.onclick = function () {
+                        target()
+                    }
                 }
             });
         </script>
