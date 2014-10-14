@@ -1,10 +1,10 @@
 <?php
 
-class Admin_AppsAdsController extends \BaseController {
+class Admin_AppsAdsController extends \Admin_BaseController {
 
-    protected $user_id = 1;
-    protected $layout = 'admin.layout';
-    protected $pagesize = 5;
+    //protected $user_id = 1;
+    //protected $layout = 'admin.layout';
+    //protected $pagesize = 5;
     protected $type = 'app';
     /**
      * 首页游戏位广告列表
@@ -161,7 +161,7 @@ class Admin_AppsAdsController extends \BaseController {
     public function offshelf($id)
     {
         $adsModel = new Ads();
-        $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
+        $ad = $adsModel->offshelf($id, $this->type);
         if (!$ad) {
             $msg = '亲，#'.$id.'下架失败了';
             return Redirect::back()->with('msg', $msg);

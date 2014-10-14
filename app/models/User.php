@@ -49,6 +49,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     }
 
     /**
+    * 根据用户多ID获得用户信息列表
+    */
+    public function getUserNameByIds($userIds) {
+        //获得列表用户数据
+        $users = User::whereIn('id', $userIds)->get();
+        $userDatas = [0 => 'N/A'];
+        foreach ($users as $user) {
+            $userDatas[$user->id] = $user->username;
+        }
+        return $userDatas;
+    }
+    /**
      * 解析条件
      *
      * @param $query obj   query

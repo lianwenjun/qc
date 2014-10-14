@@ -1,10 +1,7 @@
 <?php
 
-class Admin_StopwordsController extends \BaseController {
+class Admin_StopwordsController extends \Admin_BaseController {
 
-    protected $user_id = 1;
-    protected $layout = 'admin.layout';
-    protected $pagesize = 5;
     /**
      * 屏蔽词列表
      * GET /admin/stopwords
@@ -15,7 +12,18 @@ class Admin_StopwordsController extends \BaseController {
     {
         $stopwordModel = new Stopwords;
         $stopwords = $stopwordModel->orderBy('id', 'desc')->paginate($this->pagesize);
-        $datas = ['stopwords' => $stopwords];
+        $userIds = [0];
+        foreach ($stopwords as $stopword) {
+            if (!isset($userIds[$stopword->creator])){
+                $userIds[] = $stopword->creator;
+            }
+            if (!isset($userIds[$stopword->operator])){
+                $userIds[] = $stopword->operator;
+            }
+        }
+        $userModel = new User;
+        $userDatas = $userModel->getUserNameByIds($userIds);
+        $datas = ['stopwords' => $stopwords, 'userDatas' => $userDatas];
         $this->layout->content = View::make('admin.stopwords.index', $datas);
     }
 
@@ -39,8 +47,8 @@ class Admin_StopwordsController extends \BaseController {
         }
         //保存输入
         $stopwordModel->word = Input::get('word');
-        $stopwordModel->creator = $this->user_id;
-        $stopwordModel->operator = $this->user_id;
+        $stopwordModel->creator = $this->userId;
+        $stopwordModel->operator = $this->userId;
         //入库失败
         if (!$stopwordModel->save()) {
             $res['msg'] = '保存失败';
@@ -79,7 +87,7 @@ class Admin_StopwordsController extends \BaseController {
         //保存输入
         $stopword->word = Input::get('word', $stopword->word);
         $stopword->to_word = Input::get('to_word', '***');
-        $stopword->operator = $this->user_id;
+        $stopword->operator = $this->userId;
         //入库失败
         if (!$stopword->save()) {
             $res['msg'] = '修改失败';
@@ -104,7 +112,7 @@ class Admin_StopwordsController extends \BaseController {
         if(!$stopword){
             return Redirect::route('stopword.index')->with('msg', '#'. $id .'不存在');   
         }
-        $stopword->operator = $this->user_id;
+        $stopword->operator = $this->userId;
         $stopword->save();
         //两个动作放一起很怪异
         $stopword->delete();

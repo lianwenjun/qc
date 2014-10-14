@@ -42,9 +42,9 @@
                     <td>{{ $keyword->id }}</td>
                     <td>{{ $keyword->word }}</td>
                     <td>{{ $keyword->search_total }}</td>
-                    <td>{{ $keyword->creator }}</td>
+                    <td>{{ isset($userDatas[$keyword->creator]) ? $userDatas[$keyword->creator] : '' }}</td>
                     <td>{{ $keyword->created_at }}</td>
-                    <td>{{ $keyword->operator }}</td>
+                    <td>{{ isset($userDatas[$keyword->operator]) ? $userDatas[$keyword->operator] : '' }}</td>
                     <td>{{ $keyword->updated_at }}</td>
                     <td>
                         <a href='javascript:;' class="jq-changeSlide" data-slide="{{ $keyword->is_slide }}">

@@ -1,10 +1,7 @@
 <?php
 
-class Admin_rankAdsController extends \BaseController {
+class Admin_rankAdsController extends \Admin_BaseController {
 
-    protected $user_id = 1;
-    protected $layout = 'admin.layout';
-    protected $pagesize = 5;
     protected $type = 'rank';
     /**
      * Display a listing of the resource.

@@ -1,9 +1,7 @@
 <?php
 
-class Admin_RatingsController extends \BaseController {
-    protected $user_id = 1;
-    protected $layout = 'admin.layout';
-    protected $pagesize = 5;
+class Admin_RatingsController extends \Admin_BaseController {
+    
     /**
      * 游戏评分列表
      * GET /admin/ratings
