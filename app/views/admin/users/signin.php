@@ -11,9 +11,9 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 function target(){
-                    window.location.href= '/nohtml5.html';
+                    window.location.href = '/nohtml5.html';
                 }
-                if (Modernizr.canvas) {
+                if (!Modernizr.canvas) {
                     //alert('对不起，您的浏览器不支持HTML5，推荐使用CHROME、火狐浏览器或者IE10以上版本的浏览器');
                     target()
                 }
