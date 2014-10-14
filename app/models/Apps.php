@@ -229,7 +229,8 @@ class Apps extends \Eloquent {
         $app['cates'] = serialize($catesModel->appCates($id));
         $app['tags'] = serialize($catesModel->appTags($id));
 
-        // TODO 处理操作人
+        // 处理操作人
+        $app['operator'] = Sentry::getUser()->id;
 
         Histories::create($app);
     }
