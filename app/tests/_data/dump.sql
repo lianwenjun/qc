@@ -370,4 +370,83 @@ VALUES
   (5, 1, '植物大战僵尸啦', 'xxxooo.com.zhiwu', 'ABSDEDEDCHAYFSS', 'htc', '127.0.0.1', '非常老行', 5, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
   (6, 1, '植物大战僵尸啦', 'xxxooo.com.zhiwu', 'ABSDEDEDCHAYFSS', 'htc', '127.0.0.1', '非常老行', 5, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
+/*----------------------------------------------------------
+| 测试 users 数据库
+----------------------------------------------------------*/
 
+CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `realname` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `permissions` text COLLATE utf8_unicode_ci,
+  `activated` tinyint(1) NOT NULL DEFAULT '0',
+  `activation_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `activated_at` timestamp NULL DEFAULT NULL,
+  `last_login` timestamp NULL DEFAULT NULL,
+  `persist_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `reset_password_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `first_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`),
+  KEY `users_activation_code_index` (`activation_code`),
+  KEY `users_reset_password_code_index` (`reset_password_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+INSERT INTO `users` (`id`, `email`, `username`, `realname`, `password`, `permissions`, `activated`, `activation_code`, `activated_at`, `last_login`, `persist_code`, `reset_password_code`, `first_name`, `last_name`, `created_at`, `updated_at`)
+VALUES
+  (1, 'test@ltbl.cn', 'test', 'test', '$2y$10$TGjZU3LD7xo8TIhAdsAg7.Sv/FWKLjduncyUQSEKELCqAzDk.YmlK', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2014-10-14 10:33:32', '2014-10-14 10:33:32');
+
+
+
+/*----------------------------------------------------------
+| 测试 groups 数据库
+----------------------------------------------------------*/
+
+CREATE TABLE `groups` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `permissions` text COLLATE utf8_unicode_ci,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `department` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `groups_name_unique` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+INSERT INTO `groups` (`id`, `name`, `permissions`, `created_at`, `updated_at`, `department`) VALUES
+  (1, 'test', '{\"apps.onshelf\":1,\"apps.dooffshelf\":1,\"apps.edit\":1,\"apps.history\":1,\"apps.draft\":1,\"apps.delete\":1,\"apps.appupload\":1,\"apps.imageupload\":1,\"apps.pending\":1,\"apps.dopass\":1,\"apps.donopass\":1,\"apps.doallpass\":1,\"apps.doallnopass\":1,\"apps.nopass\":1,\"apps.offshelf\":1,\"appsads.index\":1,\"appsads.create\":1,\"appsads.offshelf\":1,\"appsads.edit\":1,\"appsads.delete\":1,\"rankads.index\":1,\"rankads.create\":1,\"rankads.offshelf\":1,\"rankads.edit\":1,\"rankads.delete\":1,\"indexads.index\":1,\"indexads.create\":1,\"indexads.offshelf\":1,\"indexads.edit\":1,\"indexads.delete\":1,\"editorads.index\":1,\"editorads.create\":1,\"editorads.offshelf\":1,\"editorads.edit\":1,\"editorads.delete\":1,\"cateads.index\":1,\"cateads.upload\":1,\"cateads.edit\":1,\"cate.index\":1,\"cate.create\":1,\"cate.edit\":1,\"cate.delete\":1,\"cate.show\":1,\"tag.index\":1,\"tag.create\":1,\"tag.edit\":1,\"tag.delete\":1,\"tag.show\":1,\"rating.index\":1,\"rating.edit\":1,\"comment.index\":1,\"comment.edit\":1,\"comment.delete\":1,\"stopword.index\":1,\"stopword.create\":1,\"stopword.edit\":1,\"stopword.delete\":1,\"keyword.index\":1,\"keyword.store\":1,\"keyword.update\":1,\"keyword.delete\":1,\"users.index\":1,\"users.create\":1,\"users.edit\":1,\"users.delete\":1,\"roles.index\":1,\"roles.create\":1,\"roles.edit\":1,\"roles.delete\":1}', '2014-10-14 10:33:12', '2014-10-14 10:33:12', 1);
+
+
+/*----------------------------------------------------------
+| 测试 users_groups 数据库
+----------------------------------------------------------*/
+
+CREATE TABLE `users_groups` (
+  `user_id` int(10) unsigned NOT NULL,
+  `group_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`user_id`,`group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `users_groups` (`user_id`, `group_id`) VALUES (1, 1);
+
+
+/*----------------------------------------------------------
+| 测试 throttle 数据库
+----------------------------------------------------------*/
+
+CREATE TABLE `throttle` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned DEFAULT NULL,
+  `ip_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `attempts` int(11) NOT NULL DEFAULT '0',
+  `suspended` tinyint(1) NOT NULL DEFAULT '0',
+  `banned` tinyint(1) NOT NULL DEFAULT '0',
+  `last_attempt_at` timestamp NULL DEFAULT NULL,
+  `suspended_at` timestamp NULL DEFAULT NULL,
+  `banned_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `throttle_user_id_index` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
