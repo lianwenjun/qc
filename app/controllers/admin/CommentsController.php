@@ -1,9 +1,7 @@
 <?php
 
-class Admin_CommentsController extends \BaseController {
-    protected $user_id = 1;
-    protected $layout = 'admin.layout';
-    protected $pagesize = 5;
+class Admin_CommentsController extends \Admin_BaseController {
+
     /**
      * 游戏评论列表
      * GET /admin/comments

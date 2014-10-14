@@ -6,6 +6,9 @@ class Admin_BaseController extends \Controller {
      *
      * @return void
      */
+    protected $layout = 'admin.layout';
+    protected $userId = 0;
+    protected $pagesize = 20;
     protected function setupLayout()
     {
         if ( ! is_null($this->layout))
@@ -13,5 +16,13 @@ class Admin_BaseController extends \Controller {
             $this->layout = View::make($this->layout);
         }
     }
-
+    /**
+    * 设置用户ID
+    */
+    public function __construct()
+    {
+        if (Sentry::check()) {
+            $this->userId = Sentry::getUser()->id;
+        }
+    }
 }

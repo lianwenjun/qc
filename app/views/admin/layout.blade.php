@@ -4,11 +4,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="{{ asset('css/admin/main.css') }}" rel="stylesheet" type="text/css" />
     <script type="text/javascript"  src="{{ asset('js/jquery.min.js') }}"></script>
+    
     <!-- 弹窗 -->
     <link href="{{ asset('css/admin/jBox/Skins/Default/jbox.css') }}" rel="stylesheet" type="text/css" />
     <script src="{{ asset('js/admin/jBox/jquery.jBox-2.3.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/admin/jBox/i18n/jquery.jBox-zh-CN.js') }}" type="text/javascript"></script>
-    <!--/ 弹窗 -->
+    
 </head>
 <body>
     @yield('content')

@@ -1,9 +1,7 @@
 <?php
 
-class Admin_EditorAdsController extends \BaseController {
-    protected $user_id = 1;
-    protected $layout = 'admin.layout';
-    protected $pagesize = 5;
+class Admin_EditorAdsController extends \Admin_BaseController {
+    
     protected $type = 'editor';
     /**
      * 编辑精选广告列表

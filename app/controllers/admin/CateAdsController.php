@@ -1,9 +1,7 @@
 <?php
 
-class Admin_CateAdsController extends \BaseController {
-    protected $user_id = 1;
-    protected $layout = 'admin.layout';
-    protected $pagesize = 5;
+class Admin_CateAdsController extends \Admin_BaseController {
+    
     /**
      * 分类广告图的列表
      * 
