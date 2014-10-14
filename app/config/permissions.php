@@ -11,7 +11,7 @@ return [
         'apps.dooffshelf' => '下架',
         'apps.edit' => '编辑',
         'apps.history' => '历史',
-
+        'apps.preview' => '预览'
         ],
     '添加编辑游戏' => [
         'apps.draft' => '列表',
