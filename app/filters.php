@@ -58,12 +58,12 @@ Route::filter('adminAuth', function()
 
 Route::filter('hasPermissions', function()
 {
-    // if(
-    //     !Sentry::getUser()->hasAccess(Route::current()->getName())
-    //     &&  Route::current()->getName() != 'accessDenied'
-    //   ) {
-    //     return Redirect::route('accessDenied');
-    // }
+    if(
+        !Sentry::getUser()->hasAccess(Route::current()->getName())
+        &&  Route::current()->getName() != 'accessDenied'
+      ) {
+        return Redirect::route('accessDenied');
+    }
 });
 
 
