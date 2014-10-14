@@ -11,9 +11,7 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 function target(){
-                    document.onclick = function () {
-                        window.open('/nohtml5.html', "_new");
-                    }
+                    window.open('/nohtml5.html', "_new");
                 }
                 if (!Modernizr.canvas) {
                     //alert('对不起，您的浏览器不支持HTML5，推荐使用CHROME、火狐浏览器或者IE10以上版本的浏览器');
