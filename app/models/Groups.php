@@ -62,16 +62,30 @@ class Groups extends \Eloquent {
      */
     public function store($data)
     {
+
+        $data['permissions'] = [];
         if(isset($data['permissions'])) {
             $permissions = [];
             foreach(Input::get('permissions', []) as $permission) {
                 $permissions[$permission] = 1;
             }
 
-            $data['permissions'] = json_encode($permissions);
+            $data['permissions'] = $permissions;
         }
 
-        return Groups::create($data);
+        $result = false;
+        try {
+            Sentry::createGroup($data);
+            Session::flash('tips', ['success' => true, 'message' => "亲，角色添加成功了"]);
+
+            $result = true;
+        } catch (Cartalyst\Sentry\Groups\NameRequiredException $e) {
+            Session::flash('tips', ['success' => false, 'message' => "亲，角色名必填"]);
+        } catch (Cartalyst\Sentry\Groups\GroupExistsException $e) {
+            Session::flash('tips', ['success' => false, 'message' => "亲，角色名已存在"]);
+        }
+
+        return $result;
     }
 
     /**
