@@ -103,7 +103,7 @@
                 top: '20%',
                 loaded:function() {
                   $("body").css("overflow-y","hidden");
-                    var uploader = $("#uploader").pluploadQueue({
+                    var apkUploader = $("#uploader").pluploadQueue({
                         runtimes : 'html5',
                         url : '{{ URL::route('apps.appupload') }}',
                         chunk_size: '1mb',
