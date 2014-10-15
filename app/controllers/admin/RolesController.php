@@ -49,12 +49,8 @@ class Admin_RolesController extends \Admin_BaseController {
     {
         $groupModel = new Groups;
         if($groupModel->store(Input::all())) {
-            Session::flash('tips', ['success' => true, 'message' => "亲，角色添加成功了"]);
-
             return Redirect::route('roles.index');
         } else {
-            Session::flash('tips', ['success' => false, 'message' => "亲，角色添加失败了"]);
-
             return Redirect::back();
         }
     }
