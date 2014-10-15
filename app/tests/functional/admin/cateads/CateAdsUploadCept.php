@@ -1,3 +1,3 @@
 <?php 
 $I = new FunctionalTester($scenario);
-$I->wantTo('perform actions and see result');
+$I->wantTo('分类图片上传');
