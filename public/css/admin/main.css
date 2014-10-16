@@ -42,7 +42,7 @@ html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅�
 .Theme_Search li span img{float:left; padding-left:5px; padding-right:5px;}
 .Theme_Search li input{display:inline-block; margin-right:3px; float:left; margin-top:5px; font-size:12px; color:#333}
 .Theme_Search .Search_wenben{ height:22px; font-family:"微软雅黑"; line-height:22px; float:left; margin-top:1px; margin-left:5px; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; position:relative; behavior: url(css/iecss3/ie-css3.htc); z-index:1; border:#666 solid 1px; padding-left:3px;}
-.Theme_Search  select{float:left; margin-top:1px; margin-left:5px;border:#666 solid 1px;}
+.Theme_Search  select{float:left; margin-top:1px; margin-left:5px;border:#666 solid 1px; width: 100px;}
 .Theme_Search .Search_en{ position:relative; bottom:4px; left:5px; float:left; cursor:pointer; behavior: url(css/iecss3/ie-css3.htc); z-index:1; color:#fff;  -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px;  background:url(../../images/admin/hover_img2.jpg) left top repeat-x #1b4182; border:#0e377d solid 1px; font-size:14px; padding:0px 8px 1px 8px; font-family:"微软雅黑";}
 .Theme_Search .Search_en:hover{color:#FF0}
 .Search_en:hover{color:#FF0}
@@ -70,7 +70,7 @@ html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅�
 .Search_biao_one td h6{float:left; font-size:12px; font-weight:normal; padding:0px 2px;}
 .Search_biao_two td h6{float:left; font-size:12px; font-weight:normal; padding:0px 2px;}
 
-.Search_show{font-size:12px; padding:2px 8px; border:#0e377d solid 1px; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; position:relative; behavior: url(css/iecss3/ie-css3.htc); z-index:1; color:#fff;   background:url(../../images/admin/hover_img2.jpg) left top  repeat-x #1b4182; margin-right:4px;}
+.Search_show{font-size:12px; padding:2px 8px; cursor: pointer; border:#0e377d solid 1px; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; position:relative; behavior: url(css/iecss3/ie-css3.htc); z-index:1; color:#fff;   background:url(../../images/admin/hover_img2.jpg) left top  repeat-x #1b4182; margin-right:4px;}
 .Search_show:hover{font-size:12px;  padding:2px 8px; color:#ff0; margin-right:4px;}
 .Search_title{font-size:16px; font-weight:bold; line-height:40px; margin:0px 15px; padding-top:10px;}
 
@@ -155,10 +155,17 @@ html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅�
 .ask_title{text-align:left;  font-size:14px; font-family:"微软雅黑"; }
 
 .no-data{text-align: center; font-size: 14px; line-height: 40px;}
-.required{padding-right: 3px}
+.required{padding-right: 3px; color:red}
 .fail{padding-left: 15px; font-size: 14px; font-family: "微软雅黑";  line-height: 40px; color: red;}
 .success{padding-left: 15px; font-size: 14px; font-family: "微软雅黑";  line-height: 40px; color:#193974;}
 .tags-list{display:none;}
+
+.jbox-waraper{}
+.wraper{padding: 30px; overflow: hidden;}
+.wraper_img{width: 80px; float: left; height: 80px; margin-left: 20px;  background:#fff; border: solid #999 1px; overflow: hidden; position: relative; color: #ccc; font-size: 18px; text-align: center; line-height: 80px; padding: 2px;}
+.wraper_img img{height: 80px; width: 80px; font-size: 0px; overflow: hidden; position: absolute; top:2px; left: 2px;}
+.btn-wraper{float: left; margin-left:30px; margin-top: 27px;}
+.wraper_buttom{display: block; width: 100%; text-align: center; background: #f3f4f6; padding: 15px 0px; border-top:#ddd solid 1px; }
 
 .fileinput-button {
   position: relative;
