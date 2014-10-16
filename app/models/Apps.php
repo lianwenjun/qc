@@ -107,7 +107,7 @@ class Apps extends \Eloquent {
 
         foreach($data as $key => $value) {
             if(! in_array($key, $this->searchEnable)) break;
-            $query = $this->conditionParse($key, $value);
+            $query = $this->conditionParse($key, $value, $query);
         }
 
         // 排序
@@ -132,13 +132,14 @@ class Apps extends \Eloquent {
      *
      * @param $field string 字段
      * @param $value mix    查询值
+     * @param $query obj    query对象
      *
      * @return query obj
      */
-    public function conditionParse($field, $value) {
+    public function conditionParse($field, $value, $query) {
 
-        if($field == 'title' && !empty($value)) {
-            $query->where('title', 'like', '%' . $value . '%');
+        if( ($field == 'title' || $field == 'pack' ) && !empty($value)) {
+            $query->where($field, 'like', '%' . $value . '%');
         } elseif($field == 'cate_id' && !empty($value)) {
             $query->whereRaw("`id` in (select `app_id` from `app_cates` where `cate_id` = '{$value}')");
         } elseif(is_array($value) && count($value) == 2) { // 查询范围
@@ -281,6 +282,9 @@ class Apps extends \Eloquent {
                         'pack'   => $data['pack']
                     ];
                 Ratings::create($rating);
+
+                $keywordsModel = new Keywords;
+                $keywordsModel->store($data['title'], $app->id);
 
                 // 获取MD5队列
                 Queue::push('AppQueue@md5', ['id' => $app->id, 'filename' => $app->download_link]);
