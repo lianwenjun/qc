@@ -282,7 +282,7 @@ class Admin_CatesController extends \Admin_BaseController {
         $cateModel = new Cates;
         $tag = $cateModel->where('id', $id)->where('parent_id', '!=', 0)->first();
         if(!$tag){
-            return Redirect::route('tag.index')->with('msg', 'tag #' . $id . 'is valid');  
+            return Redirect::route('tag.index')->with('msg', 'error,tag #' . $id . ' is valid');  
         }
         $tag->delete();
         return Redirect::route('tag.index')->with('msg', 'suss delete');
