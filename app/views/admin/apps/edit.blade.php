@@ -51,6 +51,20 @@ ul.ui-sortable li.placeholder:before {
   position: absolute;
 }
 .required {color:red;}
+
+.jq-initTags h2 {
+  position: relative;
+  padding-right: 14px;
+  padding-left: 14px;
+}
+.jq-initTags h2:after{
+  content: "x";
+  top: -5px;
+  right: 3px;
+  position: absolute;
+  font-family: fantasy;
+  color: #F66;
+}
 </style>
 <div class="Content_right_top Content_height">
    <div class="Theme_title">
@@ -120,14 +134,14 @@ ul.ui-sortable li.placeholder:before {
             <tr class="Search_biao_two">
                <td class="Search_lei"><span class="required">*</span>游戏标签：</td>
                <td>
-                  <span style="float:left; line-height:26px; padding-right:8px;" class="jq-initTags">
+                  <span style="float:left; line-height:26px; padding-right: 0; background: none; margin-top:0; border: 0px" class="jq-initTags Browse_centent_about">
                         <?php $split = ''; $tagsText = ''; ?>
                         @foreach($app->tags as $tag)
                             <?php $tagsText .=  $split.$tag->title; ?>
                             <?php $catesInput .= "<input name='cates[]' value='".$tag->id."'>"; ?>
-                            <?php $split = ', '; ?>
+                            <?php $split = '</h2>, <h2>'; ?>
                         @endforeach
-                        {{ $tagsText }}
+                        {{ '<h2>' . $tagsText  . '</h2>' }}
                   </span>
                   <input name="checkTag" type="hidden" value="{{ $tagsText }}"/><!-- 验证用 -->
                </td>
@@ -179,7 +193,7 @@ ul.ui-sortable li.placeholder:before {
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei"><span class="required">*</span>游戏截图：</td>
-               <td><a href="javascript:;" class="Search_Update" id="jq-uploadPic">图片上传</a> <span style="color:#C00" class="jq-picTips">可选择多张，图片规格为220*370px 的JPG/PNG</span></td>
+               <td><a href="javascript:;" class="Search_Update" id="jq-uploadPic">图片上传</a> <span style="color:#C00" class="jq-picTips">最多可选择6张，图片规格为220*370px 的JPG/PNG</span></td>
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">截图预览：</td>
@@ -197,7 +211,7 @@ ul.ui-sortable li.placeholder:before {
                </td>
             </tr>
             <tr class="Search_biao_two">
-               <td class="Search_lei"><span class="required">*</span>新版特性：</td>
+               <td class="Search_lei">新版特性：</td>
                <td><textarea name="changes" id="changes" class="Search_textarea">{{ $app->changes }}</textarea>
                </td>
             </tr>
@@ -206,12 +220,13 @@ ul.ui-sortable li.placeholder:before {
                <td colspan="2" align="center" class="Search_submit">
                   @if($app->status == 'new')
                   <a href="javascript:;" class="jq-submitDraft" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'draft']) }}">存为草搞件</a>
+                  <a href="javascript:;" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'pending']) }}" class="jq-submit">提 交</a>
                   @elseif($app->status == 'onshelf')
-                  <a href="javascript:;" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'onshelf']) }}" class="jq-submitPending">提 交</a>
+                  <a href="javascript:;" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'onshelf']) }}" class="jq-submit">提 交</a>
                   @elseif($app->status == 'nopass' || $app->status == 'offshelf')
-                  <a href="javascript:;" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'pending']) }}" class="jq-submitPending">提交待审核列表</a>
+                  <a href="javascript:;" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'pending']) }}" class="jq-submit">提交待审核列表</a>
                   @else
-                  <a href="javascript:;" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'pending']) }}" class="jq-submitPending">提 交</a>
+                  <a href="javascript:;" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'pending']) }}" class="jq-submit">提 交</a>
                   @endif
                   <a href="{{ Request::header('referer') }}" target="BoardRight">返回列表</a></td>
             </tr>
@@ -226,13 +241,19 @@ ul.ui-sortable li.placeholder:before {
 
 <script type="text/javascript">
 
-    // 初始化分类
-    function initCates() {
+    /**
+     * 初始化分类
+     * 
+     * @param h jbox节点
+     *
+     * @return void
+     */
+    function initCates(h) {
         var catesText = $('.jq-initCates').text();
-        $('div[id^="cate_"]').hide();
 
-        var cates = catesText.split(", ");
-        $('input[type="checkbox"]').each(function() {
+        var cates = catesText.trim().split(", ");
+
+        h.find('.jq-cateClick').each(function() {
             for(i in cates) {
                 // console.log($(this).parent().text() + ' ---> ' + cates[i].trim());
                 if($(this).parent().text() == cates[i].trim()) {
@@ -241,13 +262,18 @@ ul.ui-sortable li.placeholder:before {
                     $(this).attr('checked', 'checked');
 
                     // 显示
-                    $('#cate_' + $(this).val()).show();
+                    h.find('#cate_' + $(this).val()).show();
                 }
             }
         });
     }
 
-    // 初始化标签
+    /**
+     * 初始化标签
+     * 
+     *
+     * @return void
+     */
     function initTags() {
         var tagsText = $('.jq-initTags').text();
 
@@ -280,7 +306,7 @@ ul.ui-sortable li.placeholder:before {
                               @endforeach
                               "</ul>" +
                            "</div>" +
-                           "<div class='add_update_Label'>" +
+                           "<div class='add_update_Label' style='height: 230px'>" +
                               "<div class='add_update_title'>标签内容</div>" +
                               @foreach($tags as $k => $cate)
                               "<div class='tags-list' id='cate_{{$k}}'>"+
@@ -299,6 +325,7 @@ ul.ui-sortable li.placeholder:before {
 
 
         // 弹出分类选择
+        var jbox = null;
         $(".jq-cates").click(function(){
             $.jBox(cateSelect, {
                 title: "<div class=ask_title>游戏分类</div>",
@@ -309,9 +336,10 @@ ul.ui-sortable li.placeholder:before {
                 opacity: 0.3,
                 showIcon:false,
                 top: '20%',
-                loaded:function(){
+                loaded:function(h){
                     $("body").css("overflow-y","hidden");
-                    initCates();
+                    jbox = h;
+                    initCates(h);
                     initTags();
                 },
                 closed:function(){
@@ -324,40 +352,62 @@ ul.ui-sortable li.placeholder:before {
         // 分类选择处理
         $(".jq-cateClick").live('click', function() {
             if($(this).attr('checked') == 'checked') {
-                $('#cate_' + $(this).val()).show();
+                jbox.find('#cate_' + $(this).val()).show();
             } else {
-                $('#cate_' + $(this).val()).find('input[type="checkbox"]').attr('checked', false);
-                $('#cate_' + $(this).val()).hide();
+                jbox.find('#cate_' + $(this).val()).find('input[type="checkbox"]').attr('checked', false);
+                jbox.find('#cate_' + $(this).val()).hide();
             }
         });
 
         // 确定分类
         $(".jq-cateSubmit").live('click', function() {
 
+            $('.jq-initCates').text('');
+            $('.jq-initTags').text('');
+
             // 分类提交
             var cates = [];
-            $('.jq-cateClick').each(function() {
+            jbox.find('.jq-cateClick').each(function() {
                 if($(this).attr('checked') == 'checked') {
                     cates.push($(this).parent().text());
                 }
             });
-            $('.jq-initCates').html(cates.join(", ")).next('input').val(cates.join(", "));
+
+            $('.jq-initCates').html(cates.join(",  ")).next('input').val(cates.join(", "));
 
             // 标签提交
             var tags = [];
-            $('[id^="cate_"]').each(function() {
+            jbox.find('[id^="cate_"]').each(function() {
                 $(this).find('input[type="checkbox"]').each(function(){
                     if($(this).attr('checked') == 'checked') {
                         tags.push($(this).parent().text());
                     }
                 });
             });
-            $('.jq-initTags').html(tags.join(", ")).next('input').val(tags.join(", "));
+            $('.jq-initTags').html("<h2>" + tags.join("</h2>, <h2>") + "</h2>").next('input').val(tags.join(", "));
 
             // 表单包含到提交表单
             $('.jq-cate').html($('.jq-cateForm').clone());
 
             $.jBox.close();
+        });
+
+        // 标签删除
+        $('.jq-initTags h2').live('click', function() {
+            var input = $(this).parent().next('input');
+            var val = input.val();
+            var newVal = val.replace($(this).text() + ', ', '').replace($(this).text(), '');
+            input.val(newVal);
+
+            var $this = $(this);
+            $(this).fadeOut(500, function() {
+                $(this).remove();
+                var html = $('.jq-initTags').html();
+                html = html.replace(', , ', ', ');
+                html = html.replace(/^, /, '');
+
+                $('.jq-initTags').html(html);
+            });
         });
 
 
@@ -542,7 +592,6 @@ ul.ui-sortable li.placeholder:before {
 
         // 保存为草稿
         $('.jq-submitDraft').click(function() {
-
             $('#form').attr('action', $(this).attr('data-action')).submit();
         });
 
@@ -551,8 +600,12 @@ ul.ui-sortable li.placeholder:before {
             return $('input[name="images[]"]').length > 0;
         }, "图片必须上传");
 
-        // 提交审核
-        $('.jq-submitPending').click(function() {
+        jQuery.validator.addMethod("images", function(value, element) {
+            return $('input[name="images[]"]').length < 7;
+        }, "图片必须少于6张");
+
+        // 提交表单
+        $('.jq-submit').click(function() {
 
             tinymce.triggerSave();
 
@@ -569,7 +622,6 @@ ul.ui-sortable li.placeholder:before {
                     download_manual: "required",
                     summary: "required",
                     "images[]": "images",
-                    changes: "required"
 
                 },
                 messages: {
@@ -582,7 +634,6 @@ ul.ui-sortable li.placeholder:before {
                     download_manual: {required: '下载次数为必填'},
                     summary: {required: '简介为必填'},
                     images: {images: ' 图片为必填'},
-                    changes: {required: '新版特性为必填'},
                 }
             });
 

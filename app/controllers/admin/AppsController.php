@@ -17,11 +17,13 @@ class Admin_AppsController extends \Admin_BaseController {
 
         $catesModel = new Cates;
         $apps  = $catesModel->addCatesInfo($apps);
+        $cates = $catesModel->allCates();
 
         // TODO 空提示
 
         return View::make('admin.apps.onshelf')
-                   ->with('apps', $apps);
+                   ->with('apps', $apps)
+                   ->with('cates', $cates);
     }
 
     /**

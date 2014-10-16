@@ -92,12 +92,16 @@
             <li>
                <span>
                   <b>查询：</b>
+                  <select name="cate_id">
+                        <option value="">--全部--</option>
+                        @foreach($cates as $cate)
+                        <option value="{{ $cate->id }}" @if(Input::get('cate_id') == $cate->id)selected="selected"@endif>{{ $cate->title }}</option>
+                        @endforeach
+                    </select>
                   <select name="type">
                      <option value="">--全部--</option>
                      <option value="title" @if(Input::get('type') == 'title')selected="selected"@endif>游戏名称</option>
                      <option value="pack" @if(Input::get('type') == 'pack')selected="selected"@endif>游戏包名</option>
-                     <option value="tag" @if(Input::get('type') == 'tag')selected="selected"@endif>! 游戏标签</option>
-                     <option value="cate" @if(Input::get('type') == 'cate')selected="selected"@endif>! 游戏分类</option>
                      <option value="version" @if(Input::get('type') == 'version')selected="selected"@endif>游戏版本号</option>
                   </select>
                </span>
