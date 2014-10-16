@@ -176,6 +176,7 @@
             var link = $(this).attr('href');
 
             var f = document.createElement('form');
+            $(f).css('display', 'none');
             $(this).after($(f).attr({
                 method: 'post',
                 action: link
@@ -209,6 +210,7 @@
                             return false;
                         }
                         var form = document.createElement('form');
+                        $(form).css('display', 'none');
 
                         $(this).after($(form).attr({
                             method: 'post',

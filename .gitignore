@@ -14,3 +14,4 @@ public/pictures/*
 public/cateads/*
 public/ads/*
 *.apk
+app/config/database.php

@@ -2,9 +2,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript"  src="{{ asset('js/jquery.min.js') }}"></script>
 <style type="text/css">
 html{background:#f0f0f0;}
 </style>
+<script>
+
+$(function() {
+    $('#BoardRight').load(function(){
+        var currentUrl = frames['BoardRight'].document.location.href;
+
+        $(frames['BoardLeft'].document).find('.mail_hover').find('.sub-menu > li > a').each(function() {
+
+            console.log($(this).attr('href'));
+            if($(this).attr('href') == currentUrl) {
+                $(this).parent().addClass('sub-menu_hover');
+            } else {
+                $(this).parent().removeClass('sub-menu_hover');
+            }
+        });
+    });
+});
+</script>
 </head>
 
 <frameset border="0" framespacing="0" rows="*" frameborder="0" >

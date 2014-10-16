@@ -8,6 +8,9 @@ $I->sendAjaxPostRequest('/admin/keyword/1/edit', ['word' => '实际就是来打�
 $I->see('suss');
 $I->sendAjaxPostRequest('/admin/keyword/1/edit', ['word' => '实际就是来打酱油的2']);
 $I->see('suss');
+//word缺少
+$I->sendAjaxPostRequest('/admin/keyword/1/edit', ['word1' => '实际就是来打酱油的', 'is_slide' => 'yes']);
+$I->see('suss');
 //word为空
 $I->sendAjaxPostRequest('/admin/keyword/1/edit', ['word' => '', 'is_slide' => 'no']);
 $I->see('suss');
@@ -19,9 +22,7 @@ $I->see('id is valid');
 $I->sendAjaxPostRequest('/admin/keyword/1/edit', ['word' => '实际就是来打酱油的', 'is_slide' => 'OK']);
 $I->see('word is must need');
 
-//word缺少
-$I->sendAjaxPostRequest('/admin/keyword/1/edit', ['word1' => '实际就是来打酱油的', 'is_slide' => 'yes']);
-$I->see('word is must need');
+
 //word缺少
 $I->sendAjaxPostRequest('/admin/keyword/1/edit', ['word1' => '实际就是来打酱油的']);
-$I->see('word is must need');
+$I->see('suss');
