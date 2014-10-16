@@ -120,8 +120,8 @@ class Admin_rankAdsController extends \Admin_BaseController {
     public function update($id)
     {
         $adsModel = new Ads();
-        $ads = $adsModel->where('id', $id)->where('type', $this->type)->first();
-        if (!$ads) {
+        $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
+        if (!$ad) {
             $msg = '亲，数据不存在';
             return Redirect::back()->with('msg', $msg);
         }
@@ -131,12 +131,13 @@ class Admin_rankAdsController extends \Admin_BaseController {
             $msg = "修改失败";
             return Redirect::back()->with('msg', $msg);
         }
-        $ads->location = Input::get('location', $ads->location);
-        $ads->is_top = Input::get('is_top', 'no');
-        $ads->sort = Input::get('sort', $ads->sort);
-        $ads->onshelfed_at = Input::get('onshelfed_at', $ads->onshelfed_at);
-        $ads->offshelfed_at = Input::get('offshelfed_at', $ads->offshelfed_at);
-        if ($ads->save()){
+        $ad->location = Input::get('location', $ad->location);
+        $ad->is_top = Input::get('is_top', 'no');
+        $ad->sort = Input::get('sort', $ad->sort);
+        $ad->onshelfed_at = Input::get('onshelfed_at', $ad->onshelfed_at);
+        $ad->offshelfed_at = Input::get('offshelfed_at', $ad->offshelfed_at);
+        $ad->is_onshelf = 'yes';
+        if ($ad->save()){
             $msg = "修改成功";
             return Redirect::route('rankads.index')->with('msg', $msg);
         }
