@@ -13,9 +13,11 @@
     <div class="Search_biao">
         <form action="{{ Request::url('appsads.create') }}" method="post">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr class="Search_biao_one">
+            <tr>
                 <td width="134" class="Search_lei">请输入游戏名称：</td>
-                <td><input id="autocomplete" name="" type="text" class="Search_text" value="" style="width:25%" />　或　从最近新增的游戏添加　<a href="#" class="Search_Update">选择</a></td>
+                <td>
+                    <input id="autocomplete" type="text" class="Search_text" style="width:25%" />　
+                </td>
             </tr>
             <input name="app_id" type="hidden" val="">
             <!--数据选择区开始-->
@@ -41,8 +43,8 @@
             <tr>
                 <td  class="Search_lei">上线时间：</td>
                 <td>
-                    <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="jq-ui-timepicker" value=""></h6>
-                    <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="jq-ui-timepicker" value=""></h6>
+                    <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="Search_text jq-ui-timepicker" value=""></h6>
+                    <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="Search_text jq-ui-timepicker" value=""></h6>
                 </td>
             </tr>
 
@@ -51,7 +53,7 @@
             </tr>
 
         </table>
-    </form>
+        </form>
     </div>            
 </div>
 <script type="text/javascript" src="{{ asset('js/jquery-ui-1.8.23.custom.min.js') }}"></script>
@@ -86,11 +88,11 @@ function getAppInfo(url){
 }
 $(function(){
     $(".jq-ui-timepicker").datetimepicker({
-            showSecond: true,
-            timeFormat: 'hh:mm:ss',
-            stepHour: 1,
-            stepMinute: 1,
-            stepSecond: 1
+        showSecond: true,
+        timeFormat: 'HH:mm:ss',
+        stepHour: 1,
+        stepMinute: 10,
+        stepSecond: 10
     });
     $("tr:odd").addClass("Search_biao_two");
     $("tr:even").addClass("Search_biao_one");

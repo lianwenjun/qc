@@ -45,7 +45,6 @@
                     <div class="Update_img">
                         <ul id="listdata">
                             <li>
-                                <img src="/images/admin/1.jpg" />
                                 <!--<a href="#">删除</a>-->
                             </li>
                             <input name="image" type="hidden" value="" />
@@ -168,7 +167,7 @@ $(function(){
         }
         if (myData.result){
             console.log( $("#listdata li img"));
-            $("#listdata li img").attr('src', myData.result);
+            $("#listdata li").html('<img src="'+myData.result+'" />');
             $("#listdata input[name=image]").val(myData.result);
         }
     });

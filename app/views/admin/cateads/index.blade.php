@@ -46,6 +46,7 @@ $(function(){
     $(".jq-cateads-upload").click(function() {
         //alert("更新图片");
         var tr = $(this).parents('tr');
+        
         $.jBox("<div id='uploader'><p>您的浏览器不支持 html5 所以无法使用上传服务。</p></div>", {  
             title: "<div class=ask_title>分类图片上传</div>",  
             width: 400,  
@@ -105,6 +106,7 @@ $(function(){
                             
                         }
                     });
+                    $.jBox.close();
                 });
             },
             closed:function() {
