@@ -6,6 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddMd5ToAppsTable' => $baseDir . '/app/database/migrations/2014_10_15_143408_add_md5_to_apps_table.php',
+    'AddMd5ToHistoriesTable' => $baseDir . '/app/database/migrations/2014_10_16_100950_add_md5_to_histories_table.php',
     'Admin_AppsAdsController' => $baseDir . '/app/controllers/admin/AppsAdsController.php',
     'Admin_AppsController' => $baseDir . '/app/controllers/admin/AppsController.php',
     'Admin_BaseController' => $baseDir . '/app/controllers/admin/BaseController.php',
@@ -2429,6 +2431,7 @@ return array(
     'TestCase' => $baseDir . '/app/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/Text/Template.php',
     'TimeOutException' => $vendorDir . '/facebook/webdriver/lib/WebDriverExceptions.php',
+    'UcGame' => $baseDir . '/app/commands/UcGame.php',
     'UnableToSetCookieException' => $vendorDir . '/facebook/webdriver/lib/WebDriverExceptions.php',
     'UnexpectedAlertOpenException' => $vendorDir . '/facebook/webdriver/lib/WebDriverExceptions.php',
     'UnexpectedJavascriptException' => $vendorDir . '/facebook/webdriver/lib/WebDriverExceptions.php',
@@ -2546,5 +2549,4 @@ return array(
     'Whoops\\Util\\Misc' => $vendorDir . '/filp/whoops/src/Whoops/Util/Misc.php',
     'Whoops\\Util\\TemplateHelper' => $vendorDir . '/filp/whoops/src/Whoops/Util/TemplateHelper.php',
     'XPathLookupException' => $vendorDir . '/facebook/webdriver/lib/WebDriverExceptions.php',
-    'permission' => $baseDir . '/app/commands/Permission.php',
 );

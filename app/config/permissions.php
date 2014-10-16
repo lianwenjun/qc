@@ -38,6 +38,7 @@ return [
         'appsads.offshelf' => '下架',
         'appsads.edit' => '编辑',
         'appsads.delete' => '删除',
+        'appsads.upload' => '上传',
     ],
     '排行游戏位管理' => [
         'rankads.index' => '列表',
@@ -52,6 +53,7 @@ return [
         'indexads.offshelf' => '下架',
         'indexads.edit' => '编辑',
         'indexads.delete' => '删除',
+
     ],
     '编辑精选管理' => [
         'editorads.index' => '列表',

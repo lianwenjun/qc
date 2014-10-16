@@ -6,14 +6,20 @@
 <link href="{{ asset('css/admin/autocomplete/jquery-autocomplete.css') }}" rel="stylesheet" type="text/css" />
 
 <div class="Content_right_top Content_height">
-    <div class="Theme_title"><h1>广告位管理 <span>首页游戏位管理</span><b>添加游戏</b></h1></div>                 
+    <div class="Theme_title"><h1>广告位管理 <span>首页游戏位管理</span><b>添加游戏</b></h1></div>
     <div class="Search_title">游戏信息</div>
         <div class="Search_biao">
             <form action="{{ Request::url('appsads.create') }}" method="post">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                         <td width="134" class="Search_lei">请输入游戏名称：</td>
-                        <td><input id="autocomplete" type="text" class="Search_text jq-searchapps" value="" placeholder="应用名称输入时自动匹配" style="width:25%" /></td>
+                        <td><select class="Search_select" name="location">
+                                @foreach($location as $k => $v)
+                                    <option value="{{ $k }}"> {{ $v }} </option>
+                                @endforeach
+                            </select>
+                            <input id="autocomplete" type="text" class="Search_text jq-searchapps" placeholder="应用名称输入时自动匹配" style="width:25%" />
+                        </td>
                     </tr>
                     <input name="app_id" type="hidden" val="">
                     <!--数据选择区开始-->
@@ -52,14 +58,15 @@
                     </tr>
 
                     <tr>
-                        <td  class="Search_lei">广告置顶：</td>
+                        <td  class="Search_lei"><span class="required">*</span>广告置顶：</td>
                         <td><input name="is_top" type="checkbox" value="yes"/>
                           是　<span style=" color:#C00">（选中后无论上架广告数量，该广告均会在轮播中出现）</span></td>
                     </tr>
 
                     <tr>
-                        <td  class="Search_lei">上线时间：</td>
-                        <td>    
+
+                        <td  class="Search_lei"><span class="required">*</span>上线时间：</td>
+                        <td>
                             <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="Search_text jq-ui-timepicker" value=""></h6>
                             <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="Search_text jq-ui-timepicker" value=""></h6></td>
                     </tr>
@@ -69,7 +76,7 @@
                     </tr>
                 </table>
             </form>
-        </div>                 
+        </div>
     </div>
 </div>
 
@@ -128,14 +135,14 @@ $(function(){
     });
     //图片上传
     UPLOADURL = '{{ route("appsads.upload") }}';
-    
+
     var uploader = new plupload.Uploader({ //实例化一个plupload上传对象
         browse_button : 'browse',
         url : UPLOADURL,
         runtimes: 'html5,flash',
         max_file_size : '1mb',
         flash_swf_url : '{{ asset("js/admin/plupload/Moxie.swf") }}',
-        filters: { 
+        filters: {
             mime_types : [ //只允许上传图片文件
                 { title : "图片文件", extensions : "jpg,gif,png" }
             ]
