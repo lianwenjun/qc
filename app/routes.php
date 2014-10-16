@@ -80,8 +80,6 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('{id}/edit', ['as' => 'users.edit', 'uses' => 'Admin_UsersController@edit']);
         Route::put('{id}/edit', ['as' => 'users.edit', 'uses' => 'Admin_UsersController@update']);
         Route::delete('{id}/delete', ['as' => 'users.delete', 'uses' => 'Admin_UsersController@destroy']);
-
-
     });
 
     // 角色组

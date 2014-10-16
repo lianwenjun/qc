@@ -106,43 +106,8 @@ class Apps extends \Eloquent {
         $data = $this->beforeQueryParse($data);
 
         foreach($data as $key => $value) {
-
             if(! in_array($key, $this->searchEnable)) break;
-
-            if($key == 'title' && !empty($value)) {
-                $query->where('title', 'like', '%' . $value . '%');
-            } elseif($key == 'cate_id' && !empty($value)) {
-                $query->whereRaw("`id` in (select `app_id` from `app_cates` where `cate_id` = '{$value}')");
-            } elseif(is_array($value) && count($value) == 2) { // 查询范围
-
-                // 处理空值
-                $unique = array_unique($value);
-                if(isset($unique[0]) && !empty($unique[0])) {
-
-                    // 时间处理
-                    if(substr($key, -3) == '_at') {
-                        $value[1] = date('Y-m-d', strtotime($value[1]) + 24 * 3600);
-                    }
-
-                    // 占空间大小处理
-                    if($key == 'size_int') {
-                        foreach($value as $k => $v) {
-                            if(substr($v, -1) == 'm' || substr($v, -1) == 'M') {
-                                $value[$k] = intval($v) * 1024;
-                            } elseif(substr($v, -1) == 'g' || substr($v, -1) == 'G') {
-                                $value[$k] = intval($v) * 1024 * 1024;
-                            } else {
-                                $value[$k] = intval($v);
-                            }
-                        }
-                    }
-
-                    $query->whereBetween($key, $value);
-                }
-
-            } elseif (!empty($value)) {
-                $query->where($key, $value);
-            }
+            $query = $this->conditionParse($key, $value, $query);
         }
 
         // 排序
@@ -157,6 +122,55 @@ class Apps extends \Eloquent {
             }
         } else {
             $query->orderBy('id', 'desc');
+        }
+
+        return $query;
+    }
+
+    /**
+     * 条件解析
+     *
+     * @param $field string 字段
+     * @param $value mix    查询值
+     * @param $query obj    query对象
+     *
+     * @return query obj
+     */
+    public function conditionParse($field, $value, $query) {
+
+        if( ($field == 'title' || $field == 'pack' ) && !empty($value)) {
+            $query->where($field, 'like', '%' . $value . '%');
+        } elseif($field == 'cate_id' && !empty($value)) {
+            $query->whereRaw("`id` in (select `app_id` from `app_cates` where `cate_id` = '{$value}')");
+        } elseif(is_array($value) && count($value) == 2) { // 查询范围
+
+            // 处理空值
+            $unique = array_unique($value);
+            if(isset($unique[0]) && !empty($unique[0])) {
+
+                // 时间处理
+                if(substr($field, -3) == '_at') {
+                    $value[1] = date('Y-m-d', strtotime($value[1]) + 24 * 3600);
+                }
+
+                // 占空间大小处理
+                if($field == 'size_int') {
+                    foreach($value as $k => $v) {
+                        if(substr($v, -1) == 'm' || substr($v, -1) == 'M') {
+                            $value[$k] = intval($v) * 1024;
+                        } elseif(substr($v, -1) == 'g' || substr($v, -1) == 'G') {
+                            $value[$k] = intval($v) * 1024 * 1024;
+                        } else {
+                            $value[$k] = intval($v);
+                        }
+                    }
+                }
+
+                $query->whereBetween($field, $value);
+            }
+
+        } elseif (!empty($value)) {
+            $query->where($field, $value);
         }
 
         return $query;
@@ -268,6 +282,12 @@ class Apps extends \Eloquent {
                         'pack'   => $data['pack']
                     ];
                 Ratings::create($rating);
+
+                $keywordsModel = new Keywords;
+                $keywordsModel->store($data['title'], $app->id);
+
+                // 获取MD5队列
+                Queue::push('AppQueue@md5', ['id' => $app->id, 'filename' => $app->download_link]);
             }
 
             return $data;
