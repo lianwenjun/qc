@@ -62,7 +62,7 @@
             </tr>
 
             <tr class="Search_biao_two">
-                <td  class="Search_lei">上线时间：</td>
+                <td  class="Search_lei"><span class="required">*</span>上线时间：</td>
                 <td>
                     <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="Search_text jq-ui-timepicker" value="{{ $ad->onshelfed_at }}"></h6>
                     <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="Search_text jq-ui-timepicker" value="{{ $ad->offshelfed_at }}"></h6>

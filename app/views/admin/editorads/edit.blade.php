@@ -49,7 +49,7 @@
                 </tr>
               
                 <tr>
-                    <td  class="Search_lei">广告区域：</td>
+                    <td class="Search_lei">广告区域：</td>
                     <td>
                     <span style="float:left">
                             {{ Form::select('location', $location, $ad->location, ['class'=>'Search_select']) }}
@@ -58,38 +58,36 @@
                 </tr>
               
                 <tr>
-                    <td  class="Search_lei">游戏截图：</td>
+                    <td class="Search_lei"><span class="required">*</span>游戏截图：</td>
                     <td><a id="browse" href="javacript:;" class="Search_Update">图片上传</a> <span style="color:#C00">（焦点图480*200，专题图230*120）</span></td>
                 </tr>
               
                 <tr>
                     <td  class="Search_lei">截图预览：</td>
                     <td class="Search_img">
-                    <div class="Update_img">
-                        <ul id="listdata">
-                            <li>
-                                <img src="{{ $ad->image }}" />
-                                <!--<a href="#">删除</a> -->
-                            </li>
-                        </ul>
-                    </div>
-
+                        <div class="Update_img">
+                            <ul id="listdata">
+                                <li>
+                                    <img src="{{ $ad->image }}" />
+                                    <!--<a href="#">删除</a> -->
+                                </li>
+                            </ul>
+                        </div>
                     </td>
                 </tr>
-              
                 <tr>
-                    <td  class="Search_lei">广告词：</td>
+                    <td class="Search_lei">广告词：</td>
                     <td><input name="word" type="text" class="Search_text" value="{{ $ad->word }}" style="width:60%" /></td>
                 </tr>
               
                 <tr>
-                    <td  class="Search_lei">广告置顶：</td>
+                    <td class="Search_lei">广告置顶：</td>
                     <td>{{ Form::checkbox('is_top', 'yes', $ad->is_top == 'yes') }}
                       是　<span style=" color:#C00">（选中后无论上架广告数量，该广告均会在轮播中出现）</span></td>
                 </tr>
               
                 <tr>
-                    <td  class="Search_lei">上线时间：</td>
+                    <td class="Search_lei"><span class="required">*</span>上线时间：</td>
                     <td>
                         <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="Search_text jq-ui-timepicker" value="{{ $ad->onshelfed_at }}" /></h6>
                         <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="Search_text jq-ui-timepicker" value="{{ $ad->offshelfed_at }}" /></h6>
@@ -99,7 +97,8 @@
                 <tr>
                     <td colspan="2" align="center"  class="Search_submit">
                         <input name="" type="submit" value="确定修改" />
-                        <a href="{{ URL::route('editorads.index') }}" target=BoardRight>返回列表</a></td>
+                        <a href="{{ URL::route('editorads.index') }}" target=BoardRight>返回列表</a>
+                    </td>
                 </tr>
             </table>
         </form>

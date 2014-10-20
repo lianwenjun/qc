@@ -51,9 +51,15 @@ class Admin_IndexController extends \Admin_BaseController {
     */
     public function searchApps() {
         $appsModel = new Apps();
-        $query = '%' . Input::get('query') . '%';
-        $apps = $appsModel->select('id', 'title')->where('status', 'onshelf')->where('title', 'like', $query)
-                    ->orderBy('id', 'desc')->get();
+        if (Input::get('type') == 'appid') {
+            $query =  Input::get('query', 0);
+            $apps = $appsModel->select('id', 'title')->where('status', 'onshelf')->where('id', $query)
+                ->orderBy('id', 'desc')->get();
+        } else {
+            $query = '%' . Input::get('query') . '%';
+            $apps = $appsModel->select('id', 'title')->where('status', 'onshelf')->where('title', 'like', $query)
+                ->orderBy('id', 'desc')->get();
+        }
         $data = [];
         foreach ($apps as $app) {
             $data[] = ['data' => URL::route('appsinfo', $app->id), 
