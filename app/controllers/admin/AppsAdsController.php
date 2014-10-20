@@ -2,9 +2,6 @@
 
 class Admin_AppsAdsController extends \Admin_BaseController {
 
-    //protected $user_id = 1;
-    //protected $layout = 'admin.layout';
-    //protected $pagesize = 5;
     protected $type = 'app';
     /**
      * 首页游戏位广告列表
@@ -62,29 +59,17 @@ class Admin_AppsAdsController extends \Admin_BaseController {
         $adsModel = new Ads();
         $validator = Validator::make(Input::all(), $adsModel->adsCreateRules);
         if ($validator->fails()){
-            Log::error($validator->messages());
+            //Log::error($validator->messages());
             $msg = "添加失败";
-            return Redirect::route('appsads.create')->with('msg', $msg);
+            return Redirect::route('appsads.create')->with('msg', $msg)->with('input', Input::all());
         }
-        $fields = [
-            'app_id' => Input::get('app_id'),
-            'title' => Input::get('title'),
-            'location' => Input::get('location'),
-            'image' => Input::get('image'),
-            'is_top' => Input::get('is_top', 'no'),
-            'onshelfed_at' => Input::get('onshelfed_at'),
-            'offshelfed_at' => Input::get('offshelfed_at'),
-            'type' => $this->type,
-            'is_onshelf' => 'yes', 
-            ];
-        foreach ($fields as $key => $value) {
-            $adsModel->$key = $value;
-        }
-        if ($adsModel->save()) {
+        $ad = $adsModel->createAds($this->type);
+        if ($ad) {
             $msg = "添加成功";
             return Redirect::route('appsads.index')->with('msg', $msg);
         }
-        return Redirect::route('appsads.index')->with('msg', $msg);
+        $msg = '添加失败';
+        return Redirect::route('appsads.create')->with('msg', $msg)->with('input', Input::all());
     }
 
     /**
@@ -136,7 +121,7 @@ class Admin_AppsAdsController extends \Admin_BaseController {
         if ($validator->fails()){
             Log::error($validator->messages());
             $msg = "添加失败";
-            return Redirect::route('appsads.index')->with('msg', $msg);
+            return Redirect::route('appsads.edit', $id)->with('msg', $msg);
         }
         $ad->location = Input::get('location', $ad->location);
         $ad->image = Input::get('image', $ad->image);
@@ -165,10 +150,10 @@ class Admin_AppsAdsController extends \Admin_BaseController {
         $ad = $adsModel->offshelf($id, $this->type);
         if (!$ad) {
             $msg = '亲，#'.$id.'下架失败了';
-            return Redirect::back()->with('msg', $msg);
+            return Redirect::route('appsads.index')->with('msg', $msg);
         }
-        $msg = '亲，#'.$id.'下架失败了';
-        return Redirect::back()->with('msg', $msg);
+        $msg = '亲，#'.$id.'下架成功';
+        return Redirect::route('appsads.index')->with('msg', $msg);
     }
 
     /**

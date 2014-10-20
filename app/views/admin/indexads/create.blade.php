@@ -21,7 +21,7 @@
         <form action="{{ Request::url('indexads.create') }}" method="post">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
-                <td width="134" class="Search_lei">请输入游戏名称：</td>
+                <td width="134" class="Search_lei"><span class="required">*</span>请输入游戏名称：</td>
                 <td>
                     <select class="Search_select jq-select-autocate" name="autocate">
                                 <option value="{{ route('searchapps').'?type=name' }}">游戏名称</option>
@@ -38,11 +38,7 @@
                 <td  class="Search_lei">广告区域：</td>
                 <td>
                 <span style="float:left">
-                      <select class="Search_select" name="location">
-                                @foreach($location as $k => $v)
-                                    <option value="{{ $k }}"> {{ $v }} </option>
-                                @endforeach
-                      </select>
+                      {{ Form::select('location', $location, Session::get('input.location', ''), ['class'=>'Search_select']); }}
                  </span>
                </td>
             </tr>
@@ -59,8 +55,9 @@
                     <ul id="listdata">
                          <li>
                             <!--a href="javascript">删除</a-->
+                            <img src="{{ Session::get('input.image', '') }}" />
                         </li>
-                        <input name="image" type="hidden" value="" />
+                        <input name="image" type="hidden" value="{{ Session::get('input.image', '') }}" />
                     </ul>
                 </div>
 
@@ -69,21 +66,21 @@
 
             <tr>
                 <td class="Search_lei">广告置顶：</td>
-                <td><input name="is_top" type="checkbox" value="yes" />
+                <td>{{ Form::checkbox('is_top', 'yes', Session::get('input.is_top') ? true : false) }} 
                   是　<span style=" color:#C00">（选中后无论上架广告数量，该广告均会在轮播中出现）</span></td>
             </tr>
 
             <tr>
                 <td class="Search_lei"><span class="required">*</span>上线时间：</td>
                 <td> 
-                    <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="Search_text jq-ui-timepicker" value=""></h6>
-                    <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="Search_text jq-ui-timepicker" value=""></h6>
+                    <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="Search_text jq-ui-timepicker" value="{{ Session::get('input.onshelfed_at', '') }}"></h6>
+                    <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="Search_text jq-ui-timepicker" value="{{ Session::get('input.offshelfed_at', '') }}"></h6>
                 </td>
             </tr>
 
             <tr>
                 <td colspan="2" align="center"  class="Search_submit">
-                    <input name="" type="submit" value="提 交" />
+                    <input class="jq-ads-create-submit" type="button" value="提 交" />
                     <a href="{{ URL::route('indexads.index') }}" target=BoardRight>返回列表</a>
                 </td>
             </tr>
@@ -97,6 +94,8 @@
 <script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-zh-CN.js') }}"></script>
 <script src="{{ asset('js/admin/plupload/plupload.full.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript" src="{{ asset('js/admin/jquery.autocomplete.js') }}"></script>
+<script src="{{ asset('js/admin/jquery.validate.min.js') }}" type="text/javascript"></script>
+
 <script type="text/javascript">
     function uploadToHtml(img){
     $("#listdata li img").src(img);
@@ -131,6 +130,7 @@ $(function(){
     $("tr:even").addClass("Search_biao_one");
     //自动匹配
     //切换
+    AUTOURL = "{{ route('searchapps').'?type=name' }}";
     $('.jq-select-autocate').change(function(){
         $('#autocomplete').autocomplete({
             serviceUrl: $('.jq-select-autocate').val(),
@@ -145,6 +145,11 @@ $(function(){
             getAppInfo(suggestion.data );
         }
     });
+    //返回判断
+    var appId = "{{ Session::get('input.app_id', '') }}";
+    if (appId !='' && appId != null && appId != undefined) {
+        getAppInfo("{{ route('appsinfo', Session::get('input.app_id', '')) }}");
+    }
     //时间插件
     $(".jq-ui-timepicker").datetimepicker({
         showSecond: true,
@@ -186,8 +191,48 @@ $(function(){
         }
         if (myData.result){
             console.log( $("#listdata li img"));
-            $("#listdata li").html('<img src="'+myData.result+'" />');
+            $("#listdata li img").attr('src', myData.result);
             $("#listdata input[name=image]").val(myData.result);
+        }
+    });
+
+    // 提交表单
+    $('.jq-ads-create-submit').click(function() {
+        // 验证
+        $("form").validate({
+            ignore: '',
+            rules: {
+                app_id: "required",
+                image: "required",
+                onshelfed_at: "required",
+                offshelfed_at: "required",
+            },
+            messages: {
+                app_id: {required: '游戏为必填'},
+                image: {required: '图片为必填'},
+                onshelfed_at: {required: '上线时间为必填'},
+                offshelfed_at: {required: '下架时间为必填'},
+            }
+        });
+
+        if($("form").valid()) {
+            $('form').submit();
+        } else {
+          $.jBox("<center style='margin: 10px'>带<span class='required'>*</span>号为必填项</center>", {
+              title: "<div class=ask_title>温馨提示</div>",
+              height: 30,
+              border: 5,
+              showType: 'slide',
+              opacity: 0.3,
+              showIcon:false,
+              top: '20%',
+              loaded:function(){
+                  $("body").css("overflow-y","hidden");
+              },
+              closed:function(){
+                  $("body").css("overflow-y","auto");
+              }
+          });
         }
     });
 });

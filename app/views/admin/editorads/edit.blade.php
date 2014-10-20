@@ -96,7 +96,7 @@
               
                 <tr>
                     <td colspan="2" align="center"  class="Search_submit">
-                        <input name="" type="submit" value="确定修改" />
+                        <input class="jq-ads-edit-submit" type="button" value="确定修改" />
                         <a href="{{ URL::route('editorads.index') }}" target=BoardRight>返回列表</a>
                     </td>
                 </tr>
@@ -109,6 +109,8 @@
 <script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-zh-CN.js') }}"></script>
 <script src="{{ asset('js/admin/plupload/plupload.full.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript" src="{{ asset('js/admin/jquery.autocomplete.js') }}"></script>
+<script src="{{ asset('js/admin/jquery.validate.min.js') }}" type="text/javascript"></script>
+
 <script type="text/javascript">
 function uploadToHtml(img){
     $("#listdata li img").src(img);
@@ -160,6 +162,43 @@ $(function(){
             console.log( $("#listdata li img"));
             $("#listdata li img").attr('src', myData.result);
             $("#listdata input[name=image]").val(myData.result);
+        }
+    });
+    // 提交表单
+    $('.jq-ads-edit-submit').click(function() {
+        // 验证
+        $("form").validate({
+            ignore: '',
+            rules: {
+                image: "required",
+                onshelfed_at: "required",
+                offshelfed_at: "required",
+            },
+            messages: {
+                image: {required: '图片为必填'},
+                onshelfed_at: {required: '上线时间为必填'},
+                offshelfed_at: {required: '下架时间为必填'},
+            }
+        });
+
+        if($("form").valid()) {
+            $('form').submit();
+        } else {
+          $.jBox("<center style='margin: 10px'>带<span class='required'>*</span>号为必填项</center>", {
+              title: "<div class=ask_title>温馨提示</div>",
+              height: 30,
+              border: 5,
+              showType: 'slide',
+              opacity: 0.3,
+              showIcon:false,
+              top: '20%',
+              loaded:function(){
+                  $("body").css("overflow-y","hidden");
+              },
+              closed:function(){
+                  $("body").css("overflow-y","auto");
+              }
+          });
         }
     });
 });

@@ -6,8 +6,10 @@ class Ads extends \Eloquent {
     protected $dates = ['deleted_at'];
     protected $softDelete = true;
     protected $table = 'ads';
-    protected $fillable = [];
     
+    protected $fillable = ['app_id', 'title', 'location', 'image', 'onshelfed_at', 
+                'offshelfed_at', 'type', 'is_onshelf', 'is_top', 'sort'];
+    //添加广告检测
     public $adsCreateRules = [
                 'app_id' => 'required|integer',
                 'title' => 'required',
@@ -17,11 +19,11 @@ class Ads extends \Eloquent {
                 'onshelfed_at' => 'required',
                 'offshelfed_at' => 'required'
             ];
-    
-           
+    //广告更新检测      
     public $adsUpdateRules = [
                 'is_top' => 'in:yes,no',
             ];
+    //添加排行广告检测
     public $rankadsCreateRules = [
                 'app_id' => 'required|integer',
                 'title' => 'required',
@@ -30,9 +32,34 @@ class Ads extends \Eloquent {
                 'onshelfed_at' => 'required',
                 'offshelfed_at' => 'required'
             ];
+    //更新排行广告检测
     public $rankadsUpateRules = [
                 'sort' => 'integer',
             ];
+    /*
+    * 添加广告
+    * @param type
+    * @param Input::all()
+    * @respone data
+    */
+    public function createAds($type) {
+        $fields = [
+            'app_id' => Input::get('app_id'),
+            'title' => Input::get('title'),
+            'location' => Input::get('location'),
+            'image' => Input::get('image', ''),
+            'is_top' => Input::get('is_top', 'no'),
+            'onshelfed_at' => Input::get('onshelfed_at'),
+            'offshelfed_at' => Input::get('offshelfed_at'),
+            'type' => $type,
+            'is_onshelf' => 'yes', 
+            'sort' => Input::get('sort', 0), 
+            'word' => Input::get('word', ''),
+            ];
+        $ad = Ads::create($fields);
+        return $ad;
+    }
+
     //搜索条件过滤
     public function indexQuery($query) {
         if (Input::get('word')){
