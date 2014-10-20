@@ -62,7 +62,7 @@ class Admin_rankAdsController extends \Admin_BaseController {
             $msg = "添加成功";
             return Redirect::route('rankads.index')->with('msg', $msg);
         }
-        return Redirect::route('rankads.index')->with('msg', $msg);
+        return Redirect::route('rankads.create')->with('msg', $msg)->with('input', Input::all());
     }
 
 
