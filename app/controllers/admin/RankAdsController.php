@@ -55,28 +55,11 @@ class Admin_rankAdsController extends \Admin_BaseController {
         $msg = "添加失败";
         if ($validator->fails()){
             Log::error($validator->messages());
-            
-            return Redirect::route('rankads.create')->with('msg', $msg);
+            return Redirect::route('rankads.create')->with('msg', $msg)->with('input', Input::all());
         }
-        $fields = [
-            'app_id' => Input::get('app_id'),
-            'title' => Input::get('title'),
-            'location' => Input::get('location'),
-            'sort' => Input::get('sort'),
-            //'is_top' => Input::get('is_top', 'no'),
-            'onshelfed_at' => Input::get('onshelfed_at'),
-            'offshelfed_at' => Input::get('offshelfed_at'),
-            'type' => $this->type,
-            'is_onshelf' => 'yes',
-            ];
-        //creater用法出错了？？？
-        //检测游戏是否存在
-        foreach ($fields as $key => $value) {
-            $adsModel->$key = $value;
-        }
-        if ($adsModel->save()) {
+        $ad = $adsModel->createAds($this->type);
+        if ($ad) {
             $msg = "添加成功";
-            Log::error($msg);
             return Redirect::route('rankads.index')->with('msg', $msg);
         }
         return Redirect::route('rankads.index')->with('msg', $msg);
@@ -102,7 +85,7 @@ class Admin_rankAdsController extends \Admin_BaseController {
         $appsModel = new Apps;
         $app = $appsModel->find($ad->app_id);
         if (!$app) {
-            return Redirect::route('rankads.index');
+            return Redirect::route('rankads.index')->with('msg', '游戏不存在');
         }
         $datas = ['ad' => $ad, 
             'location' => Config::get('status.ads.ranklocation'),
