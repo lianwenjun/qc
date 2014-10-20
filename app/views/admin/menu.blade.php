@@ -21,7 +21,7 @@
       <ul>
             <li class="Content_left_logo">游戏商店系统</li>
             @if( Sentry::check() )
-            <li class="Content_left_title">Hi，{{ Sentry::getUser()->username }}<br><a href="<?php echo URL::route('users.changePwd'); ?>" target=BoardRight>修改密码</a>　<a href="<?php echo URL::route('users.signout') ?>" target="perent">退出系统</a></li>
+            <li class="Content_left_title">Hi，{{ Sentry::getUser()->username }}<br><a href="<?php echo URL::route('users.changePwd'); ?>" target=BoardRight>修改密码</a>　<a href="<?php echo URL::route('users.signout') ?>" target="_parent">退出系统</a></li>
             @endif
       </ul>
 </div>

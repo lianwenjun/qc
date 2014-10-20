@@ -241,15 +241,22 @@ class Admin_AppsController extends \Admin_BaseController {
 
     /**
      * 更新游戏
-     * PUT /admin/apps/{id}
+     * PUT /admin/apps/status/{id}
      *
      * @param  int  $id
-     * @param  string $status
      *
      * @return Response
      */
-    public function update($id, $status)
+    public function update($id)
     {
+        $route = Route::current()->getName();
+        $paths = explode('.', $route);
+
+        if(!isset($paths[1]) && !in_array($paths[1], ['onshelf', 'draft', 'pending'])) {
+            App::abort(404);
+        }
+
+        $status = $paths[1];
 
         if(! Apps::find($id)) {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
