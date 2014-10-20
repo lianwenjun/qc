@@ -11,6 +11,7 @@
 |
 */
 Route::pattern('id', '[0-9]+');
+Route::pattern('status', '[0-9]+');
 Route::get('/', function()
 {
     return View::make('hello');
@@ -21,7 +22,6 @@ Route::put('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_User
 
 // 后台处理
 Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
-
 {
     Route::get('/',        ['as' => 'admin.index',   'uses' => 'Admin_IndexController@index']);
     Route::get('/menu',    ['as' => 'admin.menu',    'uses' => 'Admin_IndexController@menu']);
@@ -120,7 +120,6 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
     Route::group(['prefix' => 'cate', 'before' => 'hasPermissions'], function() //游戏分类
     {
         Route::get('index', ['as' => 'cate.index', 'uses' => 'Admin_CatesController@index']);
-        //Route::get('create', ['as' => 'cate.create', 'uses' => 'Admin_CatesController@create']);
         Route::post('create', ['as' => 'cate.create', 'uses' => 'Admin_CatesController@store']);
         Route::post('{id}/edit', ['as' => 'cate.edit', 'uses' => 'Admin_CatesController@update']);
         Route::get('{id}/delete', ['as' => 'cate.delete', 'uses' => 'Admin_CatesController@destroy']);
@@ -130,7 +129,6 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
     Route::group(['prefix' => 'tag', 'before' => 'hasPermissions'], function() //游戏标签
     {
         Route::get('index', ['as' => 'tag.index', 'uses' => 'Admin_CatesController@tagIndex']);
-        Route::get('create', ['as' => 'tag.create', 'uses' => 'Admin_CatesController@tagCreate']);
         Route::post('create', ['as' => 'tag.create', 'uses' => 'Admin_CatesController@tagStore']);
         Route::post('{id}/edit', ['as' => 'tag.edit', 'uses' => 'Admin_CatesController@update']);
         Route::delete('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_CatesController@tagDestroy']);
@@ -170,7 +168,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::post('{id}/edit', ['as' => 'appsads.edit', 'uses' => 'Admin_AppsAdsController@update']);
         Route::delete('{id}/delete', ['as' => 'appsads.delete', 'uses' => 'Admin_AppsAdsController@destroy']);
         Route::get('{id}/offshelf', ['as' => 'appsads.offshelf', 'uses' => 'Admin_AppsAdsController@offshelf']);
-        Route::post('imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_AppsAdsController@upload']);
+        //Route::post('imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_AppsAdsController@upload']);
     });
     Route::group(['prefix' => 'rankads', 'before' => 'hasPermissions'], function() //游戏位推广
     {
@@ -212,6 +210,27 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 
     Route::get('searchapps', ['as' => 'searchapps', 'uses' => 'Admin_IndexController@searchApps']);//智能匹配列表
     Route::get('appsinfo/{id}', ['as' => 'appsinfo', 'uses' => 'Admin_IndexController@appsinfo']);//近期添加列表
+});
+//图片
+Route::post('/admin/appsads/imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_AppsAdsController@upload']);
+
+//api
+Route::group(['prefix' => 'api'], function()
+{   
+    Route::group(['prefix' => 'v1'], function() //V1版本
+    {
+        Route::get('game/extend/{type}/{pageSize}/{pageIndex}', ['uses' => '']);
+        Route::get('game/cull/{type}/{pageSize}/{pageIndex}', ['uses' => '']);
+        Route::get('game/list/{area}/{pageSize}/{pageIndex}', ['uses' => '']);
+        Route::get('game/info/edit/downcount/{appid}/{imei}', ['uses' => '']);
+        Route::get('game/info/appid/{appid}', ['uses' => '']);
+        Route::get('appclient/ver/info/{versionCode}', ['uses' => '']);
+        Route::post('game/feedback/add', ['uses' => '']);
+        Route::get('game/search/{type}/{keyword}/{exclude}/{pageSize}/{pageIndex}', ['uses' => '']);
+        Route::get('game/search/autocomplete/{keyword}', ['uses' => '']);
+        Route::get('game/category/all', ['uses' => '']);
+        Route::post('game/update', ['uses' => '']);
+    });
 });
 
 // 404 跳转

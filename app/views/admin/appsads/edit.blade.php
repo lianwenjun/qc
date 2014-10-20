@@ -55,7 +55,7 @@
                     </tr>
 
                     <tr class="Search_biao_two">
-                        <td  class="Search_lei">游戏截图：</td>
+                        <td  class="Search_lei"><span class="required">*</span>游戏截图：</td>
                         <td><a id="browse" href="javascript:;" class="Search_Update">图片上传</a> <span style="color:#C00">（焦点图480*200，专题图230*120）</span></td>
                     </tr>
 
@@ -77,15 +77,15 @@
                     </tr>
 
                     <tr class="Search_biao_one">
-                        <td  class="Search_lei">上线时间：</td>
+                        <td class="Search_lei"><span class="required">*</span>上线时间：</td>
                         <td>
-                            <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="jq-ui-timepicker" value="{{ $ad->onshelfed_at }}"></h6>
-                             <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="jq-ui-timepicker" value="{{ $ad->offshelfed_at }}"></h6>
+                            <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="Search_text jq-ui-timepicker" value="{{ $ad->onshelfed_at }}"></h6>
+                             <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="Search_text jq-ui-timepicker" value="{{ $ad->offshelfed_at }}"></h6>
                          </td>
                     </tr>
 
                     <tr class="Search_biao_two">
-                        <td colspan="2" align="center"  class="Search_submit"><input type="submit" value="提 交" /> <a href="{{ URL::route('appsads.index') }}" target=BoardRight>返回列表</a></td>
+                        <td colspan="2" align="center"  class="Search_submit"><input type="button" value="提 交" /> <a href="{{ URL::route('appsads.index') }}" target=BoardRight>返回列表</a></td>
                     </tr>
                 
                 </table>
@@ -101,11 +101,11 @@
 <script type="text/javascript">
 $(function(){
     $(".jq-ui-timepicker").datetimepicker({
-            showSecond: true,
-            timeFormat: 'hh:mm:ss',
-            stepHour: 1,
-            stepMinute: 1,
-            stepSecond: 1
+        showSecond: true,
+        timeFormat: 'HH:mm:ss',
+        stepHour: 1,
+        stepMinute: 10,
+        stepSecond: 10
     });
     UPLOADURL = '{{ route("appsads.upload") }}';
     

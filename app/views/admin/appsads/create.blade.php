@@ -6,14 +6,19 @@
 <link href="{{ asset('css/admin/autocomplete/jquery-autocomplete.css') }}" rel="stylesheet" type="text/css" />
 
 <div class="Content_right_top Content_height">
-    <div class="Theme_title"><h1>广告位管理 <span>首页游戏位管理</span><b>添加游戏</b></h1></div>                 
+    <div class="Theme_title"><h1>广告位管理 <span>首页游戏位管理</span><b>添加游戏</b></h1></div>
     <div class="Search_title">游戏信息</div>
         <div class="Search_biao">
             <form action="{{ Request::url('appsads.create') }}" method="post">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                         <td width="134" class="Search_lei">请输入游戏名称：</td>
-                        <td><input id="autocomplete" type="text" class="Search_text jq-searchapps" value="" placeholder="应用名称输入时自动匹配" style="width:25%" />　或　从最近新增的游戏添加　<a href="#" class="Search_Update">选择</a></td>
+                        <td><select class="Search_select jq-select-autocate" name="autocate">
+                                <option value="{{ route('searchapps').'?type=name' }}">游戏名称</option>
+                                <option value="{{ route('searchapps').'?type=appid' }}">游戏ID</option>
+                            </select>
+                            <input id="autocomplete" type="text" class="Search_text jq-searchapps" placeholder="输入时自动匹配" style="width:25%" />
+                        </td>
                     </tr>
                     <input name="app_id" type="hidden" val="">
                     <!--数据选择区开始-->
@@ -32,7 +37,7 @@
                     </tr>
 
                     <tr>
-                        <td  class="Search_lei">游戏截图：</td>
+                        <td  class="Search_lei"><span class="required">*</span>游戏截图：</td>
                         <td><a id="browse" href="javascrip:;" class="Search_Update">图片上传</a> <span style="color:#C00">（焦点图480*200，专题图230*120）</span></td>
                     </tr>
 
@@ -41,7 +46,7 @@
                         <td class="Search_img">
                         <div class="Update_img">
                             <ul id="listdata">
-                                <li><img src="/images/admin/1.jpg" />
+                                <li>
                                     <!--a href="javascript">删除</a-->
                                 </li>
                                 <input name="image" type="hidden" value="" />
@@ -58,10 +63,11 @@
                     </tr>
 
                     <tr>
-                        <td  class="Search_lei">上线时间：</td>
-                        <td>    
-                            <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="jq-ui-timepicker" value=""></h6>
-                            <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="jq-ui-timepicker" value=""></h6></td>
+
+                        <td  class="Search_lei"><span class="required">*</span>上线时间：</td>
+                        <td>
+                            <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="Search_text jq-ui-timepicker" value=""></h6>
+                            <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="Search_text jq-ui-timepicker" value=""></h6></td>
                     </tr>
 
                     <tr>
@@ -69,7 +75,7 @@
                     </tr>
                 </table>
             </form>
-        </div>                 
+        </div>
     </div>
 </div>
 
@@ -112,8 +118,18 @@ $(function(){
     $("tr:odd").addClass("Search_biao_two");
     $("tr:even").addClass("Search_biao_one");
     //自动匹配
+    AUTOURL = "{{ route('searchapps').'?type=name' }}";
+    //切换
+    $('.jq-select-autocate').change(function(){
+        $('#autocomplete').autocomplete({
+            serviceUrl: $('.jq-select-autocate').val(),
+            onSelect: function (suggestion) {
+                getAppInfo(suggestion.data );
+            }
+        });
+    });
     $('#autocomplete').autocomplete({
-        serviceUrl: '{{ route("searchapps") }}',
+        serviceUrl: AUTOURL,
         onSelect: function (suggestion) {
             getAppInfo(suggestion.data );
         }
@@ -121,21 +137,21 @@ $(function(){
     //时间插件
     $(".jq-ui-timepicker").datetimepicker({
             showSecond: true,
-            timeFormat: 'hh:mm:ss',
+            timeFormat: 'HH:mm:ss',
             stepHour: 1,
-            stepMinute: 1,
-            stepSecond: 1
+            stepMinute: 10,
+            stepSecond: 10
     });
     //图片上传
     UPLOADURL = '{{ route("appsads.upload") }}';
-    
+
     var uploader = new plupload.Uploader({ //实例化一个plupload上传对象
         browse_button : 'browse',
         url : UPLOADURL,
         runtimes: 'html5,flash',
         max_file_size : '1mb',
         flash_swf_url : '{{ asset("js/admin/plupload/Moxie.swf") }}',
-        filters: { 
+        filters: {
             mime_types : [ //只允许上传图片文件
                 { title : "图片文件", extensions : "jpg,gif,png" }
             ]
@@ -159,7 +175,7 @@ $(function(){
         }
         if (myData.result){
             console.log( $("#listdata li img"));
-            $("#listdata li img").attr('src', myData.result);
+            $("#listdata li").html('<img src="'+myData.result+'" />');
             $("#listdata input[name=image]").val(myData.result);
         }
     });
