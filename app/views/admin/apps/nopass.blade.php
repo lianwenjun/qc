@@ -71,7 +71,7 @@
             <td>{{ date('Y-m-d H:i', strtotime($app['created_at'])) }}</td>
             <td>{{ date('Y-m-d H:i', strtotime($app['updated_at'])) }}</td>
             <td>{{ $app['reason'] }}</td>
-            <td><a href="{{ URL::route('apps.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a> <a href="{{ URL::route('apps.delete', $app['id']) }}" class="Search_del jq-delete">删除</a></td>
+            <td><a href="{{ URL::route('apps.nopass.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a> <a href="{{ URL::route('apps.delete', $app['id']) }}" class="Search_del jq-delete">删除</a></td>
          </tr>
          @endforeach
          @if(empty($apps['total']))

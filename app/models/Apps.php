@@ -272,6 +272,7 @@ class Apps extends \Eloquent {
             $data['size_int']      = round(filesize($savePath) / 1024, 0);
             $data['icon']          = $icon;
             $data['download_link'] = str_replace(public_path(), '', $savePath);
+            $data['source']        = 'lt';
 
             if(empty($dontSave)) {
                 $app = Apps::create($data);

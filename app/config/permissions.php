@@ -9,13 +9,14 @@ return [
     '上架游戏列表' => [
         'apps.onshelf' => '列表',
         'apps.dooffshelf' => '下架',
-        'apps.edit' => '编辑',
+        'apps.onshelf.edit' => '编辑',
         'apps.history' => '历史',
         'apps.preview' => '预览'
         ],
     '添加编辑游戏' => [
         'apps.draft' => '列表',
         'apps.delete' => '删除',
+        'apps.draft.edit' => '编辑',
         'apps.appupload' => 'APK上传',
         'apps.imageupload' => '图片上传',
         ],
@@ -25,12 +26,15 @@ return [
         'apps.donopass' => '审核不通过',
         'apps.doallpass' => '批量审核通过',
         'apps.doallnopass' => '批量审核不通过',
+        'apps.pending.edit' => '提交到待审核',
         ],
     '审核不通过列表' => [
         'apps.nopass' => '列表',
+        'apps.nopass.edit' => '编辑',
     ],
     '下架游戏列表' => [
         'apps.offshelf' => '列表',
+        'apps.offshelf.edit' => '编辑',
     ],
     '首页游戏位管理' => [
         'appsads.index' => '列表',

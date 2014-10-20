@@ -52,7 +52,7 @@ Route::filter('adminAuth', function()
 {
     if (! Sentry::check())
     {
-        return Redirect::route('users.signin');
+        return "<script>window.parent.location.href='".URL::route('users.signin')."';</script>";
     }
 });
 
