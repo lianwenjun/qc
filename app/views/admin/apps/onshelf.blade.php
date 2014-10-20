@@ -150,7 +150,11 @@
             <td><a href="javascript:;" data-id="{{ $app['id'] }}" class="Search_Look jq-preview">点击预览</a></td>
             <td>{{ $app['download_counts'] }}</td>
             <td>{{ date('Y-m-d H:i', strtotime($app['onshelfed_at'])) }}</td>
-            <td><a href="{{ URL::route('apps.dooffshelf', ['id' => $app['id']]) }}" class="Search_show jq-dooffshelf">下架</a> <a href="{{ URL::route('apps.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">更新</a> <a href="{{ URL::route('apps.history', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">历史</a> </td>
+            <td>
+              <a href="{{ URL::route('apps.dooffshelf', ['id' => $app['id']]) }}" class="Search_show jq-dooffshelf">下架</a>
+              <a href="{{ URL::route('apps.onshelf.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">更新</a>
+              <a href="{{ URL::route('apps.history', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">历史</a>
+            </td>
          </tr>
          @endforeach
          @if(empty($apps['total']))

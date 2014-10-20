@@ -73,9 +73,9 @@
                 <td>{{ date('Y-m-d H:i', strtotime($app['created_at'])) }}</td>
                 <td>
                     @if($app['status'] == 'new')
-                    <a href="{{ URL::route('apps.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a>
+                    <a href="{{ URL::route('apps.draft.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a>
                     @else 
-                    <a href="{{ URL::route('apps.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">草稿</a>
+                    <a href="{{ URL::route('apps.draft.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">草稿</a>
                     @endif
                     <a href="{{ URL::route('apps.delete', $app['id']) }}" class="Search_del jq-delete">删除</a></td>
             </tr>

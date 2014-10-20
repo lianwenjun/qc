@@ -14,7 +14,7 @@ $(function() {
 
         $(frames['BoardLeft'].document).find('.mail_hover').find('.sub-menu > li > a').each(function() {
 
-            console.log($(this).attr('href'));
+            // console.log($(this).attr('href'));
             if($(this).attr('href') == currentUrl) {
                 $(this).parent().addClass('sub-menu_hover');
             } else {
