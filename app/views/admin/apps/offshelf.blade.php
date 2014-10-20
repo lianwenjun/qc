@@ -70,7 +70,9 @@
             <td>{{ $app['onshelfed_at'] != '0000-00-00 00:00:00' ? date('Y-m-d H:i', strtotime($app['onshelfed_at'])) : '' }}</td>
             <td>{{ $app['offshelfed_at'] != '0000-00-00 00:00:00' ? date('Y-m-d H:i', strtotime($app['offshelfed_at'])) : '' }}</td>
             <td>{{ isset($app['operator']) && !empty($app['operator']) ? $app['operator'] : '' }}</td>
-            <td><a href="{{ URL::route('apps.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a></td>
+            <td>
+              <a href="{{ URL::route('apps.offshelf.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a>
+            </td>
          </tr>
          @endforeach
          @if(empty($apps['total']))
