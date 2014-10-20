@@ -13,12 +13,11 @@
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                         <td width="134" class="Search_lei">请输入游戏名称：</td>
-                        <td><select class="Search_select" name="location">
-                                @foreach($location as $k => $v)
-                                    <option value="{{ $k }}"> {{ $v }} </option>
-                                @endforeach
+                        <td><select class="Search_select jq-select-autocate" name="autocate">
+                                <option value="{{ route('searchapps').'?type=name' }}">游戏名称</option>
+                                <option value="{{ route('searchapps').'?type=appid' }}">游戏ID</option>
                             </select>
-                            <input id="autocomplete" type="text" class="Search_text jq-searchapps" placeholder="应用名称输入时自动匹配" style="width:25%" />
+                            <input id="autocomplete" type="text" class="Search_text jq-searchapps" placeholder="输入时自动匹配" style="width:25%" />
                         </td>
                     </tr>
                     <input name="app_id" type="hidden" val="">
@@ -38,7 +37,7 @@
                     </tr>
 
                     <tr>
-                        <td  class="Search_lei">游戏截图：</td>
+                        <td  class="Search_lei"><span class="required">*</span>游戏截图：</td>
                         <td><a id="browse" href="javascrip:;" class="Search_Update">图片上传</a> <span style="color:#C00">（焦点图480*200，专题图230*120）</span></td>
                     </tr>
 
@@ -58,7 +57,7 @@
                     </tr>
 
                     <tr>
-                        <td  class="Search_lei"><span class="required">*</span>广告置顶：</td>
+                        <td  class="Search_lei">广告置顶：</td>
                         <td><input name="is_top" type="checkbox" value="yes"/>
                           是　<span style=" color:#C00">（选中后无论上架广告数量，该广告均会在轮播中出现）</span></td>
                     </tr>
@@ -119,8 +118,18 @@ $(function(){
     $("tr:odd").addClass("Search_biao_two");
     $("tr:even").addClass("Search_biao_one");
     //自动匹配
+    AUTOURL = "{{ route('searchapps').'?type=name' }}";
+    //切换
+    $('.jq-select-autocate').change(function(){
+        $('#autocomplete').autocomplete({
+            serviceUrl: $('.jq-select-autocate').val(),
+            onSelect: function (suggestion) {
+                getAppInfo(suggestion.data );
+            }
+        });
+    });
     $('#autocomplete').autocomplete({
-        serviceUrl: '{{ route("searchapps") }}',
+        serviceUrl: AUTOURL,
         onSelect: function (suggestion) {
             getAppInfo(suggestion.data );
         }

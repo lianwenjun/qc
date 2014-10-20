@@ -144,7 +144,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::post('{id}/edit', ['as' => 'appsads.edit', 'uses' => 'Admin_AppsAdsController@update']);
         Route::delete('{id}/delete', ['as' => 'appsads.delete', 'uses' => 'Admin_AppsAdsController@destroy']);
         Route::get('{id}/offshelf', ['as' => 'appsads.offshelf', 'uses' => 'Admin_AppsAdsController@offshelf']);
-        Route::post('imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_AppsAdsController@upload']);
+        //Route::post('imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_AppsAdsController@upload']);
     });
     Route::group(['prefix' => 'rankads', 'before' => 'hasPermissions'], function() //游戏位推广
     {
@@ -187,7 +187,8 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
     Route::get('searchapps', ['as' => 'searchapps', 'uses' => 'Admin_IndexController@searchApps']);//智能匹配列表
     Route::get('appsinfo/{id}', ['as' => 'appsinfo', 'uses' => 'Admin_IndexController@appsinfo']);//近期添加列表
 });
-
+//图片
+Route::post('/admin/appsads/imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_AppsAdsController@upload']);
 
 //api
 Route::group(['prefix' => 'api'], function()

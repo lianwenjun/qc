@@ -16,6 +16,10 @@
             <tr>
                 <td width="134" class="Search_lei">请输入游戏名称：</td>
                 <td>
+                    <select class="Search_select jq-select-autocate" name="autocate">
+                                <option value="{{ route('searchapps').'?type=name' }}">游戏名称</option>
+                                <option value="{{ route('searchapps').'?type=appid' }}">游戏ID</option>
+                    </select>
                     <input id="autocomplete" type="text" class="Search_text" style="width:25%" />　
                 </td>
             </tr>
@@ -41,7 +45,7 @@
             </tr>
 
             <tr>
-                <td  class="Search_lei">上线时间：</td>
+                <td  class="Search_lei"><span class="required">*</span>上线时间：</td>
                 <td>
                     <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="Search_text jq-ui-timepicker" value=""></h6>
                     <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="Search_text jq-ui-timepicker" value=""></h6>
@@ -97,8 +101,17 @@ $(function(){
     $("tr:odd").addClass("Search_biao_two");
     $("tr:even").addClass("Search_biao_one");
     //自动匹配
+    //切换
+    $('.jq-select-autocate').change(function(){
+        $('#autocomplete').autocomplete({
+            serviceUrl: $('.jq-select-autocate').val(),
+            onSelect: function (suggestion) {
+                getAppInfo(suggestion.data );
+            }
+        });
+    });
     $('#autocomplete').autocomplete({
-        serviceUrl: '{{ route("searchapps") }}',
+        serviceUrl: AUTOURL,
         onSelect: function (suggestion) {
             getAppInfo(suggestion.data );
         }

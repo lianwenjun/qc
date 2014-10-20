@@ -47,7 +47,6 @@ $(function(){
     $(".jq-cateads-upload").click(function() {
         //alert("更新图片");
         var tr = $(this).parents('tr');
-
         $.jBox("<div id='uploader'><p>您的浏览器不支持 html5 所以无法使用上传服务。</p></div>", {
             title: "<div class=ask_title>分类图片上传</div>",
             width: 320,
@@ -59,7 +58,7 @@ $(function(){
             top: '20%',
             loaded:function() {
                 $("body").css("overflow-y","hidden");
-                $(".jbox-content").html('<div class="jbox-waraper" style=""><div class="wraper"><div class="wraper_img"><span>暂无图片</span><div id="file-list"></div></div><div class="btn-wraper"><input type="button" value="选择文件并上传" id="browse" /></div></div><div class="wraper_buttom"><input class="Search_show" type="button" value="确定" id="upload-btn"/></div></div>');
+                $(".jbox-content").html('<div class="jbox-waraper" style=""><div class="wraper"><div class="wraper_img"><span>暂无图片</span><div id="file-list"></div></div><div class="btn-wraper"><input type="button" value="选择文件并上传" id="browse" /></div></div><div class="wraper_buttom"><input class="Search_show jq-cateads-sure" type="button" value="确定" id="upload-btn"/></div></div>');
                 var uploader = new plupload.Uploader({ //实例化一个plupload上传对象
                     browse_button : 'browse',
                     url : '{{ route("cateads.upload") }}',
@@ -96,22 +95,26 @@ $(function(){
                 });
                 //点击确定
                 $(".jq-cateads-sure").live('click', function(){
+                    if ($("#file-list").html() == ''){
+                        alert('没图片数据');
+                        return;
+                    };
                     var image = tr.find('input[name=upload-image]').val();
                     var url = tr.find('input[name=edit-url]').val();
                     $.post(url, {image:image}, function(res) {
                         //如果返回结果成功，关闭上传页面并替换掉原图
                         if (res.status == 'ok'){
-                            uploader.destroy();
-
+                            tr.find('img').attr('src', image);
+                            $.jBox.close();
+                            return;
                         }
                     });
+                    //alert("上传失败");
                     $.jBox.close();
                 });
             },
             closed:function() {
                $("body").css("overflow-y","auto");
-               uploader.destroy();
-               //location.href = location.href;
             }
         });
     });
