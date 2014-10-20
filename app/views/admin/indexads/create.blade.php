@@ -22,7 +22,13 @@
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
                 <td width="134" class="Search_lei">请输入游戏名称：</td>
-                <td><input id="autocomplete" name="" type="text" class="Search_text" value="" placeholder="应用名称输入时自动匹配" style="width:25%" />　或　从最近新增的游戏添加　<a href="#" class="Search_Update">选择</a></td>
+                <td>
+                    <select class="Search_select jq-select-autocate" name="autocate">
+                                <option value="{{ route('searchapps').'?type=name' }}">游戏名称</option>
+                                <option value="{{ route('searchapps').'?type=appid' }}">游戏ID</option>
+                    </select>
+                    <input id="autocomplete" type="text" class="Search_text" placeholder="应用名称输入时自动匹配" style="width:25%" />
+                </td>
             </tr>
             <input name="app_id" type="hidden" val="">
             <!--数据选择区开始-->
@@ -42,16 +48,16 @@
             </tr>
 
             <tr>
-                <td  class="Search_lei">游戏截图：</td>
+                <td class="Search_lei"><span class="required">*</span>游戏截图：</td>
                 <td><a id="browse" href="javascript:;" class="Search_Update">图片上传</a> <span style="color:#C00">（焦点图480*200，专题图230*120）</span></td>
             </tr>
 
             <tr>
-                <td  class="Search_lei">截图预览：</td>
+                <td class="Search_lei">截图预览：</td>
                 <td class="Search_img">
                 <div class="Update_img">
                     <ul id="listdata">
-                         <li><img src="/images/admin/1.jpg" />
+                         <li>
                             <!--a href="javascript">删除</a-->
                         </li>
                         <input name="image" type="hidden" value="" />
@@ -62,16 +68,16 @@
             </tr>
 
             <tr>
-                <td  class="Search_lei">广告置顶：</td>
+                <td class="Search_lei">广告置顶：</td>
                 <td><input name="is_top" type="checkbox" value="yes" />
                   是　<span style=" color:#C00">（选中后无论上架广告数量，该广告均会在轮播中出现）</span></td>
             </tr>
 
             <tr>
-                <td  class="Search_lei">上线时间：</td>
+                <td class="Search_lei"><span class="required">*</span>上线时间：</td>
                 <td> 
-                    <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="jq-ui-timepicker" value=""></h6>
-                    <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="jq-ui-timepicker" value=""></h6>
+                    <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="Search_text jq-ui-timepicker" value=""></h6>
+                    <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="Search_text jq-ui-timepicker" value=""></h6>
                 </td>
             </tr>
 
@@ -124,19 +130,28 @@ $(function(){
     $("tr:odd").addClass("Search_biao_two");
     $("tr:even").addClass("Search_biao_one");
     //自动匹配
+    //切换
+    $('.jq-select-autocate').change(function(){
+        $('#autocomplete').autocomplete({
+            serviceUrl: $('.jq-select-autocate').val(),
+            onSelect: function (suggestion) {
+                getAppInfo(suggestion.data );
+            }
+        });
+    });
     $('#autocomplete').autocomplete({
-        serviceUrl: '{{ route("searchapps") }}',
+        serviceUrl: AUTOURL,
         onSelect: function (suggestion) {
             getAppInfo(suggestion.data );
         }
     });
     //时间插件
     $(".jq-ui-timepicker").datetimepicker({
-            showSecond: true,
-            timeFormat: 'hh:mm:ss',
-            stepHour: 1,
-            stepMinute: 1,
-            stepSecond: 1
+        showSecond: true,
+        timeFormat: 'HH:mm:ss',
+        stepHour: 1,
+        stepMinute: 10,
+        stepSecond: 10
     });
     //图片上传
     UPLOADURL = '{{ route("appsads.upload") }}';
@@ -171,7 +186,7 @@ $(function(){
         }
         if (myData.result){
             console.log( $("#listdata li img"));
-            $("#listdata li img").attr('src', myData.result);
+            $("#listdata li").html('<img src="'+myData.result+'" />');
             $("#listdata input[name=image]").val(myData.result);
         }
     });

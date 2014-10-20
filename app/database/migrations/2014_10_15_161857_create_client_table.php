@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 //本地APP的版本表
-class CreateMarketTable extends Migration {
+class CreateClientTable extends Migration {
 
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateMarketTable extends Migration {
      */
     public function up()
     {
-        Schema::create('market', function(Blueprint $table)
+        Schema::create('client', function(Blueprint $table)
         {
             $table->increments('id');
             $table->string('download_link', 255)->comment('下载地址');
@@ -35,7 +35,7 @@ class CreateMarketTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('market');
+        //Schema::drop('market');
     }
 
 }

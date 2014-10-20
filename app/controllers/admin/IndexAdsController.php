@@ -120,8 +120,8 @@ class Admin_indexAdsController extends \Admin_BaseController {
     public function update($id)
     {
         $adsModel = new Ads();
-        $ads = $adsModel->where('id', $id)->where('type', $this->type)->first();
-        if (!$ads) {
+        $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
+        if (!$ad) {
             $msg = '亲，数据不存在';
             return Redirect::back()->with('msg', $msg);
         }
@@ -131,12 +131,13 @@ class Admin_indexAdsController extends \Admin_BaseController {
             $msg = "添加失败";
             return Redirect::back()->with('msg', $msg);
         }
-        $ads->location = Input::get('location', $ads->location);
-        $ads->image = Input::get('image', $ads->image);
-        $ads->is_top = Input::get('is_top', 'no');
-        $ads->onshelfed_at = Input::get('onshelfed_at', $ads->onshelfed_at);
-        $ads->offshelfed_at = Input::get('offshelfed_at', $ads->offshelfed_at);
-        if ($ads->save()){
+        $ad->location = Input::get('location', $ad->location);
+        $ad->image = Input::get('image', $ad->image);
+        $ad->is_top = Input::get('is_top', 'no');
+        $ad->onshelfed_at = Input::get('onshelfed_at', $ad->onshelfed_at);
+        $ad->offshelfed_at = Input::get('offshelfed_at', $ad->offshelfed_at);
+        $ad->is_onshelf = 'yes';
+        if ($ad->save()){
             $msg = "修改成功";
             return Redirect::route('indexads.index')->with('msg', $msg);
         }
