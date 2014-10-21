@@ -11,12 +11,7 @@
             <ul>
                 <li>
                     <span><b>查询：</b>
-                        <select name="is_top">
-                            <option value="">是否置顶</option>
-                            @foreach($is_top as $k=>$v)
-                                <option value="{{ $k }}">{{ $v }}</option>
-                            @endforeach
-                        </select>
+                        
                     </span>
                     <span>
                          <select name="status">
@@ -54,7 +49,6 @@
                 <td width="13%">上架时间</td>
                 <td width="13%">下线时间</td>
                 <td width="7%">状态</td>
-                <td width="7%">是否置顶</td>
                 <td width="15%">操作</td>
             </tr>
             @forelse($ads as $ad)                   
@@ -67,7 +61,6 @@
                     <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->onshelfed_at }}</td>
                     <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->offshelfed_at }}</td>
                     <td {{ Config::get('status.ads.statusColor')[adsStatus($ad)] }}>{{ Config::get('status.ads.status')[adsStatus($ad)] }}</td>
-                    <td>{{ Config::get('status.ads.is_top')[$ad->is_top] }}</td>
                     <td>
                         @if($ad->is_onshelf == 'yes')
                             <a href="{{ URL::route('rankads.offshelf', $ad->id) }}" target=BoardRight class="Search_show">下架</a>
@@ -93,6 +86,9 @@
 $(function(){
     $(".jq-tr:odd").addClass("Search_biao_two");
     $(".jq-tr:even").addClass("Search_biao_one");
+    $("input[name=word]").focus(function() {
+        $(this).val("");
+    });
     //分页
     pageInit({{ $ads->getCurrentPage() }}, {{ $ads->getLastPage() }}, {{ $ads->getTotal() }});
 });

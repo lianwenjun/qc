@@ -10,14 +10,14 @@ class Keywords extends \Eloquent {
 
 
     //过滤更新
-    public function validateUpate(){
+    public function validateUpate($id){
         $validator = Validator::make(
             [
                 'word' => Input::get('word'),
                 'is_slide' => Input::get('is_slide'),
             ],
             [
-                'word' => 'min:1',
+                'word' => 'min:1|unique:keywords,word,'.$id.',id,deleted_at,NULL',
                 'is_slide' => 'in:yes,no',
             ]
         );

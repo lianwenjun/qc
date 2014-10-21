@@ -193,3 +193,12 @@ function renderPreview(prefix, data)
     initCarousel();
 
 }
+//返回消息弹窗,
+// @params text
+function returnMsgBox(text) {
+    $.jBox("<p style='margin: 10px'>"+text+"</p>", {
+            title: "<div class='ask_title'>返回结果</div>",
+            showIcon: false,
+            draggable: false,
+    });
+};
