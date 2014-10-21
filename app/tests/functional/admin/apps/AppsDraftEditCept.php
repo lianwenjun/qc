@@ -44,5 +44,3 @@ $data = [
 ];
 $I->sendAjaxRequest('PUT', '/admin/apps/pending/14', $data);
 $I->seeRecord('apps', ['id' => '14', 'status' => 'pending', 'deleted_at' => null]);
-
-

@@ -17,8 +17,3 @@ $I->amOnPage('/admin/apps/draft/8');
 $data['summary'] = '大家好，我是上传有游戏君，即将成为草稿君';
 $I->sendAjaxRequest('PUT', '/admin/apps/draft/8', $data);
 $I->seeRecord('apps', ['id' => '8', 'status' => 'draft', 'deleted_at' => null]);
-
-
-
-
-
