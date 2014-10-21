@@ -71,6 +71,7 @@
                                     <img src="{{ $ad->image }}" />
                                     <!--<a href="#">删除</a> -->
                                 </li>
+                                 <input name="image" type="hidden" value="{{ $ad->image }}" />
                             </ul>
                         </div>
                     </td>
@@ -96,7 +97,7 @@
               
                 <tr>
                     <td colspan="2" align="center"  class="Search_submit">
-                        <input class="jq-ads-edit-submit" type="button" value="确定修改" />
+                        <input class="jq-ads-edit-submit" type="button" value="确定" />
                         <a href="{{ URL::route('editorads.index') }}" target=BoardRight>返回列表</a>
                     </td>
                 </tr>

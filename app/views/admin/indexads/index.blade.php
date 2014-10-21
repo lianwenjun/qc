@@ -35,7 +35,7 @@
                          </select>
                     </span>
                      
-                    <span><input name="" type="text" class="Search_wenben" size="20" value="输入游戏名称" /></span>
+                    <span><input maxlength="16" name="word" type="text" class="Search_wenben" size="20" placeholder="输入游戏名称" /></span>
                     <input name="" type="submit" value="搜索" class="Search_en" />
                 </li>            
             </ul>
@@ -51,7 +51,6 @@
                     <td width="4%">图片</td>
                     <td width="9%">游戏名称</td>
                     <td width="6%">所属类别</td>
-                    <td width="7%">排列序号</td>
                     <td width="13%">上架时间</td>
                     <td width="13%">下线时间</td>
                     <td width="7%">状态</td>
@@ -64,7 +63,6 @@
                     <td><img src="{{ $ad->image }}" width="28" height="28" /></td>
                     <td>{{ $ad->title }}</td>
                     <td>{{ isset($location[$ad->location]) ? $location[$ad->location] : '' }}</td>
-                    <td>{{ $ad->sort }}</td>
                     <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->onshelfed_at }}</td>
                     <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->offshelfed_at }}</td>
                     <td {{ Config::get('status.ads.statusColor')[adsStatus($ad)] }}>{{ Config::get('status.ads.status')[adsStatus($ad)] }}</td>
