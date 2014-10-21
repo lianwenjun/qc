@@ -5,7 +5,7 @@
 <script src="{{ asset('js/admin/additional-methods.min.js') }}" type="text/javascript"></script>
 <div class="Content_right_top Content_height">
     <div class="Theme_title">
-        <h1>管理中心 <span> 角色管理</span> <b> 编辑角色 </b></h1>
+        <h1>管理中心 <span> 角色管理 </span> <b> 编辑角色 </b></h1>
         <a href="{{ URL::route('roles.index') }}">返回列表</a>
     </div>
     <!-- 提示 -->
@@ -54,18 +54,22 @@
                 </td>
             </tr>
             @endforeach
-            <tr class="Search_biao_xuan">
-                <td align="center">
+            <td>  
+                <span><label><input type="checkbox" id="checkAll">全选</label></span>
+                <span><label><input type="checkbox" id="reverse">反选</label></span>
+            </td>
+            <td class="Search_biao_xuan">
+                <span align="center">
                     <a href="{{ URL::route('roles.index') }}" class="Search_biao_button" >返回</a>
                     <a href="javascript:;" class="Search_biao_button jq-submit" > 提交 </a>
-                </td>
-            </tr>
+                </span>
+            </td>
         </table>
     </div>
     </form>
 </div>
 <script>
-// 提交审核
+    // 提交审核
     $('.jq-submit').click(function() {
         // 验证
         $("#form").validate({
@@ -85,5 +89,21 @@
             $("#form").submit();
         }
     });
+  
+    // 全选
+    $("#checkAll").click(function() {
+       if(this.checked) {
+         $("input[name='permissions[]']").prop("checked", true);
+       } else {
+         $("input[name='permissions[]']").prop("checked", false);          
+       }
+   });
+   // 反选
+   $("#reverse").click(function() {
+        $("input[name='permissions[]']").each(function() {
+            $(this).prop("checked", !$(this).prop('checked'));
+        }); 
+   });
+
 </script>
 @stop
