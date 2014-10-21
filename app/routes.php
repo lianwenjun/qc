@@ -43,27 +43,46 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('offshelf', ['as' => 'apps.offshelf', 'uses' => 'Admin_AppsController@offshelf']);
 
         // 历史
-        Route::get('{id}/history', ['as' => 'apps.history', 'uses' => 'Admin_AppsController@history']);
+        Route::get('onshelf/{id}/history', ['as' => 'apps.history', 'uses' => 'Admin_AppsController@history'])
+             ->where('id', '[0-9]+');
 
         // 编辑
-        Route::get('{id}/edit',          ['as' => 'apps.edit',      'uses' => 'Admin_AppsController@edit']);
-        Route::put('{id}/edit/{status}', ['as' => 'apps.edit',      'uses' => 'Admin_AppsController@update'])
-             ->where('id', '[0-9]+')->where('status', '[A-Za-z]+');
+        Route::get('onshelf/{id}',  ['as' => 'apps.onshelf.edit',  'uses' => 'Admin_AppsController@edit'])
+             ->where('id', '[0-9]+');
+        Route::get('draft/{id}',    ['as' => 'apps.draft.edit',    'uses' => 'Admin_AppsController@edit'])
+             ->where('id', '[0-9]+');
+        Route::get('nopass/{id}',   ['as' => 'apps.nopass.edit',   'uses' => 'Admin_AppsController@edit'])
+             ->where('id', '[0-9]+');
+        Route::get('offshelf/{id}', ['as' => 'apps.offshelf.edit', 'uses' => 'Admin_AppsController@edit'])
+             ->where('id', '[0-9]+');
+
+        Route::put('onshelf/{id}', ['as' => 'apps.onshelf.edit',  'uses' => 'Admin_AppsController@update'])
+             ->where('id', '[0-9]+');
+        Route::put('draft/{id}', ['as' => 'apps.draft.edit',    'uses' => 'Admin_AppsController@update'])
+             ->where('id', '[0-9]+');
+        Route::put('pending/{id}', ['as' => 'apps.pending.edit',    'uses' => 'Admin_AppsController@update'])
+             ->where('id', '[0-9]+');
+
 
         // 删除
-        Route::delete('{id}/delete',     ['as' => 'apps.delete',    'uses' => 'Admin_AppsController@destroy']);
+        Route::delete('{id}', ['as' => 'apps.delete', 'uses' => 'Admin_AppsController@destroy'])
+             ->where('id', '[0-9]+');
 
         // 审核
-        Route::put('{id}/dopass', ['as' => 'apps.dopass',    'uses' => 'Admin_AppsController@dopass']);
-        Route::put('{id}/donopass', ['as' => 'apps.donopass',    'uses' => 'Admin_AppsController@donopass']);
+        Route::put('{id}/dopass', ['as' => 'apps.dopass',    'uses' => 'Admin_AppsController@dopass'])
+             ->where('id', '[0-9]+');
+        Route::put('{id}/donopass', ['as' => 'apps.donopass',    'uses' => 'Admin_AppsController@donopass'])
+             ->where('id', '[0-9]+');
         Route::put('doallpass', ['as' => 'apps.doallpass',    'uses' => 'Admin_AppsController@doallpass']);
         Route::put('doallnopass', ['as' => 'apps.doallnopass',    'uses' => 'Admin_AppsController@doallnopass']);
 
         // 下架
-        Route::put('{id}/dooffshelf', ['as' => 'apps.dooffshelf',    'uses' => 'Admin_AppsController@dooffshelf']);
+        Route::put('{id}/dooffshelf', ['as' => 'apps.dooffshelf',    'uses' => 'Admin_AppsController@dooffshelf'])
+             ->where('id', '[0-9]+');
 
         // 预览
-        Route::get('{id}/preveiw', ['as' => 'apps.preview',      'uses' => 'Admin_AppsController@preview']);
+        Route::get('{id}/preveiw', ['as' => 'apps.preview',      'uses' => 'Admin_AppsController@preview'])
+             ->where('id', '[0-9]+');
 
         // 上传
         Route::post('imageupload', ['as' => 'apps.imageupload', 'uses' => 'Admin_AppsController@imageUpload']);
@@ -77,8 +96,10 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('index', ['as' => 'users.index', 'uses' => 'Admin_UsersController@index']);
         Route::get('create', ['as' => 'users.create', 'uses' => 'Admin_UsersController@create']);
         Route::post('create', ['as' => 'users.create', 'uses' => 'Admin_UsersController@store']);
-        Route::get('{id}/edit', ['as' => 'users.edit', 'uses' => 'Admin_UsersController@edit']);
-        Route::put('{id}/edit', ['as' => 'users.edit', 'uses' => 'Admin_UsersController@update']);
+        Route::get('{id}/edit', ['as' => 'users.edit', 'uses' => 'Admin_UsersController@edit'])
+             ->where('id', '[0-9]+');
+        Route::put('{id}/edit', ['as' => 'users.edit', 'uses' => 'Admin_UsersController@update'])
+             ->where('id', '[0-9]+');
         Route::delete('{id}/delete', ['as' => 'users.delete', 'uses' => 'Admin_UsersController@destroy']);
     });
 
@@ -88,9 +109,12 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('index', ['as' => 'roles.index', 'uses' => 'Admin_RolesController@index']);
         Route::get('create', ['as' => 'roles.create', 'uses' => 'Admin_RolesController@create']);
         Route::post('create', ['as' => 'roles.create', 'uses' => 'Admin_RolesController@store']);
-        Route::get('{id}/edit', ['as' => 'roles.edit', 'uses' => 'Admin_RolesController@edit']);
-        Route::put('{id}/edit', ['as' => 'roles.edit', 'uses' => 'Admin_RolesController@update']);
-        Route::delete('{id}/delete', ['as' => 'roles.delete', 'uses' => 'Admin_RolesController@destroy']);
+        Route::get('{id}/edit', ['as' => 'roles.edit', 'uses' => 'Admin_RolesController@edit'])
+             ->where('id', '[0-9]+');
+        Route::put('{id}/edit', ['as' => 'roles.edit', 'uses' => 'Admin_RolesController@update'])
+             ->where('id', '[0-9]+');
+        Route::delete('{id}/delete', ['as' => 'roles.delete', 'uses' => 'Admin_RolesController@destroy'])
+             ->where('id', '[0-9]+');
     });
 
     Route::group(['prefix' => 'cate', 'before' => 'hasPermissions'], function() //游戏分类
@@ -107,6 +131,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('index', ['as' => 'tag.index', 'uses' => 'Admin_CatesController@tagIndex']);
         Route::post('create', ['as' => 'tag.create', 'uses' => 'Admin_CatesController@tagStore']);
         Route::post('{id}/edit', ['as' => 'tag.edit', 'uses' => 'Admin_CatesController@update']);
+        Route::get('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_CatesController@destroy']);
         Route::delete('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_CatesController@tagDestroy']);
         Route::get('{id}/show', ['as' => 'tag.show', 'uses' => 'Admin_CatesController@show']);
     });

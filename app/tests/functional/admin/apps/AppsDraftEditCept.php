@@ -13,7 +13,7 @@ $I = new FunctionalTester($scenario);
 $I->wantTo('添加编辑游戏编辑功能');
 
 // 必填验证
-$I->amOnPage('/admin/apps/14/edit');
+$I->amOnPage('/admin/apps/draft/14');
 $data = [
     'cates'           => [1,2],
     'author'          => '草稿制造厂',
@@ -25,12 +25,12 @@ $data = [
     'images'          => ['/pictures/6/b/6bcfd1ee3b3dbdd58dea0e046f08ee6e.jpg'],
     'changes'         => 'fixes bugs',
 ];
-$I->sendAjaxRequest('PUT', '/admin/apps/14/edit/pending', $data);
+$I->sendAjaxRequest('PUT', '/admin/apps/pending/14', $data);
 $I->seeInSession(['tips'=>['success' => false, 'message' => "请按要求填写表单"]]);
 
 // 提交保存
 $I->seeRecord('apps', ['id' => '14', 'status' => 'draft', 'deleted_at' => null]);
-$I->amOnPage('/admin/apps/14/edit');
+$I->amOnPage('/admin/apps/draft/14');
 $data = [
     'cates'           => [1,2],
     'author'          => '草稿制造厂',
@@ -42,7 +42,7 @@ $data = [
     'images'          => ['/pictures/6/b/6bcfd1ee3b3dbdd58dea0e046f08ee6e.jpg'],
     'changes'         => 'fixes bugs',
 ];
-$I->sendAjaxRequest('PUT', '/admin/apps/14/edit/pending', $data);
+$I->sendAjaxRequest('PUT', '/admin/apps/pending/14', $data);
 $I->seeRecord('apps', ['id' => '14', 'status' => 'pending', 'deleted_at' => null]);
 
 

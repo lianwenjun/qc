@@ -7,10 +7,10 @@
         <ul>
             <li> 
                  @if (Sentry::getUser()->hasAccess('cate.create'))
-                 <span><input name="" id="Classification" type="submit" value="添加分类" class="Search_en" /></span>
+                 <span><input id="Classification" type="submit" value="添加分类" class="Search_en" /></span>
                  @endif
                  @if (Sentry::getUser()->hasAccess('tag.create'))
-                 <span><input name="" id="Tag" type="submit" value="添加标签" class="Search_en" /></span>
+                 <span><input id="Tag" type="submit" value="添加标签" class="Search_en" /></span>
                  @endif
             </li> 
         </ul>
@@ -112,6 +112,27 @@
 
 
 <script type="text/javascript">
+function delMsgBox(func) {
+    $.jBox("<p style='margin: 10px'>您要删除吗？</p>", {
+            title: "<div class='ask_title'>是否删除？</div>",
+            showIcon: false,
+            draggable: false,
+            buttons: {'确定':true, "算了": false},
+            submit: function(v, h, f) {
+                if (v){
+                    func();
+                }
+            }
+    });
+};
+
+function returnMsgBox(text) {
+    $.jBox("<p style='margin: 10px'>"+text+"</p>", {
+            title: "<div class='ask_title'>返回结果</div>",
+            showIcon: false,
+            draggable: false,
+    });
+};
 $(function(){
     $(".jq-cate:odd").addClass("Push_left_two");
     $(".jq-cate:even").addClass("Push_left_one");
@@ -127,7 +148,7 @@ $(function(){
     var cateText = '<table align="center" border="0" cellspacing="0" cellpadding="0" class="add_Classification">' +
                     '<tr>' + 
                         '<td width="114" align="right">分类名称：</td>' + 
-                        '<td height="40"><input name="cate" type="text" class="add_Classification_text"/></td>' + 
+                        '<td height="40"><input name="cate" maxlength="15" type="text" class="add_Classification_text"/></td>' + 
                     '</tr><tr>' + 
                         '<td colspan="2" style=" text-align:center; padding:15px 0px;">'+
                         '<input name="" type="button" value="添加" class="Search_en jq-addCate" /></td>'+
@@ -144,29 +165,39 @@ $(function(){
                         '</td></tr><tr>' + 
                         '<td align="right" valign="top">标签名称：</td>' +
                         '<td height="40">' + 
-                            '<input name="tag" type="text"  class="add_Classification_text"/>' +
+                            '<input name="tag" maxlength="15" type="text"  class="add_Classification_text"/>' +
                         '</td></tr><tr>' +
                         '<td colspan="2" style=" text-align:center; padding:15px 0px;">' +
                             '<input name="" type="button" value="添加" class="Search_en jq-addTag" />' +
                         '</td></tr></table>';
     //添加分类
     function addCate(){
-        $('.jq-addCate').click(function(){
-            
+        var processCate = function(){
             var cate = $('input[name=cate]').val();
             var createUrl = "{{ route('cate.create') }}";
             $.post(createUrl, {word:cate}, function(res){
                 if ( res.status == 'ok' ){
-                    alert('添加分类成功');
                     $.jBox.close();
                     return;
                 }
+                returnMsgBox('添加分类失败');
             });
+        };
+        $('.jq-addCate').click(function(){
+            processCate();
+        });
+        //ENTER健监听
+        var $inp = $('input[name=cate]'); 
+        $inp.keypress(function (e) { 
+            var key = e.which; 
+            if (key == 13) {
+                processCate();
+            }
         });
     }
     //添加便签
     function addTag(){
-        $('.jq-addTag').click(function(){
+        var processTag = function () {
             var parent_id = $('select[name=parent_id]').val();
             var tag = $('input[name=tag]').val();
             if (tag == '' || tag == undefined){
@@ -176,11 +207,22 @@ $(function(){
 
             $.post(createUrl, {parent_id:parent_id,word:tag}, function(res){
                 if ( res.status == 'ok' ){
-                    alert('添加成功');
                     $.jBox.close();
                     return;
                 }
+                returnMsgBox('添加标签失败');
             });
+        }
+        $('.jq-addTag').click(function(){
+            processTag();
+        });
+        //ENTER健监听
+        var $inp = $('input[name=tag]'); 
+        $inp.keypress(function (e) { 
+            var key = e.which; 
+            if (key == 13) {
+                processTag();
+            }
         });
     }
     $("#Classification").click(function(){
@@ -266,7 +308,7 @@ $(function(){
         var editUrl = $(this).parents().children('input[name=edit_url]').val();
         $.post(editUrl, data, function(res) {
             if (res.status == 'ok'){
-                alert("修改分类成功");
+                returnMsgBox('修改成功');
                 li.eq(0).find('.jq-title').html(title);
                 li.find('.user_button').html(buttonCate);
             }
@@ -306,13 +348,11 @@ $(function(){
     });
     //点击标签
     $(".jq-tagClick").live('click', function() {
-        //alert('点击标签');
         //清理掉hover的选择并还原数据
         var tag = $(".scrollText_hover");
         tag.removeClass('scrollText_hover');
         var tagId = tag.attr('data-tag-id');
         var title = $(".jq-tagDisplay-"+tagId+' ul input[name=pre_title]').val();
-        //console.log($(".jq-tagDisplay-"+tagId+' ul li p').html());
         $(".jq-tagDisplay-"+tagId+' ul li p').html(title);
         //新选择
         $(this).addClass('scrollText_hover');
@@ -336,10 +376,9 @@ $(function(){
         var data = {word:title};
         var editUrl = $(this).parents().find('input[name=edit_url]').val();
         var tagId = $(this).parents().find('input[name=tag_id]').val();
-        console.log(data);
         $.post(editUrl, data, function(res) {
             if (res.status == 'ok'){
-                alert("修改标签成功");
+                returnMsgBox('修改成功');
                 li.eq(0).find('.jq-title').html(title);
                 li.find('.user_button').html(buttonTag);
                 $(".jq-tagClick-"+tagId).text(title);
@@ -348,30 +387,31 @@ $(function(){
     });
     //点击删除标签
     $(".jq-delTag").live('click', function(){
-        //alert('点击删除标签');
-        var delUrl = $(this).parents().find('input[name=del_url]').val();
-        var tagId = $(this).parents().find('input[name=tag_id]').val();
-        
-        $.get(delUrl, function(res) {
-            if (res.status == 'ok') {
-                //alert('删除成功');
-                //成功返回删除本地的
-                $(".jq-tagDisplay-"+tagId).hide();
-                $(".jq-tagClick-"+tagId).remove();
-            }
-        });
+        var thisObj = $(this);
+        var del = function() {
+            var delUrl = thisObj.parents().find('input[name=del_url]').val();
+            var tagId = thisObj.parents().find('input[name=tag_id]').val();
+            $.get(delUrl, function(res) {
+                if (res.status == 'ok') {
+                    $(".jq-tagDisplay-"+tagId).hide();
+                    $(".jq-tagClick-"+tagId).remove();
+                }   
+            });
+        };
+        delMsgBox(del);
     });
     //点击删除分类
     $(".jq-delCate").live('click', function(){
-        //alert('点击删除分类');
-        var delUrl = $(this).parents().find('input[name=del_url]').val();
-        $.get(delUrl, function(res) {
-            if (res.status == 'ok') {
-                //alert('删除成功');
-                //成功返回刷新页面
-                window.location.href = window.location.pathname;
-            }
-        });
+        var thisObj = $(this);
+        var del = function(){
+            var delUrl = thisObj.parents().find('input[name=del_url]').val();
+            $.get(delUrl, function(res) {
+                if (res.status == 'ok') {
+                    window.location.href = window.location.pathname;
+                }
+            });
+        };
+        delMsgBox(del);
     });
 });
 </script>              

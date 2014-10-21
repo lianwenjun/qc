@@ -12,15 +12,21 @@ $(function() {
     $('#BoardRight').load(function(){
         var currentUrl = frames['BoardRight'].document.location.href;
 
+        var match = false;
         $(frames['BoardLeft'].document).find('.mail_hover').find('.sub-menu > li > a').each(function() {
+            if($(this).attr('href') == currentUrl) {
+                match = true;
+            }
+        });
 
-            console.log($(this).attr('href'));
+        $(frames['BoardLeft'].document).find('.mail_hover').find('.sub-menu > li > a').each(function() {
             if($(this).attr('href') == currentUrl) {
                 $(this).parent().addClass('sub-menu_hover');
-            } else {
+            } else if(match) {
                 $(this).parent().removeClass('sub-menu_hover');
             }
         });
+
     });
 });
 </script>

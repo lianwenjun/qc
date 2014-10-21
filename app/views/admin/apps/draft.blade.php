@@ -74,10 +74,10 @@
                 <td>
                     @if($app['status'] == 'new')
                         @if(Sentry::getUser()->hasAccess('apps.edit'))
-                    <a href="{{ URL::route('apps.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a>
+                    <a href="{{ URL::route('apps.draft.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a>
                         @endif
                     @else 
-                    <a href="{{ URL::route('apps.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">草稿</a>
+                    <a href="{{ URL::route('apps.draft.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">草稿</a>
                     @endif
                     <a href="{{ URL::route('apps.delete', $app['id']) }}" class="Search_del jq-delete">删除</a></td>
             </tr>

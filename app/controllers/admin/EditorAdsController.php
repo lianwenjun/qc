@@ -55,35 +55,21 @@ class Admin_EditorAdsController extends \Admin_BaseController {
         $validator = Validator::make(Input::all(), $adsModel->adsCreateRules);
         if ($validator->fails()){
             Log::error($validator->messages());
-            return Redirect::route('editorads.create')->with('msg', $msg);
+            return Redirect::route('editorads.create')->with('msg', $msg)->with('input', Input::all());
         }
         //检测游戏是否存在
         $appsModel = new Apps;
         $app = $appsModel->find(Input::get('app_id'));
         if (!$app) {
             $msg = '游戏不存在';
-            return Redirect::route('editorads.index')->with('msg', $msg);
+            return Redirect::route('editorads.create')->with('msg', $msg)->with('input', Input::all());
         }
-        $fields = [
-            'app_id' => Input::get('app_id'),
-            'title' => Input::get('title'),
-            'location' => Input::get('location'),
-            'image' => Input::get('image'),
-            'is_top' => Input::get('is_top', 'no'),
-            'word' => Input::get('word', ''),
-            'onshelfed_at' => Input::get('onshelfed_at'),
-            'offshelfed_at' => Input::get('offshelfed_at'),
-            'type' => $this->type,
-            'is_onshelf' => 'yes', 
-            ];
-        foreach ($fields as $key => $value) {
-            $adsModel->$key = $value;
-        }
-        if ($adsModel->save()) {
+        $ad = $adsModel->createAds($this->type);
+        if ($ad) {
             $msg = "添加成功";
             return Redirect::route('editorads.index')->with('msg', $msg);
         }
-        return Redirect::route('editorads.index')->with('msg', $msg);
+        return Redirect::route('editorads.create')->with('msg', $msg)->with('input', Input::all());
     }
 
     /**
@@ -126,7 +112,9 @@ class Admin_EditorAdsController extends \Admin_BaseController {
         $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
         //检测广告是否存在
         if (!$ad) {
-            return Redirect::route('editorads.index');
+            $msg = '#' . $id .'不存在';
+            Log::error($msg);
+            return Redirect::route('editorads.index')->with('msg', $msg);
         }
         $validator = Validator::make(Input::all(), $adsModel->adsUpdateRules);
         if ($validator->fails()){
@@ -146,7 +134,7 @@ class Admin_EditorAdsController extends \Admin_BaseController {
             return Redirect::route('editorads.index')->with('msg', $msg);
         }
         $msg = "修改失败";
-        return Redirect::route('editorads.index')->with('msg', $msg);
+        return Redirect::back()->with('msg', $msg);
         
     }
 
