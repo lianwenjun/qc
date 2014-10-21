@@ -27,7 +27,7 @@
                                 <option value="{{ route('searchapps').'?type=name' }}">游戏名称</option>
                                 <option value="{{ route('searchapps').'?type=appid' }}">游戏ID</option>
                     </select>
-                    <input id="autocomplete" type="text" class="Search_text" placeholder="应用名称输入时自动匹配" style="width:25%" />
+                    <input maxlength="16" id="autocomplete" type="text" class="Search_text" placeholder="输入时自动匹配" style="width:25%" />
                 </td>
             </tr>
             <input name="app_id" type="hidden" val="">

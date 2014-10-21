@@ -6,7 +6,9 @@
 <div class="Content_right_top Content_height">
     <div class="Theme_title">
         <h1>管理中心 <span> 管理员管理</span></h1>
+        @if(Sentry::getUser()->hasAccess('roles.create'))
         <a href="{{ URL::route('users.create') }}" class="Theme_Excel">添加管理员</a>
+        @endif
     </div>
     <form action="{{ URL::route('users.index') }}" method="get">
     <div class="Theme_Search">
@@ -65,7 +67,14 @@
                 <td>{{ $user['email'] }}</td>
                 <td>{{ $user['created_at'] }}</td>
                 <td><img src="@if($user['activated']) {{ asset('images/xia_yes.png') }} @else {{ asset('images/xia_none.png') }} @endif" width="18" height="18" /></td>
-                <td><a href="{{ URL::route('users.edit', ['id' => $user['id']]) }}" class="Search_show">编辑</a><a href="{{ URL::route('users.delete', ['id' => $user['id']]) }}" class="Search_del jq-delete">删除</a></td>
+                <td>
+                    @if(Sentry::getUser()->hasAccess('roles.edit'))
+                    <a href="{{ URL::route('users.edit', ['id' => $user['id']]) }}" class="Search_show">编辑</a>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('roles.delete'))
+                    <a href="{{ URL::route('users.delete', ['id' => $user['id']]) }}" class="Search_del jq-delete">删除</a>
+                    @endif
+                </td>
             </tr>
             @endforeach
             @if(empty($users['total']))

@@ -18,7 +18,11 @@
                     <td>{{ $catead->id }}</td>
                     <td><img src="{{ $catead->image ? $catead->image : '/images/admin/u1188.png' }}" width="28" height="28" /></td>
                     <td>{{ $catead->title }}</td>
-                    <td><a href="javascript:;" target=BoardRight class="Search_show jq-cateads-upload">重新上传图片</a></td>
+                    <td>
+                        @if (Sentry::getUser()->hasAccess('cateads.upload'))
+                        <a href="javascript:;" target=BoardRight class="Search_show jq-cateads-upload">重新上传图片</a>
+                        @endif
+                    </td>
                     <input value="{{ URL::route('cateads.edit', $catead->id) }}" name="edit-url" type="hidden">
                     <input value="" name="upload-image" type="hidden">
                 </tr>
@@ -58,7 +62,7 @@ $(function(){
             top: '20%',
             loaded:function() {
                 $("body").css("overflow-y","hidden");
-                $(".jbox-content").html('<div class="jbox-waraper" style=""><div class="wraper"><div class="wraper_img"><span>暂无图片</span><div id="file-list"></div></div><div class="btn-wraper"><input type="button" value="选择文件并上传" id="browse" /></div></div><div class="wraper_buttom"><input class="Search_show jq-cateads-sure" type="button" value="确定" id="upload-btn"/></div></div>');
+                $(".jbox-content").html('<div class="jbox-waraper" style=""><div class="wraper"><div class="wraper_img"><span>暂无图片</span><div id="file-list"></div></div><div class="btn-wraper"><input type="button" value="选择图片并上传" id="browse" /></div></div><div class="wraper_buttom"><input class="Search_show jq-cateads-sure" type="button" value="确定" id="upload-btn"/></div></div>');
                 var uploader = new plupload.Uploader({ //实例化一个plupload上传对象
                     browse_button : 'browse',
                     url : '{{ route("cateads.upload") }}',

@@ -131,6 +131,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('index', ['as' => 'tag.index', 'uses' => 'Admin_CatesController@tagIndex']);
         Route::post('create', ['as' => 'tag.create', 'uses' => 'Admin_CatesController@tagStore']);
         Route::post('{id}/edit', ['as' => 'tag.edit', 'uses' => 'Admin_CatesController@update']);
+        Route::get('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_CatesController@destroy']);
         Route::delete('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_CatesController@tagDestroy']);
         Route::get('{id}/show', ['as' => 'tag.show', 'uses' => 'Admin_CatesController@show']);
     });

@@ -39,9 +39,10 @@ class Admin_StopwordsController extends \Admin_BaseController {
         $stopwordModel = new Stopwords;
         $res = ['status'=>'ok', 'msg'=>'suss'];
         //检测输入
-        $validator = Validator::make(Input::all(), $stopwordModel->createRules);
+        $validator = Validator::make(Input::all(), $stopwordModel->rules, $stopwordModel->messages);
         if ($validator->fails()){
-            $res['msg'] = '验证失败';
+            Log::error($validator->messages()->first('word'));
+            $res['msg'] = $validator->messages()->first('word');
             $res['status'] = 'error';
             return Response::json($res);
         }
@@ -77,10 +78,15 @@ class Admin_StopwordsController extends \Admin_BaseController {
             return Response::json($res);;   
         }
         //检测输入
-        $validator = Validator::make(Input::all(), $stopwordModel->createRules);
+        
+        $validator = Validator::make(
+                    Input::all(), 
+                    $stopwordModel->updateRules($id), 
+                    $stopwordModel->messages
+                );
         if ($validator->fails()){
-            Log::error($validator->messages());
-            $res['msg'] = '验证失败';
+            Log::error($validator->messages()->first('word'));
+            $res['msg'] = $validator->messages()->first('word');
             $res['status'] = 'error';
             return Response::json($res);
         }

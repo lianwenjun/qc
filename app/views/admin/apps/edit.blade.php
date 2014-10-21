@@ -108,7 +108,7 @@ ul.ui-sortable li.placeholder:before {
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">上传新版本：</td>
-               <td class="Search_apk"><span id="container"><a href="javascript:;" class="Search_Update" id="jq-uploadApp">选择APK</a><span id="uploadInfo"></span></span><img class="upload-icon-src" src="{{ $app->icon }}" width="90" height="90"></td>
+               <td class="Search_apk"><span id="container"><a href="javascript:;" class="Search_Update" {{ Sentry::getUser()->hasAccess('apps.appupload') ? 'id="jq-uploadApp"':''}} >选择APK</a><span id="uploadInfo"></span></span><img class="upload-icon-src" src="{{ $app->icon }}" width="90" height="90"></td>
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">游戏关键字：</td>
