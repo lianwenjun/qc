@@ -382,7 +382,7 @@ filter:Alpha(opacity=60);}
 .Search_biao .Search_biao_text td input{line-height:22px; height:22px; border:#666 solid 1px; padding-left:3px; font-family:"微软雅黑";}
 .Search_biao .Search_biao_text td select{ border:#666 solid 1px;}
 .Search_biao .Search_biao_xuan td{padding:15px 0px; font-size:14px; overflow:hidden; line-height:16px;}
-.Search_biao .Search_biao_xuan span{float:left; padding-right:20px; cursor:pointer;}
+.Search_biao .Search_biao_xuan span{float:right; padding-top:20px; cursor:pointer;}
 .Search_biao .Search_biao_xuan input{float:left; margin-right:3px; margin-top:3px;}
 .Search_biao .Search_biao_xuan .Search_biao_button{float:right; padding:5px 10px; margin-right:10px; font-family:"微软雅黑"; font-size:14px; font-weight:bold; color:#FFF; background:#193974; border: 1px solid #0e377d; cursor:pointer;}
 .Search_biao .Search_biao_xuan .Search_biao_quxiao{float:right; padding:8px 13px; margin-top:2px; margin-right:10px; font-family:"微软雅黑"; font-size:14px; font-weight:bold; color:#FFF; background:#193974; border: 1px solid #0e377d; cursor:pointer;}
