@@ -25,8 +25,6 @@
             @endif
       </ul>
 </div>
-
-
 <div id="wrapper-250">
       <ul class="accordion">
       

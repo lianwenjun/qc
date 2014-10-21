@@ -20,6 +20,13 @@ class Admin_rankAdsController extends \Admin_BaseController {
         }
         $query = $query->where('type', $this->type);
         $ads = $query->orderBy('id', 'desc')->paginate($this->pagesize);
+        $appsModel = new Apps();
+        foreach ($ads as &$ad) {
+            $app = $appsModel->find($ad->app_id);
+            if ($app) $ad->image = $app->icon;
+            
+        }
+        //var_dump($ads->toarray());
         $statusArray = ['online' => '线上展示',
                     'onshelf' => '上架',
                     'expired' => '已过期',

@@ -9,13 +9,12 @@
                 <li>
                     <span><b>查询：</b>
                         <select name="cate">
-                            <option value="">--全部--</option>
                             <option value="title">游戏名称</option>
                             <option value="pack">包名</option>
                         </select>
                     </span>
                     <span>
-                        <input name="word" type="text" class="Search_wenben" size="20" value="" placeholder="输入关键字"/>
+                        <input name="word" type="text" class="Search_wenben" size="20" maxlength="10" value="" placeholder="输入关键字"/>
                     </span>
                     <input type="submit" value="搜索" class="Search_en" />
                 </li>
@@ -65,6 +64,7 @@
 </div>
 <script type="text/javascript" src="{{ asset('js/jquery.pager.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/admin/common.js') }}"></script>
+
 <script>
 $(function(){
     CREATEURL = "{{ route('stopword.create') }}";
@@ -80,17 +80,27 @@ $(function(){
     $(".jq-editWord").live('click', function() {
         var td = $(this).parents('tr').children('td');
         var text6 = td.eq(6).html();
-        var to_text1 = '<input name="textfield" type="text" id="textfield" value="" size="8" class="Classification_text" />';
+        var to_text1 = '<input name="textfield" type="text" id="textfield" value="" size="8" class="Classification_text jq-edit-input" />';
         var to_text7 = '<a href="javacript:;" class="Search_show jq-saveWord">确定</a> <a href="javacript:;" class="Search_show jq-chanceWord">取消</a>';
         td.eq(6).html(to_text1);
         td.eq(6).find('#textfield').val(text6);
         $(this).parent().html(to_text7);
     });
+    //输入强制
+    $(".jq-edit-input").live('keyup', function(){    
+            $(this).val($(this).val().replace(/[^0-9.]/g,''));    
+        }).bind("paste",function(){  //CTR+V事件处理    
+            $(this).val($(this).val().replace(/[^0-9.]/g,''));     
+        }).css("ime-mode", "disabled"); //CSS设置输入法不可用    
     //提交
     $(".jq-saveWord").live('click', function() {
         //alert('点击保存');
         var td = $(this).parents('tr').children('td');
         var text6 = td.eq(6).find('input').val();
+        if (isNaN(text6) || parseInt(text6) < 1 || parseInt(text6) > 5){
+            alert("请输入大于1小于5的数字");
+            return;
+        }
         var editUrl = td.find('#edit-url').val();
         var data = {manual:text6};
         $.post(editUrl, data, function(res) {
