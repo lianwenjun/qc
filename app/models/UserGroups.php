@@ -25,4 +25,19 @@ class UserGroups extends \Eloquent {
         return $ids;
     }
 
+        /**
+     * 获取当前用户的组名
+     *
+     * @return $role 组名
+     **/
+    public function getCurrentUserGroupName()
+    {
+        $userId = Sentry::getUser()->id;
+        $ids = $this->userGroupIds($userId);
+        $groupId = last($ids);
+        $group = Sentry::findGroupById($groupId);
+        $role = $group->name;
+        
+        return $role;
+    }
 }

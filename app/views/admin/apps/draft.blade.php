@@ -73,7 +73,9 @@
                 <td>{{ date('Y-m-d H:i', strtotime($app['created_at'])) }}</td>
                 <td>
                     @if($app['status'] == 'new')
+                        @if(Sentry::getUser()->hasAccess('apps.edit'))
                     <a href="{{ URL::route('apps.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a>
+                        @endif
                     @else 
                     <a href="{{ URL::route('apps.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">草稿</a>
                     @endif

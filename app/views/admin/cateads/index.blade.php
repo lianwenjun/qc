@@ -18,7 +18,11 @@
                     <td>{{ $catead->id }}</td>
                     <td><img src="{{ $catead->image ? $catead->image : '/images/admin/u1188.png' }}" width="28" height="28" /></td>
                     <td>{{ $catead->title }}</td>
-                    <td><a href="javascript:;" target=BoardRight class="Search_show jq-cateads-upload">重新上传图片</a></td>
+                    <td>
+                        @if (Sentry::getUser()->hasAccess('cateads.upload'))
+                        <a href="javascript:;" target=BoardRight class="Search_show jq-cateads-upload">重新上传图片</a>
+                        @endif
+                    </td>
                     <input value="{{ URL::route('cateads.edit', $catead->id) }}" name="edit-url" type="hidden">
                     <input value="" name="upload-image" type="hidden">
                 </tr>
