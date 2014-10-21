@@ -47,16 +47,9 @@ class Admin_UsersController extends \Admin_BaseController {
      */
     public function store()
     {
-        $validator = Validator::make(
-        [
-            'email' => Input::get('email'),
-        ],
-        [
-            'email' => 'unique:users',
-        ]);
+        $validator = Validator::make(['email' => Input::get('email')], ['email' => 'unique:users',]);
 
-        if($validator->fails())
-        {
+        if($validator->fails()) {
             Session::flash('tips', ['success' => false, 'message' => "亲，邮箱已被注册"]);
         } else {
             $userModel = new User;
