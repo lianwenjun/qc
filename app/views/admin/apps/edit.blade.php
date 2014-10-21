@@ -216,17 +216,14 @@ ul.ui-sortable li.placeholder:before {
                </td>
             </tr>
             <tr class="Search_biao_one">
-
                <td colspan="2" align="center" class="Search_submit">
-                  @if($app->status == 'new')
+                  @if($app->status == 'new' || $app->status == 'draft')
                   <a href="javascript:;" class="jq-submitDraft" data-action="{{ URL::route('apps.draft.edit', ['id' => $app->id]) }}">存为草搞件</a>
                   <a href="javascript:;" data-action="{{ URL::route('apps.pending.edit', ['id' => $app->id]) }}" class="jq-submit">提 交</a>
                   @elseif($app->status == 'onshelf')
                   <a href="javascript:;" data-action="{{ URL::route('apps.onshelf.edit', ['id' => $app->id]) }}" class="jq-submit">提 交</a>
                   @elseif($app->status == 'nopass' || $app->status == 'offshelf')
                   <a href="javascript:;" data-action="{{ URL::route('apps.pending.edit', ['id' => $app->id]) }}" class="jq-submit">提交待审核列表</a>
-                  @else
-                  <a href="javascript:;" data-action="{{ URL::route('apps.pending.edit', ['id' => $app->id]) }}" class="jq-submit">提 交</a>
                   @endif
                   <a href="{{ Request::header('referer') }}" target="BoardRight">返回列表</a></td>
             </tr>
