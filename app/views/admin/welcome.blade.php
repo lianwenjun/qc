@@ -13,7 +13,7 @@
   </tr>
   <tr>
     @if( Sentry::check() )
-    <td align="center" style="height:70px; line-height:70px; padding-top:20px; font-size:28px;">管理员：<span style="color:#C00">{{ Sentry::getUser()->username }}</span></td>
+    <td align="center" style="height:70px; line-height:70px; padding-top:20px; font-size:28px;">{{ $role }}：<span style="color:#C00">{{ Sentry::getUser()->username }}</span></td>
     @endif
   </tr>
   <tr>

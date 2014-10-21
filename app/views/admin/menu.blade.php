@@ -25,12 +25,10 @@
             @endif
       </ul>
 </div>
-
-
 <div id="wrapper-250">
       <ul class="accordion">
       
-            <li id="one" class="mail_hover"> <a href="#one">游戏管理</a>
+            <li id="one" class="mail"> <a href="#one">游戏管理</a>
                  <ul class="sub-menu">
                        <li><a href="{{ URL::route('apps.onshelf') }}" target=BoardRight>上架游戏列表</a></li>
                        <li><a href="{{ URL::route('apps.draft') }}" target=BoardRight>添加编辑游戏</a></li>
@@ -76,7 +74,7 @@
             var accordion_head = $('.accordion > li > a'),
                 accordion_body = $('.accordion li > .sub-menu');
             // Open the first tab on load
-            accordion_head.first().addClass('active').next().slideDown('normal');
+            //accordion_head.first().addClass('active').next().slideDown('normal');
             // Click function
             accordion_head.on('click', function(event) {
                 // Disable header links

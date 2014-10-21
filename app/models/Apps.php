@@ -24,7 +24,7 @@ class Apps extends \Eloquent {
             'download_manual' => 'required',
             'summary'         => 'required',
             'images'          => 'required',
-            'changes'         => 'required|',
+            'changes'         => '',
         ],
     ];
 
@@ -241,7 +241,7 @@ class Apps extends \Eloquent {
         
         $catesModel = new Cates;
         $app['cates'] = serialize($catesModel->appCates($id));
-        $app['tags'] = serialize($catesModel->appTags($id));
+        $app['tags']  = serialize($catesModel->appTags($id));
 
         // 处理操作人
         $app['operator'] = Sentry::getUser()->id;
