@@ -6,8 +6,12 @@
     <div class="Theme_Search">
         <ul>
             <li> 
+                 @if (Sentry::getUser()->hasAccess('cate.create'))
                  <span><input name="" id="Classification" type="submit" value="添加分类" class="Search_en" /></span>
+                 @endif
+                 @if (Sentry::getUser()->hasAccess('tag.create'))
                  <span><input name="" id="Tag" type="submit" value="添加标签" class="Search_en" /></span>
+                 @endif
             </li> 
         </ul>
     </div>                 

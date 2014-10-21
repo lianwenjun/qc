@@ -32,7 +32,10 @@ class Admin_IndexController extends \Admin_BaseController {
      */
     public function welcome()
     {
-        return View::make('admin.welcome');
+        $model = new UserGroups();
+        $role = $model->getCurrentUserGroupName();
+        
+        return View::make('admin.welcome')->with('role', $role);
     }
 
     /**

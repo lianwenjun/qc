@@ -108,7 +108,7 @@ ul.ui-sortable li.placeholder:before {
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">上传新版本：</td>
-               <td class="Search_apk"><span id="container"><a href="javascript:;" class="Search_Update" id="jq-uploadApp">选择APK</a><span id="uploadInfo"></span></span><img class="upload-icon-src" src="{{ $app->icon }}" width="90" height="90"></td>
+               <td class="Search_apk"><span id="container"><a href="javascript:;" class="Search_Update" {{ Sentry::getUser()->hasAccess('apps.appupload') ? 'id="jq-uploadApp"':''}} >选择APK</a><span id="uploadInfo"></span></span><img class="upload-icon-src" src="{{ $app->icon }}" width="90" height="90"></td>
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">游戏关键字：</td>
@@ -218,7 +218,7 @@ ul.ui-sortable li.placeholder:before {
             <tr class="Search_biao_one">
 
                <td colspan="2" align="center" class="Search_submit">
-                  @if($app->status == 'new')
+                  @if($app->status == 'new' or $app->status == 'draft')
                   <a href="javascript:;" class="jq-submitDraft" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'draft']) }}">存为草搞件</a>
                   <a href="javascript:;" data-action="{{ URL::route('apps.edit', ['id' => $app->id, 'status' => 'pending']) }}" class="jq-submit">提 交</a>
                   @elseif($app->status == 'onshelf')

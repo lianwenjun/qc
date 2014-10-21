@@ -24,7 +24,7 @@ class Apps extends \Eloquent {
             'download_manual' => 'required',
             'summary'         => 'required',
             'images'          => 'required',
-            'changes'         => 'required|',
+            'changes'         => '',
         ],
     ];
 
