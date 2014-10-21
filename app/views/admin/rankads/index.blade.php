@@ -34,7 +34,7 @@
                             @endforeach
                          </select>
                     </span>
-                    <span><input name="" type="text" class="Search_wenben" size="20" value="输入游戏名称" /></span>
+                    <span><input maxlength="16" placeholder="输入游戏名称" type="text" class="Search_wenben" size="20" value="" /></span>
                     <input name="" type="submit" value="搜索" class="Search_en" />
                     </li>   
               </ul>

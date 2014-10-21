@@ -112,7 +112,9 @@ class Admin_EditorAdsController extends \Admin_BaseController {
         $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
         //检测广告是否存在
         if (!$ad) {
-            return Redirect::route('editorads.index');
+            $msg = '#' . $id .'不存在';
+            Log::error($msg);
+            return Redirect::route('editorads.index')->with('msg', $msg);
         }
         $validator = Validator::make(Input::all(), $adsModel->adsUpdateRules);
         if ($validator->fails()){
@@ -132,7 +134,7 @@ class Admin_EditorAdsController extends \Admin_BaseController {
             return Redirect::route('editorads.index')->with('msg', $msg);
         }
         $msg = "修改失败";
-        return Redirect::route('editorads.index')->with('msg', $msg);
+        return Redirect::back()->with('msg', $msg);
         
     }
 

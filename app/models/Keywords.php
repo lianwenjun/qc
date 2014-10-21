@@ -30,7 +30,7 @@ class Keywords extends \Eloquent {
                 'word' => Input::get('word'),
             ],
             [
-                'word' => 'required|min:1',
+                'word' => 'required|min:1|unique:keywords',
             ]
         );
         return $validator;

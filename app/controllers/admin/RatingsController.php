@@ -13,13 +13,15 @@ class Admin_RatingsController extends \Admin_BaseController {
         $query = [];
         $ratingModel = new Ratings();
         $where = $ratingModel;
-        if (Input::get('cate') == 'title') {
-            $query = ['%', Input::get('word'), '%'];
-            $where = $ratingModel->where('title', 'like', join($query));
-        }
-        if (Input::get('cate' == 'pack')) {
-            $query = ['%', Input::get('word'), '%'];
-            $where = $ratingModel->where('pack', 'like', join($query));
+        if (Input::get('word')) {
+            if (Input::get('cate') == 'title') {
+                $query = ['%', Input::get('word'), '%'];
+                $where = $ratingModel->where('title', 'like', join($query));
+            }
+            if (Input::get('cate') == 'pack') {
+                $query = ['%', Input::get('word'), '%'];
+                $where = $ratingModel->where('pack', 'like', join($query));
+            }
         }
         //查询，默认分页
         $ratings = $where->orderBy('id', 'desc')->paginate($this->pagesize);

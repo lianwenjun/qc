@@ -13,19 +13,21 @@ class Cates extends \Eloquent {
     protected $fillable = [];
     //过滤分类
     public $CatesRules = [
-                'word' => 'required',
+                'word' => 'required|unique:cates,title,NULL,id,parent_id,0,deleted_at,NULL',
                 ];
     //过滤标签
     public $TagsCreateRules = [
-                'word' => 'required',
+                'word' => 'required|unique:cates,title,0,parent_id',
                 'parent_id' => 'required|integer',
                 ];
     //过滤标签添加
-    public $TagsUpdateRules = [
-                'word' => 'required',
+
+    public function tagsUpdateRules($id) {
+        return [
+                'word' => 'required|unique:cates,title,'.$id .',id,deleted_at,NULL',
                 'sort' => 'integer',
                 ];
-
+    }
     /**
      * 获取单个游戏的分类
      *
