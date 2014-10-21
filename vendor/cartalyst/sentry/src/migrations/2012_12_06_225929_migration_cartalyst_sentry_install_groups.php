@@ -33,7 +33,7 @@ class MigrationCartalystSentryInstallGroups extends Migration {
         {
             $table->increments('id');
             $table->string('name');
-            $table->string('department');
+            $table->int('department');
             $table->text('permissions')->nullable();
             $table->timestamps();
 

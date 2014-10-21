@@ -47,8 +47,14 @@ class Admin_UsersController extends \Admin_BaseController {
      */
     public function store()
     {
-        $userModel = new User;
-        $userModel->store(Input::all());
+        $validator = Validator::make(['email' => Input::get('email')], ['email' => 'unique:users',]);
+
+        if($validator->fails()) {
+            Session::flash('tips', ['success' => false, 'message' => "亲，邮箱已被注册"]);
+        } else {
+            $userModel = new User;
+            $userModel->store(Input::all());
+        }
 
         return Redirect::route('users.index');
     }
@@ -100,6 +106,7 @@ class Admin_UsersController extends \Admin_BaseController {
             $user->email = Input::get('email');
             $user->username = Input::get('username');
             $user->realname = Input::get('realname');
+            $user->activated = Input::get('activated');
 
             // 密码
             if(!empty(Input::get('password'))) {

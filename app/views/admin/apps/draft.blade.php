@@ -72,12 +72,16 @@
                 <td>{{ $app['version'] }}</td>
                 <td>{{ date('Y-m-d H:i', strtotime($app['created_at'])) }}</td>
                 <td>
+                @if(Sentry::getUser()->hasAccess('apps.draft.edit'))
                     @if($app['status'] == 'new')
                     <a href="{{ URL::route('apps.draft.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a>
                     @else 
                     <a href="{{ URL::route('apps.draft.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">草稿</a>
                     @endif
+                @endif
+                        @if(Sentry::getUser()->hasAccess('apps.delete'))
                     <a href="{{ URL::route('apps.delete', $app['id']) }}" class="Search_del jq-delete">删除</a></td>
+                        @endif
             </tr>
             @endforeach
             @if(empty($apps['total']))
