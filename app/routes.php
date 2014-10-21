@@ -60,7 +60,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
              ->where('id', '[0-9]+');
         Route::put('draft/{id}', ['as' => 'apps.draft.edit',    'uses' => 'Admin_AppsController@update'])
              ->where('id', '[0-9]+');
-        Route::put('draft/{id}', ['as' => 'apps.pending.edit',    'uses' => 'Admin_AppsController@update'])
+        Route::put('pending/{id}', ['as' => 'apps.pending.edit',    'uses' => 'Admin_AppsController@update'])
              ->where('id', '[0-9]+');
 
 
