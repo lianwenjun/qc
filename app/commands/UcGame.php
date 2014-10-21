@@ -20,7 +20,7 @@ class UcGame extends Command {
      */
     protected $description = '拉取九游游戏.';
 
-    const SERVER = 'http://interface.test7.9game.cn:8039/datasync/getdata';
+    const SERVER = 'http://interface.9game.cn/datasync/getdata';
     const CALLER = '9game_wap_xdagame';
     const KEY    = 'e23b281ecd253384d41dfd29dce7351f';
 
@@ -48,49 +48,79 @@ class UcGame extends Command {
             $this->error('参数错误! 你可以用  --help 命令查看帮助');
         }
 
-
-        print_r($this->request());
+        print_r($this->all());
 
     }
 
     /**
-     * 请求就有
+     * 请求
      *
      *
      */
-    public function request()
+    public function all()
     {
+
+        $gameField = 'game.name,game.deleted';
+        $platformField = 'platform.id,platform.platformId,platform.logoImageUrl,platform.active,platform.version,platform.score,platform.size,platform.screenshotImageUrls,platform.description,platform.deleted';
+        $packageField = 'package.platformId,package.downUrl,package.packageName,package.version,package.upgradeDescription,package.md5,package.ad,package.secureLevel,package.deleted,package.extendInfo,';
+
         $sort = [
-                'syncEntity' => 'game,platform,package',
-                'syncField' => 'game.id',
-                'syncType' => 1,
-                'dateFrom' => '20000101000000',
-                'dateTo' => '20140101000000',
-                'pageSize' => 100,
-                'pageNum' => 1
+                'syncEntity' => 'game,package,platform',
+                'syncField'  => sprintf('%s,%s,%s', $gameField, $platformField, $packageField),
+                'syncType'   => 1,
+                'dateFrom'   => '20000101000000',
+                'dateTo'     => '20140101000000',
+                'pageSize'   => 10,
+                'pageNum'    => 10000
             ];
 
         $data = [
             'id' => time(),
             'client' => ['caller' => self::CALLER, 'ex' => null],
-            'data' => [
-                'syncEntity' => 'game,platform,package',
-                'syncField' => 'game.id',
-                'syncType' => 1,
-                'dateFrom' => '20000101000000',
-                'dateTo' => '20140101000000',
-                'pageSize' => 100,
-                'pageNum' => 1
-            ],
             'encrypt' => 'base64',
         ];
-        $json = json_encode($data);
 
+        ksort($sort);
+        $data['data'] = $sort;
 
-        $d = ksort($sort);
+        $signStr = '';
+        foreach($sort as $k => $v) {
+            $signStr .= sprintf("%s=%s", $k, $v);
+        }
 
-        return $sort;
+        $data['sign'] = md5(self::CALLER . $signStr . self::KEY);
+        $removeRespone = $this->remoteData(json_encode($data));
 
+        return $this->parse($removeRespone);
+    }
+
+    /**
+     * 解析数据
+     *
+     * @param $data string json 格式数据
+     *
+     * @return array
+     */
+    protected function parse($data)
+    {
+        $data = json_decode($data, true);
+
+        if(isset($data['data'])) {
+            $data['data'] = base64_decode($data['data']);
+        }
+
+        return $data;
+    }
+
+    /**
+     * 远程数据
+     *
+     * @param $json string 请求条件
+     *
+     * @return string json
+     */
+    protected function remoteData($json)
+    {
         $ch = curl_init(self::SERVER);                                                                      
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
         curl_setopt($ch, CURLOPT_POSTFIELDS, $json);                                                                  

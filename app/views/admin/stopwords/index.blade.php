@@ -8,7 +8,7 @@
         <ul>
             <li>
                  <span><b>屏蔽添加：</b>
-                 <input name="word" type="text" class="Search_wenben" size="60" value="" placeholder="添加屏蔽词" />
+                 <input name="word" maxlength="16" type="text" class="Search_wenben" size="60" value="" placeholder="添加屏蔽词" />
                  </span>
                  <input type="submit" value="添加" class="jq-submitWord Search_en" />
             </li>
@@ -87,7 +87,7 @@ $(function(){
         $.post(url, data, function(res) {
             //错误判断
             if (res.status != 'ok') {
-                alert('添加' + word + '失败');
+                alert(res.msg);
                 return;
             }
             //成功返回刷新页面
@@ -141,6 +141,7 @@ $(function(){
                 td.eq(2).html(text2);
                 return;
             }
+            alert(res.msg);
             return;
         }).fail(function() {
             alert('亲，服务器出错啦');
@@ -153,7 +154,7 @@ $(function(){
         var text2 = td.find('#preToword').val();
         var delUrl = td.find('#del-url').val();
         var text8 = '<a href="javacript:;" class="Search_show jq-editWord">修改</a> ' + 
-                    '<a href="'+delUrl+'" class="Search_del jq-delWord">删除</a>';
+                    '<a href="'+delUrl+'" class="Search_del jq-delete">删除</a>';
         $(this).parent().html(text8);
         td.eq(1).html(text1);
         td.eq(2).html(text2);

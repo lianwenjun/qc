@@ -55,33 +55,21 @@ class Admin_indexAdsController extends \Admin_BaseController {
         $validator = Validator::make(Input::all(), $adsModel->adsCreateRules);
         if ($validator->fails()){
             Log::error($validator->messages());
-            return Redirect::route('indexads.create')->with('msg', $msg);
+            return Redirect::route('indexads.create')->with('msg', $msg)->with('input', Input::all());
         }
         //检测游戏是否存在
         $appsModel = new Apps;
         $app = $appsModel->find(Input::get('app_id'));
         if (!$app) {
-            return Redirect::route('indexads.index');
+            $msg = '#' . Input::get('app_id') . '游戏不存在';
+            return Redirect::route('indexads.create')->with('msg', $msg)->with('input', Input::all());
         }
-        $fields = [
-            'app_id' => Input::get('app_id'),
-            'title' => Input::get('title'),
-            'location' => Input::get('location'),
-            'image' => Input::get('image'),
-            'is_top' => Input::get('is_top', 'no'),
-            'onshelfed_at' => Input::get('onshelfed_at'),
-            'offshelfed_at' => Input::get('offshelfed_at'),
-            'type' => $this->type,
-            'is_onshelf' => 'yes', 
-            ];
-        foreach ($fields as $key => $value) {
-            $adsModel->$key = $value;
-        }
-        if ($adsModel->save()) {
+        $ad = $adsModel->createAds($this->type);
+        if ($ad) {
             $msg = "添加成功";
             return Redirect::route('indexads.index')->with('msg', $msg);
         }
-        return Redirect::route('indexads.index')->with('msg', $msg);
+        return Redirect::route('indexads.create')->with('msg', $msg)->with('input', Input::all());
     }
     /**
      * 编辑选定的首页图片位广告

@@ -158,8 +158,8 @@
               @if(Sentry::getUser()->hasAccess('apps.dooffshelf'))
               <a href="{{ URL::route('apps.dooffshelf', ['id' => $app['id']]) }}" class="Search_show jq-dooffshelf">下架</a>
               @endif
-              @if(Sentry::getUser()->hasAccess('apps.edit'))
-              <a href="{{ URL::route('apps.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">更新</a>
+              @if(Sentry::getUser()->hasAccess('apps.onshelf.edit'))
+              <a href="{{ URL::route('apps.onshelf.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">更新</a>
               @endif
               @if(Sentry::getUser()->hasAccess('apps.history'))
               <a href="{{ URL::route('apps.history', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">历史</a>

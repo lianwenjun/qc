@@ -222,11 +222,10 @@ class Admin_CatesController extends \Admin_BaseController {
             return Response::json(['status' => 'error', 'msg' => 'cate is valid']);   
         }
         //检测输入
-        //Log::error(Input::all());
-        $validator = Validator::make(Input::all(), $cateModel->TagsUpdateRules);
+        $validator = Validator::make(Input::all(), $cateModel->tagsUpdateRules($id));
         if ($validator->fails()){
             Log::error($validator->messages());
-            return Response::json(['status'=>'error', 'msg'=>'word is must need']);
+            return Response::json(['status'=>'error', 'msg'=>'标签重复了']);
         }
         //保存数据
         $cate->title = Input::get('word');

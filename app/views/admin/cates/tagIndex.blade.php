@@ -7,7 +7,7 @@
         <ul>
             <li>
                 <span><b>标签名称：</b>
-                    <input name="addTag" type="text" class="Search_wenben" size="20" value="请输入标签名称" /></span>
+                    <input name="addTag" maxlength="16" type="text" class="Search_wenben" size="20" value="" placeholder="请输入标签名称" /></span>
                 <span>
                     <b>游戏分类：</b>
                     <select name="cates1">
@@ -17,7 +17,7 @@
                         @endforeach
                     </select>
                 </span>
-                <input name="" type="submit" value="添加" class="Search_en jq-submitAdd" />
+                <input type="submit" value="添加" class="Search_en jq-submitAdd" />
             </li>
             <li>
                 <span>
@@ -30,7 +30,7 @@
                     </select>
                 </span>
                 <span>
-                    <input name="searchTag" type="text" class="Search_wenben" size="20" value="输入关键字" />
+                    <input maxlength="16" name="searchTag" type="text" class="Search_wenben" size="20" value="" placeholder="输入关键字" />
                 </span>
                 <input name="" type="submit" value="搜索" class="Search_en jq-submitSearch" />
             </li>       
@@ -167,6 +167,7 @@ $(function(){
                 td.eq(4).html(text4);
                 return;
             }
+            alert(res.msg);
             return;
         }).fail(function() {
             alert('亲，服务器出错啦');

@@ -9,13 +9,13 @@
         <ul>
             <li>
                <span><b>关键词添加：</b>
-               <input name="word" type="text" class="Search_wenben" size="30" value="添加关键词" />
+               <input name="word" type="text" class="Search_wenben" size="30" value="" placeholder="添加关键词" />
                </span>
                <input type="submit" value="添加" class="Search_en jq-submitWord" />
             </li>
             <li>
                <span><b>查询：</b>
-               <input name="searchWord" type="text" class="Search_wenben" size="30" value="输入关键字" />
+               <input maxlength="16" name="searchWord" type="text" class="Search_wenben" size="30" value="" placeholder="输入关键字"/>
                </span>
                <input type="submit" value="搜索" class="Search_en jq-submitSearch" />
             </li>
@@ -98,7 +98,6 @@ $(function(){
     $(".jq-submitWord").click(function() {
         var word = $("input[name=word]").val();
         if (word === "添加关键词" || word == "") {
-            $("input[name=word]").val("添加关键词");
             return;
         }
         // 添加关键词
@@ -121,7 +120,6 @@ $(function(){
     $(".jq-submitSearch").click(function() {
         var word = $("input[name=searchWord]").val();
         if (word === "输入关键字" || word == "") {
-            $("input[name=searchWord]").val("输入关键字");
             return;
         }
         // 查询

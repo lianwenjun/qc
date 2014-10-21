@@ -9,13 +9,12 @@
                 <li>
                     <span><b>查询：</b>
                         <select name="cate">
-                            <option>--全部--</option>
                             <option value="title">游戏名称</option>
                             <option value="pack">包名</option>
                         </select>
                     </span>
                     <span>
-                        <input name="word" type="text" class="Search_wenben" size="20" value="" placeholder="输入关键字" />
+                        <input maxlength="16" name="word" type="text" class="Search_wenben" size="20" value="" placeholder="输入关键字" />
                     </span>
                     <input name="" type="submit" value="搜索" class="Search_en" />
                 </li>
