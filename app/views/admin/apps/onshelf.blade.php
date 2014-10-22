@@ -189,6 +189,7 @@
       // 下架
       $('.jq-dooffshelf').click(function() {
         var link = $(this).attr('href');
+        var $this = $(this);
         $.jBox("<p style='margin: 10px'>您要下架吗？</p>", {
           title: "<div class='ask_title'>下架游戏</div>",
           showIcon: false,
@@ -198,11 +199,12 @@
 
             if(v) {
               var form = document.createElement('form');
-
-              $(this).after($(form).attr({
+              $(form).css('display', 'none');
+              $this.after($(form).attr({
                 method: 'post',
                 action: link
               }).append('<input type="hidden" name="_method" value="PUT" />'));
+
               $(form).submit();
             }
           }

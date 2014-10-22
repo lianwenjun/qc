@@ -188,6 +188,7 @@
 
         // 审核不通过理由弹窗
         $('.jq-nopass').click(function() {
+            var $this = $(this);
             var link = $(this).attr('href');
             $.jBox('<div class="Look_content"><ul>'+
                     '<li><input class="Look_input" name="reason" type="radio" value="恶意软件" />恶意软件</li>'+
@@ -212,7 +213,7 @@
                         var form = document.createElement('form');
                         $(form).css('display', 'none');
 
-                        $(this).after($(form).attr({
+                        $this.after($(form).attr({
                             method: 'post',
                             action: link
                         }).append('<input type="hidden" name="reason" value="'+reason+'" /><input type="hidden" name="_method" value="PUT" />'));
@@ -265,7 +266,7 @@
 
         // 全部不通过
         $('.jq-allNoPass').click(function() {
-
+            var $this = $(this);
             if(!valiCheckbox('ids[]')) {
                 alert('请先选择游戏');
             } else {
@@ -297,7 +298,7 @@
                             }
 
                             var form = document.createElement('form');
-                            $(this).after($(form).attr({
+                            $this.after($(form).attr({
                                         method: 'post',
                                         action: '{{ URL::route('apps.doallnopass') }}'
                             }));
