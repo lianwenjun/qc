@@ -8,7 +8,7 @@ class Ads extends \Eloquent {
     protected $table = 'ads';
     
     protected $fillable = ['app_id', 'title', 'location', 'image', 'onshelfed_at', 
-                'offshelfed_at', 'type', 'is_onshelf', 'is_top', 'sort'];
+                'offshelfed_at', 'type', 'is_onshelf', 'is_top', 'sort', 'word'];
     //添加广告检测
     public $adsCreateRules = [
                 'app_id' => 'required|integer',
