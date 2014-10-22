@@ -30,39 +30,74 @@
       
             <li id="one" class="mail"> <a href="#one">游戏管理</a>
                  <ul class="sub-menu">
+                    @if(Sentry::getUser()->hasAccess('apps.onshelf'))
                        <li><a href="{{ URL::route('apps.onshelf') }}" target=BoardRight>上架游戏列表</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('apps.draft'))
                        <li><a href="{{ URL::route('apps.draft') }}" target=BoardRight>添加编辑游戏</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('apps.pending'))
                        <li><a href="{{ URL::route('apps.pending') }}" target=BoardRight>待审核列表</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('apps.nopass'))
                        <li><a href="{{ URL::route('apps.nopass') }}" target=BoardRight>审核不通过列表</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('apps.offshelf'))
                        <li><a href="{{ URL::route('apps.offshelf') }}" target=BoardRight>下架游戏列表</a></li>
+                    @endif
                  </ul>
             </li>
             
             <li id="two" class="mail"> <a href="#two">广告位管理</a>
                  <ul class="sub-menu">
+                    @if(Sentry::getUser()->hasAccess('appsads.index'))
                        <li><a href="{{ URL::route('appsads.index') }}" target=BoardRight>首页游戏位管理</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('rankads.index'))
                        <li><a href="{{ URL::route('rankads.index') }}" target=BoardRight>排行游戏位管理</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('indexads.index'))
                        <li><a href="{{ URL::route('indexads.index') }}" target=BoardRight>首页图片位管理</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('editorads.index'))
                        <li><a href="{{ URL::route('editorads.index') }}" target=BoardRight>编辑精选管理</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('cateads.index'))
                        <li><a href="{{ URL::route('cateads.index') }}" target=BoardRight>分类页图片位推广</a></li>
-
+                    @endif
                  </ul>
             </li>
             
             <li id="three" class="mail"> <a href="#three">系统管理</a>
                  <ul class="sub-menu">
+                    @if(Sentry::getUser()->hasAccess('cate.index'))
                        <li><a href="{{ URL::route('cate.index') }}" target=BoardRight>游戏分类管理</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('tag.index'))
                        <li><a href="{{ URL::route('tag.index') }}" target=BoardRight>游戏标签管理</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('rating.index'))
                        <li><a href="{{ URL::route('rating.index') }}" target=BoardRight>游戏评分列表</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('comment.index'))
                        <li><a href="{{ URL::route('comment.index') }}" target=BoardRight>游戏评论列表</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('stopword.index'))
                        <li><a href="{{ URL::route('stopword.index') }}" target=BoardRight>屏蔽词管理</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('keyword.index'))
                        <li><a href="{{ URL::route('keyword.index') }}" target=BoardRight>关键字管理</a></li>
+                    @endif
                  </ul>
             </li>
             <li id="three" class="mail"><a href="#three">管理中心</a>
                  <ul class="sub-menu">
+                    @if(Sentry::getUser()->hasAccess('users.index'))
                        <li><a href="{{ URL::route('users.index') }}" target=BoardRight>管理员管理</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('roles.index'))
                        <li><a href="{{ URL::route('roles.index') }}" target=BoardRight>角色管理</a></li></li>
+                    @endif
                  </ul>
             </li>
 

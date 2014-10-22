@@ -97,8 +97,8 @@ $(function(){
         //alert('点击保存');
         var td = $(this).parents('tr').children('td');
         var text6 = td.eq(6).find('input').val();
-        if (isNaN(text6) || parseInt(text6) < 1 || parseInt(text6) > 5){
-            alert("请输入大于1小于5的数字");
+        if (isNaN(text6) || parseInt(text6) < 1 || parseInt(text6) > 5 || text6 == ''){
+            returnMsgBox("请输入大于1小于5的数字");
             return;
         }
         var editUrl = td.find('#edit-url').val();
@@ -113,7 +113,7 @@ $(function(){
             }
             return;
         }).fail(function() {
-            alert('亲，服务器出错啦');
+            returnMsgBox('亲，服务器出错啦');
         });
     });
     //取消
