@@ -3,6 +3,7 @@
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use JildertMiedema\LaravelPlupload\PluploadException;
 
 class Apps extends \Eloquent {
 
@@ -273,6 +274,18 @@ class Apps extends \Eloquent {
             $data['icon']          = $icon;
             $data['download_link'] = str_replace(public_path(), '', $savePath);
             $data['source']        = 'lt';
+
+            // 检查是否存在
+            $isExisted = Apps::where('pack', $data['pack'])
+                             ->where('version_code', $data['version_code'])
+                             ->first();
+
+            if($isExisted) {
+                $status = Config::get('status.apps.status')[$isExisted->status];
+                unlink($savePath);
+
+                return ['error' => ['code' => 500, 'message' => '已存在' . $status . '列表中']];
+            }
 
             if(empty($dontSave)) {
                 $app = Apps::create($data);
