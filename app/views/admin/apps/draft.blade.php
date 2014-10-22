@@ -19,7 +19,9 @@
 <div class="Content_right_top Content_height">
     <div class="Theme_title">
         {{ Breadcrumbs::render('apps.draft') }}
+        @if(Sentry::getUser()->hasAccess('apps.appupload'))
         <a href="javascript:;" class="jq-appUpload" target="BoardRight">游戏上传</a>
+        @endif
     </div>
     <form action="{{ URL::route('apps.draft') }}" method="get">
         <div class="Theme_Search">
