@@ -114,7 +114,8 @@
                 showIcon: false,
                 top: '20%',
                 loaded:function() {
-                  $("body").css("overflow-y","hidden");
+                    $("body").css("overflow-y","hidden");
+
                     var apkUploader = $("#uploader").pluploadQueue({
                         runtimes : 'html5',
                         url : '{{ URL::route('apps.appupload') }}',
@@ -127,10 +128,17 @@
                             ]
                         },
                         flash_swf_url : '{{ asset('js/admin/plupload/Moxie.swf') }}',
-                    });
-                    apkUploader.bind('UploadProgress', function(up, file) {
-                        if(file.percent == 100) file.percent = 99;
-                        document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+                        init : {
+                            FileUploaded: function(up, file, response) {
+                                response = jQuery.parseJSON( response.response );
+
+                                if(typeof(response.result.error) != 'undefined' && response.result.error.code == '500') {
+                                    alert(file.name + response.result.error.message);
+                                    file.status = plupload.FAILED;
+                                }
+
+                            }
+                        }
                     });
                 },
                 closed:function() {

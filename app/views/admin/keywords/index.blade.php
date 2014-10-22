@@ -107,13 +107,13 @@ $(function(){
         $.post(url, data, function(res) {
             //错误判断
             if (res.status != 'ok') {
-                alert('添加' + word + '失败');
+                returnMsgBox('添加' + word + '失败');
                 return;
             }
             //成功返回刷新页面
             window.location.href = window.location.pathname;
         }).fail(function() {
-            alert('亲，服务器出错啦');
+            returnMsgBox('亲，服务器出错啦');
         });
     });
     //提交查询
@@ -151,11 +151,14 @@ $(function(){
                             ' <a href="'+delUrl+'" class="Search_del jq-delete">删除</a>';
                 td.eq(8).html(text8);
                 td.eq(1).html(text1);
+                td.eq(5).html(res.data.operator);
+                td.eq(6).html(res.data.updated_at);
                 return;
             }
+            returnMsgBox(res.msg);
             return;
         }).fail(function() {
-            alert('亲，服务器出错啦');
+            returnMsgBox('亲，服务器出错啦');
         });
     });
     //取消
@@ -194,7 +197,7 @@ $(function(){
             }
             return;
         }).fail(function() {
-            alert('亲，服务器出错啦');
+            returnMsgBox('亲，服务器出错啦');
         });
     });
 });

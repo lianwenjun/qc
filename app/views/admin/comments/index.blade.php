@@ -16,7 +16,7 @@
                     <span>
                         <input maxlength="16" name="word" type="text" class="Search_wenben" size="20" value="" placeholder="输入关键字" />
                     </span>
-                    <input name="" type="submit" value="搜索" class="Search_en" />
+                    <input type="submit" value="搜索" class="Search_en" />
                 </li>
             </ul>
         </div>
@@ -70,6 +70,9 @@
 <script type="text/javascript" src="{{ asset('js/admin/common.js') }}"></script>
 <script>
 $(function(){
+    $("input[name=word]").focus(function() {
+        $(this).val("");
+    });
     $(".jq-tr:odd").addClass("Search_biao_two");
     $(".jq-tr:even").addClass("Search_biao_one");
     //分页
@@ -91,20 +94,19 @@ $(function(){
         var content = td.eq(6).find('input').val();
         var editUrl = td.find('#edit-url').val();
         var delUrl = td.find('#del-url').val();
-        //var is_slide = td.eq().
         var data = {content:content};
         $.post(editUrl, data, function(res) {
             //错误判断
             if (res.status == 'ok') {
                 var text8 = '<a href="javacript:;" class="Search_show jq-editWord">修改</a>'+
-                            '<a href="'+delUrl+'" class="Search_del jq-delWord">删除</a>';
-                $(this).parent().html(text8);
+                            '<a href="'+delUrl+'" class="Search_del jq-delete">删除</a>';
+                td.eq(9).html(text8);
                 td.eq(6).html(content);
                 return;
             }
             return;
         }).fail(function() {
-            alert('亲，服务器出错啦');
+            returnMsgBox('亲，服务器出错啦');
         });
     });
     //取消
@@ -113,7 +115,7 @@ $(function(){
         var text1 = td.find('#preWord').val();
         var delUrl = td.find('#del-url').val();
         var text8 = '<a href="javacript:;" class="Search_show jq-editWord">修改</a> ' + 
-                    '<a href="'+delUrl+'" class="Search_del jq-delWord">删除</a>';
+                    '<a href="'+delUrl+'" class="Search_del jq-delete">删除</a>';
         $(this).parent().html(text8);
         td.eq(6).html(text1);
     });
