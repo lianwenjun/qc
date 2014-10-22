@@ -7,7 +7,7 @@ $(function() {
      *
      */
     $('.jq-delete').live('click', function() {
-
+        var $this = $(this);
         var link = $(this).attr('href');
         $.jBox("<p style='margin: 10px'>您要删除吗？</p>", {
             title: "<div class='ask_title'>是否删除？</div>",
@@ -17,7 +17,7 @@ $(function() {
             submit: function(v, h, f) {
                 if(v) {
                     var f = document.createElement('form');
-                    $(this).after($(f).attr({
+                    $this.after($(f).attr({
                         method: 'post',
                         action: link
                     }).append('<input type="hidden" name="_method" value="DELETE" />'));
