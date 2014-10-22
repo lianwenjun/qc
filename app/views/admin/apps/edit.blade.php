@@ -598,7 +598,7 @@ ul.ui-sortable li.placeholder:before {
 
         // 图片
         jQuery.validator.addMethod("images", function(value, element) {
-            return $('input[name="images[]"]').length > 1;
+            return $('input[name="images[]"]').length > 0;
         }, "图片必须上传");
 
         jQuery.validator.addMethod("maxImage", function(value, element) {
