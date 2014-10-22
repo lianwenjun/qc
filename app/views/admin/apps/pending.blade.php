@@ -141,7 +141,14 @@
             <td>{{ $app['version'] }}</td>
             <td><a href="javascript:;" data-id="{{ $app['id'] }}" class="Search_Look jq-preview">点击预览</a></td>
             <td>{{ date('Y-m-d H:i', strtotime($app['updated_at'])) }}</td>
-            <td><a href="{{ URL::route('apps.dopass', ['id' => $app['id']]) }}" class="Search_show jq-dopass">通过</a> <a href="{{ URL::route('apps.donopass', ['id' => $app['id']]) }}" class="Search_Notthrough jq-nopass">不通过</a></td>
+            <td>
+                @if(Sentry::getUser()->hasAccess('apps.dopass'))
+                <a href="{{ URL::route('apps.dopass', ['id' => $app['id']]) }}" class="Search_show jq-dopass">通过</a>
+                @endif
+                @if(Sentry::getUser()->hasAccess('apps.donopass'))
+                <a href="{{ URL::route('apps.donopass', ['id' => $app['id']]) }}" class="Search_Notthrough jq-nopass">不通过</a>
+                @endif
+            </td>
          </tr>
          @endforeach
         @if(empty($apps['total']))
@@ -150,7 +157,15 @@
       </table>
       <table width="100%" border="0" cellspacing="0" cellpadding="0">
          <tr>
-            <td class="DataCount_xuanze"><span><input class="jq-checkAll" type="checkbox"/>全选</span><input type="button" value="已选择全部通过" class="jq-allPass DataCount_button" /><input type="button" value="已选择全部不通过" class="jq-allNoPass DataCount_button" /></td>
+            <td class="DataCount_xuanze">
+                <span><input class="jq-checkAll" type="checkbox"/>全选</span>
+                @if(Sentry::getUser()->hasAccess('apps.doallpass'))
+                <input type="button" value="已选择全部通过" class="jq-allPass DataCount_button" />
+                @endif
+                @if(Sentry::getUser()->hasAccess('apps.doallnopass'))
+                <input type="button" value="已选择全部不通过" class="jq-allNoPass DataCount_button" />
+                @endif
+            </td>
          </tr>
       </table>
       @if($apps['last_page'] > 1)
