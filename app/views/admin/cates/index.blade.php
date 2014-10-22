@@ -57,11 +57,20 @@
                                 <li class="user_one"><strong>分类名称：</strong><p class="jq-title">{{ $cate['data']['title']}}</p></li>
                                 <li class="user_two"><strong>游戏数量：</strong>{{ $cate['appcount']}}</li>
                                 <li class="user_one"><strong>搜索次数：</strong>{{ $cate['data']['search_total'] }}</li>
-                                <li class="user_two"><strong>标签管理：</strong><a data-url="{{ URL::route('cate.show', $cate['data']['id']) }}" class="jq-showCate" href="javascript:;">{{ count($cate['list']) }}（点击查看标签信息）</a></li>
+                                <li class="user_two">
+                                    <strong>标签管理：</strong>
+                                    @if (Sentry::getUser()->hasAccess('cate.show'))
+                                    <a data-url="{{ URL::route('cate.show', $cate['data']['id']) }}" class="jq-showCate" href="javascript:;">{{ count($cate['list']) }}（点击查看标签信息）</a>
+                                    @endif
+                                </li>
                                 <li class="user_one"><strong>添加时间：</strong>{{ $cate['data']['created_at'] }}</li>
                                 <li class="user_button">
+                                    @if (Sentry::getUser()->hasAccess('cate.edit'))
                                     <a class="Search_show jq-editCate" href="javascript:;">修 改</a>
+                                    @endif
+                                    @if (Sentry::getUser()->hasAccess('cate.delete'))
                                     <a class="Search_xiajia jq-delCate" href="javascript:;">删除</a>
+                                    @endif
                                 </li>
                                 
                                 <input type="hidden" name="edit_url" value="{{ URL::route('cate.edit', $cate['data']['id']) }}"/>

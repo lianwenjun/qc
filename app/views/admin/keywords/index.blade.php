@@ -11,7 +11,9 @@
                <span><b>关键词添加：</b>
                <input name="word" type="text" class="Search_wenben" size="30" value="" placeholder="添加关键词" />
                </span>
+               @if(Sentry::getUser()->hasAccess('keyword.store'))
                <input type="submit" value="添加" class="Search_en jq-submitWord" />
+               @endif
             </li>
             <li>
                <span><b>查询：</b>
@@ -55,7 +57,14 @@
                         @endif 
                     </td>
                     
-                    <td><a href="javacript:;" class="Search_show jq-editWord">修改</a> <a href="{{ route('keyword.delete', $keyword->id) }}" class="Search_del jq-delete">删除</a></td>
+                    <td>
+                        @if(Sentry::getUser()->hasAccess('keyword.edit'))
+                        <a href="javacript:;" class="Search_show jq-editWord">修改</a>
+                        @endif
+                        @if(Sentry::getUser()->hasAccess('keyword.delete'))
+                        <a href="{{ route('keyword.delete', $keyword->id) }}" class="Search_del jq-delete">删除</a>
+                        @endif
+                    </td>
                     <td style="display:none">
                         <input id="edit-url" value="{{ route('keyword.update', $keyword->id) }}" type="hidden"/>
                         <input id="del-url" value="{{ route('keyword.delete', $keyword->id) }}" type="hidden"/>

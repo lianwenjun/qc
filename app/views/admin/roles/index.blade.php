@@ -6,7 +6,9 @@
 <div class="Content_right_top Content_height">
     <div class="Theme_title">
         <h1>管理中心 <span> 角色管理</span></h1>
+        @if(Sentry::getUser()->hasAccess('roles.create'))
         <a href="{{ URL::route('roles.create') }}" target="BoardRight">添加角色</a>
+        @endif
     </div>
     <form action="{{ URL::route('roles.index') }}" method="get">
     <div class="Theme_Search">
@@ -50,7 +52,14 @@
                 <td>{{ $group['id'] }}</td>
                 <td>{{ $group['name'] }}</td>
                 <td>{{ $departments[$group['department']] }}</td>
-                <td><a href="{{ URL::route('roles.edit', ['id' => $group['id'] ]) }}" class="Search_show">编辑</a><a href="{{ URL::route('roles.delete', ['id' => $group['id'] ]) }}" class="Search_del jq-delete">删除</a></td>
+                <td>
+                    @if(Sentry::getUser()->hasAccess('roles.edit'))
+                    <a href="{{ URL::route('roles.edit', ['id' => $group['id'] ]) }}" class="Search_show">编辑</a>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('roles.delete'))
+                    <a href="{{ URL::route('roles.delete', ['id' => $group['id'] ]) }}" class="Search_del jq-delete">删除</a>
+                    @endif
+                </td>
             </tr>
             @endforeach
             @if(empty($groups['total']))

@@ -224,7 +224,9 @@ ul.ui-sortable li.placeholder:before {
                   @elseif($app->status == 'onshelf')
                   <a href="javascript:;" data-action="{{ URL::route('apps.onshelf.edit', ['id' => $app->id]) }}" class="jq-submit">提 交</a>
                   @elseif($app->status == 'nopass' || $app->status == 'offshelf')
+                      @if(Sentry::getUser()->hasAccess('apps.pending.edit'))
                   <a href="javascript:;" data-action="{{ URL::route('apps.pending.edit', ['id' => $app->id]) }}" class="jq-submit">提交待审核列表</a>
+                      @endif
                   @endif
                   <a href="{{ Request::header('referer') }}" target="BoardRight">返回列表</a></td>
             </tr>
