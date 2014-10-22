@@ -589,6 +589,7 @@ ul.ui-sortable li.placeholder:before {
 
         // 保存为草稿
         $('.jq-submitDraft').click(function() {
+            $('input[name="images[]"][value=""]').remove();
             $('#form').attr('action', $(this).attr('data-action')).submit();
         });
 
