@@ -85,6 +85,9 @@
 $(function(){
     $(".jq-tr:odd").addClass("Search_biao_two");
     $(".jq-tr:even").addClass("Search_biao_one");
+    $("input[name=word]").focus(function() {
+        $(this).val("");
+    });
     //分页
     pageInit({{ $ads->getCurrentPage() }}, {{ $ads->getLastPage() }}, {{ $ads->getTotal() }});
 });

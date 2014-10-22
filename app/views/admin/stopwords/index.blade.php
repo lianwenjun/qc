@@ -87,13 +87,13 @@ $(function(){
         $.post(url, data, function(res) {
             //错误判断
             if (res.status != 'ok') {
-                alert(res.msg);
+                returnMsgBox(res.msg);
                 return;
             }
             //成功返回刷新页面
             window.location.href = window.location.pathname;
         }).fail(function() {
-            alert('亲，服务器出错啦');
+            returnMsgBox('亲，服务器出错啦');
         });
     });
     //提交查询
@@ -141,10 +141,10 @@ $(function(){
                 td.eq(2).html(text2);
                 return;
             }
-            alert(res.msg);
+            returnMsgBox(res.msg);
             return;
         }).fail(function() {
-            alert('亲，服务器出错啦');
+            returnMsgBox('亲，服务器出错啦');
         });
     });
     //取消

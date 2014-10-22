@@ -79,15 +79,18 @@ class Admin_KeywordsController extends \Admin_BaseController {
             return Response::json(['status'=>'error', 'msg'=>'id is valid']);   
         }
         //检测输入
-        if ($ky->validateUpate()->fails()){
-            return Response::json(['status'=>'error', 'msg'=>'word is must need']);
+        if ($ky->validateUpate($id)->fails()){
+            return Response::json(['status'=>'error', 'msg'=>'关键字重复了']);
         }
         //保存数据
         $keyword->operator = $this->userId;
         $keyword->word = Input::get('word', $keyword->word);
         $keyword->is_slide = Input::get('is_slide', $keyword->is_slide);
         $keyword->save();
-        return Response::json(['status'=>'ok', 'msg'=>'suss']);
+        $userModel = new User;
+        $data['operator'] = $userModel->find($this->userId)->username;
+        $data['updated_at'] = date($keyword->updated_at);
+        return Response::json(['status'=>'ok', 'msg'=>'suss', 'data'=>$data]);
     }
 
     /**
