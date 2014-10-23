@@ -8,7 +8,7 @@
                 'draft' => '草稿',
                 'pending' => '待审核',
                 'nopass' => '审核不通过',
-                'restock' => '上架', 
+                'stock' => '上架', 
                 'unstock' => '下架',
             ],
             //是否有广告
@@ -31,25 +31,25 @@
             'status' =>[
                 'expired' => '已过期',
                 'online' => '线上展示',
-                'restock' => '上架',
+                'stock' => '上架',
                 'unstock' => '已下架',
             ],
             //状态颜色
             'statusColor' => [
                 'expired' => 'class="Red"',
                 'online' => 'class="Green"',
-                'restock' => '',
+                'stock' => '',
                 'unstock' => '',
             ],
             //时间颜色
             'timeColor' => [
                 'expired' => 'class="Red"',
                 'online' => '',
-                'restock' => '',
+                'stock' => '',
                 'unstock' => '',
             ],
             //是否上架
-            'is_restock' => [
+            'is_stock' => [
                 'yes' => '上架', 'no' => '下架',
             ],
             //是否过期
