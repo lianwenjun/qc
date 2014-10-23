@@ -48,7 +48,14 @@
                     <td>{{ $comment->content }}</td>
                     <td>{{ $comment->created_at }}</td>
                     <td>{{ $comment->rating }}</td>
-                    <td><a href="javascript:;" class="Search_show jq-editWord">修改</a> <a href="{{ route('comment.delete', $comment->id) }}" class="Search_del jq-delete">删除</a></td>
+                    <td>
+                        @if(Sentry::getUser()->hasAccess('comment.edit'))
+                        <a href="javascript:;" class="Search_show jq-editWord">修改</a>
+                        @endif
+                        @if(Sentry::getUser()->hasAccess('comment.delete'))
+                        <a href="{{ route('comment.delete', $comment->id) }}" class="Search_del jq-delete">删除</a>
+                        @endif
+                    </td>
                     <td style="display:none">
                         <input id="edit-url" value="{{ route('comment.edit', $comment->id) }}" type="hidden"/>
                         <input id="del-url" value="{{ route('comment.delete', $comment->id) }}" type="hidden"/>

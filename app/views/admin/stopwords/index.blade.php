@@ -10,7 +10,9 @@
                  <span><b>屏蔽添加：</b>
                  <input name="word" maxlength="16" type="text" class="Search_wenben" size="60" value="" placeholder="添加屏蔽词" />
                  </span>
+                 @if(Sentry::getUser()->hasAccess('stopword.create'))
                  <input type="submit" value="添加" class="jq-submitWord Search_en" />
+                 @endif
             </li>
                
         </ul>
@@ -39,8 +41,13 @@
                     <td>{{ $stopword->created_at }}</td>
                     <td>{{ isset($userDatas[$stopword->operator]) ? $userDatas[$stopword->operator] : '' }}</td>
                     <td>{{ $stopword->updated_at }}</td>
-                    <td><a href="javascript:;" class="Search_show jq-editWord">修改</a>
+                    <td>
+                        @if(Sentry::getUser()->hasAccess('stopword.edit'))
+                        <a href="javascript:;" class="Search_show jq-editWord">修改</a>
+                        @endif
+                        @if(Sentry::getUser()->hasAccess('stopword.delete'))
                         <a href="{{ URL::route('stopword.delete', $stopword->id) }}" class="Search_del jq-delete">删除</a>
+                        @endif
                     </td>
                     <td style="display:none">
                         <input id="edit-url" value="{{ route('stopword.edit', $stopword->id) }}" type="hidden"/>
