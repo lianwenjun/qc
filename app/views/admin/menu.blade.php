@@ -42,8 +42,8 @@
                     @if(Sentry::getUser()->hasAccess('apps.nopass'))
                        <li><a href="{{ URL::route('apps.nopass') }}" target=BoardRight>审核不通过列表</a></li>
                     @endif
-                    @if(Sentry::getUser()->hasAccess('apps.offshelf'))
-                       <li><a href="{{ URL::route('apps.offshelf') }}" target=BoardRight>下架游戏列表</a></li>
+                    @if(Sentry::getUser()->hasAccess('apps.unstock'))
+                       <li><a href="{{ URL::route('apps.unstock') }}" target=BoardRight>下架游戏列表</a></li>
                     @endif
                  </ul>
             </li>
@@ -62,16 +62,16 @@
                     @if(Sentry::getUser()->hasAccess('editorads.index'))
                        <li><a href="{{ URL::route('editorads.index') }}" target=BoardRight>编辑精选管理</a></li>
                     @endif
-                    @if(Sentry::getUser()->hasAccess('cateads.index'))
-                       <li><a href="{{ URL::route('cateads.index') }}" target=BoardRight>分类页图片位推广</a></li>
+                    @if(Sentry::getUser()->hasAccess('catads.index'))
+                       <li><a href="{{ URL::route('catads.index') }}" target=BoardRight>分类页图片位推广</a></li>
                     @endif
                  </ul>
             </li>
             
             <li id="three" class="mail"> <a href="#three">系统管理</a>
                  <ul class="sub-menu">
-                    @if(Sentry::getUser()->hasAccess('cate.index'))
-                       <li><a href="{{ URL::route('cate.index') }}" target=BoardRight>游戏分类管理</a></li>
+                    @if(Sentry::getUser()->hasAccess('cat.index'))
+                       <li><a href="{{ URL::route('cat.index') }}" target=BoardRight>游戏分类管理</a></li>
                     @endif
                     @if(Sentry::getUser()->hasAccess('tag.index'))
                        <li><a href="{{ URL::route('tag.index') }}" target=BoardRight>游戏标签管理</a></li>

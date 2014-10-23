@@ -117,13 +117,13 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
              ->where('id', '[0-9]+');
     });
 
-    Route::group(['prefix' => 'cate', 'before' => 'hasPermissions'], function() //游戏分类
+    Route::group(['prefix' => 'cat', 'before' => 'hasPermissions'], function() //游戏分类
     {
-        Route::get('index', ['as' => 'cate.index', 'uses' => 'Admin_Cate_CatesController@index']);
-        Route::post('create', ['as' => 'cate.create', 'uses' => 'Admin_Cate_CatesController@store']);
-        Route::post('{id}/edit', ['as' => 'cate.edit', 'uses' => 'Admin_Cate_CatesController@update']);
-        Route::get('{id}/delete', ['as' => 'cate.delete', 'uses' => 'Admin_Cate_CatesController@destroy']);
-        Route::get('{id}', ['as' => 'cate.show', 'uses' => 'Admin_Cate_CatesController@show']);
+        Route::get('index', ['as' => 'cat.index', 'uses' => 'Admin_Cate_CatesController@index']);
+        Route::post('create', ['as' => 'cat.create', 'uses' => 'Admin_Cate_CatesController@store']);
+        Route::post('{id}/edit', ['as' => 'cat.edit', 'uses' => 'Admin_Cate_CatesController@update']);
+        Route::get('{id}/delete', ['as' => 'cat.delete', 'uses' => 'Admin_Cat_CatsController@destroy']);
+        Route::get('{id}', ['as' => 'cat.show', 'uses' => 'Admin_Cate_CatesController@show']);
     });
 
     Route::group(['prefix' => 'tag', 'before' => 'hasPermissions'], function() //游戏标签
@@ -201,11 +201,11 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::delete('{id}/delete', ['as'=>'editorads.delete', 'uses' => 'Admin_EditorAdsController@destroy']);
         Route::get('{id}/unstock', ['as'=>'editorads.unstock', 'uses' => 'Admin_EditorAdsController@unstock']);
     });
-    Route::group(['prefix' => 'cateads', 'before' => 'hasPermissions'], function() //分类推广
+    Route::group(['prefix' => 'catads', 'before' => 'hasPermissions'], function() //分类推广
     {
-        Route::get('index', ['as' => 'cateads.index', 'uses' => 'Admin_Cate_CateAdsController@index']);
-        Route::post('imageupload', ['as' => 'cateads.upload', 'uses' => 'Admin_Cate_CateAdsController@upload']);
-        Route::post('{id}/edit', ['as' => 'cateads.edit', 'uses' => 'Admin_Cate_CateAdsController@update']);
+        Route::get('index', ['as' => 'catads.index', 'uses' => 'Admin_Cate_catadsController@index']);
+        Route::post('imageupload', ['as' => 'catads.upload', 'uses' => 'Admin_Cate_catadsController@upload']);
+        Route::post('{id}/edit', ['as' => 'catads.edit', 'uses' => 'Admin_Cate_catadsController@update']);
     });
 
 
