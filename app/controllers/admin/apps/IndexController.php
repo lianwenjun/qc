@@ -21,7 +21,7 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
 
         // TODO 空提示
 
-        return View::make('admin.apps.stock')
+        return View::make('admin.apps.index.stock')
                    ->with('apps', $apps)
                    ->with('cats', $cats);
     }
@@ -44,7 +44,7 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
         $apps  = $cats->addCatsInfo($apps);
         $cats = $cats->allCats();
 
-        return View::make('admin.apps.draft')
+        return View::make('admin.apps.index.draft')
                    ->with('apps', $apps)
                    ->with('cats', $cats);
     }
@@ -67,7 +67,7 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
         $apps  = $cats->addCatsInfo($apps);
         $cats = $cats->allCats();
 
-        return View::make('admin.apps.pending')
+        return View::make('admin.apps.index.pending')
                    ->with('apps', $apps)
                    ->with('cats', $cats);
     }
@@ -89,7 +89,7 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
         $apps  = $cats->addCatsInfo($apps);
         $cats = $cats->allCats();
 
-        return View::make('admin.apps.notpass')
+        return View::make('admin.apps.index.notpass')
                    ->with('apps', $apps)
                    ->with('cats', $cats);
     }
@@ -114,7 +114,7 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
         $user = new User;
         $apps = $user->addOperator($apps);
 
-        return View::make('admin.apps.unstock')
+        return View::make('admin.apps.index.unstock')
                    ->with('apps', $apps)
                    ->with('cats', $cats);
     }
@@ -144,7 +144,7 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
             return Redirect::back();
         }
 
-        return View::make('admin.apps.edit')
+        return View::make('admin.apps.index.edit')
                    ->with('app', $app)
                    ->with('cats', $cats)
                    ->with('tags', $tags);
@@ -219,7 +219,7 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
         $user = new User;
         $apps = $user->addOperator($apps);
 
-        return View::make('admin.apps.history')
+        return View::make('admin.apps.index.history')
                    ->with('apps', $apps)
                    ->with('id', $id);
     }

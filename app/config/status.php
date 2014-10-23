@@ -7,7 +7,7 @@
                 'publish' => '新上传',
                 'draft' => '草稿',
                 'pending' => '待审核',
-                'nopass' => '审核不通过',
+                'notpass' => '审核不通过',
                 'stock' => '上架', 
                 'unstock' => '下架',
             ],
