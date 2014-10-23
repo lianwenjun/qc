@@ -12,11 +12,11 @@ class Cats extends \Eloquent {
     protected $table = 'cats';
     protected $fillable = [];
     //过滤分类
-    public $CatsRules = [
+    public $catsRules = [
                 'word' => 'required|unique:cats,title,NULL,id,parent_id,0,deleted_at,NULL',
                 ];
     //过滤标签
-    public $TagsCreateRules = [
+    public $tagsCreateRules = [
                 'word' => 'required|unique:cats,title,0,parent_id',
                 'parent_id' => 'required|integer',
                 ];
