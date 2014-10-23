@@ -43,7 +43,7 @@ class CreateHistoriesTable extends Migration {
             $table->timestamp('stocked_at')->comment('上架时间');
             $table->timestamp('unstocked_at')->comment('下架时间');
             $table->timestamp('reviewed_at')->comment('审核时间');
-            $table->text('cates')->comment('游戏分类');
+            $table->text('cats')->comment('游戏分类');
             $table->text('tags')->comment('游戏标签');
             $table->softDeletes();
             $table->timestamps();

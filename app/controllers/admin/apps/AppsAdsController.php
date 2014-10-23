@@ -12,9 +12,10 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
     public function index()
     {
         $adsModel = new Ads();
-        $query = $adsModel;
+        $adsClass = new Admin_CadsClass;
+        $query = new Ads;
         //条件查询
-        $query = $adsModel->indexQuery($query);
+        $query = $adsClass->indexQuery($query);
         if (Input::get('location')){
             $query = $query->where('location', Input::get('location'));
         }
@@ -109,7 +110,8 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
         if (!$ad) {
             return Redirect::route('appsads.index')->with('msg', '亲，数据不存在');
         }
-        $validator = Validator::make(Input::all(), Ads::adsUpdateRules);
+        $adsClass = new Admin_CadsClass;
+        $validator = Validator::make(Input::all(), $adsClass->adsUpdateRules);
         if ($validator->fails()){
             Log::error($validator->messages());
             $msg = "添加失败";
