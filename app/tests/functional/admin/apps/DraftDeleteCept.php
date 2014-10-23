@@ -10,6 +10,10 @@
 $I = new FunctionalTester($scenario);
 $I->wantTo('添加编辑游戏删除功能');
 
+// 登陆
+$data = ['username' => 'test', 'password' => 'test'];
+$I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
+
 $I->amOnPage('/admin/apps/draft');
 
 // 正常删除

@@ -36,58 +36,54 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
     Route::group(['prefix' => 'apps', 'before' => 'hasPermissions'], function()
     {
         // 列表
-        Route::get('onshelf',  ['as' => 'apps.onshelf',  'uses' => 'Admin_AppsController@onshelf']);
-        Route::get('draft',    ['as' => 'apps.draft',    'uses' => 'Admin_AppsController@draft']);
-        Route::get('pending',  ['as' => 'apps.pending',  'uses' => 'Admin_AppsController@pending']);
-        Route::get('nopass',   ['as' => 'apps.nopass',   'uses' => 'Admin_AppsController@nopass']);
-        Route::get('unstock', ['as' => 'apps.unstock', 'uses' => 'Admin_AppsController@unstock']);
+        Route::get('stock', ['as' => 'apps.stock', 'uses' => 'Admin_Apps_IndexController@stock']);
+        Route::get('draft', ['as' => 'apps.draft', 'uses' => 'Admin_Apps_IndexController@draft']);
+        Route::get('pending', ['as' => 'apps.pending', 'uses' => 'Admin_Apps_IndexController@pending']);
+        Route::get('nopass', ['as' => 'apps.notpass', 'uses' => 'Admin_Apps_IndexController@notpass']);
+        Route::get('unstock', ['as' => 'apps.unstock', 'uses' => 'Admin_Apps_IndexController@unstock']);
 
         // 历史
-        Route::get('onshelf/{id}/history', ['as' => 'apps.history', 'uses' => 'Admin_AppsController@history'])
+        Route::get('publish/{id}/history', ['as' => 'apps.history', 'uses' => 'Admin_Apps_IndexController@history'])
              ->where('id', '[0-9]+');
 
-        // 编辑
-        Route::get('onshelf/{id}',  ['as' => 'apps.onshelf.edit',  'uses' => 'Admin_AppsController@edit'])
+        // 编辑页面
+        Route::get('stock/{id}', ['as' => 'apps.stock.edit', 'uses' => 'Admin_Apps_IndexController@edit'])
              ->where('id', '[0-9]+');
-        Route::get('draft/{id}',    ['as' => 'apps.draft.edit',    'uses' => 'Admin_AppsController@edit'])
+        Route::get('draft/{id}', ['as' => 'apps.draft.edit', 'uses' => 'Admin_Apps_IndexController@edit'])
              ->where('id', '[0-9]+');
-        Route::get('nopass/{id}',   ['as' => 'apps.nopass.edit',   'uses' => 'Admin_AppsController@edit'])
-             ->where('id', '[0-9]+');
-        Route::get('unstock/{id}', ['as' => 'apps.unstock.edit', 'uses' => 'Admin_AppsController@edit'])
+        Route::get('notpass/{id}', ['as' => 'apps.notpass.edit', 'uses' => 'Admin_Apps_IndexController@edit'])
              ->where('id', '[0-9]+');
 
-        Route::put('onshelf/{id}', ['as' => 'apps.onshelf.edit',  'uses' => 'Admin_AppsController@update'])
-             ->where('id', '[0-9]+');
-        Route::put('draft/{id}', ['as' => 'apps.draft.edit',    'uses' => 'Admin_AppsController@update'])
-             ->where('id', '[0-9]+');
-        Route::put('pending/{id}', ['as' => 'apps.pending.edit',    'uses' => 'Admin_AppsController@update'])
+        Route::get('unstock/{id}', ['as' => 'apps.unstock.edit', 'uses' => 'Admin_Apps_IndexController@edit'])
              ->where('id', '[0-9]+');
 
+        // 编辑处理
+        Route::put('stock/{id}', ['as' => 'apps.stock.edit', 'uses' => 'Admin_Apps_IndexController@update'])
+             ->where('id', '[0-9]+');
+        Route::put('draft/{id}', ['as' => 'apps.draft.edit', 'uses' => 'Admin_Apps_IndexController@update'])
+             ->where('id', '[0-9]+');
+        Route::put('pending/{id}', ['as' => 'apps.pending.edit', 'uses' => 'Admin_Apps_IndexController@update'])
+             ->where('id', '[0-9]+');
 
         // 删除
-        Route::delete('{id}', ['as' => 'apps.delete', 'uses' => 'Admin_AppsController@destroy'])
+        Route::delete('{id}', ['as' => 'apps.delete', 'uses' => 'Admin_Apps_IndexController@destroy'])
              ->where('id', '[0-9]+');
 
         // 审核
-        Route::put('{id}/dopass', ['as' => 'apps.dopass',    'uses' => 'Admin_AppsController@dopass'])
-             ->where('id', '[0-9]+');
-        Route::put('{id}/donopass', ['as' => 'apps.donopass',    'uses' => 'Admin_AppsController@donopass'])
-             ->where('id', '[0-9]+');
-        Route::put('doallpass', ['as' => 'apps.doallpass',    'uses' => 'Admin_AppsController@doallpass']);
-        Route::put('doallnopass', ['as' => 'apps.doallnopass',    'uses' => 'Admin_AppsController@doallnopass']);
+        Route::put('putStock', ['as' => 'apps.putPublish', 'uses' => 'Admin_Apps_IndexController@putStock']);
+        Route::put('putNotpass', ['as' => 'apps.putNotpass', 'uses' => 'Admin_Apps_IndexController@putNotpass']);
+
 
         // 下架
-        Route::put('{id}/dounstock', ['as' => 'apps.dounstock',    'uses' => 'Admin_AppsController@dounstock'])
-             ->where('id', '[0-9]+');
+        Route::put('putUnstock', ['as' => 'apps.putUnstock', 'uses' => 'Admin_Apps_IndexController@putUnstock']);
 
         // 预览
-        Route::get('{id}/preveiw', ['as' => 'apps.preview',      'uses' => 'Admin_AppsController@preview'])
+        Route::get('{id}/preveiw', ['as' => 'apps.preview', 'uses' => 'Admin_Apps_IndexController@preview'])
              ->where('id', '[0-9]+');
 
         // 上传
-        Route::post('imageupload', ['as' => 'apps.imageupload', 'uses' => 'Admin_AppsController@imageUpload']);
-        Route::post('appupload/{dontSave?}', ['as' => 'apps.appupload', 'uses' => 'Admin_AppsController@appUpload']);
-
+        Route::post('imageupload', ['as' => 'apps.imageupload', 'uses' => 'Admin_Apps_IndexController@imageUpload']);
+        Route::post('appupload/{dontSave?}', ['as' => 'apps.appupload', 'uses' => 'Admin_Apps_IndexController@appUpload']);
     });
 
      // 管理员
