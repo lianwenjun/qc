@@ -138,11 +138,11 @@ CREATE TABLE `ratings` (
 insert into ratings (app_id, title, pack) select id as appid, title, pack from apps;
 
 /*----------------------------------------------------------
-| 测试 cates 数据库
+| 测试 cats 数据库
 ----------------------------------------------------------*/
-DROP TABLE IF EXISTS `cates`;
+DROP TABLE IF EXISTS `cats`;
 
-CREATE TABLE `cates` (
+CREATE TABLE `cats` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `parent_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父类分类ID',
@@ -155,7 +155,7 @@ CREATE TABLE `cates` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `cates` (`id`, `title`, `parent_id`, `search_total`, `sort`, `deleted_at`, `created_at`, `updated_at`)
+INSERT INTO `cats` (`id`, `title`, `parent_id`, `search_total`, `sort`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
   (1, '休闲益智', 0, 0, 0, NULL, '2014-09-26 02:42:10', '2014-09-26 02:42:10'),
   (2, '角色扮演', 0, 0, 0, NULL, '2014-09-26 02:42:10', '2014-09-26 02:42:10'),
@@ -164,17 +164,17 @@ VALUES
   (26, '飞升游戏', 0, 0, 0, NULL, '2014-09-26 02:42:34', '2014-09-26 02:42:34'),
   (27, '来点东西', 0, 0, 0, NULL, '2014-09-26 05:35:36', '2014-09-26 05:35:36');
 
-INSERT INTO `cates` (`id`, `title`, `parent_id`, `search_total`, `sort`, `deleted_at`, `created_at`, `updated_at`)
+INSERT INTO `cats` (`id`, `title`, `parent_id`, `search_total`, `sort`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
   (3, '围棋', 1, 0, 0, NULL, '2014-09-26 02:42:10', '2014-09-26 02:42:10'),
   (4, '象棋', 1, 0, 0, NULL, '2014-09-26 02:42:10', '2014-09-26 02:42:10');
 
 /*----------------------------------------------------------
-| 测试 app_cates 数据库
+| 测试 app_cats 数据库
 ----------------------------------------------------------*/
-DROP TABLE IF EXISTS `app_cates`;
+DROP TABLE IF EXISTS `app_cats`;
 
-CREATE TABLE `app_cates` (
+CREATE TABLE `app_cats` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `app_id` int(10) unsigned NOT NULL COMMENT '游戏ID',
   `cate_id` int(10) unsigned NOT NULL COMMENT '分类ID',
@@ -183,7 +183,7 @@ CREATE TABLE `app_cates` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `app_cates` (`id`, `app_id`, `cate_id`, `created_at`, `updated_at`)
+INSERT INTO `app_cats` (`id`, `app_id`, `cate_id`, `created_at`, `updated_at`)
 VALUES
   (1,22,1,'2014-09-29 09:22:39','2014-09-29 09:22:39'),
   (2,21,2,'2014-09-29 09:22:39','2014-09-29 09:22:39');
@@ -194,9 +194,9 @@ VALUES
 ----------------------------------------------------------*/
 DROP TABLE IF EXISTS `cate_ads`;
 
-CREATE TABLE `cate_ads` (
+CREATE TABLE `cat_ads` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `cate_id` int(10) unsigned NOT NULL COMMENT '分类ID',
+  `cat_id` int(10) unsigned NOT NULL COMMENT '分类ID',
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '分类名',
   `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '分类图片',
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -206,7 +206,7 @@ CREATE TABLE `cate_ads` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-insert into cate_ads (cate_id, title) select id , title from cates where deleted_at is null and parent_id = 0;
+insert into cat_ads (cat_id, title) select id , title from cats where deleted_at is null and parent_id = 0;
 
 /*----------------------------------------------------------
 | 测试 keywords 数据库

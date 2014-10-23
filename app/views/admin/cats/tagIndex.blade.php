@@ -17,7 +17,7 @@
                         @endforeach
                     </select>
                 </span>
-                @if(Sentry::getUser()->hasAccess('tag.create'))
+                @if(Sentry::getUser() ? Sentry::getUser()->hasAccess('tag.create') : '')
                 <input type="submit" value="添加" class="Search_en jq-submitAdd" />
                 @endif
             </li>
@@ -62,10 +62,10 @@
                         <td>{{ $tag->sort }}</td>
                         <td>{{ $tag->updated_at }}</td>
                         <td>
-                            @if(Sentry::getUser()->hasAccess('tag.edit'))
+                            @if(Sentry::getUser() ? Sentry::getUser()->hasAccess('tag.edit') : '')
                             <a href="javascript:;" class="Search_show jq-editTag">编辑</a>
                             @endif
-                            @if(Sentry::getUser()->hasAccess('tag.delete'))
+                            @if(Sentry::getUser() ? Sentry::getUser()->hasAccess('tag.delete') : '')
                             <a href="{{ route('tag.delete', $tag->id) }}" class="Search_del jq-delete">删除</a>
                             @endif
                         </td>

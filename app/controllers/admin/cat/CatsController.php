@@ -32,7 +32,6 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         }
         $appsCount = DB::table('app_cats')
                      ->select(DB::raw('count(*) as app_count, cat_id'))
-                     ->where('status', 'stock')
                      ->whereIn('cat_id', $catIds)
                      ->groupBy('cat_id')
                      ->get();
@@ -91,7 +90,7 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         $catModel->title = Input::get('word');
         $catModel->save();
         //保存到分类库中
-        $catAdsModel = new catAds;
+        $catAdsModel = new CatAds;
         $catAdsModel->cat_id = $catModel->id;
         $catAdsModel->title = $catModel->title;
         $catAdsModel->save();
@@ -109,7 +108,7 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         //检测输入
         Log::error(Input::all());
         $catModel = new Cats;
-        $validator = Validator::make(Input::all(), $catModel->TagsCreateRules);
+        $validator = Validator::make(Input::all(), $catModel->tagsCreateRules);
         if ($validator->fails()){
             Log::error($validator->messages());
             return Response::json(['status'=>'error', 'msg'=>'word is must need']);
