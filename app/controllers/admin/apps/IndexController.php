@@ -16,7 +16,7 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
                           ->toArray();
 
         $cats = new Cats;
-        $apps  = $cats->addCatsInfo($apps);
+        $apps = $cats->addCatsInfo($apps);
         $cats = $cats->allCats();
 
         // TODO 空提示
@@ -37,11 +37,11 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
         
         $apps = new Apps();
         $apps = $apps->lists(['publish', 'draft'], Input::all())
-                          ->paginate(20)
-                          ->toArray();
+                     ->paginate(20)
+                     ->toArray();
 
         $cats = new Cats;
-        $apps  = $cats->addCatsInfo($apps);
+        $apps = $cats->addCatsInfo($apps);
         $cats = $cats->allCats();
 
         return View::make('admin.apps.index.draft')
@@ -60,11 +60,11 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
 
         $apps = new Apps();
         $apps = $apps->lists(['pending'], Input::all())
-                          ->paginate(20)
-                          ->toArray();
+                     ->paginate(20)
+                     ->toArray();
 
         $cats = new Cats;
-        $apps  = $cats->addCatsInfo($apps);
+        $apps = $cats->addCatsInfo($apps);
         $cats = $cats->allCats();
 
         return View::make('admin.apps.index.pending')
@@ -86,7 +86,7 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
                      ->toArray();
 
         $cats = new Cats;
-        $apps  = $cats->addCatsInfo($apps);
+        $apps = $cats->addCatsInfo($apps);
         $cats = $cats->allCats();
 
         return View::make('admin.apps.index.notpass')
@@ -104,11 +104,11 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
     {
         $apps = new Apps();
         $apps = $apps->lists(['unstock'], Input::all())
-                          ->paginate(20)
-                          ->toArray();
+                     ->paginate(20)
+                     ->toArray();
 
         $cats = new Cats;
-        $apps  = $cats->addCatsInfo($apps);
+        $apps = $cats->addCatsInfo($apps);
         $cats = $cats->allCats();
 
         $user = new User;
