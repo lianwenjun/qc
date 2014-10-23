@@ -2,29 +2,29 @@
 
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
-class Cates extends \Eloquent {
+class Cats extends \Eloquent {
 
     //这部分假删除部分能做成个头部不呢
     use SoftDeletingTrait;
     protected $dates = ['deleted_at'];
     protected $softDelete = true;
     
-    protected $table = 'cates';
+    protected $table = 'cats';
     protected $fillable = [];
     //过滤分类
-    public $CatesRules = [
-                'word' => 'required|unique:cates,title,NULL,id,parent_id,0,deleted_at,NULL',
+    public $CatsRules = [
+                'word' => 'required|unique:cats,title,NULL,id,parent_id,0,deleted_at,NULL',
                 ];
     //过滤标签
     public $TagsCreateRules = [
-                'word' => 'required|unique:cates,title,0,parent_id',
+                'word' => 'required|unique:cats,title,0,parent_id',
                 'parent_id' => 'required|integer',
                 ];
     //过滤标签添加
 
     public function tagsUpdateRules($id) {
         return [
-                'word' => 'required|unique:cates,title,'.$id .',id,deleted_at,NULL',
+                'word' => 'required|unique:cats,title,'.$id .',id,deleted_at,NULL',
                 'sort' => 'integer',
                 ];
     }
@@ -35,16 +35,16 @@ class Cates extends \Eloquent {
      *
      * @return array [[id=>1, title=>xxx]]
      */
-    public function appCates($id)
+    public function appCats($id)
     {
 
         $data = [];
-        $ids = AppCates::select('cate_id')
+        $ids = AppCats::select('cat_id')
                        ->where('app_id', $id)
                        ->get()->toArray();
 
         if($ids) {
-            $data = Cates::select(['id', 'title'])
+            $data = Cats::select(['id', 'title'])
                          ->where('parent_id', 0)
                          ->whereIn('id', $ids)
                          ->get()->toArray();
@@ -64,12 +64,12 @@ class Cates extends \Eloquent {
     {
 
         $data = [];
-        $ids = AppCates::select('cate_id')
+        $ids = AppCats::select('cat_id')
                        ->where('app_id', $id)
                        ->get()->toArray();
 
         if($ids) {
-            $data = Cates::select(['id', 'title'])
+            $data = Cats::select(['id', 'title'])
                          ->where('parent_id', '!=', 0)
                          ->whereIn('id', $ids)
                          ->get()->toArray();
@@ -83,9 +83,9 @@ class Cates extends \Eloquent {
      *
      * @return obj
      */
-    public function allCates()
+    public function allCats()
     {
-        return Cates::select(['id', 'title', 'search_total', 'created_at'])
+        return Cats::select(['id', 'title', 'search_total', 'created_at'])
                     ->where('parent_id', 0)
                     ->orderBy('sort', 'desc')
                     ->get();
@@ -98,7 +98,7 @@ class Cates extends \Eloquent {
      */
     public function allTags()
     {
-        return Cates::select(['id', 'parent_id', 'title'])
+        return Cats::select(['id', 'parent_id', 'title'])
                     ->where('parent_id', '!=', 0)
                     ->orderBy('sort', 'desc')
                     ->get();
@@ -111,17 +111,17 @@ class Cates extends \Eloquent {
      *
      * @return array
      */
-    public function addCatesInfo($apps)
+    public function addCatsInfo($apps)
     {
         foreach($apps['data'] as $key => $app) {
-            $cates = $this->appCates($app['id']);
+            $cats = $this->appCats($app['id']);
 
-            $cateNames = [];
-            foreach($cates as $cate) {
-                $cateNames[] = $cate['title'];
+            $catNames = [];
+            foreach($cats as $cat) {
+                $catNames[] = $cat['title'];
             }
 
-            $apps['data'][$key] += [ 'cate_name' => implode(', ', $cateNames)];
+            $apps['data'][$key] += [ 'cat_name' => implode(', ', $catNames)];
         }
 
         return $apps;
@@ -135,12 +135,12 @@ class Cates extends \Eloquent {
     public function allTagsWithCate() {
 
         $data=[];
-        foreach($this->allCates() as $cate) {
-            $data[$cate->id]['title'] = $cate->title;
+        foreach($this->allCats() as $cat) {
+            $data[$cat->id]['title'] = $cat->title;
             foreach($this->allTags() as $tag) {
-                if($tag->parent_id == $cate->id) {
+                if($tag->parent_id == $cat->id) {
                     $tagData = ['id' => $tag->id, 'title' => $tag->title];
-                    $data[$cate->id]['tags'][] = $tagData;
+                    $data[$cat->id]['tags'][] = $tagData;
                 }
             }
         }
@@ -155,9 +155,9 @@ class Cates extends \Eloquent {
      *
      * @return obj
      */
-    public function cateTags($id)
+    public function catTags($id)
     {
-        return Cates::select(['id', 'title'])
+        return Cats::select(['id', 'title'])
                     ->where('parent_id', $id)
                     ->orderBy('sort', 'desc')
                     ->get();

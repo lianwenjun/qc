@@ -1,33 +1,33 @@
 <?php
 
-class Admin_AppsController extends \Admin_BaseController {
+class Admin_Apps_IndexController extends \Admin_BaseController {
 
     /**
      * 上架游戏列表
-     * GET /admin/apps/onshelf
+     * GET /admin/apps/publish
      *
      * @return Response
      */
-    public function onshelf()
+    public function publish()
     {
-        $appsModel = new Apps();
-        $apps = $appsModel->lists(['onshelf'], Input::all())
+        $apps = new Apps();
+        $apps = $apps->lists(['publish'], Input::all())
                           ->paginate(20)
                           ->toArray();
 
-        $catesModel = new Cates;
-        $apps  = $catesModel->addCatesInfo($apps);
-        $cates = $catesModel->allCates();
+        $cats = new Cats;
+        $apps  = $cats->addCatsInfo($apps);
+        $cats = $cats->allCats();
 
         // TODO 空提示
 
-        return View::make('admin.apps.onshelf')
+        return View::make('admin.apps.publish')
                    ->with('apps', $apps)
-                   ->with('cates', $cates);
+                   ->with('cats', $cats);
     }
 
     /**
-     * 添加编辑游戏列表
+     * 添加编辑游戏列表(草稿)
      * GET /admin/apps/draft
      *
      * @return Response
@@ -35,18 +35,18 @@ class Admin_AppsController extends \Admin_BaseController {
     public function draft()
     {
         
-        $appsModel = new Apps();
-        $apps = $appsModel->lists(['new', 'draft'], Input::all())
+        $apps = new Apps();
+        $apps = $apps->lists(['new', 'draft'], Input::all())
                           ->paginate(20)
                           ->toArray();
 
-        $catesModel = new Cates;
-        $apps  = $catesModel->addCatesInfo($apps);
-        $cates = $catesModel->allCates();
+        $cats = new Cats;
+        $apps  = $cats->addCatsInfo($apps);
+        $cats = $cats->allCats();
 
         return View::make('admin.apps.draft')
                    ->with('apps', $apps)
-                   ->with('cates', $cates);
+                   ->with('cats', $cats);
     }
 
     /**
@@ -58,65 +58,65 @@ class Admin_AppsController extends \Admin_BaseController {
     public function pending()
     {
 
-        $appsModel = new Apps();
-        $apps = $appsModel->lists(['pending'], Input::all())
+        $apps = new Apps();
+        $apps = $apps->lists(['pending'], Input::all())
                           ->paginate(20)
                           ->toArray();
 
-        $catesModel = new Cates;
-        $apps  = $catesModel->addCatesInfo($apps);
-        $cates = $catesModel->allCates();
+        $cats = new Cats;
+        $apps  = $cats->addCatsInfo($apps);
+        $cats = $cats->allCats();
 
         return View::make('admin.apps.pending')
                    ->with('apps', $apps)
-                   ->with('cates', $cates);
+                   ->with('cats', $cats);
     }
 
     /**
      * 审核不通过列表
-     * GET /admin/apps/nopass
+     * GET /admin/apps/notpass
      *
      * @return Response
      */
-    public function nopass()
+    public function notpass()
     {
-        $appsModel = new Apps();
-        $apps = $appsModel->lists(['nopass'], Input::all())
-                          ->paginate(20)
-                          ->toArray();
+        $apps = new Apps();
+        $apps = $apps->lists(['notpass'], Input::all())
+                     ->paginate(20)
+                     ->toArray();
 
-        $catesModel = new Cates;
-        $apps  = $catesModel->addCatesInfo($apps);
-        $cates = $catesModel->allCates();
+        $cats = new Cats;
+        $apps  = $cats->addCatsInfo($apps);
+        $cats = $cats->allCats();
 
-        return View::make('admin.apps.nopass')
+        return View::make('admin.apps.notpass')
                    ->with('apps', $apps)
-                   ->with('cates', $cates);
+                   ->with('cats', $cats);
     }
 
     /**
      * 下架游戏列表
-     * GET /admin/apps/stock
+     * GET /admin/apps/unstock
      *
      * @return Response
      */
-    public function offshelf()
+    public function unstock()
     {
-        $appsModel = new Apps();
-        $apps = $appsModel->lists(['offshelf'], Input::all())
+        $apps = new Apps();
+        $apps = $apps->lists(['unstock'], Input::all())
                           ->paginate(20)
                           ->toArray();
 
-        $catesModel = new Cates;
-        $apps  = $catesModel->addCatesInfo($apps);
-        $cates = $catesModel->allCates();
+        $cats = new Cats;
+        $apps  = $cats->addCatsInfo($apps);
+        $cats = $cats->allCats();
 
-        $userModel = new User;
-        $apps = $userModel->addOperator($apps);
+        $user = new User;
+        $apps = $user->addOperator($apps);
 
-        return View::make('admin.apps.offshelf')
+        return View::make('admin.apps.unstock')
                    ->with('apps', $apps)
-                   ->with('cates', $cates);
+                   ->with('cats', $cats);
     }
 
     /**
@@ -130,16 +130,16 @@ class Admin_AppsController extends \Admin_BaseController {
     public function history($id)
     {
 
-        $appsModel = new Histories();
-        $apps = $appsModel->lists($id, Input::all())
+        $apps = new Histories();
+        $apps = $apps->lists($id, Input::all())
                           ->paginate(20)
                           ->toArray();
 
-        $historyModel = new Histories;
-        $apps = $historyModel->addCatesInfo($apps);
+        $history = new Histories;
+        $apps = $history->addCatsInfo($apps);
 
-        $userModel = new User;
-        $apps = $userModel->addOperator($apps);
+        $user = new User;
+        $apps = $user->addOperator($apps);
 
         return View::make('admin.apps.history')
                    ->with('apps', $apps)
@@ -157,9 +157,9 @@ class Admin_AppsController extends \Admin_BaseController {
      */
     public function appUpload($dontSave = '')
     {
-        $appModel = new Apps();
+        $app = new Apps();
 
-        return $appModel->appUpload($dontSave);
+        return $app->appUpload($dontSave);
     }
 
     /**
@@ -174,12 +174,12 @@ class Admin_AppsController extends \Admin_BaseController {
     {
 
         if(Input::get('type') == 'history') {
-            $historyModel = new Histories();
-            $app = $historyModel->preview($id);
+            $history = new Histories();
+            $app = $history->preview($id);
 
         } else {
-            $appModel = new Apps();
-            $app = $appModel->preview($id);
+            $app = new Apps();
+            $app = $app->preview($id);
         }
 
 
@@ -203,9 +203,9 @@ class Admin_AppsController extends \Admin_BaseController {
      */
     public function imageUpload()
     {
-        $appModel = new Apps();
+        $app = new Apps();
 
-        return $appModel->imageUpload();
+        return $app->imageUpload();
     }
 
     /**
@@ -219,12 +219,12 @@ class Admin_AppsController extends \Admin_BaseController {
     public function edit($id)
     {
 
-        $appsModel = new Apps;
-        $app = $appsModel->info($id);
+        $apps = new Apps;
+        $app = $apps->info($id);
 
-        $catesModel = new Cates;
-        $cates = $catesModel->allCates();
-        $tags  = $catesModel->allTagsWithCate();
+        $cats = new Cats;
+        $cats = $cats->allCats();
+        $tags  = $cats->allTagsWithCate();
 
         if(empty($app)) {
             $tips = ['success' => false, 'message' => "亲，ID：{$id}的游戏不存在"];
@@ -235,7 +235,7 @@ class Admin_AppsController extends \Admin_BaseController {
 
         return View::make('admin.apps.edit')
                    ->with('app', $app)
-                   ->with('cates', $cates)
+                   ->with('cats', $cats)
                    ->with('tags', $tags);
     }
 
@@ -252,7 +252,7 @@ class Admin_AppsController extends \Admin_BaseController {
         $route = Route::current()->getName();
         $paths = explode('.', $route);
 
-        if(!isset($paths[1]) && !in_array($paths[1], ['onshelf', 'draft', 'pending'])) {
+        if(!isset($paths[1]) && !in_array($paths[1], ['stock', 'draft', 'pending'])) {
             App::abort(404);
         }
 
@@ -262,18 +262,18 @@ class Admin_AppsController extends \Admin_BaseController {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
         }
 
-        $appsModel = new Apps();
+        $apps = new Apps();
         
         // 验证表单
         $validFail = false;
         $data = Input::all();
-        if(isset($appsModel->rules[$status])) {
-            $validator = Validator::make($data, $appsModel->rules[$status]);
+        if(isset($apps->rules[$status])) {
+            $validator = Validator::make($data, $apps->rules[$status]);
             $validFail = $validator->fails();
         }
         
         if(! $validFail) {
-            if( $appsModel->store($id, $status, $data) ) {
+            if( $apps->store($id, $status, $data) ) {
                 Session::flash('tips', ['success' => true, 'message' => "修改成功"]);
             } else {
                 Session::flash('tips', ['success' => false, 'message' => "修改失败"]);
@@ -343,7 +343,7 @@ class Admin_AppsController extends \Admin_BaseController {
     {
         if(! $app = Apps::find($id)) {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
-        } elseif ($app->update(['status' => 'onshelf', 'onshelfed_at' => date('Y-m-d H:i:s')])) {
+        } elseif ($app->update(['status' => 'stock', 'stocked_at' => date('Y-m-d H:i:s')])) {
             Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经审核通过"]);
         } else {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}审核操作失败了"]);
@@ -368,7 +368,7 @@ class Admin_AppsController extends \Admin_BaseController {
 
         if(! $apps = Apps::whereIn('id', $ids)) {
             Session::flash('tips', ['success' => false, 'message' => "亲，找不到游戏"]);
-        } elseif ($apps->update(['status' => 'onshelf'])) {
+        } elseif ($apps->update(['status' => 'stock'])) {
             Session::flash('tips', ['success' => true, 'message' => "亲，全部已经审核通过"]);
         } else {
             Session::flash('tips', ['success' => false, 'message' => "亲，操作失败了"]);
