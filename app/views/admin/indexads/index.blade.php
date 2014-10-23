@@ -4,7 +4,9 @@
 <div class="Content_right_top Content_height">
     <div class="Theme_title">
         <h1>广告位管理 <span>首页图片位管理</span></h1>
+        @if(Sentry::getUser()->hasAccess('indexads.create'))
         <a href="{{ URL::route('indexads.create') }}" target=BoardRight>添加游戏</a>
+        @endif
     </div>
     <form action="{{ URL::route('indexads.index') }}" method="get">
         <div class="Theme_Search">
@@ -68,11 +70,15 @@
                     <td {{ Config::get('status.ads.statusColor')[adsStatus($ad)] }}>{{ Config::get('status.ads.status')[adsStatus($ad)] }}</td>
                     <td>{{ Config::get('status.ads.is_top')[$ad->is_top] }}</td>
                     <td>
-                        @if($ad->is_onshelf == 'yes')
+                        @if($ad->is_onshelf == 'yes' && Sentry::getUser()->hasAccess('offshelf'))
                             <a href="{{ URL::route('indexads.offshelf', $ad->id) }}" target=BoardRight class="Search_show">下架</a>
                         @endif
+                        @if(Sentry::getUser()->hasAccess('indexads.edit'))
                         <a href="{{ URL::route('indexads.edit', $ad->id) }}" target=BoardRight class="Search_show">编辑</a>
+                        @endif
+                        @if(Sentry::getUser()->hasAccess('indexads.delete'))
                         <a href="{{ URL::route('indexads.delete', $ad->id) }}" class="Search_del jq-delete">删除</a>
+                        @endif
                     </td>
                 </tr>
             @empty

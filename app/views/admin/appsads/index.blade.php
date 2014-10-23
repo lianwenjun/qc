@@ -2,7 +2,12 @@
 
 @section('content') 
 <div class="Content_right_top Content_height">
-    <div class="Theme_title"><h1>广告位管理 <span>首页游戏位管理</span></h1><a href="{{ URL::route('appsads.create') }}" target=BoardRight>添加游戏</a></div>
+    <div class="Theme_title">
+        <h1>广告位管理 <span>首页游戏位管理</span></h1>
+        @if(Sentry::getUser()->hasAccess('appsads.create'))
+        <a href="{{ URL::route('appsads.create') }}" target=BoardRight>添加游戏</a>
+        @endif
+    </div>
     <form action="{{ URL::route('appsads.index') }}" method="get">
         <div class="Theme_Search">
             <ul>
@@ -61,11 +66,15 @@
                     
                     <td>{{ Config::get('status.ads.is_top')[$ad->is_top] }}</td>
                     <td>
-                        @if($ad->is_onshelf == 'yes')
+                        @if($ad->is_onshelf == 'yes' && Sentry::getUser()->hasAccess('appsads.offshelf'))
                             <a href="{{ URL::route('appsads.offshelf', $ad->id) }}" target=BoardRight class="Search_show">下架</a>
                         @endif
+                        @if(Sentry::getUser()->hasAccess('appsads.edit'))
                         <a href="{{ URL::route('appsads.edit', $ad->id) }}" target=BoardRight class="Search_show">编辑</a>
+                        @endif
+                        @if(Sentry::getUser()->hasAccess('appsads.delete'))
                         <a href="{{ URL::route('appsads.delete', $ad->id) }}" class="Search_del jq-delete">删除</a>
+                        @endif
                     </td>
                 </tr>
             @empty

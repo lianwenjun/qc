@@ -4,7 +4,9 @@
 <div class="Content_right_top Content_height">
     <div class="Theme_title">
         <h1>广告位管理 <span>编辑精选管理</span></h1>
+        @if(Sentry::getUser()->hasAccess('editorads.create'))
         <a href="{{ URL::route('editorads.create') }}" target=BoardRight>添加游戏</a>
+        @endif
     </div>
     <form action="{{ URL::route('editorads.index') }}" method="get">
         <div class="Theme_Search">
@@ -68,11 +70,15 @@
                     <!--<td>{{ $ad->sort }}</td>-->
                     <td>{{ $ad->word }}</td>
                     <td>
-                        @if($ad->is_onshelf == 'yes')
+                        @if($ad->is_onshelf == 'yes' && Sentry::getUser()->hasAccess('editorads.offshelf'))
                             <a href="{{ URL::route('editorads.offshelf', $ad->id) }}" target=BoardRight class="Search_show">下架</a>
                         @endif
+                        @if(Sentry::getUser()->hasAccess('editorads.edit'))
                         <a href="{{ URL::route('editorads.edit', $ad->id) }}" target=BoardRight class="Search_show">编辑</a>
+                        @endif
+                        @if(Sentry::getUser()->hasAccess('editorads.delete'))
                         <a href="{{ URL::route('editorads.delete', $ad->id) }}" class="Search_del jq-delete">删除</a>
+                        @endif
                     </td>
                 </tr>
             @empty

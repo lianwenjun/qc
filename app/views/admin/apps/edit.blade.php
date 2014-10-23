@@ -43,7 +43,8 @@ body.dragging, body.dragging * {
   opacity: 0.5;
   z-index: 2000;
 }
-
+.Search_biao label.error { color: red;margin-left: 10px; }
+ul.ui-sortable label { height:156px;line-height: 156px;display: inline-block; }
 ul.ui-sortable li.placeholder {
   position: relative;
 }
@@ -165,7 +166,7 @@ ul.ui-sortable li.placeholder:before {
                      <option value="Android">Android</option>
                   </select>
                   <input name="os_version" type="text" class="Search_input" value="{{ $app->os_version }}" size="8">
-                  以上
+                  <span>以上</span>
                </td>
             </tr>
             <tr class="Search_biao_two">
@@ -200,12 +201,12 @@ ul.ui-sortable li.placeholder:before {
                <td class="Search_img">
                   <div class="Update_img">
                      <ul class="ui-sortable jq-pictures">
+                        <input name="images[]" value="" type="hidden"/><!-- 验证用 -->
                         @if(is_array($app->images))
                             @foreach($app->images as $image)
                             <li><img src="{{ $image }}"><input name="images[]" value="{{ $image }}" type="hidden"/><a class="jq-picDelete dragged" href="javascript:;">删除</a></li>
                             @endforeach
                         @endif
-                        <input name="images[]" value="" type="hidden"/><!-- 验证用 -->
                      </ul>
                   </div>
                </td>
@@ -223,7 +224,9 @@ ul.ui-sortable li.placeholder:before {
                   @elseif($app->status == 'onshelf')
                   <a href="javascript:;" data-action="{{ URL::route('apps.onshelf.edit', ['id' => $app->id]) }}" class="jq-submit">提 交</a>
                   @elseif($app->status == 'nopass' || $app->status == 'offshelf')
+                      @if(Sentry::getUser()->hasAccess('apps.pending.edit'))
                   <a href="javascript:;" data-action="{{ URL::route('apps.pending.edit', ['id' => $app->id]) }}" class="jq-submit">提交待审核列表</a>
+                      @endif
                   @endif
                   <a href="{{ Request::header('referer') }}" target="BoardRight">返回列表</a></td>
             </tr>
@@ -589,6 +592,7 @@ ul.ui-sortable li.placeholder:before {
 
         // 保存为草稿
         $('.jq-submitDraft').click(function() {
+            $('input[name="images[]"][value=""]').remove();
             $('#form').attr('action', $(this).attr('data-action')).submit();
         });
 
@@ -597,7 +601,7 @@ ul.ui-sortable li.placeholder:before {
             return $('input[name="images[]"]').length > 0;
         }, "图片必须上传");
 
-        jQuery.validator.addMethod("images", function(value, element) {
+        jQuery.validator.addMethod("maxImage", function(value, element) {
             return $('input[name="images[]"]').length < 7;
         }, "图片必须少于6张");
 
@@ -618,19 +622,20 @@ ul.ui-sortable li.placeholder:before {
                     sort: "required",
                     download_manual: "required",
                     summary: "required",
-                    "images[]": "images",
-
+                    "images[]":{ maxImage: true, images: true }
                 },
                 messages: {
-                    checkCate: {required: '分类为必填'},
-                    checkTag: {required: '标签为必填'},
-                    os_version: {required: '系统要求为必填'},
-                    author: {required: '游戏作者为必填'},
-                    version_code: {required: '包名为必填'},
-                    sort: {required: '排序为必填'},
-                    download_manual: {required: '下载次数为必填'},
-                    summary: {required: '简介为必填'},
-                    images: {images: ' 图片为必填'},
+                    checkCate: {required: '分类为必填!'},
+                    checkTag: {required: '标签为必填!'},
+                    os_version: {required: '系统要求为必填!'},
+                    author: {required: '游戏作者为必填!'},
+                    version_code: {required: '包名为必填!'},
+                    sort: {required: '排序为必填!'},
+                    download_manual: {required: '下载次数为必填!'},
+                    summary: {required: '简介为必填!'}
+                },
+                errorPlacement: function(error, element) { 
+                  error.appendTo(element.parent().append()); 
                 }
             });
 
