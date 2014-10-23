@@ -3,7 +3,7 @@
 @section('content')
 <div class="Content_right_top Content_height">
     <div class="Theme_title"><h1>广告位管理 <span>分类页图片位推广</span></h1></div>
-    <div class="Search_cunt" style="padding-top:15px;">共 <strong>{{ $cateads->getTotal() }}</strong> 条信息 </div>
+    <div class="Search_cunt" style="padding-top:15px;">共 <strong>{{ $catads->getTotal() }}</strong> 条信息 </div>
 
     <div class="Search_biao">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -13,17 +13,17 @@
                 <td width="25%">分类名称</td>
                 <td width="20%">操作</td>
             </tr>
-            @forelse($cateads as $catead)
+            @forelse($catads as $catad)
                 <tr class="jq-tr">
-                    <td>{{ $catead->id }}</td>
-                    <td><img src="{{ $catead->image ? $catead->image : '/images/admin/u1188.png' }}" width="28" height="28" /></td>
-                    <td>{{ $catead->title }}</td>
+                    <td>{{ $catad->id }}</td>
+                    <td><img src="{{ $catad->image ? $catad->image : '/images/admin/u1188.png' }}" width="28" height="28" /></td>
+                    <td>{{ $catad->title }}</td>
                     <td>
-                        @if (Sentry::getUser()->hasAccess('cateads.upload'))
-                        <a href="javascript:;" target=BoardRight class="Search_show jq-cateads-upload">重新上传图片</a>
+                        @if (Sentry::getUser()->hasAccess('catads.upload'))
+                        <a href="javascript:;" target=BoardRight class="Search_show jq-catads-upload">重新上传图片</a>
                         @endif
                     </td>
-                    <input value="{{ URL::route('cateads.edit', $catead->id) }}" name="edit-url" type="hidden">
+                    <input value="{{ URL::route('catads.edit', $catad->id) }}" name="edit-url" type="hidden">
                     <input value="" name="upload-image" type="hidden">
                 </tr>
             @empty
@@ -32,7 +32,7 @@
                 <tr>
             @endforelse
         </table>
-        @if($cateads->getLastPage() > 1)
+        @if($catads->getLastPage() > 1)
             <div id="pager"></div>
         @endif
     </div>
@@ -47,8 +47,8 @@ $(function(){
     $(".jq-tr:even").addClass("Search_biao_one");
 
     //分页
-    pageInit({{ $cateads->getCurrentPage() }}, {{ $cateads->getLastPage() }}, {{ $cateads->getTotal() }});
-    $(".jq-cateads-upload").click(function() {
+    pageInit({{ $catads->getCurrentPage() }}, {{ $catads->getLastPage() }}, {{ $catads->getTotal() }});
+    $(".jq-catads-upload").click(function() {
         //alert("更新图片");
         var tr = $(this).parents('tr');
         $.jBox("<div id='uploader'><p>您的浏览器不支持 html5 所以无法使用上传服务。</p></div>", {
@@ -62,10 +62,10 @@ $(function(){
             top: '20%',
             loaded:function() {
                 $("body").css("overflow-y","hidden");
-                $(".jbox-content").html('<div class="jbox-waraper" style=""><div class="wraper"><div class="wraper_img"><span>暂无图片</span><div id="file-list"></div></div><div class="btn-wraper"><input type="button" value="选择图片并上传" id="browse" /></div></div><div class="wraper_buttom"><input class="Search_show jq-cateads-sure" type="button" value="确定" id="upload-btn"/></div></div>');
+                $(".jbox-content").html('<div class="jbox-waraper" style=""><div class="wraper"><div class="wraper_img"><span>暂无图片</span><div id="file-list"></div></div><div class="btn-wraper"><input type="button" value="选择图片并上传" id="browse" /></div></div><div class="wraper_buttom"><input class="Search_show jq-catads-sure" type="button" value="确定" id="upload-btn"/></div></div>');
                 var uploader = new plupload.Uploader({ //实例化一个plupload上传对象
                     browse_button : 'browse',
-                    url : '{{ route("cateads.upload") }}',
+                    url : '{{ route("catads.upload") }}',
                     runtimes: 'html5,flash',
                     max_file_size : '1mb',
                     flash_swf_url : '{{ asset("js/admin/plupload/Moxie.swf") }}',
@@ -98,7 +98,7 @@ $(function(){
                     }
                 });
                 //点击确定
-                $(".jq-cateads-sure").live('click', function(){
+                $(".jq-catads-sure").live('click', function(){
                     if ($("#file-list").html() == ''){
                         alert('没图片数据');
                         return;

@@ -142,7 +142,7 @@ insert into ratings (app_id, title, pack) select id as appid, title, pack from a
 ----------------------------------------------------------*/
 DROP TABLE IF EXISTS `cats`;
 
-CREATE TABLE `cates` (
+CREATE TABLE `cats` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `parent_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父类分类ID',
@@ -170,7 +170,7 @@ VALUES
   (4, '象棋', 1, 0, 0, NULL, '2014-09-26 02:42:10', '2014-09-26 02:42:10');
 
 /*----------------------------------------------------------
-| 测试 app_cates 数据库
+| 测试 app_cats 数据库
 ----------------------------------------------------------*/
 DROP TABLE IF EXISTS `app_cats`;
 
@@ -183,7 +183,11 @@ CREATE TABLE `app_cats` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+<<<<<<< HEAD
 INSERT INTO `app_cats` (`id`, `app_id`, `cat_id`, `created_at`, `updated_at`)
+=======
+INSERT INTO `app_cats` (`id`, `app_id`, `cate_id`, `created_at`, `updated_at`)
+>>>>>>> e29be5a2ceb48f0c68425a1d3f9984e563c88b94
 VALUES
   (1,22,1,'2014-09-29 09:22:39','2014-09-29 09:22:39'),
   (2,21,2,'2014-09-29 09:22:39','2014-09-29 09:22:39');
@@ -194,9 +198,9 @@ VALUES
 ----------------------------------------------------------*/
 DROP TABLE IF EXISTS `cate_ads`;
 
-CREATE TABLE `cate_ads` (
+CREATE TABLE `cat_ads` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `cate_id` int(10) unsigned NOT NULL COMMENT '分类ID',
+  `cat_id` int(10) unsigned NOT NULL COMMENT '分类ID',
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '分类名',
   `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '分类图片',
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -206,7 +210,7 @@ CREATE TABLE `cate_ads` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-insert into cate_ads (cate_id, title) select id , title from cates where deleted_at is null and parent_id = 0;
+insert into cat_ads (cat_id, title) select id , title from cats where deleted_at is null and parent_id = 0;
 
 /*----------------------------------------------------------
 | 测试 keywords 数据库
