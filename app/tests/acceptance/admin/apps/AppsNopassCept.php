@@ -2,6 +2,7 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('审核不通过列表');
 
+// 登陆
 $I->amOnPage('/admin/users/signin');
 $I->fillField('username', 'test');
 $I->fillField('password', 'test');
