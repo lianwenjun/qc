@@ -96,7 +96,7 @@ class Admin_AppsController extends \Admin_BaseController {
 
     /**
      * 下架游戏列表
-     * GET /admin/apps/offshelf
+     * GET /admin/apps/stock
      *
      * @return Response
      */
@@ -283,7 +283,7 @@ class Admin_AppsController extends \Admin_BaseController {
             return Redirect::back();
         }
 
-        return Redirect::to('admin/apps/' . $status);
+        return Redirect::to(URL::route('apps.'.$status));
     }
 
     /**

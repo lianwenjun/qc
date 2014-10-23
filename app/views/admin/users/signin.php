@@ -5,7 +5,6 @@
         <title>游戏商店后台</title>
         <link href="<?php echo asset('/css/admin/signin.css') ?>" rel="stylesheet" type="text/css" />
         <script type="text/javascript"  src="<?php echo asset('/js/jquery.min.js') ?>"></script>
-        <script type="text/javascript" src="<?php echo asset('/js/admin/signin.js') ?>"></script>
         <script type="text/javascript"  src="<?php echo asset('/js/admin/modernizr.custom.js') ?>"></script>
         <!--/ 弹窗 -->
         <script type="text/javascript">
