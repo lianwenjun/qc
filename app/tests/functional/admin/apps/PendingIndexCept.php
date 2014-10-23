@@ -9,8 +9,12 @@
 $I = new FunctionalTester($scenario);
 $I->wantTo('待审核游戏列表功能');
 
+// 登陆
+$data = ['username' => 'test', 'password' => 'test'];
+$I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
+
 // 列表
-$I->amOnAction('Admin_AppsController@pending');
+$I->amOnAction('Admin_Apps_IndexController@pending');
 $I->see('待审游戏A君');
 
 /* --------------------------------------------------------

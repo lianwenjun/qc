@@ -30,8 +30,8 @@
       
             <li id="one" class="mail"> <a href="#one">游戏管理</a>
                  <ul class="sub-menu">
-                    @if(Sentry::getUser()->hasAccess('apps.onshelf'))
-                       <li><a href="{{ URL::route('apps.onshelf') }}" target=BoardRight>上架游戏列表</a></li>
+                    @if(Sentry::getUser()->hasAccess('apps.stock'))
+                       <li><a href="{{ URL::route('apps.stock') }}" target=BoardRight>上架游戏列表</a></li>
                     @endif
                     @if(Sentry::getUser()->hasAccess('apps.draft'))
                        <li><a href="{{ URL::route('apps.draft') }}" target=BoardRight>添加编辑游戏</a></li>
@@ -39,8 +39,8 @@
                     @if(Sentry::getUser()->hasAccess('apps.pending'))
                        <li><a href="{{ URL::route('apps.pending') }}" target=BoardRight>待审核列表</a></li>
                     @endif
-                    @if(Sentry::getUser()->hasAccess('apps.nopass'))
-                       <li><a href="{{ URL::route('apps.nopass') }}" target=BoardRight>审核不通过列表</a></li>
+                    @if(Sentry::getUser()->hasAccess('apps.notpass'))
+                       <li><a href="{{ URL::route('apps.notpass') }}" target=BoardRight>审核不通过列表</a></li>
                     @endif
                     @if(Sentry::getUser()->hasAccess('apps.unstock'))
                        <li><a href="{{ URL::route('apps.unstock') }}" target=BoardRight>下架游戏列表</a></li>
