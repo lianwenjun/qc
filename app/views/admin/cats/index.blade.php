@@ -6,7 +6,7 @@
     <div class="Theme_Search">
         <ul>
             <li> 
-                 @if (Sentry::getUser()->hasAccess('cate.create'))
+                 @if (Sentry::getUser()->hasAccess('cat.create'))
                  <span><input id="Classification" type="submit" value="添加分类" class="Search_en" /></span>
                  @endif
                  @if (Sentry::getUser()->hasAccess('tag.create'))
@@ -23,11 +23,11 @@
                     <!--分类标签管理!-->
                     <div style="width:100%; height:390px; scrollbar-3dlight-color:#DDD; scrollbar-arrow-color:#333; scrollbar-base-color:#cfcfcf; scrollbar-darkshadow-color:#fff; scrollbar-face-color:#cfcfcf; scrollbar-highlight-color:#fff; scrollbar-shadow-color:#595959; overflow-y:auto; overflow-x:hidden">
                         <ul class="dropdown">
-                            @foreach($cates as $index => $cate)
-                                <li class="jq-cate" data-cate-id="{{  $cate['data']['id'] }}"><a href="javascript:;"><span class="Push_page">{{  $cate['data']['title'] }}</span></a>
+                            @foreach($cats as $index => $cat)
+                                <li class="jq-cat" data-cat-id="{{  $cat['data']['id'] }}"><a href="javascript:;"><span class="Push_page">{{  $cat['data']['title'] }}</span></a>
                                     <!--二级分类!-->
                                     <ul>
-                                        @foreach($cate['list'] as $tag)
+                                        @foreach($cat['list'] as $tag)
                                             <li class="Push_fen"><span>{{$tag['title']}}</span></li>
                                         @endforeach
                                     </ul>
@@ -51,31 +51,31 @@
                 <!--未选择游戏分类-->
                 <div class="user_Prompt"  style="display:none">未选择游戏分类</div>
                     <!--未选择游戏分类-->
-                    @foreach($cates as $index => $cate)
-                        <div data-cate-id= "{{ $cate['data']['id'] }}" class="user_tabler user_Lower ja-cate-id jq-cate-{{ $cate['data']['id'] }}" style="display:none">
+                    @foreach($cats as $index => $cat)
+                        <div data-cat-id= "{{ $cat['data']['id'] }}" class="user_tabler user_Lower ja-cat-id jq-cat-{{ $cat['data']['id'] }}" style="display:none">
                             <ul>
-                                <li class="user_one"><strong>分类名称：</strong><p class="jq-title">{{ $cate['data']['title']}}</p></li>
-                                <li class="user_two"><strong>游戏数量：</strong>{{ $cate['appcount']}}</li>
-                                <li class="user_one"><strong>搜索次数：</strong>{{ $cate['data']['search_total'] }}</li>
+                                <li class="user_one"><strong>分类名称：</strong><p class="jq-title">{{ $cat['data']['title']}}</p></li>
+                                <li class="user_two"><strong>游戏数量：</strong>{{ $cat['appcount']}}</li>
+                                <li class="user_one"><strong>搜索次数：</strong>{{ $cat['data']['search_total'] }}</li>
                                 <li class="user_two">
                                     <strong>标签管理：</strong>
-                                    @if (Sentry::getUser()->hasAccess('cate.show'))
-                                    <a data-url="{{ URL::route('cate.show', $cate['data']['id']) }}" class="jq-showCate" href="javascript:;">{{ count($cate['list']) }}（点击查看标签信息）</a>
+                                    @if (Sentry::getUser()->hasAccess('cat.show'))
+                                    <a data-url="{{ URL::route('cat.show', $cat['data']['id']) }}" class="jq-showcat" href="javascript:;">{{ count($cat['list']) }}（点击查看标签信息）</a>
                                     @endif
                                 </li>
-                                <li class="user_one"><strong>添加时间：</strong>{{ $cate['data']['created_at'] }}</li>
+                                <li class="user_one"><strong>添加时间：</strong>{{ $cat['data']['created_at'] }}</li>
                                 <li class="user_button">
-                                    @if (Sentry::getUser()->hasAccess('cate.edit'))
-                                    <a class="Search_show jq-editCate" href="javascript:;">修 改</a>
+                                    @if (Sentry::getUser()->hasAccess('cat.edit'))
+                                    <a class="Search_show jq-editcat" href="javascript:;">修 改</a>
                                     @endif
-                                    @if (Sentry::getUser()->hasAccess('cate.delete'))
-                                    <a class="Search_xiajia jq-delCate" href="javascript:;">删除</a>
+                                    @if (Sentry::getUser()->hasAccess('cat.delete'))
+                                    <a class="Search_xiajia jq-delcat" href="javascript:;">删除</a>
                                     @endif
                                 </li>
                                 
-                                <input type="hidden" name="edit_url" value="{{ URL::route('cate.edit', $cate['data']['id']) }}"/>
-                                <input type="hidden" name="pre_title" value="{{ $cate['data']['title']}}"/>
-                                <input type="hidden" name="del_url" value="{{ URL::route('cate.delete', $cate['data']['id']) }}" />
+                                <input type="hidden" name="edit_url" value="{{ URL::route('cat.edit', $cat['data']['id']) }}"/>
+                                <input type="hidden" name="pre_title" value="{{ $cat['data']['title']}}"/>
+                                <input type="hidden" name="del_url" value="{{ URL::route('cat.delete', $cat['data']['id']) }}" />
                             </ul>
                         </div>
                     @endforeach
@@ -143,32 +143,32 @@ function returnMsgBox(text) {
     });
 };
 $(function(){
-    $(".jq-cate:odd").addClass("Push_left_two");
-    $(".jq-cate:even").addClass("Push_left_one");
+    $(".jq-cat:odd").addClass("Push_left_two");
+    $(".jq-cat:even").addClass("Push_left_one");
     $("#scrollDiv").textSlider({line:4,speed:500,timer:3000});
 
     //JQ-add
-    cateCreateUrl = "{{ route('cate.create') }}";
+    catCreateUrl = "{{ route('cat.create') }}";
     tagCreateUrl = "{{ route('tag.create') }}";
-    updateCate = '<a class="Search_show jq-updateCate" href="javascript:;">确定</a>';
+    updatecat = '<a class="Search_show jq-updatecat" href="javascript:;">确定</a>';
     updateTag = '<a class="Search_show jq-updateTag" href="javascript:;">确定</a>';
-    buttonCate = '<a class="Search_show jq-editCate" href="javascript:;">修 改</a><a class="Search_xiajia jq-delCate" href="javascript:;">删除</a>';
+    buttoncat = '<a class="Search_show jq-editcat" href="javascript:;">修 改</a><a class="Search_xiajia jq-delcat" href="javascript:;">删除</a>';
     buttonTag = '<a class="Search_show jq-editTag" href="javascript:;">修 改</a><a class="Search_xiajia jq-delTag" href="javascript:;">删除</a>';
-    var cateText = '<table align="center" border="0" cellspacing="0" cellpadding="0" class="add_Classification">' +
+    var catText = '<table align="center" border="0" cellspacing="0" cellpadding="0" class="add_Classification">' +
                     '<tr>' + 
                         '<td width="114" align="right">分类名称：</td>' + 
-                        '<td height="40"><input name="cate" maxlength="15" type="text" class="add_Classification_text"/></td>' + 
+                        '<td height="40"><input name="cat" maxlength="15" type="text" class="add_Classification_text"/></td>' + 
                     '</tr><tr>' + 
                         '<td colspan="2" style=" text-align:center; padding:15px 0px;">'+
-                        '<input name="" type="button" value="添加" class="Search_en jq-addCate" /></td>'+
+                        '<input name="" type="button" value="添加" class="Search_en jq-addcat" /></td>'+
                     '</tr></table>';
     var tagText =   '<table align="center" border="0" cellspacing="0" cellpadding="0" class="add_Classification">' +
                         '<tr>'+
                         '<td width="114" align="right">所属分类：</td>' + 
                         '<td height="40">' + 
                             '<select id="u117_input" name="parent_id">' +
-                                @foreach($allcates as $cate)
-                                    '<option value="{{ $cate->id }}">{{ $cate->title }}</option>' +
+                                @foreach($allcats as $cat)
+                                    '<option value="{{ $cat->id }}">{{ $cat->title }}</option>' +
                                 @endforeach
                             '</select>' + 
                         '</td></tr><tr>' + 
@@ -180,11 +180,11 @@ $(function(){
                             '<input name="" type="button" value="添加" class="Search_en jq-addTag" />' +
                         '</td></tr></table>';
     //添加分类
-    function addCate(){
-        var processCate = function(){
-            var cate = $('input[name=cate]').val();
-            var createUrl = "{{ route('cate.create') }}";
-            $.post(createUrl, {word:cate}, function(res){
+    function addcat(){
+        var processcat = function(){
+            var cat = $('input[name=cat]').val();
+            var createUrl = "{{ route('cat.create') }}";
+            $.post(createUrl, {word:cat}, function(res){
                 if ( res.status == 'ok' ){
                     $.jBox.close();
                     return;
@@ -192,15 +192,15 @@ $(function(){
                 returnMsgBox('添加分类失败');
             });
         };
-        $('.jq-addCate').click(function(){
-            processCate();
+        $('.jq-addcat').click(function(){
+            processcat();
         });
         //ENTER健监听
-        var $inp = $('input[name=cate]'); 
+        var $inp = $('input[name=cat]'); 
         $inp.keypress(function (e) { 
             var key = e.which; 
             if (key == 13) {
-                processCate();
+                processcat();
             }
         });
     }
@@ -235,7 +235,7 @@ $(function(){
         });
     }
     $("#Classification").click(function(){
-        $.jBox(cateText, {  
+        $.jBox(catText, {  
             title: "<div class=ask_title>分类添加</div>",  
             width: 550,  
             height:370,
@@ -246,7 +246,7 @@ $(function(){
             top: '20%',
             loaded:function(){
                 $("body").css("overflow-y","hidden");
-                addCate();
+                addcat();
             }
             ,
             closed:function(){
@@ -293,38 +293,38 @@ $(function(){
         }
     });
     //点击分类
-    $(".jq-cate").click(function() {
-        var cate_id = $(this).attr('data-cate-id');
-        $(".ja-cate-id").hide();
-        $(".jq-cate-" + cate_id).show();
+    $(".jq-cat").click(function() {
+        var cat_id = $(this).attr('data-cat-id');
+        $(".ja-cat-id").hide();
+        $(".jq-cat-" + cat_id).show();
         $(".user_center").show();
         $(".user_right").hide();
     });
     //点击编辑分类
-    $(".jq-editCate").live('click', function() {
+    $(".jq-editcat").live('click', function() {
         var li = $(this).parents('ul').children('li');
         var title = li.eq(0).find('.jq-title').html();
-        var to_title = '<input name="editCate" type="text" value="" />';
+        var to_title = '<input name="editcat" type="text" value="" />';
         li.eq(0).find('.jq-title').html(to_title);
-        li.eq(0).find('input[name=editCate]').val(title);
-        li.find('.user_button').html(updateCate);
+        li.eq(0).find('input[name=editcat]').val(title);
+        li.find('.user_button').html(updatecat);
     });
     //确定修改分类
-    $(".jq-updateCate").live('click', function() {
+    $(".jq-updatecat").live('click', function() {
         var li = $(this).parents('ul').children('li');
-        var title = li.eq(0).find('input[name=editCate]').val();
+        var title = li.eq(0).find('input[name=editcat]').val();
         var data = {word:title};
         var editUrl = $(this).parents().children('input[name=edit_url]').val();
         $.post(editUrl, data, function(res) {
             if (res.status == 'ok'){
                 returnMsgBox('修改成功');
                 li.eq(0).find('.jq-title').html(title);
-                li.find('.user_button').html(buttonCate);
+                li.find('.user_button').html(buttoncat);
             }
         });
     });
     //显示分类标签列表
-    $(".jq-showCate").click(function() {
+    $(".jq-showcat").click(function() {
         var showUrl = $(this).attr('data-url');
         $.get(showUrl, function(res) {
             if (res.status == 'ok') {
@@ -410,7 +410,7 @@ $(function(){
         delMsgBox(del);
     });
     //点击删除分类
-    $(".jq-delCate").live('click', function(){
+    $(".jq-delcat").live('click', function(){
         var thisObj = $(this);
         var del = function(){
             var delUrl = thisObj.parents().find('input[name=del_url]').val();
