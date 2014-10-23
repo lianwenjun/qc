@@ -165,8 +165,8 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
     * 上传图片
     */
     public function upload(){
-        $adsModel = new Ads();
-        return $adsModel->imageUpload();
+        $cupload = new Admin_Cupload;
+        return $upload->adsImageUpload();
     }
 
 }

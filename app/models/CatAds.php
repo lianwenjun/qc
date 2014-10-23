@@ -11,16 +11,4 @@ class CatAds extends \Eloquent {
     public $updateRules = [
         'image' => 'required'
     ];
-
-    public function imageUpload() {
-        return Plupload::receive('file', function ($file)
-        {
-            list($dir, $filename) = uploadPath('cateads', $file->getClientOriginalName());
-            $file->move($dir, $filename);
-
-            $savePath = $dir . '/' . $filename;
-
-            return str_replace(public_path(), '', $savePath);
-        });
-    }
 }

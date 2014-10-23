@@ -53,14 +53,13 @@ class Admin_IndexController extends \Admin_BaseController {
     * @return Response
     */
     public function searchApps() {
-        $appsModel = new Apps();
         if (Input::get('type') == 'appid') {
             $query =  Input::get('query', 0);
-            $apps = $appsModel->select('id', 'title')->where('status', 'onshelf')->where('id', $query)
+            $apps = Apps::select('id', 'title')->where('status', 'stock')->where('id', $query)
                 ->orderBy('id', 'desc')->get();
         } else {
             $query = '%' . Input::get('query') . '%';
-            $apps = $appsModel->select('id', 'title')->where('status', 'onshelf')->where('title', 'like', $query)
+            $apps = Apps::select('id', 'title')->where('status', 'stock')->where('title', 'like', $query)
                 ->orderBy('id', 'desc')->get();
         }
         $data = [];
@@ -77,9 +76,8 @@ class Admin_IndexController extends \Admin_BaseController {
     * @return Response
     */
     public function appsinfo($id) {
-        $appsModel = new Apps();
-        $app = $appsModel->select('id', 'title', 'icon', 'pack', 'size', 'version', 'created_at')
-                    ->where('status', 'onshelf')->where('id', $id)->first();
+        $app = Apps::select('id', 'title', 'icon', 'pack', 'size', 'version', 'created_at')
+                    ->where('status', 'stock')->where('id', $id)->first();
         if (!empty($app)) {
             return Response::json(['data' => $app, 'status'=>'ok']);
         }
