@@ -133,9 +133,9 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
         $apps = new Apps;
         $app = $apps->info($id);
 
-        $cats = new Cats;
-        $cats = $cats->allCats();
-        $tags  = $cats->allTagsWithCate();
+        $cats    = new Cats;
+        $allCats = $cats->allCats();
+        $tags    = $cats->allTagsWithCat();
 
         if(empty($app)) {
             $tips = ['success' => false, 'message' => "亲，ID：{$id}的游戏不存在"];
@@ -146,7 +146,7 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
 
         return View::make('admin.apps.index.edit')
                    ->with('app', $app)
-                   ->with('cats', $cats)
+                   ->with('cats', $allCats)
                    ->with('tags', $tags);
     }
 
