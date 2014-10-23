@@ -12,6 +12,10 @@
 $I = new FunctionalTester($scenario);
 $I->wantTo('添加编辑游戏编辑功能');
 
+// 登陆
+$data = ['username' => 'test', 'password' => 'test'];
+$I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
+
 // 必填验证
 $I->amOnPage('/admin/apps/draft/14');
 $data = [

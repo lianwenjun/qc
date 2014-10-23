@@ -27,6 +27,11 @@
 
 $I = new FunctionalTester($scenario);
 $I->wantTo('上架游戏列表功能');
+
+// 登陆
+$data = ['username' => 'test', 'password' => 'test'];
+$I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
+
 $I->amOnAction('Admin_AppsController@onshelf');
 $I->see('上架游戏C君');
 

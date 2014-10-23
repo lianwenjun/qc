@@ -2,6 +2,7 @@
 $I = new AcceptanceTester($scenario);
 $I->wantTo('添加编辑游戏');
 
+// 登陆
 $I->amOnPage('/admin/users/signin');
 $I->fillField('username', 'test');
 $I->fillField('password', 'test');

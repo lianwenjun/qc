@@ -19,6 +19,10 @@
 $I = new FunctionalTester($scenario);
 $I->wantTo('添加编辑游戏列表功能');
 
+// 登陆
+$data = ['username' => 'test', 'password' => 'test'];
+$I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
+
 // 列表
 $I->amOnAction('Admin_AppsController@draft');
 $I->see('上传游戏A君');
