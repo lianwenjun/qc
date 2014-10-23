@@ -1,8 +1,8 @@
 <?php
 
-Breadcrumbs::register('apps.onshelf', function($breadcrumbs) {
+Breadcrumbs::register('apps.stock', function($breadcrumbs) {
     $breadcrumbs->push('游戏管理', 'javascript:;');
-    $breadcrumbs->push('上架游戏列表', route('apps.onshelf'));
+    $breadcrumbs->push('上架游戏列表', route('apps.stock'));
 });
 
 Breadcrumbs::register('apps.draft', function($breadcrumbs) {
@@ -15,14 +15,14 @@ Breadcrumbs::register('apps.pending', function($breadcrumbs) {
     $breadcrumbs->push('待审核列表', route('apps.pending'));
 });
 
-Breadcrumbs::register('apps.nopass', function($breadcrumbs) {
+Breadcrumbs::register('apps.notpass', function($breadcrumbs) {
     $breadcrumbs->push('游戏管理', 'javascript:;');
-    $breadcrumbs->push('审核不通过列表', route('apps.nopass'));
+    $breadcrumbs->push('审核不通过列表', route('apps.notpass'));
 });
 
-Breadcrumbs::register('apps.offshelf', function($breadcrumbs) {
+Breadcrumbs::register('apps.unstock', function($breadcrumbs) {
     $breadcrumbs->push('游戏管理', 'javascript:;');
-    $breadcrumbs->push('下架游戏列表', route('apps.offshelf'));
+    $breadcrumbs->push('下架游戏列表', route('apps.unstock'));
 });
 
 Breadcrumbs::register('apps.edit', function($breadcrumbs) {
@@ -32,6 +32,6 @@ Breadcrumbs::register('apps.edit', function($breadcrumbs) {
 
 Breadcrumbs::register('apps.history', function($breadcrumbs) {
     $breadcrumbs->push('游戏管理', 'javascript:;');
-    $breadcrumbs->push('上架游戏列表', route('apps.onshelf'));
+    $breadcrumbs->push('上架游戏列表', route('apps.stock'));
     $breadcrumbs->push('历史', 'javascript:;');
 });

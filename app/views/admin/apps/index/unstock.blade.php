@@ -11,25 +11,25 @@
 <script type="text/javascript" src="{{ asset('js/admin/common.js') }}"></script>
 <div class="Content_right_top Content_height">
    <div class="Theme_title">
-      {{ Breadcrumbs::render('apps.offshelf') }}
+      {{ Breadcrumbs::render('apps.unstock') }}
    </div>
-   <form action="{{ URL::route('apps.offshelf') }}" method="get">
+   <form action="{{ URL::route('apps.unstock') }}" method="get">
       <div class="Theme_Search">
          <ul>
             <li>
                <span>
                   <b>查询：</b>
-                  <select name="cate_id">
+                  <select name="cat_id">
                      <option value="">--全部--</option>
-                     @foreach($cates as $cate)
-                     <option value="{{ $cate->id }}" @if(Input::get('cate_id') == $cate->id)selected="selected"@endif>{{ $cate->title }}</option>
+                     @foreach($cats as $cat)
+                     <option value="{{ $cat->id }}" @if(Input::get('cat_id') == $cat->id)selected="selected"@endif>{{ $cat->title }}</option>
                      @endforeach
                   </select>
                </span>
                <span>
                   <input name="title" type="text" class="Search_wenben" size="20" placeholder="请输入关键词" value="{{ Input::get('title') }}"/>
                </span>
-               <span>　<b>日期：</b><input name="offshelfed_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('offshelfed_at')[0]) ? Input::get('offshelfed_at')[0] : '' }}"/><b>-</b><input name="offshelfed_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('offshelfed_at')[1]) ? Input::get('offshelfed_at')[1] : '' }}"/></span>
+               <span>　<b>日期：</b><input name="unstocked_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('unstocked_at')[0]) ? Input::get('unstocked_at')[0] : '' }}"/><b>-</b><input name="unstocked_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('unstocked_at')[1]) ? Input::get('unstocked_at')[1] : '' }}"/></span>
                <input type="submit" value="搜索" class="Search_en" />
             </li>
          </ul>
@@ -64,15 +64,15 @@
             <td>{{ $app['title'] }}</td>
             <td><img src="{{ asset($app['icon']) }}" width="28" height="28" /></td>
             <td>{{ $app['pack'] }}</td>
-            <td>{{ !empty($app['cate_name']) ? $app['cate_name'] : '/' }}</td>
+            <td>{{ !empty($app['cat_name']) ? $app['cat_name'] : '/' }}</td>
             <td>{{ $app['size'] }}</td>
             <td>{{ $app['version'] }}</td>
-            <td>{{ $app['onshelfed_at'] != '0000-00-00 00:00:00' ? date('Y-m-d H:i', strtotime($app['onshelfed_at'])) : '' }}</td>
-            <td>{{ $app['offshelfed_at'] != '0000-00-00 00:00:00' ? date('Y-m-d H:i', strtotime($app['offshelfed_at'])) : '' }}</td>
+            <td>{{ $app['stocked_at'] != '0000-00-00 00:00:00' ? date('Y-m-d H:i', strtotime($app['stocked_at'])) : '' }}</td>
+            <td>{{ $app['unstocked_at'] != '0000-00-00 00:00:00' ? date('Y-m-d H:i', strtotime($app['unstocked_at'])) : '' }}</td>
             <td>{{ isset($app['operator']) && !empty($app['operator']) ? $app['operator'] : '' }}</td>
             <td>
-              @if(Sentry::getUser()->hasAccess('apps.offshelf.edit'))
-              <a href="{{ URL::route('apps.offshelf.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a>
+              @if(Sentry::getUser()->hasAccess('apps.unstock.edit'))
+              <a href="{{ URL::route('apps.unstock.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a>
               @endif
             </td>
          </tr>
@@ -89,7 +89,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
       // 日期控件
-      $('input[name="offshelfed_at[]"]').datepicker({dateFormat: 'yy-mm-dd'});
+      $('input[name="unstocked_at[]"]').datepicker({dateFormat: 'yy-mm-dd'});
 
       // 分页
       pageInit({{ $apps['current_page'] }}, {{ $apps['last_page'] }}, {{ $apps['total'] }});

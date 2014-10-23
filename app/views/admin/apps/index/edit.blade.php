@@ -119,16 +119,16 @@ ul.ui-sortable li.placeholder:before {
                 <td  class="Search_lei"><span class="required">*</span>游戏分类：</td>
                 <td>
                     <span style="float:left; line-height:26px; padding-right:8px;" class="jq-initCates">
-                        <?php $split = ''; $catesText = ''; $catesInput = ''; ?>
-                        @foreach($app->cates as $cate)
-                            <?php $catesText .=  $split.$cate->title; ?>
-                            <?php $catesInput .= "<input name='cates[]' value='".$cate->id."'>"; ?>
+                        <?php $split = ''; $catsText = ''; $catsInput = ''; ?>
+                        @foreach($app->cats as $cat)
+                            <?php $catsText .=  $split.$cat->title; ?>
+                            <?php $catsInput .= "<input name='cats[]' value='".$cat->id."'>"; ?>
                             <?php $split = ', '; ?>
                         @endforeach
-                        {{ $catesText }}
+                        {{ $catsText }}
                     </span>
-                    <input name="checkCate" type="hidden" value="{{ $catesText }}"/><!-- 验证用 -->
-                    <span style="float:left;"><a href="javascript:;" class="Search_en jq-cates">修改</a></span>
+                    <input name="checkCate" type="hidden" value="{{ $catsText }}"/><!-- 验证用 -->
+                    <span style="float:left;"><a href="javascript:;" class="Search_en jq-cats">修改</a></span>
                 </td>
             </tr>
 
@@ -139,7 +139,7 @@ ul.ui-sortable li.placeholder:before {
                         <?php $split = ''; $tagsText = ''; ?>
                         @foreach($app->tags as $tag)
                             <?php $tagsText .=  $split.$tag->title; ?>
-                            <?php $catesInput .= "<input name='cates[]' value='".$tag->id."'>"; ?>
+                            <?php $catsInput .= "<input name='cats[]' value='".$tag->id."'>"; ?>
                             <?php $split = '</h2>, <h2>'; ?>
                         @endforeach
                         {{ '<h2>' . $tagsText  . '</h2>' }}
@@ -218,12 +218,12 @@ ul.ui-sortable li.placeholder:before {
             </tr>
             <tr class="Search_biao_one">
                <td colspan="2" align="center" class="Search_submit">
-                  @if($app->status == 'new' || $app->status == 'draft')
+                  @if($app->status == 'publish' || $app->status == 'draft')
                   <a href="javascript:;" class="jq-submitDraft" data-action="{{ URL::route('apps.draft.edit', ['id' => $app->id]) }}">存为草搞件</a>
                   <a href="javascript:;" data-action="{{ URL::route('apps.pending.edit', ['id' => $app->id]) }}" class="jq-submit">提 交</a>
-                  @elseif($app->status == 'onshelf')
-                  <a href="javascript:;" data-action="{{ URL::route('apps.onshelf.edit', ['id' => $app->id]) }}" class="jq-submit">提 交</a>
-                  @elseif($app->status == 'nopass' || $app->status == 'offshelf')
+                  @elseif($app->status == 'stock')
+                  <a href="javascript:;" data-action="{{ URL::route('apps.stock.edit', ['id' => $app->id]) }}" class="jq-submit">提 交</a>
+                  @elseif($app->status == 'notpass' || $app->status == 'unstock')
                       @if(Sentry::getUser()->hasAccess('apps.pending.edit'))
                   <a href="javascript:;" data-action="{{ URL::route('apps.pending.edit', ['id' => $app->id]) }}" class="jq-submit">提交待审核列表</a>
                       @endif
@@ -232,7 +232,7 @@ ul.ui-sortable li.placeholder:before {
             </tr>
          </tbody>
       </table>
-      <div class="jq-cate" style="display:none">{{ $catesInput }}</div>
+      <div class="jq-cat" style="display:none">{{ $catsInput }}</div>
       <input name="_method" type="hidden" value="put"/>
       </form>
    </div>
@@ -249,20 +249,20 @@ ul.ui-sortable li.placeholder:before {
      * @return void
      */
     function initCates(h) {
-        var catesText = $('.jq-initCates').text();
+        var catsText = $('.jq-initCates').text();
 
-        var cates = catesText.trim().split(", ");
+        var cats = catsText.trim().split(", ");
 
-        h.find('.jq-cateClick').each(function() {
-            for(i in cates) {
-                // console.log($(this).parent().text() + ' ---> ' + cates[i].trim());
-                if($(this).parent().text() == cates[i].trim()) {
+        h.find('.jq-catClick').each(function() {
+            for(i in cats) {
+                // console.log($(this).parent().text() + ' ---> ' + cats[i].trim());
+                if($(this).parent().text() == cats[i].trim()) {
 
                     // 选中
                     $(this).attr('checked', 'checked');
 
                     // 显示
-                    h.find('#cate_' + $(this).val()).show();
+                    h.find('#cat_' + $(this).val()).show();
                 }
             }
         });
@@ -297,37 +297,37 @@ ul.ui-sortable li.placeholder:before {
         $(".jq-initKeyword").val({{ json_encode($app->keywords) }}).trigger("change");
 
         // 弹出内容
-        var cateSelect = "<div class='add_update jq-cateForm'>" +
+        var catSelect = "<div class='add_update jq-catForm'>" +
                            "<div class='add_update_title'>游戏分类</div>" +
                            "<div class='add_update_lei'>" +
                               "<ul>" +
-                              @foreach($cates as $cate)
-                                 "<li><lable><input type='checkbox' class='jq-cateClick' value='{{ $cate->id }}' name='cates[]'/>{{ $cate->title }}</lable></li>" +
+                              @foreach($cats as $cat)
+                                 "<li><lable><input type='checkbox' class='jq-catClick' value='{{ $cat->id }}' name='cats[]'/>{{ $cat->title }}</lable></li>" +
                               @endforeach
                               "</ul>" +
                            "</div>" +
                            "<div class='add_update_Label' style='height: 230px'>" +
                               "<div class='add_update_title'>标签内容</div>" +
-                              @foreach($tags as $k => $cate)
-                              "<div class='tags-list' id='cate_{{$k}}'>"+
-                                  "<div class='add_update_title_lei'>{{ $cate['title'] }}</div><div class='add_update_lei'><ul>"+
-                                     @if(isset($cate['tags']))
-                                        @foreach($cate['tags'] as $tag)
-                                        "<li><lable><input type='checkbox' name='cates[]' value='{{ $tag['id'] }}'/>{{ $tag['title'] }}</lable></li>" +
+                              @foreach($tags as $k => $cat)
+                              "<div class='tags-list' id='cat_{{$k}}'>"+
+                                  "<div class='add_update_title_lei'>{{ $cat['title'] }}</div><div class='add_update_lei'><ul>"+
+                                     @if(isset($cat['tags']))
+                                        @foreach($cat['tags'] as $tag)
+                                        "<li><lable><input type='checkbox' name='cats[]' value='{{ $tag['id'] }}'/>{{ $tag['title'] }}</lable></li>" +
                                         @endforeach
                                      @endif
                                   "</ul></div>" +
                               "</div>" +
                               @endforeach
                            "</div>" +
-                           "<div class='add_update_button'><input type='button' value='确定' class='Search_en jq-cateSubmit'/></div>" +
+                           "<div class='add_update_button'><input type='button' value='确定' class='Search_en jq-catSubmit'/></div>" +
                         "</div>";
 
 
         // 弹出分类选择
         var jbox = null;
-        $(".jq-cates").click(function(){
-            $.jBox(cateSelect, {
+        $(".jq-cats").click(function(){
+            $.jBox(catSelect, {
                 title: "<div class=ask_title>游戏分类</div>",
                 width: 650,
                 height:450,
@@ -350,34 +350,34 @@ ul.ui-sortable li.placeholder:before {
         });
 
         // 分类选择处理
-        $(".jq-cateClick").live('click', function() {
+        $(".jq-catClick").live('click', function() {
             if($(this).attr('checked') == 'checked') {
-                jbox.find('#cate_' + $(this).val()).show();
+                jbox.find('#cat_' + $(this).val()).show();
             } else {
-                jbox.find('#cate_' + $(this).val()).find('input[type="checkbox"]').attr('checked', false);
-                jbox.find('#cate_' + $(this).val()).hide();
+                jbox.find('#cat_' + $(this).val()).find('input[type="checkbox"]').attr('checked', false);
+                jbox.find('#cat_' + $(this).val()).hide();
             }
         });
 
         // 确定分类
-        $(".jq-cateSubmit").live('click', function() {
+        $(".jq-catSubmit").live('click', function() {
 
             $('.jq-initCates').text('');
             $('.jq-initTags').text('');
 
             // 分类提交
-            var cates = [];
-            jbox.find('.jq-cateClick').each(function() {
+            var cats = [];
+            jbox.find('.jq-catClick').each(function() {
                 if($(this).attr('checked') == 'checked') {
-                    cates.push($(this).parent().text());
+                    cats.push($(this).parent().text());
                 }
             });
 
-            $('.jq-initCates').html(cates.join(",  ")).next('input').val(cates.join(", "));
+            $('.jq-initCates').html(cats.join(",  ")).next('input').val(cats.join(", "));
 
             // 标签提交
             var tags = [];
-            jbox.find('[id^="cate_"]').each(function() {
+            jbox.find('[id^="cat_"]').each(function() {
                 $(this).find('input[type="checkbox"]').each(function(){
                     if($(this).attr('checked') == 'checked') {
                         tags.push($(this).parent().text());
@@ -387,7 +387,7 @@ ul.ui-sortable li.placeholder:before {
             $('.jq-initTags').html("<h2>" + tags.join("</h2>, <h2>") + "</h2>").next('input').val(tags.join(", "));
 
             // 表单包含到提交表单
-            $('.jq-cate').html($('.jq-cateForm').clone());
+            $('.jq-cat').html($('.jq-catForm').clone());
 
             $.jBox.close();
         });

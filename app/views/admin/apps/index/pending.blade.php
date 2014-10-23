@@ -90,10 +90,10 @@
             <ul>
                 <li>
                     <span><b>查询：</b>
-                    <select name="cate_id">
+                    <select name="cat_id">
                         <option value="">--全部--</option>
-                        @foreach($cates as $cate)
-                        <option value="{{ $cate->id }}" @if(Input::get('cate_id') == $cate->id)selected="selected"@endif>{{ $cate->title }}</option>
+                        @foreach($cats as $cat)
+                        <option value="{{ $cat->id }}" @if(Input::get('cat_id') == $cat->id)selected="selected"@endif>{{ $cat->title }}</option>
                         @endforeach
                     </select>
                     </span>
@@ -136,17 +136,17 @@
             <td><img src="{{ asset($app['icon']) }}" width="28" height="28" /></td>
             <td>{{ $app['title'] }}</td>
             <td>{{ $app['pack'] }}</td>
-            <td>{{ !empty($app['cate_name']) ? $app['cate_name'] : '/' }}</td>
+            <td>{{ !empty($app['cat_name']) ? $app['cat_name'] : '/' }}</td>
             <td>{{ $app['size'] }}</td>
             <td>{{ $app['version'] }}</td>
             <td><a href="javascript:;" data-id="{{ $app['id'] }}" class="Search_Look jq-preview">点击预览</a></td>
             <td>{{ date('Y-m-d H:i', strtotime($app['updated_at'])) }}</td>
             <td>
-                @if(Sentry::getUser()->hasAccess('apps.dopass'))
-                <a href="{{ URL::route('apps.dopass', ['id' => $app['id']]) }}" class="Search_show jq-dopass">通过</a>
+                @if(Sentry::getUser()->hasAccess('apps.putStock'))
+                <a href="{{ URL::route('apps.putStock', ['id' => $app['id']]) }}" class="Search_show jq-putStock">通过</a>
                 @endif
-                @if(Sentry::getUser()->hasAccess('apps.donopass'))
-                <a href="{{ URL::route('apps.donopass', ['id' => $app['id']]) }}" class="Search_Notthrough jq-nopass">不通过</a>
+                @if(Sentry::getUser()->hasAccess('apps.putNotpass'))
+                <a href="{{ URL::route('apps.putNotpass', ['id' => $app['id']]) }}" class="Search_Notthrough jq-putNotpass">不通过</a>
                 @endif
             </td>
          </tr>
@@ -159,11 +159,11 @@
          <tr>
             <td class="DataCount_xuanze">
                 <span><input class="jq-checkAll" type="checkbox"/>全选</span>
-                @if(Sentry::getUser()->hasAccess('apps.doallpass'))
-                <input type="button" value="已选择全部通过" class="jq-allPass DataCount_button" />
+                @if(Sentry::getUser()->hasAccess('apps.putStock'))
+                <input type="button" value="已选择全部通过" class="jq-putAllStock DataCount_button" />
                 @endif
-                @if(Sentry::getUser()->hasAccess('apps.doallnopass'))
-                <input type="button" value="已选择全部不通过" class="jq-allNoPass DataCount_button" />
+                @if(Sentry::getUser()->hasAccess('apps.putNotpass'))
+                <input type="button" value="已选择全部不通过" class="jq-putAllNotpass DataCount_button" />
                 @endif
             </td>
          </tr>
@@ -186,7 +186,7 @@
         $('input[name="updated_at[]"]').datepicker({dateFormat: 'yy-mm-dd'});
 
         // 审核通过
-        $('.jq-dopass').click(function() {
+        $('.jq-putStock').click(function() {
 
             var link = $(this).attr('href');
 
@@ -202,7 +202,7 @@
         });
 
         // 审核不通过理由弹窗
-        $('.jq-nopass').click(function() {
+        $('.jq-putNotpass').click(function() {
             var $this = $(this);
             var link = $(this).attr('href');
             $.jBox('<div class="Look_content"><ul>'+
@@ -252,7 +252,7 @@
         });
 
         // 全部通过
-        $('.jq-allPass').click(function() {
+        $('.jq-putAllStock').click(function() {
 
             if(!valiCheckbox('ids[]')) {
                 alert('请先选择游戏');
@@ -266,7 +266,7 @@
                 var form = document.createElement('form');
                 $(this).after($(form).attr({
                             method: 'post',
-                            action: '{{ URL::route('apps.doallpass') }}'
+                            action: '{{ URL::route('apps.putStock') }}'
                 }));
 
                 for(idx in ids) {
@@ -280,7 +280,7 @@
         });
 
         // 全部不通过
-        $('.jq-allNoPass').click(function() {
+        $('.jq-putAllNotpass').click(function() {
             var $this = $(this);
             if(!valiCheckbox('ids[]')) {
                 alert('请先选择游戏');
@@ -315,7 +315,7 @@
                             var form = document.createElement('form');
                             $this.after($(form).attr({
                                         method: 'post',
-                                        action: '{{ URL::route('apps.doallnopass') }}'
+                                        action: '{{ URL::route('apps.putNotpass') }}'
                             }));
 
                             for(idx in ids) {

@@ -84,18 +84,18 @@
 
 <div class="Content_right_top Content_height">
    <div class="Theme_title">
-      {{ Breadcrumbs::render('apps.onshelf') }}
+      {{ Breadcrumbs::render('apps.stock') }}
    </div>
-   <form action="{{ URL::route('apps.onshelf') }}" method="get">
+   <form action="{{ URL::route('apps.stock') }}" method="get">
       <div class="Theme_Search">
          <ul>
             <li>
                <span>
                   <b>查询：</b>
-                  <select name="cate_id">
+                  <select name="cat_id">
                         <option value="">--全部--</option>
-                        @foreach($cates as $cate)
-                        <option value="{{ $cate->id }}" @if(Input::get('cate_id') == $cate->id)selected="selected"@endif>{{ $cate->title }}</option>
+                        @foreach($cats as $cat)
+                        <option value="{{ $cat->id }}" @if(Input::get('cat_id') == $cat->id)selected="selected"@endif>{{ $cat->title }}</option>
                         @endforeach
                     </select>
                   <select name="type">
@@ -109,7 +109,7 @@
                   <input name="keyword" type="text" class="Search_wenben" size="20" placeholder="请输入关键词" value="{{ Input::get('keyword') }}"/>
                </span>
                <span>　<b>安装包大小：</b><input name="size_int[]" type="text" placeholder="10k" style="width: 80px" class="Search_wenben" value="{{ isset(Input::get('size_int')[0]) ? Input::get('size_int')[0] : '' }}"/><b>-</b><input name="size_int[]" type="text" placeholder="10m" style="width: 80px" class="Search_wenben" value="{{ isset(Input::get('size_int')[1]) ? Input::get('size_int')[1] : '' }}"/></span>
-               <span>　<b>日期：</b><input name="onshelfed_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('onshelfed_at')[0]) ? Input::get('onshelfed_at')[0] : '' }}"/><b>-</b><input name="onshelfed_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('onshelfed_at')[1]) ? Input::get('onshelfed_at')[1] : '' }}"/></span>
+               <span>　<b>日期：</b><input name="stocked_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('stocked_at')[0]) ? Input::get('stocked_at')[0] : '' }}"/><b>-</b><input name="stocked_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('stocked_at')[1]) ? Input::get('stocked_at')[1] : '' }}"/></span>
                <input type="submit" value="搜索" class="Search_en" />
             </li>
          </ul>
@@ -135,7 +135,7 @@
             <td width="6%">版本号</td>
             <td width="7%">预览</td>
             <td width="7%" style="cursor:pointer" class="jq-sort" data-field='download_counts' data-order='' data-title="下载量">下载量↑↓</td>
-            <td width="8%" style="cursor:pointer" class="jq-sort" data-field='onshelfed_at' data-order='' data-title="上架时间">上架时间↑↓</td>
+            <td width="8%" style="cursor:pointer" class="jq-sort" data-field='stocked_at' data-order='' data-title="上架时间">上架时间↑↓</td>
             <td width="18%">操作</td>
          </tr>
          @foreach($apps['data'] as $k => $app)
@@ -144,7 +144,7 @@
             <td><img src="{{ asset($app['icon']) }}" width="28" height="28" /></td>
             <td>{{ $app['title'] }}</td>
             <td>{{ $app['pack'] }}</td>
-            <td>{{ !empty($app['cate_name']) ? $app['cate_name'] : '/' }}</td>
+            <td>{{ !empty($app['cat_name']) ? $app['cat_name'] : '/' }}</td>
             <td>{{ $app['size'] }}</td>
             <td>{{ $app['version'] }}</td>
             <td>
@@ -153,13 +153,13 @@
               @endif
             </td>
             <td>{{ $app['download_counts'] }}</td>
-            <td>{{ date('Y-m-d H:i', strtotime($app['onshelfed_at'])) }}</td>
+            <td>{{ date('Y-m-d H:i', strtotime($app['stocked_at'])) }}</td>
             <td>
-              @if(Sentry::getUser()->hasAccess('apps.dooffshelf'))
-              <a href="{{ URL::route('apps.dooffshelf', ['id' => $app['id']]) }}" class="Search_show jq-dooffshelf">下架</a>
+              @if(Sentry::getUser()->hasAccess('apps.putUnstock'))
+              <a href="{{ URL::route('apps.putUnstock', ['id' => $app['id']]) }}" class="Search_show jq-putUnstock">下架</a>
               @endif
-              @if(Sentry::getUser()->hasAccess('apps.onshelf.edit'))
-              <a href="{{ URL::route('apps.onshelf.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">更新</a>
+              @if(Sentry::getUser()->hasAccess('apps.stock.edit'))
+              <a href="{{ URL::route('apps.stock.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">更新</a>
               @endif
               @if(Sentry::getUser()->hasAccess('apps.history'))
               <a href="{{ URL::route('apps.history', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">历史</a>
@@ -184,10 +184,10 @@
 
    $(document).ready(function(){
       // 日期控件
-      $('input[name="onshelfed_at[]"]').datepicker({dateFormat: 'yy-mm-dd'});
+      $('input[name="stocked_at[]"]').datepicker({dateFormat: 'yy-mm-dd'});
 
       // 下架
-      $('.jq-dooffshelf').click(function() {
+      $('.jq-putUnstock').click(function() {
         var link = $(this).attr('href');
         var $this = $(this);
         $.jBox("<p style='margin: 10px'>您要下架吗？</p>", {

@@ -70,7 +70,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
              ->where('id', '[0-9]+');
 
         // 审核
-        Route::put('putStock', ['as' => 'apps.putPublish', 'uses' => 'Admin_Apps_IndexController@putStock']);
+        Route::put('putStock', ['as' => 'apps.putStock', 'uses' => 'Admin_Apps_IndexController@putStock']);
         Route::put('putNotpass', ['as' => 'apps.putNotpass', 'uses' => 'Admin_Apps_IndexController@putNotpass']);
 
 

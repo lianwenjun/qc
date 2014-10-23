@@ -12,18 +12,18 @@
 
 <div class="Content_right_top Content_height">
    <div class="Theme_title">
-      {{ Breadcrumbs::render('apps.nopass') }}
+      {{ Breadcrumbs::render('apps.notpass') }}
    </div>
-   <form action="{{ URL::route('apps.nopass') }}" method="get">
+   <form action="{{ URL::route('apps.notpass') }}" method="get">
       <div class="Theme_Search">
          <ul>
             <li>
                <span>
                   <b>查询：</b>
-                  <select name="cate_id">
+                  <select name="cat_id">
                      <option value="">--全部--</option>
-                     @foreach($cates as $cate)
-                     <option value="{{ $cate->id }}" @if(Input::get('cate_id') == $cate->id)selected="selected"@endif>{{ $cate->title }}</option>
+                     @foreach($cats as $cat)
+                     <option value="{{ $cat->id }}" @if(Input::get('cat_id') == $cat->id)selected="selected"@endif>{{ $cat->title }}</option>
                      @endforeach
                   </select>
                </span>
@@ -65,15 +65,15 @@
             <td>{{ $app['title'] }}</td>
             <td><img src="{{ asset($app['icon']) }}" width="28" height="28" /></td>
             <td>{{ $app['pack'] }}</td>
-            <td>{{ !empty($app['cate_name']) ? $app['cate_name'] : '/' }}</td>
+            <td>{{ !empty($app['cat_name']) ? $app['cat_name'] : '/' }}</td>
             <td>{{ $app['size'] }}</td>
             <td>{{ $app['version'] }}</td>
             <td>{{ date('Y-m-d H:i', strtotime($app['created_at'])) }}</td>
             <td>{{ date('Y-m-d H:i', strtotime($app['updated_at'])) }}</td>
             <td>{{ $app['reason'] }}</td>
             <td>
-               @if(Sentry::getUser()->hasAccess('apps.nopass.edit'))
-               <a href="{{ URL::route('apps.nopass.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a>
+               @if(Sentry::getUser()->hasAccess('apps.notpass.edit'))
+               <a href="{{ URL::route('apps.notpass.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a>
                @endif
                <a href="{{ URL::route('apps.delete', $app['id']) }}" class="Search_del jq-delete">删除</a>
             </td>

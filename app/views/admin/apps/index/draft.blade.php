@@ -28,10 +28,10 @@
             <ul>
                 <li>
                     <span><b>查询：</b>
-                    <select name="cate_id">
+                    <select name="cat_id">
                         <option value="">--全部--</option>
-                        @foreach($cates as $cate)
-                        <option value="{{ $cate->id }}" @if(Input::get('cate_id') == $cate->id)selected="selected"@endif>{{ $cate->title }}</option>
+                        @foreach($cats as $cat)
+                        <option value="{{ $cat->id }}" @if(Input::get('cat_id') == $cat->id)selected="selected"@endif>{{ $cat->title }}</option>
                         @endforeach
                     </select>
                     </span>
@@ -69,13 +69,13 @@
                 <td><img src="{{ asset($app['icon']) }}" width="28" height="28" /></td>
                 <td>{{ $app['title'] }}</td>
                 <td>{{ $app['pack'] }}</td>
-                <td>{{ !empty($app['cate_name']) ? $app['cate_name'] : '/' }}</td>
+                <td>{{ !empty($app['cat_name']) ? $app['cat_name'] : '/' }}</td>
                 <td>{{ $app['size'] }}</td>
                 <td>{{ $app['version'] }}</td>
                 <td>{{ date('Y-m-d H:i', strtotime($app['created_at'])) }}</td>
                 <td>
                 @if(Sentry::getUser()->hasAccess('apps.draft.edit'))
-                    @if($app['status'] == 'new')
+                    @if($app['status'] == 'publish')
                     <a href="{{ URL::route('apps.draft.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">编辑</a>
                     @else 
                     <a href="{{ URL::route('apps.draft.edit', ['id' => $app['id'] ]) }}" target="BoardRight" class="Search_show">草稿</a>

@@ -18,7 +18,7 @@ class Apps extends \BaseModel {
     public $rules = [
         'draft'   => [],
         'pending' => [
-            'cates'           => 'required',
+            'cats'           => 'required',
             'os_version'      => 'required',
             'version_code'    => 'required',
             'sort'            => 'required',
@@ -32,21 +32,21 @@ class Apps extends \BaseModel {
     // 可以搜索字段
     public $searchEnable = [
         'title',
-        'cate_id',
+        'cat_id',
         'pack',
         'version',
         'size_int',
         'created_at',
         'updated_at',
-        'onshelfed_at',
-        'offshelfed_at'
+        'stocked_at',
+        'unstocked_at'
     ];
 
     // 可以排序的字段
     public $orderEnable = [
         'size_int',
         'download_counts',
-        'onshelfed_at'
+        'stocked_at'
     ];
 
     /**
@@ -141,8 +141,8 @@ class Apps extends \BaseModel {
 
         if( ($field == 'title' || $field == 'pack' ) && !empty($value)) {
             $query->where($field, 'like', '%' . $value . '%');
-        } elseif($field == 'cate_id' && !empty($value)) {
-            $query->whereRaw("`id` in (select `app_id` from `app_cates` where `cate_id` = '{$value}')");
+        } elseif($field == 'cat_id' && !empty($value)) {
+            $query->whereRaw("`id` in (select `app_id` from `app_cats` where `cat_id` = '{$value}')");
         } elseif(is_array($value) && count($value) == 2) { // 查询范围
 
             // 处理空值
@@ -191,14 +191,14 @@ class Apps extends \BaseModel {
 
         // 处理关键字
         if(isset($data['keywords'])) {
-            $keywordsModel = new Keywords;
-            $keywordsModel->store($data['keywords'], $id);
+            $keywords = new Keywords;
+            $keywords->store($data['keywords'], $id);
         }
 
         // 处理分类/标签
-        if(isset($data['cates'])) {
-            $appCatesModel = new AppCates;
-            $appCatesModel->store($id, $data['cates']);
+        if(isset($data['cats'])) {
+            $appCats = new AppCats;
+            $appCats->store($id, $data['cats']);
         }
 
         // 处理图片
@@ -222,7 +222,7 @@ class Apps extends \BaseModel {
         }
 
         // 处理历史
-        if($status == 'onshelf') {
+        if($status == 'stock') {
             $this->history($id);
         }
 
@@ -242,9 +242,9 @@ class Apps extends \BaseModel {
         $app['app_id'] = $id;
         unset($app['id']);
         
-        $catesModel = new Cates;
-        $app['cates'] = serialize($catesModel->appCates($id));
-        $app['tags']  = serialize($catesModel->appTags($id));
+        $cats = new Cats;
+        $app['cats'] = serialize($cats->appCats($id));
+        $app['tags']  = serialize($cats->appTags($id));
 
         // 处理操作人
         $app['operator'] = Sentry::getUser()->id;
@@ -278,12 +278,12 @@ class Apps extends \BaseModel {
             $data['source']        = 'lt';
 
             // 检查是否存在
-            $isExisted = Apps::where('pack', $data['pack'])
+            $isExist = Apps::where('pack', $data['pack'])
                              ->where('version_code', $data['version_code'])
                              ->first();
 
-            if($isExisted) {
-                $status = Config::get('status.apps.status')[$isExisted->status];
+            if($isExist) {
+                $status = Config::get('status.apps.status')[$isExist->status];
                 unlink($savePath);
 
                 return ['error' => ['code' => 500, 'message' => '已存在' . $status . '列表中']];
@@ -299,8 +299,8 @@ class Apps extends \BaseModel {
                     ];
                 Ratings::create($rating);
 
-                $keywordsModel = new Keywords;
-                $keywordsModel->store($data['title'], $app->id);
+                $keywords = new Keywords;
+                $keywords->store($data['title'], $app->id);
 
                 // 获取MD5队列
                 Queue::push('AppQueue@md5', ['id' => $app->id, 'filename' => $app->download_link]);
@@ -342,15 +342,15 @@ class Apps extends \BaseModel {
 
         if(empty($info)) return false;
 
-        $catesModel = new Cates;
-        $info['cates']  = $catesModel->appCates($id);
-        $info['tags']   = $catesModel->appTags($id);
+        $cats = new Cats;
+        $info['cats']  = $cats->appCats($id);
+        $info['tags']   = $cats->appTags($id);
         $info['images'] = unserialize($info['images']);
 
-        $keywordsModel = new Keywords;
-        $info['keywords'] = $keywordsModel->appKeywords($id);
+        $keywords = new Keywords;
+        $info['keywords'] = $keywords->appKeywords($id);
 
-        return json_decode(json_encode($info), FALSE);
+        return (object) $info;
     }
 
     /**
@@ -370,9 +370,9 @@ class Apps extends \BaseModel {
         $info->sameAuthor = $this->sameAuthor($id, $info->author);
 
         // 同类游戏
-        $info->sameCate = $this->sameCate($id, $info->cates);
+        $info->sameCat = $this->sameCat($id, $info->cats);
 
-        return json_decode(json_encode($info), TRUE);
+        return (array) $info;
     }
 
     /**
@@ -400,16 +400,16 @@ class Apps extends \BaseModel {
      * 同分类游戏
      *
      * @param $id    int   游戏id
-     * @param $cates array 分类信息
+     * @param $cats array 分类信息
      * @param $limit int   数量
      *
      * @return array
      */
-    public function sameCate($id, $cates, $limit = 3)
+    public function sameCat($id, $cats, $limit = 3)
     {
 
-        $appCatesModel = new AppCates;
-        $ids = $appCatesModel->sameCateAppId($id, $cates, $limit);
+        $appCats = new AppCats;
+        $ids = $appCats->sameCatAppId($id, $cats, $limit);
 
         if(empty($ids)) return [];
 
