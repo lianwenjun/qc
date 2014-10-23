@@ -36,7 +36,7 @@ return [
     '首页游戏位管理' => [
         'appsads.index' => '列表',
         'appsads.create' => '新增',
-        'appsads.offshelf' => '下架',
+        'appsads.unstock' => '下架',
         'appsads.edit' => '编辑',
         'appsads.delete' => '删除',
         'appsads.upload' => '上传',
@@ -44,14 +44,14 @@ return [
     '排行游戏位管理' => [
         'rankads.index' => '列表',
         'rankads.create' => '新增',
-        'rankads.offshelf' => '下架',
+        'rankads.unstock' => '下架',
         'rankads.edit' => '编辑',
         'rankads.delete' => '删除',
     ],
     '首页图片位管理' => [
         'indexads.index' => '列表',
         'indexads.create' => '新增',
-        'indexads.offshelf' => '下架',
+        'indexads.unstock' => '下架',
         'indexads.edit' => '编辑',
         'indexads.delete' => '删除',
 
@@ -59,21 +59,21 @@ return [
     '编辑精选管理' => [
         'editorads.index' => '列表',
         'editorads.create' => '新增',
-        'editorads.offshelf' => '下架',
+        'editorads.unstock' => '下架',
         'editorads.edit' => '编辑',
         'editorads.delete' => '删除',
     ],
     '分类页图片位推广' => [
-        'cateads.index' => '列表',
-        'cateads.upload' => '上传',
-        'cateads.edit' => '编辑',
+        'catads.index' => '列表',
+        'catads.upload' => '上传',
+        'catads.edit' => '编辑',
     ],
     '游戏分类管理' => [
-        'cate.index' => '列表',
-        'cate.create' => '新增',
-        'cate.edit' => '编辑',
-        'cate.delete' => '删除',
-        'cate.show' => '查看',
+        'cat.index' => '列表',
+        'cat.create' => '新增',
+        'cat.edit' => '编辑',
+        'cat.delete' => '删除',
+        'cat.show' => '查看',
     ],
     '游戏标签管理' => [
         'tag.index' => '列表',
