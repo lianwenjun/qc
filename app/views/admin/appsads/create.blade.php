@@ -45,7 +45,12 @@
 
                     <tr>
                         <td  class="Search_lei"><span class="required">*</span>游戏截图：</td>
-                        <td><a id="browse" href="javascrip:;" class="Search_Update">图片上传</a> <span style="color:#C00">（焦点图480*200，专题图230*120）</span></td>
+                        <td>
+                            @if(Sentry::getUser()->hasAccess('appsads.upload'))
+                            <a id="browse" href="javascrip:;" class="Search_Update">图片上传</a>
+                            @endif
+                            <span style="color:#C00">（焦点图480*200，专题图230*120）</span>
+                        </td>
                     </tr>
 
                     <tr>

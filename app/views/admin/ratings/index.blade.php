@@ -45,7 +45,11 @@
                     <td>{{ $rating->counts }}</td>
                     <td>{{ $rating->avg }}</td>
                     <td>{{ $rating->manual }}</td>
-                    <td><a href="javascript:;" class="Search_show jq-editWord">修改</a></td>
+                    <td>
+                        @if(Sentry::getUser()->hasAccess('rating.edit'))
+                        <a href="javascript:;" class="Search_show jq-editWord">修改</a>
+                        @endif
+                    </td>
                     <td style="display:none">
                         <input id="edit-url" value="{{ route('rating.edit', $rating->id) }}" type="hidden"/>
                         <input id="preWord" value="{{ $rating->manual }}" type="hidden"/>

@@ -4,7 +4,9 @@
 <div class="Content_right_top Content_height">
     <div class="Theme_title">
         <h1>广告位管理 <span>排行游戏位管理</span></h1>
+        @if(Sentry::getUser()->hasAccess('rankads.create'))
         <a href="{{ URL::route('rankads.create') }}" target=BoardRight>添加游戏</a>
+        @endif
     </div>
     <form action="{{ URL::route('rankads.index') }}" method="get">
         <div class="Theme_Search">
@@ -61,11 +63,15 @@
                     <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->offshelfed_at }}</td>
                     <td {{ Config::get('status.ads.statusColor')[adsStatus($ad)] }}>{{ Config::get('status.ads.status')[adsStatus($ad)] }}</td>
                     <td>
-                        @if($ad->is_onshelf == 'yes')
+                        @if($ad->is_onshelf == 'yes' && Sentry::getUser()->hasAccess('rankads.offshelf'))
                             <a href="{{ URL::route('rankads.offshelf', $ad->id) }}" target=BoardRight class="Search_show">下架</a>
                         @endif
+                        @if(Sentry::getUser()->hasAccess('rankads.edit'))
                         <a href="{{ URL::route('rankads.edit', $ad->id) }}" target=BoardRight class="Search_show">编辑</a>
+                        @endif
+                        @if(Sentry::getUser()->hasAccess('rankads.delete'))
                         <a href="{{ URL::route('rankads.delete', $ad->id) }}" class="Search_del jq-delete">删除</a>
+                        @endif
                     </td>
                 </tr>
             @empty
