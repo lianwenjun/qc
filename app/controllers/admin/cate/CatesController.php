@@ -1,6 +1,6 @@
 <?php
 
-class Admin_CatesController extends \Admin_BaseController {
+class Admin_Cate_CatesController extends \Admin_BaseController {
 
     /**
      * 

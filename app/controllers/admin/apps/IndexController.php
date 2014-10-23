@@ -4,14 +4,14 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
 
     /**
      * 上架游戏列表
-     * GET /admin/apps/publish
+     * GET /admin/apps/stock
      *
      * @return Response
      */
-    public function publish()
+    public function stock()
     {
         $apps = new Apps();
-        $apps = $apps->lists(['publish'], Input::all())
+        $apps = $apps->lists(['stock'], Input::all())
                           ->paginate(20)
                           ->toArray();
 
@@ -21,7 +21,7 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
 
         // TODO 空提示
 
-        return View::make('admin.apps.publish')
+        return View::make('admin.apps.stock')
                    ->with('apps', $apps)
                    ->with('cats', $cats);
     }
@@ -36,7 +36,7 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
     {
         
         $apps = new Apps();
-        $apps = $apps->lists(['new', 'draft'], Input::all())
+        $apps = $apps->lists(['publish', 'draft'], Input::all())
                           ->paginate(20)
                           ->toArray();
 
@@ -120,97 +120,8 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
     }
 
     /**
-     * 游戏历史
-     * GET /admin/apps/{id}/history
-     *
-     * @param $id int 游戏ID
-     *
-     * @return Response
-     */
-    public function history($id)
-    {
-
-        $apps = new Histories();
-        $apps = $apps->lists($id, Input::all())
-                          ->paginate(20)
-                          ->toArray();
-
-        $history = new Histories;
-        $apps = $history->addCatsInfo($apps);
-
-        $user = new User;
-        $apps = $user->addOperator($apps);
-
-        return View::make('admin.apps.history')
-                   ->with('apps', $apps)
-                   ->with('id', $id);
-    }
-
-
-    /**
-     * 上传游戏APK
-     * POST /admin/apps/appupload
-     *
-     * @param $dontSave string 是否入库（空是入库）
-     *
-     * @return Response
-     */
-    public function appUpload($dontSave = '')
-    {
-        $app = new Apps();
-
-        return $app->appUpload($dontSave);
-    }
-
-    /**
-     * 预览游戏数据
-     * GET /admin/apps/{id}/preview
-     *
-     * @param $id int APPID
-     *
-     * @return Response
-     */
-    public function preview($id)
-    {
-
-        if(Input::get('type') == 'history') {
-            $history = new Histories();
-            $app = $history->preview($id);
-
-        } else {
-            $app = new Apps();
-            $app = $app->preview($id);
-        }
-
-
-        $app['updated_at'] = date('Y-m-d', strtotime($app['updated_at']));
-
-        if($app) {
-            $info = ['success' => true, 'data' => $app];
-        } else {
-            $info = ['success' => false];
-        }
-
-        return json_encode($info);
-    }
-
-
-    /**
-     * 上传游戏图片
-     * POST /admin/apps/imageupload
-     *
-     * @return Response
-     */
-    public function imageUpload()
-    {
-        $app = new Apps();
-
-        return $app->imageUpload();
-    }
-
-    /**
      * 游戏编辑页面
-     * GET /admin/apps/{id}/edit
+     * GET /admin/apps/{id}
      *
      * @param  int  $id 游戏ID
      *
@@ -287,8 +198,67 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
     }
 
     /**
+     * 游戏历史
+     * GET /admin/apps/{id}/history
+     *
+     * @param $id int 游戏ID
+     *
+     * @return Response
+     */
+    public function history($id)
+    {
+
+        $apps = new Histories();
+        $apps = $apps->lists($id, Input::all())
+                          ->paginate(20)
+                          ->toArray();
+
+        $history = new Histories;
+        $apps = $history->addCatsInfo($apps);
+
+        $user = new User;
+        $apps = $user->addOperator($apps);
+
+        return View::make('admin.apps.history')
+                   ->with('apps', $apps)
+                   ->with('id', $id);
+    }
+
+
+    /**
+     * 预览游戏数据
+     * GET /admin/apps/{id}/preview
+     *
+     * @param $id int APPID
+     *
+     * @return Response
+     */
+    public function preview($id)
+    {
+
+        if(Input::get('type') == 'history') {
+            $history = new Histories();
+            $app = $history->preview($id);
+
+        } else {
+            $app = new Apps();
+            $app = $app->preview($id);
+        }
+
+        $app['updated_at'] = date('Y-m-d', strtotime($app['updated_at']));
+
+        if($app) {
+            $info = ['success' => true, 'data' => $app];
+        } else {
+            $info = ['success' => false];
+        }
+
+        return json_encode($info);
+    }
+
+    /**
      * 删除游戏
-     * DELETE /admin/apps/{id}/delete
+     * DELETE /admin/apps/{id}
      *
      * @param int $id
      *
@@ -311,54 +281,42 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
     }
 
     /**
-     * 下架游戏
-     * DELETE /admin/apps/{id}/dooffshelf
+     * 上传游戏APK
+     * POST /admin/apps/appupload
      *
-     * @param int $id
+     * @param $dontSave string 是否入库（空是入库）
      *
      * @return Response
      */
-    public function dooffshelf($id)
+    public function appUpload($dontSave = '')
     {
-        if(! $app = Apps::find($id)) {
-            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
-        } elseif ($app->update(['status' => 'offshelf', 'offshelfed_at' => date('Y-m-d H:i:s')])) {
-            Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经下架"]);
-        } else {
-            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}下架操作失败了"]);
-        }
-   
-        return Redirect::back();
+        $app = new Apps();
+
+        return $app->appUpload($dontSave);
+    }
+    
+    /**
+     * 上传游戏图片
+     * POST /admin/apps/imageupload
+     *
+     * @return Response
+     */
+    public function imageUpload()
+    {
+        $app = new Apps();
+
+        return $app->imageUpload();
     }
 
     /**
-     * 审核通过
-     * PUT /admin/apps/{id}/dopass
+     * 审核通过（上架）
+     * PUT /admin/apps/putStock
      *
-     * @param $id int 游戏ID
      *
      * @return Response
      */
-    public function dopass($id)
+    public function putStock()
     {
-        if(! $app = Apps::find($id)) {
-            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
-        } elseif ($app->update(['status' => 'stock', 'stocked_at' => date('Y-m-d H:i:s')])) {
-            Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经审核通过"]);
-        } else {
-            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}审核操作失败了"]);
-        }
-   
-        return Redirect::back();
-    }
-
-    /**
-     * 批量审核通过
-     * PUT /admin/apps/doallpass
-     *
-     * @return Response
-     */
-    public function doallpass() {
         $ids = Input::get('ids');
 
         if(empty($ids)) {
@@ -378,36 +336,32 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
     }
 
     /**
-     * 审核不通过
-     * PUT /admin/apps/{id}/donopass
-     *
-     * @param $id int 游戏ID
+     * 下架游戏
+     * PUT /admin/apps/putUnstock
      *
      * @return Response
      */
-    public function donopass($id)
+    public function putUnstock()
     {
         if(! $app = Apps::find($id)) {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
-            return Redirect::back();
-        }
-        
-        if($app->update(['status' => 'nopass', 'reason' => Input::get('reason')])) {
-            Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经审核不通过"]);
+        } elseif ($app->update(['status' => 'offshelf', 'offshelfed_at' => date('Y-m-d H:i:s')])) {
+            Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经下架"]);
         } else {
-            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}审核操作失败了"]);
+            Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}下架操作失败了"]);
         }
-
+   
         return Redirect::back();
     }
 
     /**
-     * 批量审核不通过
-     * PUT /admin/apps/doallnopass
+     * 审核不通过
+     * PUT /admin/apps/putNotpass
      *
      * @return Response
      */
-    public function doallnopass() {
+    public function putNotpass()
+    {
         $ids = Input::get('ids');
         $reason = Input::get('reason');
 
@@ -426,4 +380,5 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
 
         return Redirect::back();
     }
+
 }

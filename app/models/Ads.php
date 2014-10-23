@@ -10,7 +10,7 @@ class Ads extends \Eloquent {
     protected $fillable = ['app_id', 'title', 'location', 'image', 'onshelfed_at', 
                 'offshelfed_at', 'type', 'is_onshelf', 'is_top', 'sort', 'word'];
     //添加广告检测
-    public $adsCreateRules = [
+    static public $adsCreateRules = [
                 'app_id' => 'required|integer',
                 'title' => 'required',
                 'location' => 'required',
@@ -20,11 +20,11 @@ class Ads extends \Eloquent {
                 'offshelfed_at' => 'required'
             ];
     //广告更新检测      
-    public $adsUpdateRules = [
+    static public  $adsUpdateRules = [
                 'is_top' => 'in:yes,no',
             ];
     //添加排行广告检测
-    public $rankadsCreateRules = [
+    public static $rankadsCreateRules = [
                 'app_id' => 'required|integer',
                 'title' => 'required',
                 'location' => 'required',
@@ -33,7 +33,7 @@ class Ads extends \Eloquent {
                 'offshelfed_at' => 'required'
             ];
     //更新排行广告检测
-    public $rankadsUpateRules = [
+    public static $rankadsUpateRules = [
                 'sort' => 'integer',
             ];
     /*
@@ -59,7 +59,21 @@ class Ads extends \Eloquent {
         $ad = Ads::create($fields);
         return $ad;
     }
-
+    /*
+    * 更新广告
+    * @param ad
+    * @param Input::all()
+    * @respone data
+    */
+    public function UpdateAds($ad) {
+        $ad->location = Input::get('location', $ad->location);
+        $ad->is_top = Input::get('is_top', 'no');
+        $ad->sort = Input::get('sort', $ad->sort);
+        $ad->onshelfed_at = Input::get('onshelfed_at', $ad->onshelfed_at);
+        $ad->offshelfed_at = Input::get('offshelfed_at', $ad->offshelfed_at);
+        $ad->is_onshelf = 'yes';
+        return $ad;
+    }
     //搜索条件过滤
     public function indexQuery($query) {
         if (Input::get('word')){
@@ -89,7 +103,7 @@ class Ads extends \Eloquent {
     }
     // 下架广告
     public function offshelf($id, $type){
-        $ad = Ads::where('id', $id)->where('type', $type)->first();
+        $ad = Ads::where('id', $id)->where('type', $type)->where('is_onshelf', 'yes')->first();
         if (!$ad) {
             return false;
         }

@@ -12,13 +12,12 @@
         <div class="Theme_Search">
             <ul>
                 <li>
-                    <span><b>查询：</b>
-                        
+                    <span><b>查询：</b>  
                     </span>
                     <span>
                          <select name="status">
                             <option value="">状态</option>
-                            @foreach($status as $k=>$v)
+                            @foreach(Config::get('status.ads.status') as $k=>$v)
                                 <option value="{{ $k }}">{{ $v }}</option>
                             @endforeach
                          </select>

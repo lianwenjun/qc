@@ -36,7 +36,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
     Route::group(['prefix' => 'apps', 'before' => 'hasPermissions'], function()
     {
         // 列表
-        Route::get('publish', ['as' => 'apps.publish',  'uses' => 'Admin_Apps_IndexController@publish']);
+        Route::get('stock', ['as' => 'apps.stock',  'uses' => 'Admin_Apps_IndexController@stock']);
         Route::get('draft',['as' => 'apps.draft',    'uses' => 'Admin_Apps_IndexController@draft']);
         Route::get('pending', ['as' => 'apps.pending',  'uses' => 'Admin_Apps_IndexController@pending']);
         Route::get('nopass', ['as' => 'apps.notpass',   'uses' => 'Admin_Apps_IndexController@notpass']);
@@ -47,7 +47,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
              ->where('id', '[0-9]+');
 
         // 编辑页面
-        Route::get('publish/{id}', ['as' => 'apps.publish.edit', 'uses' => 'Admin_Apps_IndexController@edit'])
+        Route::get('stock/{id}', ['as' => 'apps.stock.edit', 'uses' => 'Admin_Apps_IndexController@edit'])
              ->where('id', '[0-9]+');
         Route::get('draft/{id}', ['as' => 'apps.draft.edit', 'uses' => 'Admin_Apps_IndexController@edit'])
              ->where('id', '[0-9]+');
@@ -57,7 +57,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
              ->where('id', '[0-9]+');
 
         // 编辑处理
-        Route::put('publish/{id}', ['as' => 'apps.publish.edit',  'uses' => 'Admin_Apps_IndexController@update'])
+        Route::put('stock/{id}', ['as' => 'apps.stock.edit',  'uses' => 'Admin_Apps_IndexController@update'])
              ->where('id', '[0-9]+');
         Route::put('draft/{id}', ['as' => 'apps.draft.edit',    'uses' => 'Admin_Apps_IndexController@update'])
              ->where('id', '[0-9]+');
@@ -70,7 +70,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
              ->where('id', '[0-9]+');
 
         // 审核
-        Route::put('putPublish', ['as' => 'apps.putPublish',    'uses' => 'Admin_Apps_IndexController@putPublish']);
+        Route::put('putStock', ['as' => 'apps.putPublish',    'uses' => 'Admin_Apps_IndexController@putStock']);
         Route::put('putNotpass', ['as' => 'apps.putNotpass',    'uses' => 'Admin_Apps_IndexController@putNotpass']);
 
 
@@ -116,21 +116,21 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 
     Route::group(['prefix' => 'cate', 'before' => 'hasPermissions'], function() //游戏分类
     {
-        Route::get('index', ['as' => 'cate.index', 'uses' => 'Admin_CatesController@index']);
-        Route::post('create', ['as' => 'cate.create', 'uses' => 'Admin_CatesController@store']);
-        Route::post('{id}/edit', ['as' => 'cate.edit', 'uses' => 'Admin_CatesController@update']);
-        Route::get('{id}/delete', ['as' => 'cate.delete', 'uses' => 'Admin_CatesController@destroy']);
-        Route::get('{id}', ['as' => 'cate.show', 'uses' => 'Admin_CatesController@show']);
+        Route::get('index', ['as' => 'cate.index', 'uses' => 'Admin_Cate_CatesController@index']);
+        Route::post('create', ['as' => 'cate.create', 'uses' => 'Admin_Cate_CatesController@store']);
+        Route::post('{id}/edit', ['as' => 'cate.edit', 'uses' => 'Admin_Cate_CatesController@update']);
+        Route::get('{id}/delete', ['as' => 'cate.delete', 'uses' => 'Admin_Cate_CatesController@destroy']);
+        Route::get('{id}', ['as' => 'cate.show', 'uses' => 'Admin_Cate_CatesController@show']);
     });
 
     Route::group(['prefix' => 'tag', 'before' => 'hasPermissions'], function() //游戏标签
     {
-        Route::get('index', ['as' => 'tag.index', 'uses' => 'Admin_CatesController@tagIndex']);
-        Route::post('create', ['as' => 'tag.create', 'uses' => 'Admin_CatesController@tagStore']);
-        Route::post('{id}/edit', ['as' => 'tag.edit', 'uses' => 'Admin_CatesController@update']);
-        Route::get('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_CatesController@destroy']);
-        Route::delete('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_CatesController@tagDestroy']);
-        Route::get('{id}/show', ['as' => 'tag.show', 'uses' => 'Admin_CatesController@show']);
+        Route::get('index', ['as' => 'tag.index', 'uses' => 'Admin_Cate_CatesController@tagIndex']);
+        Route::post('create', ['as' => 'tag.create', 'uses' => 'Admin_Cate_CatesController@tagStore']);
+        Route::post('{id}/edit', ['as' => 'tag.edit', 'uses' => 'Admin_Cate_CatesController@update']);
+        Route::get('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_Cate_CatesController@destroy']);
+        Route::delete('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_Cate_CatesController@tagDestroy']);
+        Route::get('{id}/show', ['as' => 'tag.show', 'uses' => 'Admin_Cate_CatesController@show']);
     });
     Route::group(['prefix' => 'rating', 'before' => 'hasPermissions'], function() //游戏评分
     {
@@ -159,13 +159,13 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
     });
     Route::group(['prefix' => 'appsads', 'before' => 'hasPermissions'], function() //游戏位推广
     {
-        Route::get('index', ['as' => 'appsads.index', 'uses' => 'Admin_AppsAdsController@index']);
-        Route::get('create', ['as' => 'appsads.create', 'uses' => 'Admin_AppsAdsController@create']);
-        Route::post('create', ['as' => 'appsads.create', 'uses' => 'Admin_AppsAdsController@store']);
-        Route::get('{id}/edit', ['as' => 'appsads.edit', 'uses' => 'Admin_AppsAdsController@edit']);
-        Route::post('{id}/edit', ['as' => 'appsads.edit', 'uses' => 'Admin_AppsAdsController@update']);
-        Route::delete('{id}/delete', ['as' => 'appsads.delete', 'uses' => 'Admin_AppsAdsController@destroy']);
-        Route::get('{id}/offshelf', ['as' => 'appsads.offshelf', 'uses' => 'Admin_AppsAdsController@offshelf']);
+        Route::get('index', ['as' => 'appsads.index', 'uses' => 'Admin_Apps_AppsAdsController@index']);
+        Route::get('create', ['as' => 'appsads.create', 'uses' => 'Admin_Apps_AppsAdsController@create']);
+        Route::post('create', ['as' => 'appsads.create', 'uses' => 'Admin_Apps_AppsAdsController@store']);
+        Route::get('{id}/edit', ['as' => 'appsads.edit', 'uses' => 'Admin_Apps_AppsAdsController@edit']);
+        Route::post('{id}/edit', ['as' => 'appsads.edit', 'uses' => 'Admin_Apps_AppsAdsController@update']);
+        Route::delete('{id}/delete', ['as' => 'appsads.delete', 'uses' => 'Admin_Apps_AppsAdsController@destroy']);
+        Route::get('{id}/unstock', ['as' => 'appsads.unstock', 'uses' => 'Admin_Apps_AppsAdsController@unstock']);
         //Route::post('imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_AppsAdsController@upload']);
     });
     Route::group(['prefix' => 'rankads', 'before' => 'hasPermissions'], function() //游戏位推广
@@ -200,9 +200,9 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
     });
     Route::group(['prefix' => 'cateads', 'before' => 'hasPermissions'], function() //分类推广
     {
-        Route::get('index', ['as' => 'cateads.index', 'uses' => 'Admin_CateAdsController@index']);
-        Route::post('imageupload', ['as' => 'cateads.upload', 'uses' => 'Admin_CateAdsController@upload']);
-        Route::post('{id}/edit', ['as' => 'cateads.edit', 'uses' => 'Admin_CateAdsController@update']);
+        Route::get('index', ['as' => 'cateads.index', 'uses' => 'Admin_Cate_CateAdsController@index']);
+        Route::post('imageupload', ['as' => 'cateads.upload', 'uses' => 'Admin_Cate_CateAdsController@upload']);
+        Route::post('{id}/edit', ['as' => 'cateads.edit', 'uses' => 'Admin_Cate_CateAdsController@update']);
     });
 
 
@@ -226,7 +226,7 @@ Route::group(['prefix' => 'api'], function()
         Route::post('game/feedback/add', ['uses' => '']);
         Route::get('game/search/{type}/{keyword}/{exclude}/{pageSize}/{pageIndex}', ['uses' => '']);
         Route::get('game/search/autocomplete/{keyword}', ['uses' => '']);
-        Route::get('game/category/all', ['uses' => '']);
+        Route::get('game/category/all', ['api.cates.index', 'uses' => 'Api_CatesController@index']);
         Route::post('game/update', ['uses' => '']);
     });
 });
