@@ -8,5 +8,5 @@ $I->fillField('username', 'test');
 $I->fillField('password', 'test');
 $I->click(['class' => 'login_submit']);
 
-$I->amOnPage('/admin/apps/onshelf');
+$I->amOnPage('/admin/apps/stock');
 $I->see('上架游戏');

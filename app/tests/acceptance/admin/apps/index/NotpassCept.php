@@ -8,5 +8,5 @@ $I->fillField('username', 'test');
 $I->fillField('password', 'test');
 $I->click(['class' => 'login_submit']);
 
-$I->amOnPage('/admin/apps/nopass');
+$I->amOnPage('/admin/apps/notpass');
 $I->see('审核不通过游戏');
