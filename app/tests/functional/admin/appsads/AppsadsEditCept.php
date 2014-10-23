@@ -7,7 +7,7 @@ $fields = [
             'images' => 'xxxoooo',
             'is_top' => 'yes',
             'restocked_at' => '2014-10-10 10:10:10',
-            'unstocked_at' => '',
+            'unstocked_at' => '1411720308',
             ];
 $I->sendAjaxPostRequest('/admin/appsads/4/edit', $fields);
 $I->seeSessionHasValues(['msg' => '修改成功']);

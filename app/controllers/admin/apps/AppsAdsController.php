@@ -11,7 +11,6 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
      */
     public function index()
     {
-        $adsModel = new Ads();
         $adsClass = new Admin_CadsClass;
         $query = new Ads;
         //条件查询
@@ -53,20 +52,17 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
      */
     public function store()
     {
-        $adsModel = new Ads();
-        $validator = Validator::make(Input::all(), $adsModel->adsCreateRules);
+        $adsClass = new Admin_CadsClass;
+        $validator = Validator::make(Input::all(), $adsClass->adsCreateRules);
         if ($validator->fails()){
-            //Log::error($validator->messages());
-            $msg = "添加失败";
-            return Redirect::route('appsads.create')->with('msg', $msg)->with('input', Input::all());
+            return Redirect::route('appsads.create')->with('msg', '添加失败')->with('input', Input::all());
         }
-        $ad = $adsModel->createAds($this->type);
+        $ad = $adsClass->createAds($this->type);
         if ($ad) {
-            $msg = "添加成功";
-            return Redirect::route('appsads.index')->with('msg', $msg);
+            return Redirect::route('appsads.index')->with('msg', '添加成功');
+        } else {
+            return Redirect::route('appsads.create')->with('msg', '添加失败')->with('input', Input::all());
         }
-        $msg = '添加失败';
-        return Redirect::route('appsads.create')->with('msg', $msg)->with('input', Input::all());
     }
 
     /**
@@ -117,12 +113,7 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
             $msg = "添加失败";
             return Redirect::route('appsads.edit', $id)->with('msg', $msg);
         }
-        $ad->location = Input::get('location', $ad->location);
-        $ad->image = Input::get('image', $ad->image);
-        $ad->is_top = Input::get('is_top', 'no');
-        $ad->onshelfed_at = Input::get('onshelfed_at', $ad->onshelfed_at);
-        $ad->offshelfed_at = Input::get('offshelfed_at', $ad->offshelfed_at);
-        $ad->is_onshelf = 'yes';
+        $ad = $adsClass->UpdateAds($ad);
         if ($ad->save()) {
             return Redirect::route('appsads.index')->with('msg', '修改成功');
         }
@@ -138,8 +129,8 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
      */
     public function unstock($id)
     {
-        $adsModel = new Ads();
-        $ad = $adsModel->unstock($id, $this->type);
+        $adsClass = new Admin_CadsClass;
+        $ad = $adsClass->unstock($id, $this->type);
         if (!$ad) {
             $msg = '亲，#'.$id.'下架失败了';
             return Redirect::route('appsads.index')->with('msg', $msg);
@@ -157,9 +148,8 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
      */
     public function destroy($id)
     {
-        $adsModel = new Ads();
         //单条查询
-        $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
+        $ad = Ads::where('id', $id)->where('type', $this->type)->first();
         //检查
         if (!$ad) {
             return App::abort(404);

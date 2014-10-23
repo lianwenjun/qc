@@ -25,7 +25,6 @@
                 <span>
                     <b>查询：</b>
                     <select name="cats2">
-                        <option>--全部--</option>
                         @foreach ($cats as $index => $value)
                             <option value="{{ $index }}">{{ $value }}</option>
                         @endforeach
@@ -51,9 +50,7 @@
                 <td width="10%">操作</td>
             </tr>
             @forelse($tags as $tag)
-                @if (!isset($cats[$tag->parent_id]))
-                    conntinue;
-                @endif
+                @if (isset($cats[$tag->parent_id]))
                     <tr class="jq-tr">
                         <td>{{ $tag->id }}</td>
                         <td>{{ $tag->title }}</td>
@@ -76,6 +73,7 @@
                             <input id="preSort" value="{{ $tag->sort }}" type="hidden"/>
                         </td>
                     </tr>
+                @endif
             @empty
                 <tr class="no-data">
                     <td colspan="9">没数据</td>
@@ -132,13 +130,12 @@ $(function(){
     //提交查询
     $(".jq-submitSearch").click(function() {
         var word = $("input[name=searchTag]").val();
-        if (word === "输入关键字" || word == "") {
-            $("input[name=searchTag]").val("输入关键字");
-            return;
+        if (word == "") {
+            $("input[name=searchTag]").val("");
         }
         var parent_id = $("select[name=cats2]").val();
         var query = '?word=' + word;;
-        if ( parent_id != '--全部--' && parent_id != '' && parent_id != undefined){
+        if (parent_id != '' && parent_id != undefined){
             query = query + '&parent_id=' + parent_id;;
         }
         var url = window.location.pathname + query;

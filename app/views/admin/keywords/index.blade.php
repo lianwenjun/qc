@@ -58,7 +58,7 @@
                     </td>
                     
                     <td>
-                        @if(Sentry::getUser()->hasAccess('keyword.edit'))
+                        @if(Sentry::getUser()->hasAccess('keyword.update'))
                         <a href="javacript:;" class="Search_show jq-editWord">修改</a>
                         @endif
                         @if(Sentry::getUser()->hasAccess('keyword.delete'))
