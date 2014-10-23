@@ -370,7 +370,7 @@ class Apps extends \Eloquent {
         // 同类游戏
         $info->sameCate = $this->sameCate($id, $info->cates);
 
-        return json_decode(json_encode($info), TRUE);;
+        return json_decode(json_encode($info), TRUE);
     }
 
     /**
