@@ -10,7 +10,7 @@ class Ads extends \Eloquent {
     protected $fillable = ['app_id', 'title', 'location', 'image', 'stocked_at', 
                 'unstocked_at', 'type', 'is_stock', 'is_top', 'sort', 'word'];
     //添加广告检测
-    static public $adsCreateRules = [
+    public $adsCreateRules = [
                 'app_id' => 'required|integer',
                 'title' => 'required',
                 'location' => 'required',
@@ -20,11 +20,11 @@ class Ads extends \Eloquent {
                 'unstocked_at' => 'required'
             ];
     //广告更新检测      
-    static public  $adsUpdateRules = [
+    public  $adsUpdateRules = [
                 'is_top' => 'in:yes,no',
             ];
     //添加排行广告检测
-    public static $rankadsCreateRules = [
+    public $rankadsCreateRules = [
                 'app_id' => 'required|integer',
                 'title' => 'required',
                 'location' => 'required',
@@ -33,7 +33,7 @@ class Ads extends \Eloquent {
                 'unstocked_at' => 'required'
             ];
     //更新排行广告检测
-    public static $rankadsUpateRules = [
+    public $rankadsUpateRules = [
                 'sort' => 'integer',
             ];
     /*

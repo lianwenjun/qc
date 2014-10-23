@@ -266,7 +266,7 @@ CREATE TABLE `ads` (
   `word` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '广告词',
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `type` enum('index','app','editor','rank') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'app' COMMENT '广告位分类',
-  `is_stock` enum('yes','no','1') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no' COMMENT '是否上架',
+  `is_stock` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no' COMMENT '是否上架',
   `is_top` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no' COMMENT '是否置顶',
   `stocked_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上架时间',
   `unstocked_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '下架时间',

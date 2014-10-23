@@ -6,7 +6,7 @@ $fields = [
             'location' => 'hotdown',
             'images' => 'xxxoooo',
             'is_top' => 'yes',
-            'restocked_at' => '',
+            'restocked_at' => '2014-10-10 10:10:10',
             'unstocked_at' => '',
             ];
 $I->sendAjaxPostRequest('/admin/appsads/4/edit', $fields);
