@@ -5,7 +5,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 use JildertMiedema\LaravelPlupload\PluploadException;
 
-class Apps extends \Eloquent {
+class Apps extends \BaseModel {
 
     use SoftDeletingTrait;
 

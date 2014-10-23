@@ -32,7 +32,7 @@ $I->wantTo('上架游戏列表功能');
 $data = ['username' => 'test', 'password' => 'test'];
 $I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
 
-$I->amOnAction('Admin_AppsController@onshelf');
+$I->amOnAction('Admin_Apps_IndexController@publish');
 $I->see('上架游戏C君');
 
 /* --------------------------------------------------------
@@ -40,32 +40,32 @@ $I->see('上架游戏C君');
 -------------------------------------------------------- */
 
 // 名称搜索 上架游戏A
-$I->sendAjaxRequest('GET', '/admin/apps/onshelf?type=title&keyword=上架游戏A&size_int%5B%5D=&size_int%5B%5D=&onshelfed_at%5B%5D=&onshelfed_at%5B%5D=');
+$I->sendAjaxRequest('GET', '/admin/apps/publish?type=title&keyword=上架游戏A&size_int%5B%5D=&size_int%5B%5D=&published_at%5B%5D=&published_at%5B%5D=');
 $I->see('上架游戏A君');
 $I->dontSee('上架游戏B君');
 
 // 包名搜索 b.b.b
-$I->sendAjaxRequest('GET', '/admin/apps/onshelf?type=pack&keyword=b.b.b&size_int%5B%5D=&size_int%5B%5D=&onshelfed_at%5B%5D=&onshelfed_at%5B%5D=');
+$I->sendAjaxRequest('GET', '/admin/apps/publish?type=pack&keyword=b.b.b&size_int%5B%5D=&size_int%5B%5D=&published_at%5B%5D=&published_at%5B%5D=');
 $I->see('上架游戏B君');
 $I->dontSee('上架游戏A君');
 
 // 版本号搜索 3.0.0
-$I->sendAjaxRequest('GET', '/admin/apps/onshelf?type=version&keyword=3.0.0&size_int%5B%5D=&size_int%5B%5D=&onshelfed_at%5B%5D=&onshelfed_at%5B%5D=');
+$I->sendAjaxRequest('GET', '/admin/apps/publish?type=version&keyword=3.0.0&size_int%5B%5D=&size_int%5B%5D=&published_at%5B%5D=&published_at%5B%5D=');
 $I->see('上架游戏A君');
 $I->dontSee('上架游戏B君');
 
 // 大小搜索 1m
-$I->sendAjaxRequest('GET', '/admin/apps/onshelf?type=&keyword=&size_int%5B%5D=1m&size_int%5B%5D=1m&onshelfed_at%5B%5D=&onshelfed_at%5B%5D=');
+$I->sendAjaxRequest('GET', '/admin/apps/publish?type=&keyword=&size_int%5B%5D=1m&size_int%5B%5D=1m&published_at%5B%5D=&published_at%5B%5D=');
 $I->see('上架游戏B君');
 $I->dontSee('上架游戏A君');
 
 // 日期搜索 2014-09-01
-$I->sendAjaxRequest('GET', '/admin/apps/onshelf?type=&keyword=&size_int%5B%5D=1m&size_int%5B%5D=1m&onshelfed_at%5B%5D=2014-09-01&onshelfed_at%5B%5D=2014-09-01');
+$I->sendAjaxRequest('GET', '/admin/apps/publish?type=&keyword=&size_int%5B%5D=1m&size_int%5B%5D=1m&published_at%5B%5D=2014-09-01&published_at%5B%5D=2014-09-01');
 $I->see('上架游戏B君');
 $I->dontSee('上架游戏A君');
 
 // 联合搜索 名称搜索 上架游戏A 日期搜索 2014-09-03
-$I->sendAjaxRequest('GET', '/admin/apps/onshelf?type=title&keyword=上架游戏A&size_int%5B%5D=&size_int%5B%5D=&onshelfed_at%5B%5D=2014-09-03&onshelfed_at%5B%5D=2014-09-03');
+$I->sendAjaxRequest('GET', '/admin/apps/publish?type=title&keyword=上架游戏A&size_int%5B%5D=&size_int%5B%5D=&published_at%5B%5D=2014-09-03&published_at%5B%5D=2014-09-03');
 $I->see('上架游戏A君');
 $I->dontSee('上架游戏B君');
 
@@ -77,28 +77,28 @@ $I->dontSee('上架游戏B君');
 | 排序功能 begin
 -------------------------------------------------------- */
 
-$I->sendAjaxRequest('GET', '/admin/apps/onshelf?orderby=size_int.desc');
+$I->sendAjaxRequest('GET', '/admin/apps/publish?orderby=size_int.desc');
 $I->see('上架游戏A君');
 $I->dontSee('上架游戏B君');
 
-$I->sendAjaxRequest('GET', '/admin/apps/onshelf?orderby=size_int.asc');
+$I->sendAjaxRequest('GET', '/admin/apps/publish?orderby=size_int.asc');
 $I->see('上架游戏B君');
 $I->dontSee('上架游戏A君');
 
-$I->sendAjaxRequest('GET', '/admin/apps/onshelf?orderby=download_counts.asc');
+$I->sendAjaxRequest('GET', '/admin/apps/publish?orderby=download_counts.asc');
 $I->see('上架游戏A君');
 $I->dontSee('上架游戏B君');
 
-$I->sendAjaxRequest('GET', '/admin/apps/onshelf?orderby=download_counts.desc');
+$I->sendAjaxRequest('GET', '/admin/apps/publish?orderby=download_counts.desc');
 $I->see('上架游戏B君');
 $I->dontSee('上架游戏A君');
 
-$I->sendAjaxRequest('GET', '/admin/apps/onshelf?orderby=onshelfed_at.desc');
+$I->sendAjaxRequest('GET', '/admin/apps/publish?orderby=published_at.desc');
 $I->see('上架游戏C君');
 $I->see('上架游戏A君');
 $I->dontSee('上架游戏B君');
 
-$I->sendAjaxRequest('GET', '/admin/apps/onshelf?orderby=onshelfed_at.asc');
+$I->sendAjaxRequest('GET', '/admin/apps/publish?orderby=published_at.asc');
 $I->see('上架游戏B君');
 $I->dontSee('上架游戏A君');
 
