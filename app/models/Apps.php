@@ -204,6 +204,8 @@ class Apps extends \Eloquent {
         // 处理图片
         if(isset($data['images'])) {
             $data['images'] = serialize($data['images']);
+        } else {
+            $data['images'] = '';
         }
 
         // 处理状态
