@@ -27,11 +27,11 @@ CREATE TABLE `apps` (
   `os` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '系统OS',
   `os_version` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '系统版本',
   `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
-  `status` enum('new','draft','pending','nopass','onshelf','offshelf') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'new' COMMENT '数据状态',
+  `status` enum('new','draft','pending','nopass','stock','unstock') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'new' COMMENT '数据状态',
   `is_verify` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no' COMMENT '是否安全认证',
   `has_ad` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no' COMMENT '是否无广告',
-  `onshelfed_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上架时间',
-  `offshelfed_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '下架时间',
+  `stocked_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上架时间',
+  `unstocked_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '下架时间',
   `reviewed_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '审核时间',
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -40,34 +40,34 @@ CREATE TABLE `apps` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /* 测试上架 */
-INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size`, `size_int`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `onshelfed_at`, `offshelfed_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
+INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size`, `size_int`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `stocked_at`, `unstocked_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
-    (100,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','上架游戏A君','a.a.a','1 GB',1048576,'3.0.0','','','','','',100,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-03 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (101,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (102,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (103,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (104,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (105,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (106,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (107,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (108,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (109,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (110,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (111,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (112,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (113,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (114,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (115,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (116,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (117,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (118,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (119,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (120,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','上架游戏B君','b.b.b','1 MB',1024,'5.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
-    (121,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','上架游戏C君','c.c.c','2 GB',2097152,'5.0.0','','','','','',99,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'onshelf','no','no','2014-09-05 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46');
+    (100,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','上架游戏A君','a.a.a','1 GB',1048576,'3.0.0','','','','','',100,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-03 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (101,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (102,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (103,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (104,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (105,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (106,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (107,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (108,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (109,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (110,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (111,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (112,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (113,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (114,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (115,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (116,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (117,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (118,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (119,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','填充游戏君','a.a.a','1 GB',104857,'3.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (120,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','上架游戏B君','b.b.b','1 MB',1024,'5.0.0','','','','','',101,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-01 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
+    (121,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','上架游戏C君','c.c.c','2 GB',2097152,'5.0.0','','','','','',99,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'stock','no','no','2014-09-05 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46');
 
 
 /* 测试草稿 */
-INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size`, `size_int`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `onshelfed_at`, `offshelfed_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
+INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size`, `size_int`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `stocked_at`, `unstocked_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
     (22,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','上传游戏A君','','27 KB',27,'1.0.2','','','','','',0,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'new','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
     (21,'/icons/6/8/68745070802f9b8addf6db640d86eeff.png','上传游戏B君','','157 KB',157,'1.0','','','','','',0,'','/apks/3/9/3934bc5f9504a26baf546483b595f45a.apk',0,'','',98,'new','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-01 10:00:00','2014-09-23 09:24:02'),
@@ -93,7 +93,7 @@ VALUES
     (444,'/icons/f/e/febeb565db27cf439b414798fdc7a5a6.png','删除游戏A君','','350 KB',350,'1.50','','','','','',0,'','/apks/a/9/a94fb9264643673fa6b54fb996cc0d70.apk',0,'','',76,'new','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-23 09:24:46','2014-09-24 02:35:37');
 
 /* 测试待审核 */
-INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size`, `size_int`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `onshelfed_at`, `offshelfed_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
+INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size`, `size_int`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `stocked_at`, `unstocked_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
     (30,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','待审游戏A君','','27 KB',27,'1.0.2','','','','','',0,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'pending','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46'),
     (31,'/icons/6/8/68745070802f9b8addf6db640d86eeff.png','待审游戏B君','','157 KB',157,'1.0','','','','','',0,'','/apks/3/9/3934bc5f9504a26baf546483b595f45a.apk',0,'','',98,'pending','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-01 10:00:00','2014-09-23 09:24:02'),
@@ -105,14 +105,14 @@ VALUES
     (37,'/icons/6/8/68745070802f9b8addf6db640d86eeff.png','待审游戏H君','','157 KB',157,'1.0','','','','','',0,'','/apks/3/9/3934bc5f9504a26baf546483b595f45a.apk',0,'','',98,'pending','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-01 10:00:00','2014-09-23 09:24:02');
 
 /* 测试审核不通过 */
-INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size`, `size_int`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `onshelfed_at`, `offshelfed_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
+INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size`, `size_int`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `stocked_at`, `unstocked_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
     (40,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','不通过游戏A君','','27 KB',27,'1.0.2','','','','','',0,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'nopass','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46');
 
 /* 测试下架 */
-INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size`, `size_int`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `onshelfed_at`, `offshelfed_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
+INSERT INTO `apps` (`id`, `icon`, `title`, `pack`, `size`, `size_int`, `version`, `author`, `summary`, `images`, `changes`, `reason`, `download_counts`, `download_manual`, `download_link`, `operator`, `os`, `os_version`, `sort`, `status`, `is_verify`, `has_ad`, `stocked_at`, `unstocked_at`, `reviewed_at`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
-    (50,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','下架游戏A君','','27 KB',27,'1.0.2','','','','','',0,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'offshelf','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46');
+    (50,'/icons/0/4/0420dd2a485e9978e78248c6d8aea840.png','下架游戏A君','','27 KB',27,'1.0.2','','','','','',0,'','/apks/5/8/58c0c78ab05fbfc518136c50e255ca16.apk',0,'','',99,'unstock','no','no','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,'2014-09-03 10:00:00','2014-09-23 08:04:46');
 
 
 /*----------------------------------------------------------
@@ -266,17 +266,17 @@ CREATE TABLE `ads` (
   `word` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '广告词',
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `type` enum('index','app','editor','rank') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'app' COMMENT '广告位分类',
-  `is_onshelf` enum('yes','no','1') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no' COMMENT '是否上架',
+  `is_stock` enum('yes','no','1') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no' COMMENT '是否上架',
   `is_top` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no' COMMENT '是否置顶',
-  `onshelfed_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上架时间',
-  `offshelfed_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '下架时间',
+  `stocked_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上架时间',
+  `unstocked_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '下架时间',
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `ads` (`id`, `app_id`, `title`, `location`, `image`, `word`, `sort`, `type`, `is_onshelf`, `is_top`, `onshelfed_at`, `offshelfed_at`, `deleted_at`, `created_at`, `updated_at`)
+INSERT INTO `ads` (`id`, `app_id`, `title`, `location`, `image`, `word`, `sort`, `type`, `is_stock`, `is_top`, `stocked_at`, `unstocked_at`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
   (1, 1, '植物大战僵尸', 'hotdown', '', '', 0, 'app', 'yes', 'no', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, '0000-00-00 00:00:00', '2014-09-26 09:06:32'),
   (2, 0, '', '', '', '', 0, 'app', 'no', 'no', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, '0000-00-00 00:00:00', '2014-09-26 09:20:23'),
@@ -286,7 +286,7 @@ VALUES
   (6, 1, '植物大战僵尸', 'hotdown', '', '', 100, 'app', 'no', 'yes', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2014-09-28 02:09:01', '0000-00-00 00:00:00', '2014-09-28 02:09:01');
 
 
-INSERT INTO `ads` (`id`, `app_id`, `title`, `location`, `image`, `word`, `sort`, `type`, `is_onshelf`, `is_top`, `onshelfed_at`, `offshelfed_at`, `deleted_at`, `created_at`, `updated_at`)
+INSERT INTO `ads` (`id`, `app_id`, `title`, `location`, `image`, `word`, `sort`, `type`, `is_stock`, `is_top`, `stocked_at`, `unstocked_at`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
   (18, 4, '可怜软件A君', 'suggest', '/ads/3/e/3ee1125c624089a91a0d50695f3c17c4.jpg', '', 100, 'index', 'yes', 'no', '2014-09-29 12:00:00', '2014-09-30 12:00:00', NULL, '2014-09-29 10:00:07', '2014-09-29 16:50:54'),
   (19, 4, '可怜软件A君', 'suggest', '/ads/3/e/3ee1125c624089a91a0d50695f3c17c4.jpg', '', 100, 'index', 'yes', 'no', '2014-09-29 12:00:00', '2014-09-30 12:00:00', NULL, '2014-09-29 10:00:07', '2014-09-29 16:50:54'),
@@ -297,7 +297,7 @@ VALUES
   (24, 4, '可怜软件A君', 'suggest', '/ads/3/e/3ee1125c624089a91a0d50695f3c17c4.jpg', '', 100, 'index', 'yes', 'no', '2014-09-29 12:00:00', '2014-09-30 12:00:00', NULL, '2014-09-29 10:00:07', '2014-09-29 16:50:54');
 
 
-INSERT INTO `ads` (`id`, `app_id`, `title`, `location`, `image`, `word`, `sort`, `type`, `is_onshelf`, `is_top`, `onshelfed_at`, `offshelfed_at`, `deleted_at`, `created_at`, `updated_at`)
+INSERT INTO `ads` (`id`, `app_id`, `title`, `location`, `image`, `word`, `sort`, `type`, `is_stock`, `is_top`, `stocked_at`, `unstocked_at`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
   (25, 3, '填充游戏A君', 'new', '/ads/f/5/f54a84f41128eb877ec408ec40d82515.jpg', '对来点人那对来点人那', 0, 'editor', 'yes', 'yes', '2014-09-29 12:00:00', '2014-09-30 12:00:00', NULL, '2014-09-30 05:11:21', '2014-09-30 09:01:10'),
   (26, 3, '填充游戏A君', 'new', '/ads/f/5/f54a84f41128eb877ec408ec40d82515.jpg', '对来点人那', 0, 'editor', 'yes', 'yes', '2014-09-29 12:00:00', '2014-09-30 12:00:00', NULL, '2014-09-30 05:11:21', '2014-09-30 09:01:10'),
@@ -305,7 +305,7 @@ VALUES
   (28, 3, '填充游戏A君', 'new', '/ads/f/5/f54a84f41128eb877ec408ec40d82515.jpg', '输入游戏名称检测222', 0, 'editor', 'yes', 'no', '2014-10-06 11:08:44', '2014-10-08 12:00:00', NULL, '2014-09-30 05:11:21', '2014-10-08 03:31:46'),
   (29, 2, '上传游戏B君', 'hotdown', '/ads/9/e/9e70c11bb130005555bfe1cfa3b78ccf.jpg', '来点新东西', 0, 'editor', 'yes', 'yes', '2014-10-09 12:00:00', '2014-10-31 12:00:00', NULL, '2014-10-08 03:46:55', '2014-10-08 03:47:02');
 
-INSERT INTO `ads` (`id`, `app_id`, `title`, `location`, `image`, `word`, `sort`, `type`, `is_onshelf`, `is_top`, `onshelfed_at`, `offshelfed_at`, `deleted_at`, `created_at`, `updated_at`)
+INSERT INTO `ads` (`id`, `app_id`, `title`, `location`, `image`, `word`, `sort`, `type`, `is_stock`, `is_top`, `stocked_at`, `unstocked_at`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
   (13, 4, '可怜软件A君', 'suggest', '/ads/3/e/3ee1125c624089a91a0d50695f3c17c4.jpg', '', 0, 'rank', 'yes', 'yes', '2014-09-29 12:00:00', '2014-09-30 12:00:00', '2014-09-29 16:17:12', '2014-09-29 10:00:07', '2014-09-29 16:17:12'),
   (14, 4, '可怜软件A君', 'suggest', '/ads/3/e/3ee1125c624089a91a0d50695f3c17c4.jpg', '', 0, 'rank', 'yes', 'yes', '2014-09-29 12:00:00', '2014-09-30 12:00:00', '2014-09-29 16:16:38', '2014-09-29 10:00:07', '2014-09-29 16:16:38'),
@@ -417,7 +417,7 @@ CREATE TABLE `groups` (
   UNIQUE KEY `groups_name_unique` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 INSERT INTO `groups` (`id`, `name`, `permissions`, `created_at`, `updated_at`, `department`) VALUES
-  (1, 'test', '{\"apps.onshelf\":1,\"apps.dooffshelf\":1,\"apps.edit\":1,\"apps.history\":1,\"apps.draft\":1,\"apps.delete\":1,\"apps.appupload\":1,\"apps.imageupload\":1,\"apps.pending\":1,\"apps.dopass\":1,\"apps.donopass\":1,\"apps.doallpass\":1,\"apps.doallnopass\":1,\"apps.nopass\":1,\"apps.offshelf\":1,\"appsads.index\":1,\"appsads.create\":1,\"appsads.offshelf\":1,\"appsads.edit\":1,\"appsads.delete\":1,\"rankads.index\":1,\"rankads.create\":1,\"rankads.offshelf\":1,\"rankads.edit\":1,\"rankads.delete\":1,\"indexads.index\":1,\"indexads.create\":1,\"indexads.offshelf\":1,\"indexads.edit\":1,\"indexads.delete\":1,\"editorads.index\":1,\"editorads.create\":1,\"editorads.offshelf\":1,\"editorads.edit\":1,\"editorads.delete\":1,\"cateads.index\":1,\"cateads.upload\":1,\"cateads.edit\":1,\"cate.index\":1,\"cate.create\":1,\"cate.edit\":1,\"cate.delete\":1,\"cate.show\":1,\"tag.index\":1,\"tag.create\":1,\"tag.edit\":1,\"tag.delete\":1,\"tag.show\":1,\"rating.index\":1,\"rating.edit\":1,\"comment.index\":1,\"comment.edit\":1,\"comment.delete\":1,\"stopword.index\":1,\"stopword.create\":1,\"stopword.edit\":1,\"stopword.delete\":1,\"keyword.index\":1,\"keyword.store\":1,\"keyword.update\":1,\"keyword.delete\":1,\"users.index\":1,\"users.create\":1,\"users.edit\":1,\"users.delete\":1,\"roles.index\":1,\"roles.create\":1,\"roles.edit\":1,\"roles.delete\":1}', '2014-10-14 10:33:12', '2014-10-14 10:33:12', 1);
+  (1, 'test', '{\"apps.stock\":1,\"apps.dounstock\":1,\"apps.edit\":1,\"apps.history\":1,\"apps.draft\":1,\"apps.delete\":1,\"apps.appupload\":1,\"apps.imageupload\":1,\"apps.pending\":1,\"apps.dopass\":1,\"apps.donopass\":1,\"apps.doallpass\":1,\"apps.doallnopass\":1,\"apps.nopass\":1,\"apps.unstock\":1,\"appsads.index\":1,\"appsads.create\":1,\"appsads.unstock\":1,\"appsads.edit\":1,\"appsads.delete\":1,\"rankads.index\":1,\"rankads.create\":1,\"rankads.unstock\":1,\"rankads.edit\":1,\"rankads.delete\":1,\"indexads.index\":1,\"indexads.create\":1,\"indexads.unstock\":1,\"indexads.edit\":1,\"indexads.delete\":1,\"editorads.index\":1,\"editorads.create\":1,\"editorads.unstock\":1,\"editorads.edit\":1,\"editorads.delete\":1,\"cateads.index\":1,\"cateads.upload\":1,\"cateads.edit\":1,\"cate.index\":1,\"cate.create\":1,\"cate.edit\":1,\"cate.delete\":1,\"cate.show\":1,\"tag.index\":1,\"tag.create\":1,\"tag.edit\":1,\"tag.delete\":1,\"tag.show\":1,\"rating.index\":1,\"rating.edit\":1,\"comment.index\":1,\"comment.edit\":1,\"comment.delete\":1,\"stopword.index\":1,\"stopword.create\":1,\"stopword.edit\":1,\"stopword.delete\":1,\"keyword.index\":1,\"keyword.store\":1,\"keyword.update\":1,\"keyword.delete\":1,\"users.index\":1,\"users.create\":1,\"users.edit\":1,\"users.delete\":1,\"roles.index\":1,\"roles.create\":1,\"roles.edit\":1,\"roles.delete\":1}', '2014-10-14 10:33:12', '2014-10-14 10:33:12', 1);
 
 
 /*----------------------------------------------------------

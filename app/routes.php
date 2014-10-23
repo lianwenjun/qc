@@ -36,10 +36,10 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
     Route::group(['prefix' => 'apps', 'before' => 'hasPermissions'], function()
     {
         // 列表
-        Route::get('stock', ['as' => 'apps.stock',  'uses' => 'Admin_Apps_IndexController@stock']);
-        Route::get('draft',['as' => 'apps.draft',    'uses' => 'Admin_Apps_IndexController@draft']);
-        Route::get('pending', ['as' => 'apps.pending',  'uses' => 'Admin_Apps_IndexController@pending']);
-        Route::get('nopass', ['as' => 'apps.notpass',   'uses' => 'Admin_Apps_IndexController@notpass']);
+        Route::get('stock', ['as' => 'apps.stock', 'uses' => 'Admin_Apps_IndexController@stock']);
+        Route::get('draft', ['as' => 'apps.draft', 'uses' => 'Admin_Apps_IndexController@draft']);
+        Route::get('pending', ['as' => 'apps.pending', 'uses' => 'Admin_Apps_IndexController@pending']);
+        Route::get('nopass', ['as' => 'apps.notpass', 'uses' => 'Admin_Apps_IndexController@notpass']);
         Route::get('unstock', ['as' => 'apps.unstock', 'uses' => 'Admin_Apps_IndexController@unstock']);
 
         // 历史
@@ -51,40 +51,39 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
              ->where('id', '[0-9]+');
         Route::get('draft/{id}', ['as' => 'apps.draft.edit', 'uses' => 'Admin_Apps_IndexController@edit'])
              ->where('id', '[0-9]+');
-        Route::get('notpass/{id}',   ['as' => 'apps.notpass.edit',   'uses' => 'Admin_Apps_IndexController@edit'])
+        Route::get('notpass/{id}', ['as' => 'apps.notpass.edit', 'uses' => 'Admin_Apps_IndexController@edit'])
              ->where('id', '[0-9]+');
+
         Route::get('unstock/{id}', ['as' => 'apps.unstock.edit', 'uses' => 'Admin_Apps_IndexController@edit'])
              ->where('id', '[0-9]+');
 
         // 编辑处理
-        Route::put('stock/{id}', ['as' => 'apps.stock.edit',  'uses' => 'Admin_Apps_IndexController@update'])
+        Route::put('stock/{id}', ['as' => 'apps.stock.edit', 'uses' => 'Admin_Apps_IndexController@update'])
              ->where('id', '[0-9]+');
-        Route::put('draft/{id}', ['as' => 'apps.draft.edit',    'uses' => 'Admin_Apps_IndexController@update'])
+        Route::put('draft/{id}', ['as' => 'apps.draft.edit', 'uses' => 'Admin_Apps_IndexController@update'])
              ->where('id', '[0-9]+');
-        Route::put('pending/{id}', ['as' => 'apps.pending.edit',    'uses' => 'Admin_Apps_IndexController@update'])
+        Route::put('pending/{id}', ['as' => 'apps.pending.edit', 'uses' => 'Admin_Apps_IndexController@update'])
              ->where('id', '[0-9]+');
-
 
         // 删除
         Route::delete('{id}', ['as' => 'apps.delete', 'uses' => 'Admin_Apps_IndexController@destroy'])
              ->where('id', '[0-9]+');
 
         // 审核
-        Route::put('putStock', ['as' => 'apps.putPublish',    'uses' => 'Admin_Apps_IndexController@putStock']);
-        Route::put('putNotpass', ['as' => 'apps.putNotpass',    'uses' => 'Admin_Apps_IndexController@putNotpass']);
+        Route::put('putStock', ['as' => 'apps.putPublish', 'uses' => 'Admin_Apps_IndexController@putStock']);
+        Route::put('putNotpass', ['as' => 'apps.putNotpass', 'uses' => 'Admin_Apps_IndexController@putNotpass']);
 
 
         // 下架
-        Route::put('putUnstock', ['as' => 'apps.putUnstock',    'uses' => 'Admin_Apps_IndexController@putUnstock']);
+        Route::put('putUnstock', ['as' => 'apps.putUnstock', 'uses' => 'Admin_Apps_IndexController@putUnstock']);
 
         // 预览
-        Route::get('{id}/preveiw', ['as' => 'apps.preview',      'uses' => 'Admin_Apps_IndexController@preview'])
+        Route::get('{id}/preveiw', ['as' => 'apps.preview', 'uses' => 'Admin_Apps_IndexController@preview'])
              ->where('id', '[0-9]+');
 
         // 上传
         Route::post('imageupload', ['as' => 'apps.imageupload', 'uses' => 'Admin_Apps_IndexController@imageUpload']);
         Route::post('appupload/{dontSave?}', ['as' => 'apps.appupload', 'uses' => 'Admin_Apps_IndexController@appUpload']);
-
     });
 
      // 管理员
@@ -176,7 +175,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('{id}/edit', ['as' => 'rankads.edit', 'uses' => 'Admin_rankAdsController@edit']);
         Route::post('{id}/edit', ['as' => 'rankads.edit', 'uses' => 'Admin_rankAdsController@update']);
         Route::delete('{id}/delete', ['as' => 'rankads.delete', 'uses' => 'Admin_rankAdsController@destroy']);
-        Route::get('{id}/offshelf', ['as' => 'rankads.offshelf', 'uses' => 'Admin_rankAdsController@offshelf']);
+        Route::get('{id}/unstock', ['as' => 'rankads.unstock', 'uses' => 'Admin_rankAdsController@unstock']);
     });
     Route::group(['prefix' => 'indexads', 'before' => 'hasPermissions'], function() //首页图片位推广
     {
@@ -186,7 +185,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('{id}/edit', ['as' => 'indexads.edit', 'uses' => 'Admin_indexAdsController@edit']);
         Route::post('{id}/edit', ['as' => 'indexads.edit', 'uses' => 'Admin_indexAdsController@update']);
         Route::delete('{id}/delete', ['as' => 'indexads.delete', 'uses' => 'Admin_indexAdsController@destroy']);
-        Route::get('{id}/offshelf', ['as' => 'indexads.offshelf', 'uses' => 'Admin_indexAdsController@offshelf']);
+        Route::get('{id}/unstock', ['as' => 'indexads.unstock', 'uses' => 'Admin_indexAdsController@unstock']);
     });
     Route::group(['prefix' => 'editorads', 'before' => 'hasPermissions'], function() //编辑推荐
     {
@@ -196,7 +195,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('{id}/edit', ['as'=>'editorads.edit', 'uses' => 'Admin_EditorAdsController@edit']);
         Route::post('{id}/edit', ['as'=>'editorads.edit', 'uses' => 'Admin_EditorAdsController@update']);
         Route::delete('{id}/delete', ['as'=>'editorads.delete', 'uses' => 'Admin_EditorAdsController@destroy']);
-        Route::get('{id}/offshelf', ['as'=>'editorads.offshelf', 'uses' => 'Admin_EditorAdsController@offshelf']);
+        Route::get('{id}/unstock', ['as'=>'editorads.unstock', 'uses' => 'Admin_EditorAdsController@unstock']);
     });
     Route::group(['prefix' => 'cateads', 'before' => 'hasPermissions'], function() //分类推广
     {
