@@ -10,9 +10,9 @@
                     <input name="addTag" maxlength="16" type="text" class="Search_wenben" size="20" value="" placeholder="请输入标签名称" /></span>
                 <span>
                     <b>游戏分类：</b>
-                    <select name="cates1">
+                    <select name="cats1">
                         <!--option>--全部--</option!-->
-                        @foreach ($cates as $index => $value )
+                        @foreach ($cats as $index => $value )
                             <option value="{{ $index }}">{{ $value }}</option>
                         @endforeach
                     </select>
@@ -24,9 +24,9 @@
             <li>
                 <span>
                     <b>查询：</b>
-                    <select name="cates2">
+                    <select name="cats2">
                         <option>--全部--</option>
-                        @foreach ($cates as $index => $value)
+                        @foreach ($cats as $index => $value)
                             <option value="{{ $index }}">{{ $value }}</option>
                         @endforeach
                     </select>
@@ -51,13 +51,13 @@
                 <td width="10%">操作</td>
             </tr>
             @forelse($tags as $tag)
-                @if (!isset($cates[$tag->parent_id]))
+                @if (!isset($cats[$tag->parent_id]))
                     conntinue;
                 @endif
                     <tr class="jq-tr">
                         <td>{{ $tag->id }}</td>
                         <td>{{ $tag->title }}</td>
-                        <td>{{ isset($cates[$tag->parent_id]) ? $cates[$tag->parent_id]: 0}}</td>
+                        <td>{{ isset($cats[$tag->parent_id]) ? $cats[$tag->parent_id]: 0}}</td>
                         <td>{{ $tag->search_total }}</td>
                         <td>{{ $tag->sort }}</td>
                         <td>{{ $tag->updated_at }}</td>
@@ -110,7 +110,7 @@ $(function(){
             $("input[name=addTag]").val("请输入标签名称");
             return;
         }
-        var parent_id = $("select[name=cates1]").val();
+        var parent_id = $("select[name=cats1]").val();
         if (parent_id == '--全部--' || parent_id == '' || parent_id == undefined){
             return;
         }
@@ -136,7 +136,7 @@ $(function(){
             $("input[name=searchTag]").val("输入关键字");
             return;
         }
-        var parent_id = $("select[name=cates2]").val();
+        var parent_id = $("select[name=cats2]").val();
         var query = '?word=' + word;;
         if ( parent_id != '--全部--' && parent_id != '' && parent_id != undefined){
             query = query + '&parent_id=' + parent_id;;
