@@ -35,11 +35,11 @@ class CreateAppsTable extends Migration {
             $table->string('os', 32)->comment('系统OS');
             $table->string('os_version', 32)->comment('系统版本');
             $table->integer('sort')->default(0)->comment('排序');
-            $table->enum('status', ['publish', 'draft', 'pending', 'nopass', 'restock', 'unstock'])->default('publish')->comment('数据状态');
+            $table->enum('status', ['publish', 'draft', 'pending', 'nopass', 'stock', 'unstock'])->default('publish')->comment('数据状态');
             $table->enum('is_verify', ['yes', 'no'])->default('no')->comment('是否安全认证');
             $table->enum('has_ad', ['yes', 'no'])->default('no')->comment('是否无广告');
             $table->string('source', 10)->comment('来源');
-            $table->timestamp('restocked_at')->comment('上架时间');
+            $table->timestamp('stocked_at')->comment('上架时间');
             $table->timestamp('unstocked_at')->comment('下架时间');
             $table->timestamp('reviewed_at')->comment('审核时间');
             $table->softDeletes();

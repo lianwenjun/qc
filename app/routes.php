@@ -40,7 +40,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('draft',    ['as' => 'apps.draft',    'uses' => 'Admin_AppsController@draft']);
         Route::get('pending',  ['as' => 'apps.pending',  'uses' => 'Admin_AppsController@pending']);
         Route::get('nopass',   ['as' => 'apps.nopass',   'uses' => 'Admin_AppsController@nopass']);
-        Route::get('offshelf', ['as' => 'apps.offshelf', 'uses' => 'Admin_AppsController@offshelf']);
+        Route::get('unstock', ['as' => 'apps.unstock', 'uses' => 'Admin_AppsController@unstock']);
 
         // 历史
         Route::get('onshelf/{id}/history', ['as' => 'apps.history', 'uses' => 'Admin_AppsController@history'])
@@ -53,7 +53,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
              ->where('id', '[0-9]+');
         Route::get('nopass/{id}',   ['as' => 'apps.nopass.edit',   'uses' => 'Admin_AppsController@edit'])
              ->where('id', '[0-9]+');
-        Route::get('offshelf/{id}', ['as' => 'apps.offshelf.edit', 'uses' => 'Admin_AppsController@edit'])
+        Route::get('unstock/{id}', ['as' => 'apps.unstock.edit', 'uses' => 'Admin_AppsController@edit'])
              ->where('id', '[0-9]+');
 
         Route::put('onshelf/{id}', ['as' => 'apps.onshelf.edit',  'uses' => 'Admin_AppsController@update'])
@@ -77,7 +77,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::put('doallnopass', ['as' => 'apps.doallnopass',    'uses' => 'Admin_AppsController@doallnopass']);
 
         // 下架
-        Route::put('{id}/dooffshelf', ['as' => 'apps.dooffshelf',    'uses' => 'Admin_AppsController@dooffshelf'])
+        Route::put('{id}/dounstock', ['as' => 'apps.dounstock',    'uses' => 'Admin_AppsController@dounstock'])
              ->where('id', '[0-9]+');
 
         // 预览
@@ -179,7 +179,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('{id}/edit', ['as' => 'rankads.edit', 'uses' => 'Admin_rankAdsController@edit']);
         Route::post('{id}/edit', ['as' => 'rankads.edit', 'uses' => 'Admin_rankAdsController@update']);
         Route::delete('{id}/delete', ['as' => 'rankads.delete', 'uses' => 'Admin_rankAdsController@destroy']);
-        Route::get('{id}/offshelf', ['as' => 'rankads.offshelf', 'uses' => 'Admin_rankAdsController@offshelf']);
+        Route::get('{id}/unstock', ['as' => 'rankads.unstock', 'uses' => 'Admin_rankAdsController@unstock']);
     });
     Route::group(['prefix' => 'indexads', 'before' => 'hasPermissions'], function() //首页图片位推广
     {
@@ -189,7 +189,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('{id}/edit', ['as' => 'indexads.edit', 'uses' => 'Admin_indexAdsController@edit']);
         Route::post('{id}/edit', ['as' => 'indexads.edit', 'uses' => 'Admin_indexAdsController@update']);
         Route::delete('{id}/delete', ['as' => 'indexads.delete', 'uses' => 'Admin_indexAdsController@destroy']);
-        Route::get('{id}/offshelf', ['as' => 'indexads.offshelf', 'uses' => 'Admin_indexAdsController@offshelf']);
+        Route::get('{id}/unstock', ['as' => 'indexads.unstock', 'uses' => 'Admin_indexAdsController@unstock']);
     });
     Route::group(['prefix' => 'editorads', 'before' => 'hasPermissions'], function() //编辑推荐
     {
@@ -199,7 +199,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('{id}/edit', ['as'=>'editorads.edit', 'uses' => 'Admin_EditorAdsController@edit']);
         Route::post('{id}/edit', ['as'=>'editorads.edit', 'uses' => 'Admin_EditorAdsController@update']);
         Route::delete('{id}/delete', ['as'=>'editorads.delete', 'uses' => 'Admin_EditorAdsController@destroy']);
-        Route::get('{id}/offshelf', ['as'=>'editorads.offshelf', 'uses' => 'Admin_EditorAdsController@offshelf']);
+        Route::get('{id}/unstock', ['as'=>'editorads.unstock', 'uses' => 'Admin_EditorAdsController@unstock']);
     });
     Route::group(['prefix' => 'cateads', 'before' => 'hasPermissions'], function() //分类推广
     {
