@@ -4,12 +4,12 @@
         'apps' => [
             //审核+上下架状态
             'status' => [
-                'new' => '新上传',
+                'publish' => '新上传',
                 'draft' => '草稿',
                 'pending' => '待审核',
                 'nopass' => '审核不通过',
-                'onshelf' => '上架', 
-                'offshelf' => '下架',
+                'restock' => '上架', 
+                'unstock' => '下架',
             ],
             //是否有广告
             'has_ads' => [
@@ -31,25 +31,25 @@
             'status' =>[
                 'expired' => '已过期',
                 'online' => '线上展示',
-                'onshelf' => '上架',
-                'offshelf' => '已下架',
+                'restock' => '上架',
+                'unstock' => '已下架',
             ],
             //状态颜色
             'statusColor' => [
                 'expired' => 'class="Red"',
                 'online' => 'class="Green"',
-                'onshelf' => '',
-                'offshelf' => '',
+                'restock' => '',
+                'unstock' => '',
             ],
             //时间颜色
             'timeColor' => [
                 'expired' => 'class="Red"',
                 'online' => '',
-                'onshelf' => '',
-                'offshelf' => '',
+                'restock' => '',
+                'unstock' => '',
             ],
             //是否上架
-            'is_onshelf' => [
+            'is_restock' => [
                 'yes' => '上架', 'no' => '下架',
             ],
             //是否过期
