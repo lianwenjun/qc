@@ -181,11 +181,11 @@ class Admin_EditorAdsController extends \Admin_BaseController {
         return Request::header('referrer') ? Redirect::back()
             ->with('msg', $msg) : Redirect::route('editorads.index')->with('msg', $msg);
     }
-    /**
+     /**
     * 上传图片
     */
     public function upload(){
-        $adsModel = new Ads();
-        return $adsModel->imageUpload();
+        $cupload = new Admin_Cupload;
+        return $upload->adsImageUpload();
     }
 }

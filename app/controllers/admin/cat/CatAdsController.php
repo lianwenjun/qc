@@ -48,8 +48,8 @@ class Admin_Cat_CatAdsController extends \Admin_BaseController {
     * 上传图片
     */
     public function upload(){
-        $catAdsModel = new CatAds();
-        return $catAdsModel->imageUpload();
+        $cupload = new Admin_Cupload;
+        return $cupload->cateImageUpload();
     }
 
 }
