@@ -119,21 +119,21 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 
     Route::group(['prefix' => 'cate', 'before' => 'hasPermissions'], function() //游戏分类
     {
-        Route::get('index', ['as' => 'cate.index', 'uses' => 'Admin_Cate_CateAdsController@index']);
-        Route::post('create', ['as' => 'cate.create', 'uses' => 'Admin_Cate_CateAdsController@store']);
-        Route::post('{id}/edit', ['as' => 'cate.edit', 'uses' => 'Admin_Cate_CateAdsController@update']);
-        Route::get('{id}/delete', ['as' => 'cate.delete', 'uses' => 'Admin_Cate_CateAdsController@destroy']);
-        Route::get('{id}', ['as' => 'cate.show', 'uses' => 'Admin_Cate_CateAdsController@show']);
+        Route::get('index', ['as' => 'cate.index', 'uses' => 'Admin_Cate_CatesController@index']);
+        Route::post('create', ['as' => 'cate.create', 'uses' => 'Admin_Cate_CatesController@store']);
+        Route::post('{id}/edit', ['as' => 'cate.edit', 'uses' => 'Admin_Cate_CatesController@update']);
+        Route::get('{id}/delete', ['as' => 'cate.delete', 'uses' => 'Admin_Cate_CatesController@destroy']);
+        Route::get('{id}', ['as' => 'cate.show', 'uses' => 'Admin_Cate_CatesController@show']);
     });
 
     Route::group(['prefix' => 'tag', 'before' => 'hasPermissions'], function() //游戏标签
     {
-        Route::get('index', ['as' => 'tag.index', 'uses' => 'Admin_Cate_CateAdsController@tagIndex']);
-        Route::post('create', ['as' => 'tag.create', 'uses' => 'Admin_Cate_CateAdsController@tagStore']);
-        Route::post('{id}/edit', ['as' => 'tag.edit', 'uses' => 'Admin_Cate_CateAdsController@update']);
-        Route::get('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_Cate_CateAdsController@destroy']);
-        Route::delete('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_Cate_CateAdsController@tagDestroy']);
-        Route::get('{id}/show', ['as' => 'tag.show', 'uses' => 'Admin_Cate_CateAdsController@show']);
+        Route::get('index', ['as' => 'tag.index', 'uses' => 'Admin_Cate_CatesController@tagIndex']);
+        Route::post('create', ['as' => 'tag.create', 'uses' => 'Admin_Cate_CatesController@tagStore']);
+        Route::post('{id}/edit', ['as' => 'tag.edit', 'uses' => 'Admin_Cate_CatesController@update']);
+        Route::get('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_Cate_CatesController@destroy']);
+        Route::delete('{id}/delete', ['as' => 'tag.delete', 'uses' => 'Admin_Cate_CatesController@tagDestroy']);
+        Route::get('{id}/show', ['as' => 'tag.show', 'uses' => 'Admin_Cate_CatesController@show']);
     });
     Route::group(['prefix' => 'rating', 'before' => 'hasPermissions'], function() //游戏评分
     {
