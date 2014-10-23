@@ -7,8 +7,8 @@ class Ads extends \Eloquent {
     protected $softDelete = true;
     protected $table = 'ads';
     
-    protected $fillable = ['app_id', 'title', 'location', 'image', 'onshelfed_at', 
-                'offshelfed_at', 'type', 'is_onshelf', 'is_top', 'sort', 'word'];
+    protected $fillable = ['app_id', 'title', 'location', 'image', 'stocked_at', 
+                'unstocked_at', 'type', 'is_stock', 'is_top', 'sort', 'word'];
     //添加广告检测
     static public $adsCreateRules = [
                 'app_id' => 'required|integer',
@@ -16,8 +16,8 @@ class Ads extends \Eloquent {
                 'location' => 'required',
                 'image' => 'required',
                 'is_top' => 'in:yes,no',
-                'onshelfed_at' => 'required',
-                'offshelfed_at' => 'required'
+                'stocked_at' => 'required',
+                'unstocked_at' => 'required'
             ];
     //广告更新检测      
     static public  $adsUpdateRules = [
@@ -29,8 +29,8 @@ class Ads extends \Eloquent {
                 'title' => 'required',
                 'location' => 'required',
                 'sort' => 'integer',
-                'onshelfed_at' => 'required',
-                'offshelfed_at' => 'required'
+                'stocked_at' => 'required',
+                'unstocked_at' => 'required'
             ];
     //更新排行广告检测
     public static $rankadsUpateRules = [
@@ -49,10 +49,10 @@ class Ads extends \Eloquent {
             'location' => Input::get('location'),
             'image' => Input::get('image', ''),
             'is_top' => Input::get('is_top', 'no'),
-            'onshelfed_at' => Input::get('onshelfed_at'),
-            'offshelfed_at' => Input::get('offshelfed_at'),
+            'stocked_at' => Input::get('stocked_at'),
+            'unstocked_at' => Input::get('unstocked_at'),
             'type' => $type,
-            'is_onshelf' => 'yes', 
+            'is_stock' => 'yes', 
             'sort' => Input::get('sort', 0), 
             'word' => Input::get('word', ''),
             ];
@@ -69,9 +69,9 @@ class Ads extends \Eloquent {
         $ad->location = Input::get('location', $ad->location);
         $ad->is_top = Input::get('is_top', 'no');
         $ad->sort = Input::get('sort', $ad->sort);
-        $ad->onshelfed_at = Input::get('onshelfed_at', $ad->onshelfed_at);
-        $ad->offshelfed_at = Input::get('offshelfed_at', $ad->offshelfed_at);
-        $ad->is_onshelf = 'yes';
+        $ad->stocked_at = Input::get('stocked_at', $ad->stocked_at);
+        $ad->unstocked_at = Input::get('unstocked_at', $ad->unstocked_at);
+        $ad->is_stock = 'yes';
         return $ad;
     }
     //搜索条件过滤
@@ -82,32 +82,32 @@ class Ads extends \Eloquent {
         }
         if (Input::get('status')){
             $status = Input::get('status');
-            if ( $status == 'onshelf' ) {
-                $query = $query->where('is_onshelf', 'yes')
-                    ->where('onshelfed_at', '>', date('Y-m-d h:m:s', time()));
+            if ( $status == 'stock' ) {
+                $query = $query->where('is_stock', 'yes')
+                    ->where('stocked_at', '>', date('Y-m-d h:m:s', time()));
             }
-            if ( $status == 'offshelf' ){
-                $query = $query->where('is_onshelf', 'no');
+            if ( $status == 'unstock' ){
+                $query = $query->where('is_stock', 'no');
             }
             if ( $status == 'online' ){
-                $query = $query->where('onshelfed_at', '<=', date('Y-m-d h:m:s', time()))
-                    ->where('offshelfed_at', '>', date('Y-m-d h:m:s', time()))
-                    ->where('is_onshelf', 'yes');
+                $query = $query->where('stocked_at', '<=', date('Y-m-d h:m:s', time()))
+                    ->where('unstocked_at', '>', date('Y-m-d h:m:s', time()))
+                    ->where('is_stock', 'yes');
             }
             if ( $status == 'expired' ){
-                $query = $query->where('offshelfed_at', '<', date('Y-m-d h:m:s', time()))
-                ->where('is_onshelf', 'yes');
+                $query = $query->where('unstocked_at', '<', date('Y-m-d h:m:s', time()))
+                ->where('is_stock', 'yes');
             }
         }
         return $query;
     }
     // 下架广告
-    public function offshelf($id, $type){
-        $ad = Ads::where('id', $id)->where('type', $type)->where('is_onshelf', 'yes')->first();
+    public function unstock($id, $type){
+        $ad = Ads::where('id', $id)->where('type', $type)->where('is_stock', 'yes')->first();
         if (!$ad) {
             return false;
         }
-        $ad->is_onshelf = 'no';
+        $ad->is_stock = 'no';
         if (!$ad->save()){
             return false;
         }

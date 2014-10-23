@@ -137,7 +137,7 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
     public function unstock($id)
     {
         $adsModel = new Ads();
-        $ad = $adsModel->offshelf($id, $this->type);
+        $ad = $adsModel->unstock($id, $this->type);
         if (!$ad) {
             $msg = '亲，#'.$id.'下架失败了';
             return Redirect::route('appsads.index')->with('msg', $msg);
