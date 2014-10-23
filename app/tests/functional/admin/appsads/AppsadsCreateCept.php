@@ -8,8 +8,8 @@ $fields = ['app_id'=> 1,
     'location' => 'hotdown', 
     'image' => 'xxxoxoxo.jpg',
     'is_top' => 'no',
-    'onshelfed_at' => '1411720308',
-    'offshelfed_at' => '1411720308',
+    'restocked_at' => '1411720308',
+    'unstocked_at' => '1411720308',
     ];
 //foreach($fields as $index => $field){
 //    $I->fillField($index, $field);

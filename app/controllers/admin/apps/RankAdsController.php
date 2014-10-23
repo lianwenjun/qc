@@ -4,7 +4,7 @@ class Admin_rankAdsController extends \Admin_BaseController {
 
     protected $type = 'rank';
     /**
-     * Display a listing of the resource.
+     * 显示排行广告列表
      * GET /admin/rankads
      *
      * @return Response
@@ -24,14 +24,9 @@ class Admin_rankAdsController extends \Admin_BaseController {
         foreach ($ads as &$ad) {
             $app = $appsModel->find($ad->app_id);
             if ($app) $ad->image = $app->icon;
-            
         }
-        //var_dump($ads->toarray());
-        $statusArray = ['online' => '线上展示',
-                    'onshelf' => '上架',
-                    'expired' => '已过期',
-                    'offshelf' => '已下架'];
-        $datas = ['ads' => $ads, 'status' => $statusArray, 
+
+        $datas = ['ads' => $ads,
                 'location' => Config::get('status.ads.ranklocation'),
                 'is_top' => Config::get('status.ads.is_top')];
         $this->layout->content = View::make('admin.rankads.index', $datas);
@@ -112,27 +107,18 @@ class Admin_rankAdsController extends \Admin_BaseController {
         $adsModel = new Ads();
         $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
         if (!$ad) {
-            $msg = '亲，数据不存在';
-            return Redirect::back()->with('msg', $msg);
+            return Redirect::back()->with('msg', '亲，数据不存在');
         }
         $validator = Validator::make(Input::all(), $adsModel->rankadsUpateRules);
         if ($validator->fails()){
-            Log::error($validator->messages());
-            $msg = "修改失败";
-            return Redirect::back()->with('msg', $msg);
+            return Redirect::back()->with('msg', '修改失败');
         }
-        $ad->location = Input::get('location', $ad->location);
-        $ad->is_top = Input::get('is_top', 'no');
-        $ad->sort = Input::get('sort', $ad->sort);
-        $ad->onshelfed_at = Input::get('onshelfed_at', $ad->onshelfed_at);
-        $ad->offshelfed_at = Input::get('offshelfed_at', $ad->offshelfed_at);
-        $ad->is_onshelf = 'yes';
+        $ad = $adsModel->UpdateAds($ad);
         if ($ad->save()){
-            $msg = "修改成功";
-            return Redirect::route('rankads.index')->with('msg', $msg);
+            return Redirect::route('rankads.index')->with('msg', '修改成功');
+        } else {
+            return Redirect::back()->with('msg', '没什么改变');
         }
-        $msg = "没什么改变";
-        return Redirect::route('rankads.index')->with('msg', $msg);
     }
 
     /**
@@ -145,21 +131,12 @@ class Admin_rankAdsController extends \Admin_BaseController {
     public function offshelf($id)
     {
         $adsModel = new Ads();
-        $ad = $adsModel->where('id', $id)->where('type', $this->type)->where('is_onshelf', 'yes')->first();
-        if (!$ad) {
-            $msg = '亲，你要下架的' . $id . '数据不存在';
-            return Request::header('referrer') ? Redirect::back()
-                ->with('msg', $msg) : Redirect::route('rankads.index')->with('msg', $msg);
-        }
-        $msg = '亲，#' . $id . '下架失败了';
-        $ad->is_onshelf = 'no';
-        if ($ad->save()){
-            $msg = '亲，#' . $id . '下架成功了';
-            return Request::header('referrer') ? Redirect::back()
-                ->with('msg', $msg) : Redirect::route('rankads.index')->with('msg', $msg);
-        }
-        return Request::header('referrer') ? Redirect::back()
-                ->with('msg', $msg) : Redirect::route('rankads.index')->with('msg', $msg);
+        $ad = $adsModel->offshelf($id, $this->type);
+        if ($ad) {
+            return  Redirect::back()->with('msg', '亲，#' . $id . '下架成功了');
+        } else {
+            return Redirect::route('rankads.index')->with('msg', '亲，#' . $id . '下架失败了');
+        }    
     }
     
     /**
@@ -176,16 +153,13 @@ class Admin_rankAdsController extends \Admin_BaseController {
         $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
         //检查
         if (!$ad) {
-            $msg = '#' . $id . '不存在';
-            return Request::header('referrer') ? Redirect::back()
-                ->with('msg', $msg) : Redirect::route('rankads.index')->with('msg', $msg);
+            return  Redirect::back()->with('msg', '#' . $id . '不存在');
         }
         $msg = '#' . $id . '删除失败';
         if ($ad->delete()){
             $msg = '#' . $id . '删除成功';
         }
-        return Request::header('referrer') ? Redirect::back()
-            ->with('msg', $msg) : Redirect::route('rankads.index')->with('msg', $msg);
+        return Redirect::back()->with('msg', $msg);
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-class Admin_AppsAdsController extends \Admin_BaseController {
+class Admin_Apps_AppsAdsController extends \Admin_BaseController {
 
     protected $type = 'app';
     /**
@@ -20,11 +20,7 @@ class Admin_AppsAdsController extends \Admin_BaseController {
         }
         $query = $query->where('type', $this->type);
         $ads = $query->orderBy('id', 'desc')->paginate($this->pagesize);
-        $statusArray = ['online' => '线上展示',
-                    'onshelf' => '上架',
-                    'expired' => '已过期',
-                    'offshelf' => '已下架'];
-        $datas = ['ads' => $ads, 'status' => $statusArray, 
+        $datas = ['ads' => $ads, 'status' => Config::get('status.ads.status'), 
                 'location' => Config::get('status.ads.applocation'),
                 'is_top' => Config::get('status.ads.is_top')];
         $this->layout->content = View::make('admin.appsads.index', $datas);
@@ -81,15 +77,13 @@ class Admin_AppsAdsController extends \Admin_BaseController {
      */
     public function edit($id)
     {
-        $adsModel = new Ads();
-        $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
+        $ad = Ads::where('id', $id)->where('type', $this->type)->first();
         //检测广告是否存在
         if (!$ad) {
             return Redirect::route('appsads.index');
         }
         //检测游戏是否存在
-        $appsModel = new Apps;
-        $app = $appsModel->find($ad->app_id);
+        $app = Apps::find($ad->app_id);
         if (!$app) {
             return Redirect::route('appsads.index');
         }
@@ -111,13 +105,11 @@ class Admin_AppsAdsController extends \Admin_BaseController {
      */
     public function update($id)
     {
-        $adsModel = new Ads();
-        $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
+        $ad = Ads::where('id', $id)->where('type', $this->type)->first();
         if (!$ad) {
-            $msg = '亲，数据不存在';
-            return Redirect::route('appsads.index')->with('msg', $msg);
+            return Redirect::route('appsads.index')->with('msg', '亲，数据不存在');
         }
-        $validator = Validator::make(Input::all(), $adsModel->adsUpdateRules);
+        $validator = Validator::make(Input::all(), Ads::adsUpdateRules);
         if ($validator->fails()){
             Log::error($validator->messages());
             $msg = "添加失败";
@@ -130,11 +122,9 @@ class Admin_AppsAdsController extends \Admin_BaseController {
         $ad->offshelfed_at = Input::get('offshelfed_at', $ad->offshelfed_at);
         $ad->is_onshelf = 'yes';
         if ($ad->save()) {
-            $msg = "修改成功";
-            return Redirect::route('appsads.index')->with('msg', $msg);
+            return Redirect::route('appsads.index')->with('msg', '修改成功');
         }
-        $msg = "没什么改变";
-        return Redirect::route('appsads.index')->with('msg', $msg);
+        return Redirect::route('appsads.index')->with('msg', '没什么改变');
     }
 
     /**
@@ -144,7 +134,7 @@ class Admin_AppsAdsController extends \Admin_BaseController {
      * @param  int  $id
      * @return Response
      */
-    public function offshelf($id)
+    public function unstock($id)
     {
         $adsModel = new Ads();
         $ad = $adsModel->offshelf($id, $this->type);
@@ -170,16 +160,13 @@ class Admin_AppsAdsController extends \Admin_BaseController {
         $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
         //检查
         if (!$ad) {
-            $msg = '#' . $id . '不存在';
-            return Request::header('referrer') ? Redirect::back()
-                ->with('msg', $msg) : Redirect::route('appsads.index')->with('msg', $msg);
+            return App::abort(404);
         }
         $msg = '#' . $id . '删除失败';
         if ($ad->delete()){
             $msg = '#' . $id . '删除成功';
         }
-        return Request::header('referrer') ? Redirect::back()
-            ->with('msg', $msg) : Redirect::route('appsads.index')->with('msg', $msg);
+        return Redirect::route('appsads.index')->with('msg', $msg);
     }
 
     /**

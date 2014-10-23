@@ -6,6 +6,7 @@ app/storage/*
 app/tests/_output/*
 .gitignore
 .git/*
+.idea/*
 *.sublime-project
 *.sublime-workspace
 public/apks/*

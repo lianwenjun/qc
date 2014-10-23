@@ -7,9 +7,9 @@
 
 return [
     '上架游戏列表' => [
-        'apps.onshelf' => '列表',
-        'apps.dooffshelf' => '下架',
-        'apps.onshelf.edit' => '编辑',
+        'apps.stock' => '列表',
+        'apps.putUnstock' => '下架',
+        'apps.stock.edit' => '编辑',
         'apps.history' => '历史',
         'apps.preview' => '预览'
         ],
@@ -22,19 +22,16 @@ return [
         ],
     '待审核列表' => [
         'apps.pending' => '列表',
-        'apps.dopass' => '审核通过',
-        'apps.donopass' => '审核不通过',
-        'apps.doallpass' => '批量审核通过',
-        'apps.doallnopass' => '批量审核不通过',
-        'apps.pending.edit' => '提交到待审核',
+        'apps.putStock' => '审核通过',
+        'apps.putNotpass' => '审核不通过',
         ],
     '审核不通过列表' => [
-        'apps.nopass' => '列表',
-        'apps.nopass.edit' => '编辑',
+        'apps.notpass' => '列表',
+        'apps.notpass.edit' => '编辑',
     ],
     '下架游戏列表' => [
-        'apps.offshelf' => '列表',
-        'apps.offshelf.edit' => '编辑',
+        'apps.unstock' => '列表',
+        'apps.unstock.edit' => '编辑',
     ],
     '首页游戏位管理' => [
         'appsads.index' => '列表',
