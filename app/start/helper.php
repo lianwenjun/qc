@@ -12,7 +12,7 @@ if(! function_exists('adsStatus')) {
             }elseif (strtotime($ad->onshelfed_at) > time()){
                 $res = 'onshelf';
             }else{
-                $res = 'noexpire';
+                $res = 'online';
             }
         }else{
             $res = 'offshelf';

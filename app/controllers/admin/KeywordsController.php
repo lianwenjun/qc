@@ -1,10 +1,6 @@
 <?php
 
 class Admin_KeywordsController extends \Admin_BaseController {
-
-    //protected $this->userId = Sentry::getUser()->id;
-    //protected $layout = 'admin.layout';
-    //protected $pagesize = 5;
     /**
      * 
      * 获得关键字的列表
@@ -15,11 +11,11 @@ class Admin_KeywordsController extends \Admin_BaseController {
      */
     public function index()
     {  
-        $ky = new Keywords;
-        $where = $ky;
+        $keywordModel = new Keywords;
+        $where = $keywordModel;
         if (Input::get('word')) {
             $query = ['%', Input::get('word'), '%'];
-            $where = $ky->where('word', 'like', join($query));
+            $where = $keywordModel->where('word', 'like', join($query));
         }
         //查询，默认分页
         $keywords = $where->orderBy('id', 'desc')->paginate($this->pagesize);
@@ -39,7 +35,7 @@ class Admin_KeywordsController extends \Admin_BaseController {
     }
 
     /**
-     * 新建一个新的关键词
+     * 添加新的关键词
      * @method POST 
      * @param string word
      * @return Response

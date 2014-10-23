@@ -29,9 +29,11 @@ class Admin_StopwordsController extends \Admin_BaseController {
 
 
     /**
-     * Store a newly created resource in storage.
+     * 添加屏蔽词
      * POST /admin/stopwords
-     *
+     * @param
+     * @param
+     * @param 
      * @return Response
      */
     public function store()
@@ -60,8 +62,8 @@ class Admin_StopwordsController extends \Admin_BaseController {
     }
 
     /**
-     * Update the specified resource in storage.
-     * PUT /admin/stopwords/{id}
+     * 更新屏蔽词
+     * POST /admin/stopwords/{id}
      *
      * @param  int  $id
      * @return Response
@@ -78,7 +80,6 @@ class Admin_StopwordsController extends \Admin_BaseController {
             return Response::json($res);;   
         }
         //检测输入
-        
         $validator = Validator::make(
                     Input::all(), 
                     $stopwordModel->updateRules($id), 
