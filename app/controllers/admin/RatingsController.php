@@ -11,16 +11,15 @@ class Admin_RatingsController extends \Admin_BaseController {
     public function index()
     {
         $query = [];
-        $ratingModel = new Ratings();
-        $where = $ratingModel;
+        $where = new Ratings();
         if (Input::get('word')) {
             if (Input::get('cate') == 'title') {
                 $query = ['%', Input::get('word'), '%'];
-                $where = $ratingModel->where('title', 'like', join($query));
+                $where = $where->where('title', 'like', join($query));
             }
             if (Input::get('cate') == 'pack') {
                 $query = ['%', Input::get('word'), '%'];
-                $where = $ratingModel->where('pack', 'like', join($query));
+                $where = $where->where('pack', 'like', join($query));
             }
         }
         //查询，默认分页
@@ -39,15 +38,15 @@ class Admin_RatingsController extends \Admin_BaseController {
     public function update($id)
     {
         //检测是否存在该数据
-        $ratingModel = new Ratings();
-        $rating = $ratingModel->find($id);
+        $ratings = new Ratings();
+        $rating = $ratings->find($id);
         $res = ['status'=>'ok', 'msg'=>'suss'];
         if(!$rating){
             $res['msg'] = '#' . $id . ' is valid';
             $res['status'] = 'error';
             return Response::json($res);   
         }
-        $validator = Validator::make(Input::all(), $ratingModel->rules);
+        $validator = Validator::make(Input::all(), $ratings->rules);
         if ($validator->fails()) {
             $res['msg'] = '#' . $id . ' data is wrong';
             $res['status'] = 'error';

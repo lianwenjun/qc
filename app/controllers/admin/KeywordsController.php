@@ -11,25 +11,15 @@ class Admin_KeywordsController extends \Admin_BaseController {
      */
     public function index()
     {  
-        $keywordModel = new Keywords;
-        $where = $keywordModel;
         if (Input::get('word')) {
             $query = ['%', Input::get('word'), '%'];
-            $where = $keywordModel->where('word', 'like', join($query));
+            $where = Keywords::where('word', 'like', join($query));
+        }else {
+            $where = new Keywords;
         }
         //查询，默认分页
         $keywords = $where->orderBy('id', 'desc')->paginate($this->pagesize);
-        $userIds = [0];
-        foreach ($keywords as $keyword) {
-            if (!isset($userIds[$keyword->creator])){
-                $userIds[] = $keyword->creator;
-            }
-            if (!isset($userIds[$keyword->operator])){
-                $userIds[] = $keyword->operator;
-            }
-        }
-        $userModel = new User;
-        $userDatas = $userModel->getUserNameByIds($userIds);
+        $userDatas = (new Admin_CuserClass)->getUserNameByList(['creator', 'operator'], $keywords);
         $datas = ['keywords' => $keywords, 'userDatas' => $userDatas];
         $this->layout->content = View::make('admin.keywords.index', $datas);
     }
@@ -43,7 +33,6 @@ class Admin_KeywordsController extends \Admin_BaseController {
     public function store()
     {
         //检测输入
-        Log::error(Input::all());
         $keyword = new Keywords;
         if ($keyword->validateCreate()->fails()){
             Log::error($keyword->validateCreate()->messages());
@@ -69,13 +58,13 @@ class Admin_KeywordsController extends \Admin_BaseController {
     public function update($id)
     {
         //检测该数据是否存在
-        $ky = new Keywords;
-        $keyword = $ky->where('id', $id)->first();
+        $kw = new Keywords;
+        $keyword = $kw->where('id', $id)->first();
         if(!$keyword){
             return Response::json(['status'=>'error', 'msg'=>'id is valid']);   
         }
         //检测输入
-        if ($ky->validateUpate($id)->fails()){
+        if ($kw->validateUpate($id)->fails()){
             return Response::json(['status'=>'error', 'msg'=>'关键字重复了']);
         }
         //保存数据
@@ -83,8 +72,7 @@ class Admin_KeywordsController extends \Admin_BaseController {
         $keyword->word = Input::get('word', $keyword->word);
         $keyword->is_slide = Input::get('is_slide', $keyword->is_slide);
         $keyword->save();
-        $userModel = new User;
-        $data['operator'] = $userModel->find($this->userId)->username;
+        $data['operator'] = User::find($this->userId)->username;
         $data['updated_at'] = date($keyword->updated_at);
         return Response::json(['status'=>'ok', 'msg'=>'suss', 'data'=>$data]);
     }
@@ -98,15 +86,14 @@ class Admin_KeywordsController extends \Admin_BaseController {
     public function destroy($id)
     {
         //检测是否存在该数据
-        $keywordModel = new Keywords();
-        $keyword = $keywordModel->find($id);
+        $keyword = Keywords::find($id);
         if(!$keyword){
-            return Redirect::action('Admin_KeywordsController@index')->with('msg', '#'. $id .'不存在');   
+            return Redirect::route('keyword.index')->with('msg', '#'. $id .'不存在');   
         }
         $keyword->operator = $this->userId;
         $keyword->save();
         //两个动作放一起很怪异
         $keyword->delete();
-        return Redirect::action('Admin_KeywordsController@index')->with('msg', '#'. $id .'删除成功');
+        return Redirect::action('keyword.index')->with('msg', '#'. $id .'删除成功');
     }
 }

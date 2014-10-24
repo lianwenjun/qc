@@ -11,19 +11,19 @@ class Admin_CommentsController extends \Admin_BaseController {
     public function index()
     {
         $query = [];
-        $commentModel = new Comments();
-        $where = $commentModel;
+        $comments = new Comments();
+        $where = $comments;
         if (Input::get('cate') == 'title') {
             $query = ['%', Input::get('word'), '%'];
-            $where = $commentModel->where('title', 'like', join($query));
+            $where = $comments->where('title', 'like', join($query));
         }
         if (Input::get('cate') == 'pack') {
             $query = ['%', Input::get('word'), '%'];
-            $where = $commentModel->where('pack', 'like', join($query));
+            $where = $comments->where('pack', 'like', join($query));
         }
         //查询，默认分页
-        $comments = $where->orderBy('id', 'desc')->paginate($this->pagesize);
-        $datas = ['comments' => $comments];
+        $datas = $where->orderBy('id', 'desc')->paginate($this->pagesize);
+        $datas = ['comments' => $datas];
         $this->layout->content = View::make('admin.comments.index', $datas);
     }
 
@@ -38,15 +38,15 @@ class Admin_CommentsController extends \Admin_BaseController {
     public function update($id)
     {
         //检测是否存在该数据
-        $commentModel = new Comments();
-        $comment = $commentModel->find($id);
+        $comments = new Comments();
+        $comment = $comments->find($id);
         $res = ['status'=>'ok', 'msg'=>'suss'];
         if(!$comment){
             $res['msg'] = '#' . $id . ' is valid';
             $res['status'] = 'error';
             return Response::json($res);   
         }
-        $validator = Validator::make(Input::all(), $commentModel->rules);
+        $validator = Validator::make(Input::all(), $comments->rules);
         if ($validator->fails()) {
             $res['msg'] = '验证失败';
             $res['status'] = 'error';
@@ -71,18 +71,12 @@ class Admin_CommentsController extends \Admin_BaseController {
     public function destroy($id)
     {
         //检测是否存在该数据
-        $commentModel = new Comments();
-        $comment = $commentModel->find($id);
+        $comment = Comments::find($id);
         if(!$comment){
-            $msg = '#'. $id .'不存在'; 
-            return Request::header('referrer') ? Redirect::back()
-            ->with('msg', $msg) : Redirect::route('comment.index')->with('msg', $msg);  
+            return Redirect::route('comment.index')->with('msg', '#'. $id .'不存在');  
         }
         $comment->delete();
-
-        $msg = '#'. $id .'删除成功';
-        return Request::header('referrer') ? Redirect::back()
-            ->with('msg', $msg) : Redirect::route('comment.index')->with('msg', $msg);
+        return Redirect::route('comment.index')->with('msg', '#'. $id .'删除成功');
     }
 
 }
