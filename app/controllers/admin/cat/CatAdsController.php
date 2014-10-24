@@ -41,7 +41,6 @@ class Admin_Cat_CatAdsController extends \Admin_BaseController {
             return ['status' => 'error', 'msg' => 'id is valid'];
         }
         return ['status' => 'ok', 'msg' => 'suss'];
-        //return Redirect::route('catads.index')->with('msg', '更新#' . $id . '成功');
     }
 
     /**

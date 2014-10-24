@@ -59,7 +59,9 @@ class Admin_CadsClass {
     public function UpdateAds($ad) {
         $ad->location = Input::get('location', $ad->location);
         $ad->is_top = Input::get('is_top', 'no');
+        $ad->image = Input::get('image', $ad->image);
         $ad->sort = Input::get('sort', $ad->sort);
+        $ad->word = Input::get('word', $ad->word);
         $ad->stocked_at = Input::get('stocked_at', $ad->stocked_at);
         $ad->unstocked_at = Input::get('unstocked_at', $ad->unstocked_at);
         $ad->is_stock = 'yes';

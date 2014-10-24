@@ -6,10 +6,10 @@
 if(! function_exists('adsStatus')) {
     function adsStatus($ad) {
         $res = '';
-        if ($ad->is_onshelf == 'yes'){
-            if (strtotime($ad->offshelfed_at) < time()){
+        if ($ad->is_stock == 'yes'){
+            if (strtotime($ad->unstocked_at) < time()){
                 $res = 'expired';
-            }elseif (strtotime($ad->onshelfed_at) > time()){
+            }elseif (strtotime($ad->stocked_at) > time()){
                 $res = 'stock';
             }else{
                 $res = 'online';

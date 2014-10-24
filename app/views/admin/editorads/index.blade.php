@@ -64,14 +64,14 @@
                     <td>{{ $ad->id }}</td>
                     <td><img src="{{ $ad->image }}" width="28" height="28" /></td>
                     <td>{{ $ad->title }}</td>
-                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->onshelfed_at }}</td>
-                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->offshelfed_at }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->stocked_at }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->unstocked_at }}</td>
                     <td {{ Config::get('status.ads.statusColor')[adsStatus($ad)] }}>{{ Config::get('status.ads.status')[adsStatus($ad)] }}</td>
                     <!--<td>{{ $ad->sort }}</td>-->
                     <td>{{ $ad->word }}</td>
                     <td>
-                        @if($ad->is_onshelf == 'yes' && Sentry::getUser()->hasAccess('editorads.offshelf'))
-                            <a href="{{ URL::route('editorads.offshelf', $ad->id) }}" target=BoardRight class="Search_show">下架</a>
+                        @if($ad->is_stock == 'yes' && Sentry::getUser()->hasAccess('editorads.unstock'))
+                            <a href="{{ URL::route('editorads.unstock', $ad->id) }}" target=BoardRight class="Search_show">下架</a>
                         @endif
                         @if(Sentry::getUser()->hasAccess('editorads.edit'))
                         <a href="{{ URL::route('editorads.edit', $ad->id) }}" target=BoardRight class="Search_show">编辑</a>
