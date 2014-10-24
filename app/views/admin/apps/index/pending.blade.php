@@ -143,10 +143,10 @@
             <td>{{ date('Y-m-d H:i', strtotime($app['updated_at'])) }}</td>
             <td>
                 @if(Sentry::getUser()->hasAccess('apps.putStock'))
-                <a href="{{ URL::route('apps.putStock', ['id' => $app['id']]) }}" class="Search_show jq-putStock">通过</a>
+                <a href="{{ URL::route('apps.putStock', ['ids[]' => $app['id']]) }}" class="Search_show jq-putStock">通过</a>
                 @endif
                 @if(Sentry::getUser()->hasAccess('apps.putNotpass'))
-                <a href="{{ URL::route('apps.putNotpass', ['id' => $app['id']]) }}" class="Search_Notthrough jq-putNotpass">不通过</a>
+                <a href="{{ URL::route('apps.putNotpass', ['ids[]' => $app['id']]) }}" class="Search_Notthrough jq-putNotpass">不通过</a>
                 @endif
             </td>
          </tr>

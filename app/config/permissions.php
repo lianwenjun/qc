@@ -24,6 +24,7 @@ return [
         'apps.pending' => '列表',
         'apps.putStock' => '审核通过',
         'apps.putNotpass' => '审核不通过',
+        'apps.pending.edit' => '提交到待审核',
         ],
     '审核不通过列表' => [
         'apps.notpass' => '列表',
