@@ -6,13 +6,9 @@
  */
 class CUpload_Image extends CUpload_Base implements CUpload_Interface
 {
-
-    // 上传目录
-    const DIR = 'pictures';
-
-    public function __construct()
+    public function __construct($dir)
     {
-        parent::__construct(self::DIR);
+        parent::__construct($dir);
     }
 
 }

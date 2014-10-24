@@ -10,19 +10,8 @@ class Admin_StopwordsController extends \Admin_BaseController {
      */
     public function index()
     {
-        $stopwordModel = new Stopwords;
-        $stopwords = $stopwordModel->orderBy('id', 'desc')->paginate($this->pagesize);
-        $userIds = [0];
-        foreach ($stopwords as $stopword) {
-            if (!isset($userIds[$stopword->creator])){
-                $userIds[] = $stopword->creator;
-            }
-            if (!isset($userIds[$stopword->operator])){
-                $userIds[] = $stopword->operator;
-            }
-        }
-        $userModel = new User;
-        $userDatas = $userModel->getUserNameByIds($userIds);
+        $stopwords = Stopwords::orderBy('id', 'desc')->paginate($this->pagesize);
+        $userDatas = (new Admin_CuserClass)->getUserNameByList(['creator', 'operator'], $stopwords);
         $datas = ['stopwords' => $stopwords, 'userDatas' => $userDatas];
         $this->layout->content = View::make('admin.stopwords.index', $datas);
     }
@@ -38,22 +27,21 @@ class Admin_StopwordsController extends \Admin_BaseController {
      */
     public function store()
     {
-        $stopwordModel = new Stopwords;
+        $stopwords = new Stopwords;
         $res = ['status'=>'ok', 'msg'=>'suss'];
         //检测输入
-        $validator = Validator::make(Input::all(), $stopwordModel->rules, $stopwordModel->messages);
+        $validator = Validator::make(Input::all(), $stopwords->rules, $stopwords->messages);
         if ($validator->fails()){
-            Log::error($validator->messages()->first('word'));
             $res['msg'] = $validator->messages()->first('word');
             $res['status'] = 'error';
             return Response::json($res);
         }
         //保存输入
-        $stopwordModel->word = Input::get('word');
-        $stopwordModel->creator = $this->userId;
-        $stopwordModel->operator = $this->userId;
+        $stopwords->word = Input::get('word');
+        $stopwords->creator = $this->userId;
+        $stopwords->operator = $this->userId;
         //入库失败
-        if (!$stopwordModel->save()) {
+        if (!$stopwords->save()) {
             $res['msg'] = '保存失败';
             $res['status'] = 'error';
             return Response::json($res);
@@ -73,7 +61,7 @@ class Admin_StopwordsController extends \Admin_BaseController {
         //检测是否存在该数据
         $stopwordModel = new Stopwords();
         $res = ['status'=>'ok', 'msg'=>'suss'];
-        $stopword = $stopwordModel->find($id);
+        $stopword = Stopwords::find($id);
         if(!$stopword){
             $res['status'] = 'error';
             $res['msg'] = '#' . $id . '未找到';
@@ -86,7 +74,6 @@ class Admin_StopwordsController extends \Admin_BaseController {
                     $stopwordModel->messages
                 );
         if ($validator->fails()){
-            Log::error($validator->messages()->first('word'));
             $res['msg'] = $validator->messages()->first('word');
             $res['status'] = 'error';
             return Response::json($res);

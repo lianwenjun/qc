@@ -11,14 +11,10 @@ use JildertMiedema\LaravelPlupload\PluploadException;
 
 class CUpload_App extends CUpload_Base implements CUpload_Interface
 {
-    // 上传目录
-    const DIR = 'apks';
-
-    public function __construct()
+    public function __construct($dir)
     {
-        parent::__construct(self::DIR);
+        parent::__construct($dir);
     }
-
     /**
      * 上传处理(override)
      *
