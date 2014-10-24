@@ -4,6 +4,10 @@
 */ 
 $I = new FunctionalTester($scenario);
 $I->wantTo('关键字列表功能');
+//先登录
+$data = ['username' => 'test', 'password' => 'test'];
+$I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
+
 $I->amOnPage('admin/keyword/index');
 //检测ACTION和ROUTENAME
 $I->seeCurrentRouteIs('keyword.index');

@@ -162,23 +162,7 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
     }
 
     /**
-     * Show the form for editing the specified resource.
-     * GET /admin/cats/{id}/edit
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //检测是否存在该数据
-        $cat = cats::find($id);
-        if(!$cat){
-            return ['status' => 'error', 'msg' => 'cat is valid'];   
-        }
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * 更新分类
      * PUT /admin/cats/{id}
      *
      * @param  int  $id
@@ -188,7 +172,7 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
     {
         //检测是否存在该数据
         $catModel = new Cats;
-        $cat = $catModel->find($id);
+        $cat = Cats::find($id);
         if(!$cat){
             return Response::json(['status' => 'error', 'msg' => 'cat is valid']);   
         }

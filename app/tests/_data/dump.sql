@@ -183,12 +183,7 @@ CREATE TABLE `app_cats` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-<<<<<<< HEAD
-INSERT INTO `app_cats` (`id`, `app_id`, `cat_id`, `created_at`, `updated_at`)
-=======
-INSERT INTO `app_cats` (`id`, `app_id`, `cate_id`, `created_at`, `updated_at`)
->>>>>>> e29be5a2ceb48f0c68425a1d3f9984e563c88b94
-VALUES
+INSERT INTO `app_cats` (`id`, `app_id`, `cat_id`, `created_at`, `updated_at`) VALUES
   (1,22,1,'2014-09-29 09:22:39','2014-09-29 09:22:39'),
   (2,21,2,'2014-09-29 09:22:39','2014-09-29 09:22:39');
 

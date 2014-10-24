@@ -1,6 +1,9 @@
 <?php 
 $I = new FunctionalTester($scenario);
 $I->wantTo('添加分类');
+//先登录
+$data = ['username' => 'test', 'password' => 'test'];
+$I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
 //正确测试
 $I->sendAjaxPostRequest('/admin/cat/create', ['word' => '我是来打酱油的']); // POST
 $I->see('suss');

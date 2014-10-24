@@ -1,6 +1,10 @@
 <?php 
 $I = new FunctionalTester($scenario);
 $I->wantTo('游戏排行广告删除');
+//先登录
+$data = ['username' => 'test', 'password' => 'test'];
+$I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
+
 //存在测试
 $I->sendAjaxRequest('DELETE' ,'/admin/rankads/15/delete');
 $I->seeSessionHasValues(['msg' => '#15删除成功']);

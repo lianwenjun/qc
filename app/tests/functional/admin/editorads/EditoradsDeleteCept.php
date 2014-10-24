@@ -1,6 +1,10 @@
 <?php 
 $I = new FunctionalTester($scenario);
 $I->wantTo('删除编辑精选广告');
+//先登录
+$data = ['username' => 'test', 'password' => 'test'];
+$I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
+
 //存在测试
 $I->sendAjaxRequest('DELETE' ,'/admin/editorads/25/delete');
 $I->seeSessionHasValues(['msg' => '#25删除成功']);

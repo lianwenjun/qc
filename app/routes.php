@@ -165,7 +165,8 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::post('{id}/edit', ['as' => 'appsads.edit', 'uses' => 'Admin_Apps_AppsAdsController@update']);
         Route::delete('{id}/delete', ['as' => 'appsads.delete', 'uses' => 'Admin_Apps_AppsAdsController@destroy']);
         Route::get('{id}/unstock', ['as' => 'appsads.unstock', 'uses' => 'Admin_Apps_AppsAdsController@unstock']);
-        //Route::post('imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_AppsAdsController@upload']);
+        Route::post('imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_Apps_AppsAdsController@upload']);
+
     });
     Route::group(['prefix' => 'rankads', 'before' => 'hasPermissions'], function() //游戏位推广
     {
@@ -186,6 +187,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::post('{id}/edit', ['as' => 'indexads.edit', 'uses' => 'Admin_indexAdsController@update']);
         Route::delete('{id}/delete', ['as' => 'indexads.delete', 'uses' => 'Admin_indexAdsController@destroy']);
         Route::get('{id}/unstock', ['as' => 'indexads.unstock', 'uses' => 'Admin_indexAdsController@unstock']);
+        Route::post('imageupload', ['as' => 'indexads.upload', 'uses' => 'Admin_indexAdsController@upload']);
     });
     Route::group(['prefix' => 'editorads', 'before' => 'hasPermissions'], function() //编辑推荐
     {
@@ -196,6 +198,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::post('{id}/edit', ['as'=>'editorads.edit', 'uses' => 'Admin_EditorAdsController@update']);
         Route::delete('{id}/delete', ['as'=>'editorads.delete', 'uses' => 'Admin_EditorAdsController@destroy']);
         Route::get('{id}/unstock', ['as'=>'editorads.unstock', 'uses' => 'Admin_EditorAdsController@unstock']);
+        Route::post('imageupload', ['as' => 'editorads.upload', 'uses' => 'Admin_EditorAdsController@upload']);
     });
     Route::group(['prefix' => 'catads', 'before' => 'hasPermissions'], function() //分类推广
     {
@@ -209,7 +212,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
     Route::get('appsinfo/{id}', ['as' => 'appsinfo', 'uses' => 'Admin_IndexController@appsinfo']);//近期添加列表
 });
 //图片
-Route::post('/admin/appsads/imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_AppsAdsController@upload']);
+//Route::post('/admin/appsads/imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_Apps_AppsAdsController@upload']);
 
 //api
 Route::group(['prefix' => 'api'], function()
