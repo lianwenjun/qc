@@ -97,5 +97,6 @@ class Admin_IndexController extends \Admin_BaseController {
                         'value' => $app->title];
         }
         return Response::json(['data' => $app, 'status'=>'ok']);
+    }
 
 }
