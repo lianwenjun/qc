@@ -39,11 +39,11 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('stock', ['as' => 'apps.stock', 'uses' => 'Admin_Apps_IndexController@stock']);
         Route::get('draft', ['as' => 'apps.draft', 'uses' => 'Admin_Apps_IndexController@draft']);
         Route::get('pending', ['as' => 'apps.pending', 'uses' => 'Admin_Apps_IndexController@pending']);
-        Route::get('nopass', ['as' => 'apps.notpass', 'uses' => 'Admin_Apps_IndexController@notpass']);
+        Route::get('notpass', ['as' => 'apps.notpass', 'uses' => 'Admin_Apps_IndexController@notpass']);
         Route::get('unstock', ['as' => 'apps.unstock', 'uses' => 'Admin_Apps_IndexController@unstock']);
 
         // 历史
-        Route::get('publish/{id}/history', ['as' => 'apps.history', 'uses' => 'Admin_Apps_IndexController@history'])
+        Route::get('stock/{id}/history', ['as' => 'apps.history', 'uses' => 'Admin_Apps_IndexController@history'])
              ->where('id', '[0-9]+');
 
         // 编辑页面
@@ -92,11 +92,11 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('index', ['as' => 'users.index', 'uses' => 'Admin_UsersController@index']);
         Route::get('create', ['as' => 'users.create', 'uses' => 'Admin_UsersController@create']);
         Route::post('create', ['as' => 'users.create', 'uses' => 'Admin_UsersController@store']);
-        Route::get('{id}/edit', ['as' => 'users.edit', 'uses' => 'Admin_UsersController@edit'])
+        Route::get('{id}', ['as' => 'users.edit', 'uses' => 'Admin_UsersController@edit'])
              ->where('id', '[0-9]+');
-        Route::put('{id}/edit', ['as' => 'users.edit', 'uses' => 'Admin_UsersController@update'])
+        Route::put('{id}', ['as' => 'users.edit', 'uses' => 'Admin_UsersController@update'])
              ->where('id', '[0-9]+');
-        Route::delete('{id}/delete', ['as' => 'users.delete', 'uses' => 'Admin_UsersController@destroy']);
+        Route::delete('{id}', ['as' => 'users.delete', 'uses' => 'Admin_UsersController@destroy']);
     });
 
     // 角色组
@@ -105,11 +105,11 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('index', ['as' => 'roles.index', 'uses' => 'Admin_RolesController@index']);
         Route::get('create', ['as' => 'roles.create', 'uses' => 'Admin_RolesController@create']);
         Route::post('create', ['as' => 'roles.create', 'uses' => 'Admin_RolesController@store']);
-        Route::get('{id}/edit', ['as' => 'roles.edit', 'uses' => 'Admin_RolesController@edit'])
+        Route::get('{id}', ['as' => 'roles.edit', 'uses' => 'Admin_RolesController@edit'])
              ->where('id', '[0-9]+');
-        Route::put('{id}/edit', ['as' => 'roles.edit', 'uses' => 'Admin_RolesController@update'])
+        Route::put('{id}', ['as' => 'roles.edit', 'uses' => 'Admin_RolesController@update'])
              ->where('id', '[0-9]+');
-        Route::delete('{id}/delete', ['as' => 'roles.delete', 'uses' => 'Admin_RolesController@destroy'])
+        Route::delete('{id}', ['as' => 'roles.delete', 'uses' => 'Admin_RolesController@destroy'])
              ->where('id', '[0-9]+');
     });
 

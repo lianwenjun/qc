@@ -12,18 +12,18 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
     {
         $apps = new Apps();
         $apps = $apps->lists(['stock'], Input::all())
-                          ->paginate(20)
+                          ->paginate($this->pagesize)
                           ->toArray();
 
-        $cats = new Cats;
-        $apps = $cats->addCatsInfo($apps);
-        $cats = $cats->allCats();
+        $cats    = new Cats;
+        $apps    = $cats->addCatsInfo($apps);
+        $allCats = $cats->allCats();
 
         // TODO 空提示
 
         return View::make('admin.apps.index.stock')
                    ->with('apps', $apps)
-                   ->with('cats', $cats);
+                   ->with('cats', $allCats);
     }
 
     /**
@@ -37,16 +37,16 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
         
         $apps = new Apps();
         $apps = $apps->lists(['publish', 'draft'], Input::all())
-                     ->paginate(20)
+                     ->paginate($this->pagesize)
                      ->toArray();
 
-        $cats = new Cats;
-        $apps = $cats->addCatsInfo($apps);
-        $cats = $cats->allCats();
+        $cats    = new Cats;
+        $apps    = $cats->addCatsInfo($apps);
+        $allCats = $cats->allCats();
 
         return View::make('admin.apps.index.draft')
                    ->with('apps', $apps)
-                   ->with('cats', $cats);
+                   ->with('cats', $allCats);
     }
 
     /**
@@ -60,16 +60,16 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
 
         $apps = new Apps();
         $apps = $apps->lists(['pending'], Input::all())
-                     ->paginate(20)
+                     ->paginate($this->pagesize)
                      ->toArray();
 
-        $cats = new Cats;
-        $apps = $cats->addCatsInfo($apps);
-        $cats = $cats->allCats();
+        $cats    = new Cats;
+        $apps    = $cats->addCatsInfo($apps);
+        $allCats = $cats->allCats();
 
         return View::make('admin.apps.index.pending')
                    ->with('apps', $apps)
-                   ->with('cats', $cats);
+                   ->with('cats', $allCats);
     }
 
     /**
@@ -82,16 +82,16 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
     {
         $apps = new Apps();
         $apps = $apps->lists(['notpass'], Input::all())
-                     ->paginate(20)
+                     ->paginate($this->pagesize)
                      ->toArray();
 
-        $cats = new Cats;
-        $apps = $cats->addCatsInfo($apps);
-        $cats = $cats->allCats();
+        $cats    = new Cats;
+        $apps    = $cats->addCatsInfo($apps);
+        $allCats = $cats->allCats();
 
         return View::make('admin.apps.index.notpass')
                    ->with('apps', $apps)
-                   ->with('cats', $cats);
+                   ->with('cats', $allCats);
     }
 
     /**
@@ -104,19 +104,19 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
     {
         $apps = new Apps();
         $apps = $apps->lists(['unstock'], Input::all())
-                     ->paginate(20)
+                     ->paginate($this->pagesize)
                      ->toArray();
 
-        $cats = new Cats;
-        $apps = $cats->addCatsInfo($apps);
-        $cats = $cats->allCats();
+        $cats    = new Cats;
+        $apps    = $cats->addCatsInfo($apps);
+        $allCats = $cats->allCats();
 
         $user = new User;
         $apps = $user->addOperator($apps);
 
         return View::make('admin.apps.index.unstock')
                    ->with('apps', $apps)
-                   ->with('cats', $cats);
+                   ->with('cats', $allCats);
     }
 
     /**
@@ -210,7 +210,7 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
 
         $apps = new Histories();
         $apps = $apps->lists($id, Input::all())
-                          ->paginate(20)
+                          ->paginate($this->pagesize)
                           ->toArray();
 
         $history = new Histories;
@@ -317,12 +317,7 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
      */
     public function putStock()
     {
-        $ids = Input::get('ids');
-
-        if(empty($ids)) {
-            Session::flash('tips', ['success' => false, 'message' => "参数不正确"]);
-            return Redirect::back();
-        }
+        $ids = Input::get('ids', [0]);
 
         if(! $apps = Apps::whereIn('id', $ids)) {
             Session::flash('tips', ['success' => false, 'message' => "亲，找不到游戏"]);
@@ -343,9 +338,11 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
      */
     public function putUnstock()
     {
+        $id = Input::get('id', 0);
+
         if(! $app = Apps::find($id)) {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
-        } elseif ($app->update(['status' => 'offshelf', 'offshelfed_at' => date('Y-m-d H:i:s')])) {
+        } elseif ($app->update(['status' => 'unstock', 'stocked_at' => date('Y-m-d H:i:s')])) {
             Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经下架"]);
         } else {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}下架操作失败了"]);
@@ -362,17 +359,12 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
      */
     public function putNotpass()
     {
-        $ids = Input::get('ids');
+        $ids    = Input::get('ids', [0]);
         $reason = Input::get('reason');
-
-        if(empty($ids) || empty($reason)) {
-            Session::flash('tips', ['success' => false, 'message' => "参数不正确"]);
-            return Redirect::back();
-        }
 
         if(! $apps = Apps::whereIn('id', $ids)) {
             Session::flash('tips', ['success' => false, 'message' => "亲，找不到游戏"]);
-        } elseif ($apps->update(['status' => 'nopass', 'reason' => $reason])) {
+        } elseif ($apps->update(['status' => 'notpass', 'reason' => $reason])) {
             Session::flash('tips', ['success' => true, 'message' => "亲，全部已经审核不通过"]);
         } else {
             Session::flash('tips', ['success' => false, 'message' => "亲，操作失败了"]);
