@@ -31,9 +31,8 @@ class CUpload_App extends CUpload_Base implements CUpload_Interface
 
         parent::handle($file);
 
-        $savePath = $this->saveDir . '/' . $this->saveName;
+        $savePath = $this->fullPath();
         $data = $this->_apkParse($savePath);
-
         $icon = $this->_apkIcon($savePath, $data['icon']);
 
         $size = filesize($savePath);
