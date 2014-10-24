@@ -10,8 +10,8 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
      */
     public function index()
     {
-        $catModel = new Cats;
-        $cats = $catModel->allcats();
+        $Cats = new Cats;
+        $cats = $Cats->allcats();
         $catIds = [];
         foreach ($cats as $cat) {
             $catIds[] = $cat->id;

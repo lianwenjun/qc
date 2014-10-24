@@ -89,7 +89,13 @@ class Admin_IndexController extends \Admin_BaseController {
     * @return Response
     */
     public function lastApp() {
-        
-    }
+        $app = Apps::select('id', 'title', 'icon', 'pack', 'size', 'version', 'created_at')
+                     ->orderBy('id', 'desc')->get();
+        $data = [];
+        foreach ($apps as $app) {
+            $data[] = ['data' => URL::route('appsinfo', $app->id), 
+                        'value' => $app->title];
+        }
+        return Response::json(['data' => $app, 'status'=>'ok']);
 
 }
