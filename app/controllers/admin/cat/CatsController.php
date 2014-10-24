@@ -20,7 +20,7 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         if (empty($catIds)){
             $catIds = [0];
         }
-        $tags = $catModel->whereIn('parent_id', $catIds)->get();
+        $tags = $Cats->whereIn('parent_id', $catIds)->get();
         $catData = [];
         foreach ($cats as $index => $cat) {
             $catData[$cat->id]['data'] = $cat->toarray();
