@@ -110,7 +110,7 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
         $adsClass = new Admin_CadsClass;
         $validator = Validator::make(Input::all(), $adsClass->adsUpdateRules);
         if ($validator->fails()){
-            Log::error($validator->messages());
+            Log::error('广告分类更新' . $validator->messages());
             return Redirect::route('appsads.edit', $id)->with('msg', '添加失败');
         }
         $ad = $adsClass->UpdateAds($ad);
@@ -132,11 +132,10 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
         $adsClass = new Admin_CadsClass;
         $ad = $adsClass->unstock($id, $this->type);
         if (!$ad) {
-            $msg = '亲，#'.$id.'下架失败了';
-            return Redirect::route('appsads.index')->with('msg', $msg);
+            return Redirect::route('appsads.index')->with('msg', '亲，#'.$id.'下架失败了');
+        } else {
+            return Redirect::route('appsads.index')->with('msg', '亲，#'.$id.'下架成功');
         }
-        $msg = '亲，#'.$id.'下架成功';
-        return Redirect::route('appsads.index')->with('msg', $msg);
     }
 
     /**
@@ -151,16 +150,17 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
         //单条查询
         $ad = Ads::where('id', $id)->where('type', $this->type)->first();
         //检查
-        if (!$ad) {
-            return App::abort(404);
-        }
         $msg = '#' . $id . '删除失败';
+        if (!$ad) {
+            return Redirect::route('appsads.index')->with('msg', $msg);
+        }
+        
         if ($ad->delete()){
             $msg = '#' . $id . '删除成功';
         }
         return Redirect::route('appsads.index')->with('msg', $msg);
     }
-
+    
     /**
     * 上传图片
     */

@@ -1,6 +1,10 @@
 <?php 
 $I = new FunctionalTester($scenario);
 $I->wantTo('首页图片位管理删除');
+//先登录
+$data = ['username' => 'test', 'password' => 'test'];
+$I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
+
 //存在测试
 $I->sendAjaxRequest('DELETE' ,'/admin/indexads/18/delete');
 $I->seeSessionHasValues(['msg' => '#18删除成功']);
