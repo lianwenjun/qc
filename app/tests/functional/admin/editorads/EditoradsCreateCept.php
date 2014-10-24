@@ -1,6 +1,11 @@
 <?php 
 $I = new FunctionalTester($scenario);
 $I->wantTo('添加编辑精选广告页面测试');
+//先登录
+$data = ['username' => 'test', 'password' => 'test'];
+$I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
+
+
 //打开添加页面
 $I->amOnpage('/admin/editorads/create');
 $I->see('添加');
@@ -13,8 +18,8 @@ $fields = ['app_id'=> 1,
     'location' => 'hotdown', 
     'image' => 'xxxoxoxo.jpg',
     'is_top' => 'no',
-    'onshelfed_at' => '1411720308',
-    'offshelfed_at' => '1411720308',
+    'stocked_at' => '1411720308',
+    'unstocked_at' => '1411720308',
     'word' => '数据测试来idea',
     ];
 //foreach($fields as $index => $field){

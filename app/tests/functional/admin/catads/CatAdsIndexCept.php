@@ -1,9 +1,9 @@
 <?php 
 $I = new FunctionalTester($scenario);
-$I->wantTo('游戏评论列表测试');
+$I->wantTo('分类页图片位推广列表');
 //先登录
 $data = ['username' => 'test', 'password' => 'test'];
 $I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
 
-$I->amOnPage('/admin/comment/index');
-$I->see('游戏评论列表');
+$I->amOnPage('/admin/catads/index');
+$I->see('分类页图片位推广');

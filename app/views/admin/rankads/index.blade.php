@@ -59,12 +59,12 @@
                     <td>{{ $ad->title }}</td>
                     <td>{{ isset($location[$ad->location]) ? $location[$ad->location] : '' }}</td>
                     <td>{{ $ad->sort }}</td>
-                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->onshelfed_at }}</td>
-                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->offshelfed_at }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->stocked_at }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->unstocked_at }}</td>
                     <td {{ Config::get('status.ads.statusColor')[adsStatus($ad)] }}>{{ Config::get('status.ads.status')[adsStatus($ad)] }}</td>
                     <td>
-                        @if($ad->is_onshelf == 'yes' && Sentry::getUser()->hasAccess('rankads.offshelf'))
-                            <a href="{{ URL::route('rankads.offshelf', $ad->id) }}" target=BoardRight class="Search_show">下架</a>
+                        @if($ad->is_stock == 'yes' && Sentry::getUser()->hasAccess('rankads.unstock'))
+                            <a href="{{ URL::route('rankads.unstock', $ad->id) }}" target=BoardRight class="Search_show">下架</a>
                         @endif
                         @if(Sentry::getUser()->hasAccess('rankads.edit'))
                         <a href="{{ URL::route('rankads.edit', $ad->id) }}" target=BoardRight class="Search_show">编辑</a>

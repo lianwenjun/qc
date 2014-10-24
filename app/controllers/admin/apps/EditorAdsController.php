@@ -105,33 +105,24 @@ class Admin_EditorAdsController extends \Admin_BaseController {
      */
     public function update($id)
     {
-        $adsModel = new Ads();
-        $ad = $adsModel->where('id', $id)->where('type', $this->type)->first();
+        $ad = Ads::where('id', $id)->where('type', $this->type)->first();
         //检测广告是否存在
         if (!$ad) {
-            $msg = '#' . $id .'不存在';
-            Log::error($msg);
-            return Redirect::route('editorads.index')->with('msg', $msg);
+            return Redirect::route('editorads.index')->with('msg', '#' . $id .'不存在');
         }
-        $validator = Validator::make(Input::all(), $adsModel->adsUpdateRules);
+        $adsClass = new Admin_CadsClass;
+        $validator = Validator::make(Input::all(), $adsClass->adsUpdateRules);
         if ($validator->fails()){
             Log::error($validator->messages());
-            $msg = "修改失败,格式不对";
-            return Redirect::back()->with('msg', $msg);
+            return Redirect::back()->with('msg', '修改失败,格式不对');
         }
-        $ad->location = Input::get('location', $ad->location);
-        $ad->image = Input::get('image', $ad->image);
-        $ad->is_top = Input::get('is_top', 'no');
-        $ad->word = Input::get('word', '');
-        $ad->onshelfed_at = Input::get('onshelfed_at', $ad->onshelfed_at);
-        $ad->offshelfed_at = Input::get('offshelfed_at', $ad->offshelfed_at);
-        $ad->is_onshelf = 'yes';
-        if ($ad->save()){
-            $msg = "修改成功";
-            return Redirect::route('editorads.index')->with('msg', $msg);
+        
+        $ad = $adsClass->UpdateAds($ad);
+        if ($ad->save()) {
+            return Redirect::route('editorads.index')->with('msg', '修改成功');
+        } else {
+            return Redirect::back()->with('msg', '修改失败');
         }
-        $msg = "修改失败";
-        return Redirect::back()->with('msg', $msg);
         
     }
 
@@ -142,10 +133,10 @@ class Admin_EditorAdsController extends \Admin_BaseController {
      * @param  int  $id
      * @return Response
      */
-    public function offshelf($id)
+    public function unstock($id)
     {
-        $adsModel = new Ads();
-        $ad = $adsModel->offshelf($id, $this->type);
+        $adsClass = new Admin_CadsClass;
+        $ad = $adsClass->unstock($id, $this->type);
         if (!$ad) {
             $msg = '亲，#'.$id.'下架失败了';
             return Request::header('referrer') ? Redirect::back()
@@ -181,11 +172,11 @@ class Admin_EditorAdsController extends \Admin_BaseController {
         return Request::header('referrer') ? Redirect::back()
             ->with('msg', $msg) : Redirect::route('editorads.index')->with('msg', $msg);
     }
-    /**
+     /**
     * 上传图片
     */
     public function upload(){
-        $adsModel = new Ads();
-        return $adsModel->imageUpload();
+        $cupload = new Admin_Cupload;
+        return $upload->adsImageUpload();
     }
 }

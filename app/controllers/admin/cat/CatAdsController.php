@@ -41,15 +41,14 @@ class Admin_Cat_CatAdsController extends \Admin_BaseController {
             return ['status' => 'error', 'msg' => 'id is valid'];
         }
         return ['status' => 'ok', 'msg' => 'suss'];
-        //return Redirect::route('catads.index')->with('msg', '更新#' . $id . '成功');
     }
 
     /**
     * 上传图片
     */
     public function upload(){
-        $catAdsModel = new CatAds();
-        return $catAdsModel->imageUpload();
+        $cupload = new Admin_Cupload;
+        return $cupload->cateImageUpload();
     }
 
 }
