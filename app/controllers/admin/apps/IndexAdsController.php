@@ -116,12 +116,7 @@ class Admin_indexAdsController extends \Admin_BaseController {
             $msg = "添加失败";
             return Redirect::back()->with('msg', $msg);
         }
-        $ad->location = Input::get('location', $ad->location);
-        $ad->image = Input::get('image', $ad->image);
-        $ad->is_top = Input::get('is_top', 'no');
-        $ad->onshelfed_at = Input::get('onshelfed_at', $ad->onshelfed_at);
-        $ad->offshelfed_at = Input::get('offshelfed_at', $ad->offshelfed_at);
-        $ad->is_onshelf = 'yes';
+        $ad = $adsModel->UpdateAds($ad);
         if ($ad->save()){
             $msg = "修改成功";
             return Redirect::route('indexads.index')->with('msg', $msg);
@@ -137,10 +132,10 @@ class Admin_indexAdsController extends \Admin_BaseController {
      * @param  int  $id
      * @return Response
      */
-    public function offshelf($id)
+    public function unstock($id)
     {
-        $adsModel = new Ads();
-        $ad = $adsModel->offshelf($id, $this->type);
+        $adsClass = new Admin_CadsClass;
+        $ad = $adsClass->unstock($id, $this->type);
         if (!$ad) {
             $msg = '亲，#'.$id.'下架失败了';
             return Request::header('referrer') ? Redirect::back()

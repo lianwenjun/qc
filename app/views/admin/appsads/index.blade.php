@@ -36,7 +36,9 @@
     </form>
                     
     <div class="Search_cunt">共 <strong>{{ $ads->getTotal() }}</strong> 条信息 </div>
-                     
+    @if (Session::get('msg'))
+        <div class="Search_cunt">{{ Session::get('msg')}}</div>
+    @endif            
     <div class="Search_biao">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr class="Search_biao_title">
@@ -52,22 +54,20 @@
                 <td width="15%">操作</td>
             </tr>
             @forelse($ads as $ad)
-                
-                
                 <tr class="jq-tr">
                     <td>{{ $ad->id }}</td>
                     <td><img src="{{ $ad->image }}" width="28" height="28" /></td>
                     <td>{{ $ad->title }}</td>
                     <td>{{ isset($location[$ad->location]) ? $location[$ad->location] : '' }}</td>
                     <!--<td>{{ $ad->sort }}</td>-->
-                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->onshelfed_at }}</td>
-                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->offshelfed_at }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->stocked_at }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->unstocked_at }}</td>
                     <td {{ Config::get('status.ads.statusColor')[adsStatus($ad)] }}>{{ Config::get('status.ads.status')[adsStatus($ad)] }}</td>
                     
                     <td>{{ Config::get('status.ads.is_top')[$ad->is_top] }}</td>
                     <td>
-                        @if($ad->is_onshelf == 'yes' && Sentry::getUser()->hasAccess('appsads.offshelf'))
-                            <a href="{{ URL::route('appsads.offshelf', $ad->id) }}" target=BoardRight class="Search_show">下架</a>
+                        @if($ad->is_stock == 'yes' && Sentry::getUser()->hasAccess('appsads.unstock'))
+                            <a href="{{ URL::route('appsads.unstock', $ad->id) }}" target=BoardRight class="Search_show">下架</a>
                         @endif
                         @if(Sentry::getUser()->hasAccess('appsads.edit'))
                         <a href="{{ URL::route('appsads.edit', $ad->id) }}" target=BoardRight class="Search_show">编辑</a>

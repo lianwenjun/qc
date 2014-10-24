@@ -72,15 +72,15 @@
                     </tr>
                     <tr class="Search_biao_two">
                         <td  class="Search_lei">广告置顶：</td>
-                        <td><input name="is_top" type="checkbox" value="{{ $ad->is_top }}" {{ $ad->is_top == 'yes' ? 'checked' : ''}}/>
+                        <td>{{ Form::checkbox('is_top', 'yes', $ad->is_top == 'yes') }}
                           是　<span style=" color:#C00">（选中后无论上架广告数量，该广告均会在轮播中出现）</span></td>
                     </tr>
 
                     <tr class="Search_biao_one">
                         <td class="Search_lei"><span class="required">*</span>上线时间：</td>
                         <td>
-                            <h6>从 </h6> <h6><input type="text" name="onshelfed_at" class="Search_text jq-ui-timepicker" value="{{ $ad->onshelfed_at }}"></h6>
-                             <h6> 到 </h6> <h6><input type="text" name="offshelfed_at" class="Search_text jq-ui-timepicker" value="{{ $ad->offshelfed_at }}"></h6>
+                            <h6>从 </h6> <h6><input type="text" name="stocked_at" class="Search_text jq-ui-timepicker" value="{{ $ad->stocked_at }}"></h6>
+                             <h6> 到 </h6> <h6><input type="text" name="unstocked_at" class="Search_text jq-ui-timepicker" value="{{ $ad->unstocked_at }}"></h6>
                          </td>
                     </tr>
 
@@ -158,14 +158,14 @@ $(function(){
             rules: {
                 app_id: "required",
                 image: "required",
-                onshelfed_at: "required",
-                offshelfed_at: "required",
+                stocked_at: "required",
+                unstocked_at: "required",
             },
             messages: {
                 app_id: {required: '游戏为必填'},
                 image: {required: '图片为必填'},
-                onshelfed_at: {required: '上线时间为必填'},
-                offshelfed_at: {required: '下架时间为必填'},
+                stocked_at: {required: '上线时间为必填'},
+                unstocked_at: {required: '下架时间为必填'},
             }
         });
 

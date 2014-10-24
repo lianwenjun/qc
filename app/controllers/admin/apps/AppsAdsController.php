@@ -104,14 +104,14 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
     {
         $ad = Ads::where('id', $id)->where('type', $this->type)->first();
         if (!$ad) {
+            Log::error('广告分类更新'.'亲，数据不存在');
             return Redirect::route('appsads.index')->with('msg', '亲，数据不存在');
         }
         $adsClass = new Admin_CadsClass;
         $validator = Validator::make(Input::all(), $adsClass->adsUpdateRules);
         if ($validator->fails()){
             Log::error($validator->messages());
-            $msg = "添加失败";
-            return Redirect::route('appsads.edit', $id)->with('msg', $msg);
+            return Redirect::route('appsads.edit', $id)->with('msg', '添加失败');
         }
         $ad = $adsClass->UpdateAds($ad);
         if ($ad->save()) {
@@ -166,7 +166,7 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
     */
     public function upload(){
         $cupload = new Admin_Cupload;
-        return $upload->adsImageUpload();
+        return $cupload->adsImageUpload();
     }
 
 }

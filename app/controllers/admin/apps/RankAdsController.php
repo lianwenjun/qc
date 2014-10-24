@@ -128,10 +128,10 @@ class Admin_rankAdsController extends \Admin_BaseController {
      * @param  int  $id
      * @return Response
      */
-    public function offshelf($id)
+    public function unstock($id)
     {
-        $adsModel = new Ads();
-        $ad = $adsModel->offshelf($id, $this->type);
+        $adsClass = new Admin_CadsClass;
+        $ad = $adsClass->unstock($id, $this->type);
         if ($ad) {
             return  Redirect::back()->with('msg', '亲，#' . $id . '下架成功了');
         } else {
