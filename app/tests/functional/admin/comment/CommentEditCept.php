@@ -2,6 +2,10 @@
 $I = new FunctionalTester($scenario);
 $I->wantTo('编辑更新游戏评论');
 
+//先登录
+$data = ['username' => 'test', 'password' => 'test'];
+$I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
+
 //正确测试
 $I->sendAjaxPostRequest('/admin/comment/1/edit', ['content' => '我是来打酱油的']); // POST
 $I->see('suss');

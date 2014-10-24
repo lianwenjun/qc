@@ -1,6 +1,10 @@
 <?php 
 $I = new FunctionalTester($scenario);
 $I->wantTo('删除游戏评论');
+//先登录
+$data = ['username' => 'test', 'password' => 'test'];
+$I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
+
 //存在测试
 $I->sendAjaxRequest('DELETE', '/admin/comment/1/delete');
 $I->seeSessionHasValues(['msg' => '#1删除成功']);

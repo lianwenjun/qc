@@ -1,6 +1,11 @@
 <?php 
 $I = new FunctionalTester($scenario);
 $I->wantTo('首页游戏位广告添加');
+
+//先登录
+$data = ['username' => 'test', 'password' => 'test'];
+$I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
+
 $I->amOnPage('/admin/appsads/create');
 //$I->see('添加游戏');
 $fields = ['app_id'=> 1, 
@@ -8,7 +13,7 @@ $fields = ['app_id'=> 1,
     'location' => 'hotdown', 
     'image' => 'xxxoxoxo.jpg',
     'is_top' => 'no',
-    'restocked_at' => '1411720308',
+    'stocked_at' => '1411720308',
     'unstocked_at' => '1411720308',
     ];
 //foreach($fields as $index => $field){

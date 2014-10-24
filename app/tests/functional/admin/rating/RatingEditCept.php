@@ -1,6 +1,10 @@
 <?php 
 $I = new FunctionalTester($scenario);
 $I->wantTo('修改游戏评分列表');
+//先登录
+$data = ['username' => 'test', 'password' => 'test'];
+$I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
+
 //正确测试
 $I->sendAjaxPostRequest('/admin/rating/8/edit', ['manual' => '4']);
 $I->see('suss');
