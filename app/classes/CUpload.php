@@ -9,13 +9,15 @@ class CUpload
 
     /**
      * 实例化
-     *
+     * @param $type string CUpload文件类名
+     * @param $dir string  文件生成目录
+     * @respone Object
      */
-    public function instance($type)
+    public function instance($type, $dir)
     {
         $class = 'CUpload_' . ucfirst($type);
 
-        return (new $class);
+        return (new $class($dir));
     }
 
 }
