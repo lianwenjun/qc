@@ -1,11 +1,8 @@
 <?php
 
-use Symfony\Component\Process\Process;
-use Symfony\Component\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
-use JildertMiedema\LaravelPlupload\PluploadException;
 
-class Apps extends \BaseModel {
+class Apps extends \Base {
 
     use SoftDeletingTrait;
 
@@ -262,34 +259,24 @@ class Apps extends \BaseModel {
      */
     public function appUpload($dontSave)
     {
-        return Plupload::receive('file', function ($file) use ($dontSave)
-        {
-            list($dir, $filename) = uploadPath('apks', $file->getClientOriginalName());
-            $file->move($dir, $filename);
+        $uploader = (new CUpload)->instance('app')->upload();
 
-            $savePath = $dir . '/' . $filename;
-            $data = $this->apkParse($savePath);
-            $icon = $this->apkIcon($savePath, $data['icon']);
+        if(empty($dontSave)) {
 
-            $data['size']          = friendlyFilesize(filesize($savePath));
-            $data['size_int']      = round(filesize($savePath) / 1024, 0);
-            $data['icon']          = $icon;
-            $data['download_link'] = str_replace(public_path(), '', $savePath);
-            $data['source']        = 'lt';
+            $data = $uploader['result']['data'];
 
-            // 检查是否存在
-            $isExist = Apps::where('pack', $data['pack'])
-                             ->where('version_code', $data['version_code'])
-                             ->first();
+            $app = Apps::where('pack', $data['pack'])
+                       ->where('version_code', $data['version_code'])
+                       ->first();
 
-            if($isExist) {
-                $status = Config::get('status.apps.status')[$isExist->status];
-                unlink($savePath);
-
-                return ['error' => ['code' => 500, 'message' => '已存在' . $status . '列表中']];
-            }
-
-            if(empty($dontSave)) {
+            if($app) {
+                $status = Config::get('status.apps.status')[$app->status];
+                unlink($uploader['result']['fullPath']);
+                $uploader['error'] = [
+                    'code' => 500, 
+                    'message' => '已存在' . $status . '列表中'
+                    ];
+            } else {
                 $app = Apps::create($data);
 
                 $rating = [
@@ -305,9 +292,9 @@ class Apps extends \BaseModel {
                 // 获取MD5队列
                 Queue::push('AppQueue@md5', ['id' => $app->id, 'filename' => $app->download_link]);
             }
+        }
 
-            return $data;
-        });
+        return $uploader;
     }
 
     /**
@@ -317,15 +304,9 @@ class Apps extends \BaseModel {
      */
     public function imageUpload()
     {
-        return Plupload::receive('file', function ($file)
-        {
-            list($dir, $filename) = uploadPath('pictures', $file->getClientOriginalName());
-            $file->move($dir, $filename);
+        $uploader = (new CUpload)->instance('image')->upload();
 
-            $savePath = $dir . '/' . $filename;
-
-            return str_replace(public_path(), '', $savePath);
-        });
+        return $uploader;
     }
 
     /**
@@ -343,14 +324,14 @@ class Apps extends \BaseModel {
         if(empty($info)) return false;
 
         $cats = new Cats;
-        $info['cats']  = $cats->appCats($id);
+        $info['cats']   = $cats->appCats($id);
         $info['tags']   = $cats->appTags($id);
         $info['images'] = unserialize($info['images']);
 
         $keywords = new Keywords;
         $info['keywords'] = $keywords->appKeywords($id);
 
-        return (object) $info;
+        return (new CUtils)->array2Object($info);
     }
 
     /**
@@ -372,7 +353,7 @@ class Apps extends \BaseModel {
         // 同类游戏
         $info->sameCat = $this->sameCat($id, $info->cats);
 
-        return (array) $info;
+        return (new CUtils)->object2Array($info);
     }
 
     /**
@@ -421,112 +402,6 @@ class Apps extends \BaseModel {
         return $apps;
     }
 
-    /**
-     * 解析 APK 包
-     *
-     * @param $apkPath string APK 路径
-     *
-     * @return array 抓取到的数据
-     */
-    public function apkParse($apkPath)
-    {
 
-        $process = new Process('aapt d badging ' . $apkPath);
-        $process->setTimeout(30);
-        $process->run();
-
-        $data = [];
-        if (! $process->isSuccessful()) {
-            Log::error('使用 AAPT 解析 APK 包错误');
-            // Log::error($process->getErrorOutput());
-        } else {
-
-            $output = explode("\n", $process->getOutput());
-            $data = $this->_outputParse($output);
-        }
-
-        return $data;
-    }
-
-    /**
-     * 获取图片
-     *
-     * @param $apkPath  string APK路径
-     * @param $iconPath string Icon路径
-     *
-     * @return $string 图片相对/public路径
-     */
-    public function apkIcon($apkPath, $iconPath)
-    {
-
-        $targetPath = str_replace('.apk', '.zip', $apkPath);
-        rename($apkPath, $targetPath);
-
-        list($dir, $filename) = uploadPath('icons', $iconPath);
-        $savePath = $dir . '/' . $filename;
-
-        $filesystem = new Filesystem();
-        $filesystem->mkdir($dir);
-        
-        // 解压图标 unzip -p myapk.zip path/to/zipped/icon.png >path/to/icon.png
-        $command = sprintf("unzip -p %s %s>%s", $targetPath, $iconPath, $savePath);
-        $process = new Process($command);
-        $process->setTimeout(10);
-        $process->run();
-        if (! $process->isSuccessful()) {
-            $savePath = '';
-            Log::error('使用 UNZIP 解压 APK 包错误');
-            // Log::error($process->getErrorOutput());
-        }
-
-        rename($targetPath, $apkPath);
-
-        return str_replace(public_path(), '', $savePath);
-    }
-
-    /**
-     * 解析 aapt 命令行输出
-     *
-     * @param $output string 输出文本
-     *
-     * @return array
-     */
-    private function _outputParse($output)
-    {
-
-        $data = [];
-        foreach ($output as $line) {
-
-            // package: name='com.fontlose.tcpudp' versionCode='6' versionName='1.50'
-            $regex = '/^package: name=\'(.+)\' versionCode=\'(\d+)\' versionName=\'(.+)\'$/';
-            preg_match($regex, $line, $matches);
-            if(! empty($matches)) {
-                $data['pack']         = $matches[1];
-                $data['version_code'] = $matches[2];
-                $data['version']      = $matches[3];
-            }
-
-            // application-label:'网络调试助手'
-            preg_match('/^application-label:\'(.+)\'$/', $line, $matches);
-            if(! empty($matches)) {
-                $data['title'] = $matches[1];
-            }
-
-            // application-label-zh_CN:'网络调试助手'
-            preg_match('/^application-label-zh_CN:\'(.+)\'$/', $line, $matches);
-            if(! empty($matches)) {
-                $data['title'] = $matches[1];
-            }
-
-            // application: label='心情调节器' icon='res/drawable-hdpi/logo.png'
-            preg_match('/^application: label=\'.+\' icon=\'(.+)\'$/', $line, $matches);
-            if(! empty($matches)) {
-                $data['icon'] = $matches[1];
-            }
-
-        }
-
-        return $data;
-    }
 
 }

@@ -461,7 +461,7 @@ ul.ui-sortable li.placeholder:before {
                 response = eval('(' + object.response + ')');
             }
 
-            for(i in response.result) {
+            for(i in response.result.data) {
                 var $this = $('[class^="upload-' + i + '"]');
 
 
@@ -472,13 +472,13 @@ ul.ui-sortable li.placeholder:before {
                     var dom = matches[0].replace('upload-'+i+'-', '');
 
                     if(dom == 'html') {
-                        $this.html(response.result[i]);
-                        $this.append('<input type="hidden" name="'+ i +'" value="'+ response.result[i] +'">');
+                        $this.html(response.result.data[i]);
+                        $this.append('<input type="hidden" name="'+ i +'" value="'+ response.result.data[i] +'">');
                     } else if(dom == 'val'){
-                        $this.val(response.result[i]);
+                        $this.val(response.result.data[i]);
                     } else {
-                        $this.attr(dom, response.result[i]);
-                        $this.after('<input type="hidden" name="'+ i +'" value="'+ response.result[i] +'">');
+                        $this.attr(dom, response.result.data[i]);
+                        $this.after('<input type="hidden" name="'+ i +'" value="'+ response.result.data[i] +'">');
                     }
                 }
             }
@@ -556,7 +556,7 @@ ul.ui-sortable li.placeholder:before {
                 response = eval('(' + object.response + ')');
             }
 
-            $('.jq-pictures').append('<li><img src="' + response.result + '"/><input name="images[]" value="'+response.result+'" type="hidden"/><a class="jq-picDelete" href="javascript:;">删除</a></li>');
+            $('.jq-pictures').append('<li><img src="' + response.result.path + '"/><input name="images[]" value="'+response.result.path+'" type="hidden"/><a class="jq-picDelete" href="javascript:;">删除</a></li>');
         });
 
         picUploader.init();
@@ -601,7 +601,7 @@ ul.ui-sortable li.placeholder:before {
             return $('input[name="images[]"]').length > 0;
         }, "图片必须上传");
 
-        jQuery.validator.addMethod("maxImage", function(value, element) {
+        jQuery.validator.addMethod("maxImages", function(value, element) {
             return $('input[name="images[]"]').length < 7;
         }, "图片必须少于6张");
 
@@ -622,7 +622,7 @@ ul.ui-sortable li.placeholder:before {
                     sort: "required",
                     download_manual: "required",
                     summary: "required",
-                    "images[]":{ maxImage: true, images: true }
+                    "images[]":{ maxImages: true, images: true }
                 },
                 messages: {
                     checkCate: {required: '分类为必填!'},

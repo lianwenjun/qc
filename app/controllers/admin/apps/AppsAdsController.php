@@ -46,8 +46,8 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
      * @param string location
      * @param string image
      * @param string is_top
-     * @param string onshelfed_at
-     * @param string offshelfed_at
+     * @param string stocked_at
+     * @param string unstocked_at
      * @return Response
      */
     public function store()

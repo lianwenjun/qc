@@ -153,7 +153,7 @@
               @endif
             </td>
             <td>{{ $app['download_counts'] }}</td>
-            <td>{{ date('Y-m-d H:i', strtotime($app['stocked_at'])) }}</td>
+            <td>{{ $app['stocked_at'] != '0000-00-00 00:00:00' ? date('Y-m-d H:i', strtotime($app['stocked_at'])) : '' }}</td>
             <td>
               @if(Sentry::getUser()->hasAccess('apps.putUnstock'))
               <a href="{{ URL::route('apps.putUnstock', ['id' => $app['id']]) }}" class="Search_show jq-putUnstock">下架</a>
