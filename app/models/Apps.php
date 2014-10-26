@@ -259,7 +259,7 @@ class Apps extends \Base {
      */
     public function appUpload($dontSave)
     {
-        $uploader = (new CUpload)->instance('app')->upload();
+        $uploader = (new CUpload)->instance('app', 'apks')->upload();
 
         if(empty($dontSave)) {
 
@@ -304,7 +304,7 @@ class Apps extends \Base {
      */
     public function imageUpload()
     {
-        $uploader = (new CUpload)->instance('image')->upload();
+        $uploader = (new CUpload)->instance('image', 'pictures')->upload();
 
         return $uploader;
     }
@@ -331,7 +331,7 @@ class Apps extends \Base {
         $keywords = new Keywords;
         $info['keywords'] = $keywords->appKeywords($id);
 
-        return (new CUtils)->array2Object($info);
+        return CUtil::array2Object($info);
     }
 
     /**
@@ -353,7 +353,7 @@ class Apps extends \Base {
         // 同类游戏
         $info->sameCat = $this->sameCat($id, $info->cats);
 
-        return (new CUtils)->object2Array($info);
+        return CUtil::object2Array($info);
     }
 
     /**

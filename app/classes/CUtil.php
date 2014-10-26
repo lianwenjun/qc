@@ -4,7 +4,7 @@
  * 工具类
  *
  */
-class CUtils
+class CUtil
 {
 
     /**
@@ -14,7 +14,7 @@ class CUtils
      *
      * @return object
      */
-    public function array2Object($array)
+    public static function array2Object($array)
     {
 
         return json_decode(json_encode($array), false);
@@ -27,7 +27,7 @@ class CUtils
      *
      * @return array
      */
-    public function object2Array($object)
+    public static function object2Array($object)
     {
 
         return json_decode(json_encode($object), true);
@@ -40,7 +40,7 @@ class CUtils
      *
      * @return string
      */
-    public function friendlyFilesize($size) {
+    public static function friendlyFilesize($size) {
          
         $mod = 1024;
      

@@ -16,7 +16,7 @@ $I->wantTo('添加编辑游戏草稿功能');
 $data = ['username' => 'test', 'password' => 'test'];
 $I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
 
-$I->seeRecord('apps', ['id' => '8', 'status' => 'new', 'deleted_at' => null]);
+$I->seeRecord('apps', ['id' => '8', 'status' => 'publish', 'deleted_at' => null]);
 $I->amOnPage('/admin/apps/draft/8');
 $data['summary'] = '大家好，我是上传有游戏君，即将成为草稿君';
 $I->sendAjaxRequest('PUT', '/admin/apps/draft/8', $data);
