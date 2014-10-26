@@ -17,7 +17,7 @@ $I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
 $I->amOnPage('/admin/apps/draft');
 
 // 正常删除
-$I->seeRecord('apps', ['id' => '444', 'status' => 'new', 'deleted_at' => null]);
+$I->seeRecord('apps', ['id' => '444', 'status' => 'publish', 'deleted_at' => null]);
 $I->sendAjaxRequest('DELETE', '/admin/apps/444');
 $I->dontSeeRecord('apps', ['id' => '444', 'deleted_at' => null]);
 

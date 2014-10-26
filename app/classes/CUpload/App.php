@@ -7,7 +7,6 @@
 
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
-use JildertMiedema\LaravelPlupload\PluploadException;
 
 class CUpload_App extends CUpload_Base implements CUpload_Interface
 {
@@ -15,6 +14,7 @@ class CUpload_App extends CUpload_Base implements CUpload_Interface
     {
         parent::__construct($dir);
     }
+
     /**
      * 上传处理(override)
      *
@@ -32,7 +32,7 @@ class CUpload_App extends CUpload_Base implements CUpload_Interface
         $icon = $this->_apkIcon($savePath, $data['icon']);
 
         $size = filesize($savePath);
-        $data['size']          = (new CUtils)->friendlyFilesize($size);
+        $data['size']          = CUtil::friendlyFilesize($size);
         $data['size_int']      = round($size / 1024, 0);
         $data['icon']          = $icon;
         $data['download_link'] = $this->savePath;
