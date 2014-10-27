@@ -163,6 +163,7 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
     
     /**
     * 上传图片
+    * 返回图片字段 result : {data, path, fullPath}
     */
     public function upload(){
         return (new CUpload)->instance('image', 'ads')->upload();

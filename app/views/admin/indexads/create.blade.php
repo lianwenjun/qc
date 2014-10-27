@@ -190,9 +190,8 @@ $(function(){
             myData = eval('(' + object.response + ')');
         }
         if (myData.result){
-            console.log( $("#listdata li img"));
-            $("#listdata li img").attr('src', myData.result);
-            $("#listdata input[name=image]").val(myData.result);
+            $("#listdata li img").attr('src', myData.result.path);
+            $("#listdata input[name=image]").val(myData.result.path);
         }
     });
 
