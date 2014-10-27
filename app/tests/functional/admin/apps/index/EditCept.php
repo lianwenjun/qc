@@ -36,7 +36,7 @@ $I->seeInSession(['tips'=>['success' => false, 'message' => "请按要求填写�
 $I->seeRecord('apps', ['id' => '14', 'status' => 'draft', 'deleted_at' => null]);
 $I->amOnPage('/admin/apps/draft/14');
 $data = [
-    'cates'           => [1,2],
+    'cats'           => [1,2],
     'author'          => '草稿制造厂',
     'os_version'      => '3.0',
     'version_code'    => 22,
