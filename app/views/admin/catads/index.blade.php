@@ -92,8 +92,8 @@ $(function(){
                         myData = eval('(' + object.response + ')');
                     }
                     if (myData.result){
-                        tr.find('input[name=upload-image]').val(myData.result);
-                        var img = "<img src='" + myData.result + "''>";
+                        tr.find('input[name=upload-image]').val(myData.result.path);
+                        var img = "<img src='" + myData.result.path + "''>";
                         $(".jbox-content").find("#file-list").html(img);
                     }
                 });
