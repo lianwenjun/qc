@@ -59,9 +59,9 @@
                     <td>{{ $ad->title }}</td>
                     <td>{{ isset($location[$ad->location]) ? $location[$ad->location] : '' }}</td>
                     <td>{{ $ad->sort }}</td>
-                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->stocked_at }}</td>
-                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->unstocked_at }}</td>
-                    <td {{ Config::get('status.ads.statusColor')[adsStatus($ad)] }}>{{ Config::get('status.ads.status')[adsStatus($ad)] }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[CUtil::adsStatus($ad)] }}>{{ $ad->stocked_at }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[CUtil::adsStatus($ad)] }}>{{ $ad->unstocked_at }}</td>
+                    <td {{ Config::get('status.ads.statusColor')[CUtil::adsStatus($ad)] }}>{{ Config::get('status.ads.status')[CUtil::adsStatus($ad)] }}</td>
                     <td>
                         @if($ad->is_stock == 'yes' && Sentry::getUser()->hasAccess('rankads.unstock'))
                             <a href="{{ URL::route('rankads.unstock', $ad->id) }}" target=BoardRight class="Search_show">下架</a>
