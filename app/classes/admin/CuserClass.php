@@ -11,6 +11,10 @@ class Admin_CuserClass {
     */
     public function getUserNameByList($key = [],$list = []) {
         $userIds = [0];
+        function cube($n)
+        {
+            return($n * $n * $n);
+        }
         foreach ($list as $l) {
             foreach ($key as $k) {
                 if (!isset($userIds[$l->$k])){
@@ -20,7 +24,7 @@ class Admin_CuserClass {
         }
         //能否整合进$list里呢？
         $users = User::whereIn('id', $userIds)->get();
-        $userDatas = [0 => 'N/A'];
+        $userDatas = [0 => '系统'];
         foreach ($users as $user) {
             $userDatas[$user->id] = $user->username;
         }

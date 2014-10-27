@@ -60,9 +60,9 @@
                     <td>{{ $ad->title }}</td>
                     <td>{{ isset($location[$ad->location]) ? $location[$ad->location] : '' }}</td>
                     <!--<td>{{ $ad->sort }}</td>-->
-                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->stocked_at }}</td>
-                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->unstocked_at }}</td>
-                    <td {{ Config::get('status.ads.statusColor')[adsStatus($ad)] }}>{{ Config::get('status.ads.status')[adsStatus($ad)] }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[CUtil::adsStatus($ad)] }}>{{ $ad->stocked_at }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[CUtil::adsStatus($ad)] }}>{{ $ad->unstocked_at }}</td>
+                    <td {{ Config::get('status.ads.statusColor')[CUtil::adsStatus($ad)] }}>{{ Config::get('status.ads.status')[CUtil::adsStatus($ad)] }}</td>
                     
                     <td>{{ Config::get('status.ads.is_top')[$ad->is_top] }}</td>
                     <td>

@@ -1,8 +1,9 @@
 <?php
 
-class Admin_Apps_AppsAdsController extends \Admin_BaseController {
+class Admin_Apps_AppsAdsController extends \Admin_AdsController {
 
     protected $type = 'app';
+    protected $indexRoute = 'appsads.index';
     /**
      * 首页游戏位广告列表
      * 
@@ -11,18 +12,18 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
      */
     public function index()
     {
-        $adsClass = new Admin_CadsClass;
-        $query = new Ads;
         //条件查询
-        $query = $adsClass->indexQuery($query);
-        if (Input::get('location')){
-            $query = $query->where('location', Input::get('location'));
-        }
-        $query = $query->where('type', $this->type);
-        $ads = $query->orderBy('id', 'desc')->paginate($this->pagesize);
-        $datas = ['ads' => $ads, 'status' => Config::get('status.ads.status'), 
-                'location' => Config::get('status.ads.applocation'),
-                'is_top' => Config::get('status.ads.is_top')];
+        $ads = Ads::ofTitle(Input::get('word'))
+                ->ofStatus(Input::get('status'))
+                ->ofLocation(Input::get('location'))
+                ->whereType($this->type)
+                ->orderBy('id', 'desc')
+                ->paginate($this->pagesize);
+        $datas = ['ads' => $ads, 
+            'status' => Config::get('status.ads.status'), 
+            'location' => Config::get('status.ads.applocation'),
+            'is_top' => Config::get('status.ads.is_top')
+        ];
         $this->layout->content = View::make('admin.appsads.index', $datas);
     }
 
@@ -52,16 +53,18 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
      */
     public function store()
     {
-        $adsClass = new Admin_CadsClass;
-        $validator = Validator::make(Input::all(), $adsClass->adsCreateRules);
-        if ($validator->fails()){
-            return Redirect::route('appsads.create')->with('msg', '添加失败')->with('input', Input::all());
+        $ads = new Ads;
+        if (!$ads->isValid(Input::all())){
+            return Redirect::route('appsads.create')->with('msg', '添加失败')
+                        ->with('input', Input::all());
         }
-        $ad = $adsClass->createAds($this->type);
-        if ($ad) {
+
+        $ad = $ads->ofCreate($this->type);
+        if ($ad->save()) {
             return Redirect::route('appsads.index')->with('msg', '添加成功');
         } else {
-            return Redirect::route('appsads.create')->with('msg', '添加失败')->with('input', Input::all());
+            return Redirect::route('appsads.create')->with('msg', '添加失败')
+                        ->with('input', Input::all());
         }
     }
 
@@ -74,15 +77,15 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
      */
     public function edit($id)
     {
-        $ad = Ads::where('id', $id)->where('type', $this->type)->first();
+        $ad = Ads::whereType($this->type)->find($id);
         //检测广告是否存在
         if (!$ad) {
-            return Redirect::route('appsads.index');
+            return Redirect::route('appsads.index', '数据不存在');
         }
         //检测游戏是否存在
         $app = Apps::find($ad->app_id);
         if (!$app) {
-            return Redirect::route('appsads.index');
+            return Redirect::route('appsads.index', '游戏不存在');
         }
         $datas = ['ad' => $ad, 
             'location' => Config::get('status.ads.applocation'),
@@ -102,71 +105,20 @@ class Admin_Apps_AppsAdsController extends \Admin_BaseController {
      */
     public function update($id)
     {
-        $ad = Ads::where('id', $id)->where('type', $this->type)->first();
+        $ad = Ads::whereType($this->type)->find($id);
         if (!$ad) {
-            Log::error('广告分类更新'.'亲，数据不存在');
             return Redirect::route('appsads.index')->with('msg', '亲，数据不存在');
         }
-        $adsClass = new Admin_CadsClass;
-        $validator = Validator::make(Input::all(), $adsClass->adsUpdateRules);
-        if ($validator->fails()){
-            Log::error('广告分类更新' . $validator->messages());
+        $valid = (new Ads)->isValid(Input::all(), 'update');
+        if (!$valid){
+            Log::error('广告分类更新');
             return Redirect::route('appsads.edit', $id)->with('msg', '添加失败');
         }
-        $ad = $adsClass->UpdateAds($ad);
+        $ad = (new Ads)->ofUpdate($ad);
         if ($ad->save()) {
             return Redirect::route('appsads.index')->with('msg', '修改成功');
         }
         return Redirect::route('appsads.index')->with('msg', '没什么改变');
-    }
-
-    /**
-     * 下架首页游戏位广告
-     * DELETE /admin/appads/{id}
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function unstock($id)
-    {
-        $adsClass = new Admin_CadsClass;
-        $ad = $adsClass->unstock($id, $this->type);
-        if (!$ad) {
-            return Redirect::route('appsads.index')->with('msg', '亲，#'.$id.'下架失败了');
-        } else {
-            return Redirect::route('appsads.index')->with('msg', '亲，#'.$id.'下架成功');
-        }
-    }
-
-    /**
-     * 删除首页游戏位广告
-     * DELETE /admin/appads/{id}
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //单条查询
-        $ad = Ads::where('id', $id)->where('type', $this->type)->first();
-        //检查
-        $msg = '#' . $id . '删除失败';
-        if (!$ad) {
-            return Redirect::route('appsads.index')->with('msg', $msg);
-        }
-        
-        if ($ad->delete()){
-            $msg = '#' . $id . '删除成功';
-        }
-        return Redirect::route('appsads.index')->with('msg', $msg);
-    }
-    
-    /**
-    * 上传图片
-    * 返回图片字段 result : {data, path, fullPath}
-    */
-    public function upload(){
-        return (new CUpload)->instance('image', 'ads')->upload();
     }
 
 }
