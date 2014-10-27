@@ -32,29 +32,29 @@ $I->see('上传游戏A君');
 -------------------------------------------------------- */
 
 // 模糊搜索
-$I->amOnPage('/admin/apps/draft?cate_id=&title=游戏&created_at[]=&created_at[]=');
+$I->amOnPage('/admin/apps/draft?cat_id=&title=游戏&created_at[]=&created_at[]=');
 $I->see('上传游戏A君');
 $I->see('上传游戏B君');
 $I->dontSee('可怜软件A君');
 
 
 // 精准搜索
-$I->amOnPage('/admin/apps/draft?cate_id=&title=上传游戏A君&created_at[]=&created_at[]=');
+$I->amOnPage('/admin/apps/draft?cat_id=&title=上传游戏A君&created_at[]=&created_at[]=');
 $I->see('上传游戏A君');
 $I->dontSee('上传游戏B君');
 
 // 分类搜索
-$I->amOnPage('/admin/apps/draft?cate_id=2&title=&created_at[]=&created_at[]=');
+$I->amOnPage('/admin/apps/draft?cat_id=2&title=&created_at[]=&created_at[]=');
 $I->see('上传游戏B君');
 $I->dontSee('上传游戏A君');
 
 // 时间搜索
-$I->amOnPage('/admin/apps/draft?cate_id=&title=&created_at[]=2014-09-01&created_at[]=2014-09-02');
+$I->amOnPage('/admin/apps/draft?cat_id=&title=&created_at[]=2014-09-01&created_at[]=2014-09-02');
 $I->see('上传游戏B君');
 $I->dontSee('上传游戏A君');
 
 // 联合搜索
-$I->amOnPage('/admin/apps/draft?cate_id=1&title=游戏&created_at[]=2014-09-02&created_at[]=2014-09-03');
+$I->amOnPage('/admin/apps/draft?cat_id=1&title=游戏&created_at[]=2014-09-02&created_at[]=2014-09-03');
 $I->see('上传游戏A君');
 $I->dontSee('上传游戏B君');
 $I->dontSee('可怜软件A君');
@@ -68,6 +68,6 @@ $I->amOnPage('/admin/apps/draft?page=2');
 $I->see('分页游戏A君');
 
 // 带搜索分页
-$I->amOnPage('/admin/apps/draft?cate_id=&title=游戏&created_at[]=&created_at[]=&page=2');
+$I->amOnPage('/admin/apps/draft?cat_id=&title=游戏&created_at[]=&created_at[]=&page=2');
 $I->see('分页游戏B君');
 $I->dontSee('分页游戏A君');
