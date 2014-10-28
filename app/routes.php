@@ -223,13 +223,16 @@ Route::group(['prefix' => 'api'], function()
         Route::get('game/cull/{type}/{pageSize}/{pageIndex}', ['uses' => '']);
         Route::get('game/list/{area}/{pageSize}/{pageIndex}', ['uses' => '']);
         Route::get('game/info/edit/downcount/{appid}/{imei}', ['uses' => '']);
-        Route::get('game/info/appid/{appid}', ['uses' => '']);
+        Route::get('game/info/appid/{appid}', ['uses' => 'Api_AppsController@info']);
         Route::get('appclient/ver/info/{versionCode}', ['uses' => '']);
-        Route::post('game/feedback/add', ['uses' => '']);
+        Route::post('game/feedback/add', ['uses' => 'Api_FeedbacksController@store']);
         Route::get('game/search/{type}/{keyword}/{exclude}/{pageSize}/{pageIndex}', ['uses' => '']);
-        Route::get('game/search/autocomplete/{keyword}', ['uses' => '']);
-        Route::get('game/category/all', ['api.cates.index', 'uses' => 'Api_CatesController@index']);
+        Route::get('game/search/autocomplete/{keyword}', ['uses' => 'Api_AppsController@autoComplete']);
+        Route::get('game/category/all', ['api.cats.index', 'uses' => 'Api_CatsController@index']);
         Route::post('game/update', ['uses' => '']);
+        Route::get('game/info/edit/downcount/request', ['uses' => '']);
+        Route::get('game/info/edit/downcount/installed', ['uses' => '']);
+        Route::get('game/info/edit/downcount/{appid}/{imei}', ['uses' => '']);
     });
 });
 
