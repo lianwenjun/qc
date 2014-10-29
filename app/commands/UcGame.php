@@ -331,7 +331,7 @@ class UcGame extends Command {
             'icon'          => $platform['logoImageUrl'],
             'title'         => $name,
             'pack'          => $package['extendInfo']['packageName'],
-            'size'          => friendlyFilesize($platform['size']),
+            'size'          => CUtil::friendlyFilesize($platform['size']),
             'size_int'      => intval($platform['size']/1024),
             'version'       => $package['extendInfo']['versionName'],
             'version_code'  => $package['extendInfo']['versionCode'],
