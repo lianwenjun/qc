@@ -1,0 +1,13 @@
+@charset "utf-8";
+/* CSS Document */
+/* 重置 */
+* { margin:0; padding:0; }
+body { font-family:"Arial Normal","Arial"; font-size:18px; }
+ul li { list-style-type: none; }
+a { text-decoration: none; }
+/* 右侧内容　*/
+.border-right { padding-left:230px; display:block; }
+.right-box { height:1040px; text-align:center; border:solid 20px #F0F0F0; }
+.right-box p { margin-top:100px; color:#333; font-size:48px; }
+span.blue { color:#00F; }
+span.black { color:#000; font-weight:700; font-size:72px; }

@@ -1,11 +1,10 @@
 @charset "utf-8";
 /* CSS Document */
 body { background:#0076D0; }
-.user { width:720px; height:539px; position:absolute; left:50%; margin-left:-360px; top:100px; background:url('../images/user-login/login-1.png') no-repeat; }
-h3 { color:#FF6; font-size:28px; text-align:center; margin-top:120px; }
-.username { color:#FFF; text-align:center; margin-top:50px; }
-.username input { width:225px; height:30px; }
-.password { color:#FFF; text-align:center; margin-left:15px; margin-top:20px; }
-.password input { width:225px; height:30px; }
+.user { width:720px; height:539px; position:absolute; left:50%; margin-left:-360px; top:100px; background:url('../images/login.png') no-repeat; }
+h3 { color:#FF6; font-size:24px; text-align:center; margin-top:120px; }
+.signin { color:#FFF; font-size:14px; text-align:center; margin-top:30px; }
+.signin input { width:225px; height:35px; margin-top:20px; border:#0b6bc3; }
+span { letter-spacing:5px; }
 .landing { text-align:center; margin-top:30px; }
-.landing input { color:#F66; font-size:18px; padding:5px 35px; background:#FFFC79; border-radius:10px; border:0; }
+.landing input { color:#F66; font-size:15px; padding:5px 35px; background:#FFFC79; border-radius:10px; border:0; }
