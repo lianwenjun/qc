@@ -3,7 +3,7 @@
 /**
  * 上传基础类
  */
-class CUpload_Base implements CUpload_Interface
+abstract class CUpload_ABase implements CUpload_Interface
 {
     public $saveDir     = '';
     public $saveName    = '';
@@ -23,6 +23,7 @@ class CUpload_Base implements CUpload_Interface
      */
     public function upload()
     {
+        $data = [];
         $uploader = Plupload::receive('file', function($file) {
 
             $this->handle($file);
@@ -44,14 +45,7 @@ class CUpload_Base implements CUpload_Interface
      *
      * @return void
      */
-    public function handle($file)
-    {
-        $this->saveInfo($file->getClientOriginalName());
-        $file->move($this->saveDir, $this->saveName);
-        $rootPath = $this->rootPath();
-
-        $this->savePath = str_replace(public_path(), '', $rootPath);
-    }
+    abstract public function handle($file);
 
     /**
      * 获得上传 hash 目录
@@ -61,25 +55,7 @@ class CUpload_Base implements CUpload_Interface
      *
      * @return array 上传目录 ['dir', 'filename']
      */
-    public function uploadPath($type, $filename)
-    {
-
-        $config = Config::get('upload');
-        if(! in_array($type, array_keys($config))) {
-            $dir = public_path() . '/uploads';
-            return [$dir, $filename];
-        }
-
-        $hash  = md5(microtime(true));
-        $hashs = str_split($hash);
-        $dir   = public_path() . Config::get('upload.'.$type);
-
-        $dir    .=  sprintf('/%s/%s', $hashs[0], $hashs[1]);
-        $info    = pathinfo($filename);
-        $newName = sprintf('%s.%s', $hash, $info['extension']);
-
-        return [$dir, $newName];
-    }
+    abstract public function uploadPath($type, $filename);
 
     /**
      * 定义存放目录以及文件名
