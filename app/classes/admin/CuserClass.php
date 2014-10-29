@@ -20,7 +20,7 @@ class Admin_CuserClass {
         }
         //能否整合进$list里呢？
         $users = User::whereIn('id', $userIds)->get();
-        $userDatas = [0 => 'N/A'];
+        $userDatas = [0 => '系统'];
         foreach ($users as $user) {
             $userDatas[$user->id] = $user->username;
         }
