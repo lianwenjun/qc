@@ -160,6 +160,7 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
      */
     public function update($id)
     {
+        // TODO 权限抽象
         $route = Route::current()->getName();
         $paths = explode('.', $route);
 
