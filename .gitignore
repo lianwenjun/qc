@@ -12,7 +12,7 @@ app/tests/_output/*
 public/apks/*
 public/icons/*
 public/pictures/*
-public/cateads/*
+public/catads/*
 public/ads/*
 *.apk
 app/config/database.php

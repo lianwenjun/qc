@@ -11,10 +11,6 @@ class Admin_CuserClass {
     */
     public function getUserNameByList($key = [],$list = []) {
         $userIds = [0];
-        function cube($n)
-        {
-            return($n * $n * $n);
-        }
         foreach ($list as $l) {
             foreach ($key as $k) {
                 if (!isset($userIds[$l->$k])){
