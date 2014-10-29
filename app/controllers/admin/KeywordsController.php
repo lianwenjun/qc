@@ -59,7 +59,7 @@ class Admin_KeywordsController extends \Admin_BaseController {
     {
         //检测该数据是否存在
         $kw = new Keywords;
-        $keyword = $kw->where('id', $id)->first();
+        $keyword = Keywords::find($id);
         if(!$keyword){
             return Response::json(['status'=>'error', 'msg'=>'id is valid']);   
         }
