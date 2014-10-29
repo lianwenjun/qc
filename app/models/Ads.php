@@ -9,40 +9,38 @@ class Ads extends \Eloquent {
     
     protected $fillable = ['app_id', 'title', 'location', 'image', 'stocked_at', 
                 'unstocked_at', 'type', 'is_stock', 'is_top', 'sort', 'word'];
-    //添加广告检测
-    public $adsCreateRules = [
+    
+    //校验数据
+    public function isValid($input, $type = 'create') {
+        $rules = [
+            'create' => [
                 'app_id' => 'required|integer',
                 'title' => 'required',
                 'location' => 'required',
-                'image' => 'required',
                 'is_top' => 'in:yes,no',
-                'stocked_at' => 'required',
-                'unstocked_at' => 'required'
-            ];
-    //广告更新检测      
-    public  $adsUpdateRules = [
-                'is_top' => 'in:yes,no',
-            ];
-    //添加排行广告检测
-    public $rankadsCreateRules = [
-                'app_id' => 'required|integer',
-                'title' => 'required',
-                'location' => 'required',
                 'sort' => 'integer',
                 'stocked_at' => 'required',
                 'unstocked_at' => 'required'
-            ];
-    //更新排行广告检测
-    public $rankadsUpateRules = [
+            ],
+            'update' => [
+                'is_top' => 'in:yes,no',
                 'sort' => 'integer',
-            ];
+            ],
+        ];
+        //返回消息没了
+        return Validator::make(
+            $input,
+            $rules[$type]
+        )->passes();
+    }
+    
     /*
     * 添加广告
     * @param type
     * @param Input::all()
     * @respone data
     */
-    public function createAds($type) {
+    public function ofCreate($type) {
         $fields = [
             'app_id' => Input::get('app_id'),
             'title' => Input::get('title'),
@@ -56,8 +54,11 @@ class Ads extends \Eloquent {
             'sort' => Input::get('sort', 0), 
             'word' => Input::get('word', ''),
             ];
-        $ad = Ads::create($fields);
-        return $ad;
+        $ads = new Ads;
+        foreach ($fields as $key => $value) {
+            $ads->$key = $value;
+        }
+        return $ads;
     }
     /*
     * 更新广告
@@ -65,7 +66,7 @@ class Ads extends \Eloquent {
     * @param Input::all()
     * @respone data
     */
-    public function UpdateAds($ad) {
+    public function ofUpdate($ad) {
         $ad->location = Input::get('location', $ad->location);
         $ad->is_top = Input::get('is_top', 'no');
         $ad->sort = Input::get('sort', $ad->sort);
@@ -74,66 +75,68 @@ class Ads extends \Eloquent {
         $ad->is_stock = 'yes';
         return $ad;
     }
-    //搜索条件过滤
-    public function indexQuery($query) {
-        if (Input::get('word')){
-            $sql = '%' . Input::get('word') . '%';
-            $query = $query->where('title', 'like', $sql);
-        }
-        if (Input::get('status')){
-            $status = Input::get('status');
-            if ( $status == 'stock' ) {
-                $query = $query->where('is_stock', 'yes')
-                    ->where('stocked_at', '>', date('Y-m-d h:m:s', time()));
-            }
-            if ( $status == 'unstock' ){
-                $query = $query->where('is_stock', 'no');
-            }
-            if ( $status == 'online' ){
-                $query = $query->where('stocked_at', '<=', date('Y-m-d h:m:s', time()))
-                    ->where('unstocked_at', '>', date('Y-m-d h:m:s', time()))
-                    ->where('is_stock', 'yes');
-            }
-            if ( $status == 'expired' ){
-                $query = $query->where('unstocked_at', '<', date('Y-m-d h:m:s', time()))
-                ->where('is_stock', 'yes');
-            }
+
+    //是否上架查询
+    /*
+    * @param query sql
+    * @param type  是否上架类型，默认为yes
+    */
+    public function scopeIsStock($query, $type='yes') {
+        return $query->where('is_stock', $type); 
+    }
+
+    //游戏名称查询
+    public function scopeTitleLike($query, $word) {
+        $sql = '%' . $word . '%';
+        return $query->where('title', 'like', $sql);
+    }
+
+    //时间小于查询
+    public function scopeLessNow($query, $key) {
+        $time = date('Y-m-d h:m:s', time());
+        return $query->where($key, '<=', $time);
+    }
+
+    //时间大于查询
+    public function scopeGreateNow($query, $key) {
+        $time = date('Y-m-d h:m:s', time());
+        return $query->where($key, '>', $time);
+    }
+
+    //名称查询
+    public function scopeOfTitle($query, $word) {
+        if ($word) {
+            $query = $query->titleLike($word);
         }
         return $query;
     }
-    // 下架广告
-    public function unstock($id, $type){
-        $ad = Ads::where('id', $id)->where('type', $type)->where('is_stock', 'yes')->first();
-        if (!$ad) {
-            return false;
-        }
-        $ad->is_stock = 'no';
-        if (!$ad->save()){
-            return false;
-        }
-        return true;
-    }
-    // 删除广告
-    public function deleteAds($id, $type, $userId = false){
-        $ad = Ads::where('id', $id)->where('type', $type)->first();
-        if (!$ad) {
-            return false;
-        }
-        if (!$ad->delete()){
-            return false;
-        }
-        return true;
-    }
-    //广告图片上传     
-    public function imageUpload() {
-        return Plupload::receive('file', function ($file)
-        {
-            list($dir, $filename) = uploadPath('ads', $file->getClientOriginalName());
-            $file->move($dir, $filename);
 
-            $savePath = $dir . '/' . $filename;
-
-            return str_replace(public_path(), '', $savePath);
-        });
+    //按位置查询
+    public function scopeOfLocation($query, $location) {
+        if ($location) {
+            $query = $query->whereLocation($location);;
+        }
+        return $query;
     }
+    
+    //时间过滤
+    public function scopeOfStatus($query, $status) {
+        switch($status){
+            case 'stock':// 上架，未到展示时间
+                $query = $query->isStock()->greateNow('stocked_at');
+                break;
+            case 'unstock'://下架不管时间
+                $query = $query->isStock('no');
+                break;
+            case 'online'://上架，在展示时间
+                $query = $query->lessNow('stocked_at')->GreateNow('unstocked_at')->isStock();
+                break;
+            case 'expired'://上架，时间过期
+                $query = $query->lessNow('unstocked_at')->isStock();
+                break;
+            default://其他
+                $query = $query;  
+        }
+        return $query;
+    }   
 }

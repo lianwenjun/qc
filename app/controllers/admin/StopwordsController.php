@@ -20,9 +20,7 @@ class Admin_StopwordsController extends \Admin_BaseController {
     /**
      * 添加屏蔽词
      * POST /admin/stopwords
-     * @param
-     * @param
-     * @param 
+     * @param word
      * @return Response
      */
     public function store()
@@ -101,8 +99,7 @@ class Admin_StopwordsController extends \Admin_BaseController {
     public function destroy($id)
     {
         //检测是否存在该数据
-        $stopwordModel = new Stopwords();
-        $stopword = $stopwordModel->find($id);
+        $stopword = Stopwords::find($id);
         if(!$stopword){
             return Redirect::route('stopword.index')->with('msg', '#'. $id .'不存在');   
         }

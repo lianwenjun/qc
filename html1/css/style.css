@@ -1,0 +1,5 @@
+/* 欢迎页面样式 */
+.welcome { height: 300px;padding-top: 22%; }
+.welcome p { text-align: center; }
+.welcome .user { margin: 40px 0;font-size: 28px; }
+.welcome .title { font-size: 40px; }

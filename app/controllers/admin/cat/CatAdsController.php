@@ -24,14 +24,13 @@ class Admin_Cat_CatAdsController extends \Admin_BaseController {
      */
     public function update($id)
     {
-        $catAdsModel = new CatAds();
         $ads = CatAds::find($id);
         if (!$ads) {
             //不存在
             return ['status' => 'error', 'msg' => 'id is valid'];
         }
         
-        $validator = Validator::make(Input::all(), $catAdsModel->updateRules);
+        $validator = Validator::make(Input::all(), (new CatAds)->updateRules);
         if ($validator->fails()) {
             return ['status' => 'error', 'msg' => 'validator'];
         }
@@ -45,10 +44,10 @@ class Admin_Cat_CatAdsController extends \Admin_BaseController {
 
     /**
     * 上传图片
+    * 返回图片字段 result : {data, path, fullPath}
     */
     public function upload(){
-        $cupload = new Admin_Cupload;
-        return $cupload->cateImageUpload();
+        return (new CUpload)->instance('image', 'catads')->upload();
     }
 
 }
