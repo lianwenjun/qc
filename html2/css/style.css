@@ -1,0 +1,23 @@
+@charset "utf-8";
+/* CSS Document */
+/* 重置 */
+* { margin:0; padding:0; }
+body { font-family:"Arial Normal","Arial"; font-size:13px; font-weight:400; }
+ul li { list-style-type: none; }
+a { text-decoration: none; }
+/* 盒子　*/
+.box { width:1660px; height:1080px; margin:0 auto; border:solid 1px #CCC; }
+/* 左侧内容　*/
+.left { width:225px; background:#00457E; }
+.title { height:100px; text-align:center; }
+h3 { line-height:100px; color:#FFF; }
+.header { height:50px; text-align:right; }
+h5 { padding-right:35px; color:#65896A; }
+.header a { font-size:13px; padding-right:10px; color:#FFF; }
+.menu { float:right; margin-top:20px; }
+p { width:176px; height:30px; text-align:right; border-radius:5px 0 0 5px; background:#DEDE0B; }
+p a { line-height:30px; padding-right:10px; color:#000; }
+p:hover { background:#FFF; }
+.menu ul { display:none; }
+/* 右侧内容　*/
+.right {  }
