@@ -231,6 +231,7 @@ Route::group(['prefix' => 'v1'], function() //V1版本
     Route::get('game/info/edit/downcount/request', ['uses' => 'V1_AppRecodersController@request']);
     Route::get('game/info/edit/downcount/installed', ['uses' => 'V1_AppRecodersController@installed']);
     Route::post('client/apps/list', ['uses' => '']);
+    Route::get('/', ['uses' => 'V1_BaseController@result']);
 });
 
 
