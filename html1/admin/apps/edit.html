@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>游戏管理—上架游戏列表—更新</title>
+    <link rel="stylesheet" href="/app/css/common.css">
+    <link rel="stylesheet" href="/app/css/style.css">
+    <base target='_self'>
+</head>
+<body>
+<!-- 主要内容盒子：开始 -->
+<div class="main-box">
+    <h2>游戏管理 <small>上架游戏列表—更新</small></h2>
+    <!-- 主要内容：开始 -->
+    <div class="content"> 
+        <!-- 游戏信息内容：开始 -->      
+        <div class="game-infos">
+            <h3 class="title">游戏信息：</h3>
+            <ul class="jq-zebra">
+                <li>
+                    <span class="left">游戏ID：</span>
+                    <span class="right">123456 </span>
+                </li>
+                <li>
+                    <span class="left">游戏名称：</span>
+                    <span class="right">game name </span>
+                </li>
+                <li>
+                    <span class="left">包名：</span>
+                    <span class="right">package name </span>
+                </li>
+                <li>
+                    <span class="left">大小：</span>
+                    <span class="right">562.01M </span>
+                </li>
+                <li>
+                    <span class="left">版本：</span>
+                    <span class="right">4.4.4 </span>
+                </li>
+                <li>
+                    <span class="left">上传时间：</span>
+                    <span class="right">2014-09-04 18:18:18</span>
+                </li>
+                <li class="new-version">
+                    <span class="left">上传新版本：</span>
+                    <span class="right">
+                        <input type="button" value="选择APK文件" />
+                        <input class="file-button" type="file" value="选择APK文件" />
+                        <img src="../images/new-version.jpg" alt="新版本图片" />
+                    </span>
+                </li>
+                <li>
+                    <span class="left">游戏关键字：</span>
+                    <span class="right"><input class="input" type="text" placeholder="MT online" /></span>
+                </li>
+                <li>
+                    <span class="left"><b>*</b>游戏分类：</span>
+                    <span class="right">休闲游戏，游戏扮演<input type="button" value="修改" class="button" /></span>
+                </li>
+                <li>
+                    <span class="left"><b>*</b>游戏标签：</span>
+                    <span class="right"><input class="input" type="text" placeholder="卡牌" /></span>
+                </li>
+                <li>
+                    <span class="left"><b>*</b>游戏作者：</span>
+                    <span class="right"><input class="input" type="text" placeholder="深圳市第七大道科技有限公司"/></span>
+                </li>           <li>
+                    <span class="left"><b>*</b>是否无广告：</span>
+                    <span class="right"><input type="checkbox" />勾选表示无广告</span>
+                </li>
+                <li>
+                    <span class="left"><b>*</b>是否安全认证：</span>
+                    <span class="right"><input type="checkbox" />勾选表示已认证</span>
+                </li>
+                <li>
+                    <span class="left"><b>*</b>系统要求：</span>
+                    <span class="right">
+                        <select>
+                            <option>Android</option>
+                            <option>IOS</option>
+                        </select>
+                        <input class="input" style="width:30px" type="text" placeholder="2.3"/>以上
+                    </span>
+                </li>
+                <li>
+                    <span class="left"><b>*</b>包名：</span>
+                    <span class="right"><input class="input" type="text" placeholder="package name"/></span>
+                </li>           
+                <li>
+                    <span class="left"><b>*</b>排序：</span>
+                    <span class="right"><input class="input" type="text" placeholder="9999"/></span>
+                </li>      
+                <li>
+                    <span class="left"><b>*</b>下载次数：</span>
+                    <span class="right"><input class="input" type="text" placeholder="5000万+"/></span>
+                </li>
+                <li class="textarea">
+                    <span class="left"><b>*</b> 游戏介绍：</span>
+                    <span class="right"><textarea rows="3" style="width:70%;" placeholder="输入文本…"></textarea></span>
+                </li>
+                <li class="choice-img">
+                    <span class="left"><b>*</b>游戏截图：</span>
+                    <span class="right">
+                        <input type="button" value="选择图片" />
+                        <font class="color-red">最多5张，图片规格为220*370px的JPG/PNG，每张图片的大小不得超过300KB</font>
+                    </span>
+                </li>
+                <li class="preview">
+                    <span class="left">截图预览：</span>
+                    <span class="right"> 
+                        <img src="../images/preview1.jpg" alt="预览图1" />
+                        <img src="../images/preview2.jpg" alt="预览图2" />
+                        <img src="../images/preview3.jpg" alt="预览图3" />
+                        <img src="../images/preview4.jpg" alt="预览图4" />
+                        <img src="../images/preview5.jpg" alt="预览图5" />
+                    </span>
+                </li>
+                <li class="textarea">
+                    <span class="left"> <b>*</b>新版特性：</span>
+                    <span class="right"><textarea rows="3" style="width:70%;" placeholder="输入文本…"></textarea></span>
+                </li>
+            </ul> 
+        </div>
+        <!-- 游戏信息内容：结束 --> 
+        <p class="submit-back">
+            <input type="button" value="提交" class="button" />
+            <input type="button" value="返回" class="button" />
+        </p>
+     </div>
+     <!-- 主要内容:结束 -->
+</div> 
+<!-- 主要内容盒子:结束 -->
+<script type="text/javascript" src="/app/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="/app/js/my.js"></script> 
+</body>
+</html>

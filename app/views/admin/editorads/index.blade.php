@@ -66,9 +66,9 @@
                     <td><img src="{{ $ad->image }}" width="28" height="28" /></td>
                     <td>{{ $ad->title }}</td>
                     <td>{{ isset($location[$ad->location]) ? $location[$ad->location] : '' }}</td>
-                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->stocked_at }}</td>
-                    <td {{ Config::get('status.ads.timeColor')[adsStatus($ad)] }}>{{ $ad->unstocked_at }}</td>
-                    <td {{ Config::get('status.ads.statusColor')[adsStatus($ad)] }}>{{ Config::get('status.ads.status')[adsStatus($ad)] }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[CUtil::adsStatus($ad)] }}>{{ $ad->stocked_at }}</td>
+                    <td {{ Config::get('status.ads.timeColor')[CUtil::adsStatus($ad)] }}>{{ $ad->unstocked_at }}</td>
+                    <td {{ Config::get('status.ads.statusColor')[CUtil::adsStatus($ad)] }}>{{ Config::get('status.ads.status')[CUtil::adsStatus($ad)] }}</td>
                     <!--<td>{{ $ad->sort }}</td>-->
                     <td>{{ $ad->word }}</td>
                     <td>

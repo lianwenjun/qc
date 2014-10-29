@@ -1,0 +1,11 @@
+/* 登录页面样式 */
+.login { width: 100%;font-family: '微软雅黑';
+	background: url('../images/login_bg.jpg') no-repeat scroll center top #0071d6; } 
+.login-block { position: absolute;left: 50%;margin-left: -143px;width: 286px;margin-top: 200px; } 
+.login-block p { margin:25px 0 25px 0;text-align: center; } 
+.login-block label { color: #fff;font-size: 14px;font-family: '宋体'; } 
+.login-block input { width: 225px;height: 35px;line-height: 35px;padding-left: 5px;border:1px solid #0b6bc3;
+	border-radius: 7px; } 
+.login-block .title { font-size: 24px;color: #dff01c; } 
+.login-block .login-button { width: 85px;line-height: 30px;padding-left: 0;color: #fae900;
+	background-color: #f59100;cursor: pointer; }
