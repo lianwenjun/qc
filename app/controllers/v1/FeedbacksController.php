@@ -1,6 +1,6 @@
 <?php
 
-class Api_FeedbacksController extends \Api_BaseController {
+class V1_FeedbacksController extends \V1_BaseController {
     /**
      * 添加反馈
      * POST /api/v1/game/feedback/add

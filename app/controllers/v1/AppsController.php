@@ -1,6 +1,6 @@
 <?php
 
-class Api_AppsController extends \Api_BaseController {
+class V1_AppsController extends \V1_BaseController {
 
     /**
      * Display a listing of the resource.

@@ -214,27 +214,25 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 //图片
 //Route::post('/admin/appsads/imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_Apps_AppsAdsController@upload']);
 
-//api
-Route::group(['prefix' => 'api'], function()
-{   
-    Route::group(['prefix' => 'v1'], function() //V1版本
-    {
-        Route::get('game/extend/{type}/{pageSize}/{pageIndex}', ['uses' => '']);
-        Route::get('game/cull/{type}/{pageSize}/{pageIndex}', ['uses' => '']);
-        Route::get('game/list/{area}/{pageSize}/{pageIndex}', ['uses' => '']);
-        Route::get('game/info/edit/downcount/{appid}/{imei}', ['uses' => '']);
-        Route::get('game/info/appid/{appid}', ['uses' => 'Api_AppsController@info']);
-        Route::get('appclient/ver/info/{versionCode}', ['uses' => '']);
-        Route::post('game/feedback/add', ['uses' => 'Api_FeedbacksController@store']);
-        Route::get('game/search/{type}/{keyword}/{exclude}/{pageSize}/{pageIndex}', ['uses' => '']);
-        Route::get('game/search/autocomplete/{keyword}', ['uses' => 'Api_AppsController@autoComplete']);
-        Route::get('game/category/all', ['api.cats.index', 'uses' => 'Api_CatsController@index']);
-        Route::post('game/update', ['uses' => '']);
-        Route::get('game/info/edit/downcount/request', ['uses' => '']);
-        Route::get('game/info/edit/downcount/installed', ['uses' => '']);
-        Route::get('game/info/edit/downcount/{appid}/{imei}', ['uses' => '']);
-    });
+
+Route::group(['prefix' => 'v1'], function() //V1版本
+{
+    Route::get('game/extend/{type}/{pageSize}/{pageIndex}', ['uses' => '']);
+    Route::get('game/cull/{type}/{pageSize}/{pageIndex}', ['uses' => '']);
+    Route::get('game/list/{area}/{pageSize}/{pageIndex}', ['uses' => '']);
+    Route::get('game/info/edit/downcount/{appid}/{imei}', ['uses' => 'V1_AppRecodersController@download']);
+    Route::get('game/info/appid/{appid}', ['uses' => 'V1_AppsController@info']);
+    Route::get('appclient/ver/info/{versionCode}', ['uses' => '']);
+    Route::post('game/feedback/add', ['uses' => 'V1_FeedbacksController@store']);
+    Route::get('game/search/{type}/{keyword}/{exclude}/{pageSize}/{pageIndex}', ['uses' => '']);
+    Route::get('game/search/autocomplete/{keyword}', ['uses' => 'V1_AppsController@autoComplete']);
+    Route::get('game/category/all', ['api.cats.index', 'uses' => 'V1_CatsController@index']);
+    Route::post('game/update', ['uses' => '']);
+    Route::get('game/info/edit/downcount/request', ['uses' => 'V1_AppRecodersController@request']);
+    Route::get('game/info/edit/downcount/installed', ['uses' => 'V1_AppRecodersController@installed']);
+    Route::post('client/apps/list', ['uses' => '']);
 });
+
 
 // 404 跳转
 Event::listen('404', function()

@@ -1,6 +1,6 @@
 <?php
 
-class Api_CatsController extends \Api_BaseController {
+class V1_CatsController extends \V1_BaseController {
     /**
      * 获得分类列表信息
      * GET /api/v1/game/category/all

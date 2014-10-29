@@ -1,6 +1,6 @@
 <?php
 
-class Api_BaseController extends \Controller {
+class V1_BaseController extends \Controller {
     /**
      * Setup the layout used by the controller.
      *
