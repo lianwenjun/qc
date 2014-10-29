@@ -10,20 +10,20 @@ class Admin_RatingsController extends \Admin_BaseController {
      */
     public function index()
     {
-        $query = [];
-        $where = new Ratings();
-        if (Input::get('word')) {
-            if (Input::get('cate') == 'title') {
-                $query = ['%', Input::get('word'), '%'];
-                $where = $where->where('title', 'like', join($query));
-            }
-            if (Input::get('cate') == 'pack') {
-                $query = ['%', Input::get('word'), '%'];
-                $where = $where->where('pack', 'like', join($query));
-            }
+        $cate = Input::get('cate');
+        switch ($cate) {
+            case 'title':
+                $query = Ratings::ofTitle(Input::get('word'));
+                break;
+            case 'pack':
+                $query = Ratings::ofPack(Input::get('word'));
+                break;
+            default:
+                $query = new Ratings;
+                break;
         }
         //查询，默认分页
-        $ratings = $where->orderBy('id', 'desc')->paginate($this->pagesize);
+        $ratings = $query->orderBy('id', 'desc')->paginate($this->pagesize);
         $datas = ['ratings' => $ratings];
         $this->layout->content = View::make('admin.ratings.index', $datas);
     }
@@ -38,16 +38,15 @@ class Admin_RatingsController extends \Admin_BaseController {
     public function update($id)
     {
         //检测是否存在该数据
-        $ratings = new Ratings();
-        $rating = $ratings->find($id);
+        $rating = Ratings::find($id);
         $res = ['status'=>'ok', 'msg'=>'suss'];
         if(!$rating){
             $res['msg'] = '#' . $id . ' is valid';
             $res['status'] = 'error';
             return Response::json($res);   
         }
-        $validator = Validator::make(Input::all(), $ratings->rules);
-        if ($validator->fails()) {
+        $valid = (new Ratings)->isValid(Input::all());
+        if (!$valid) {
             $res['msg'] = '#' . $id . ' data is wrong';
             $res['status'] = 'error';
             return Response::json($res); 
