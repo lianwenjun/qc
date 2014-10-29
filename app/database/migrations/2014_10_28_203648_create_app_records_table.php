@@ -19,6 +19,7 @@ class CreateAppRecordsTable extends Migration {
             $table->integer('request')->default(0)->unsigned()->comment('请求数');
             $table->integer('download')->default(0)->unsigned()->comment('下载数');
             $table->integer('install')->default(0)->unsigned()->comment('安装数');
+            $table->integer('active')->default(0)->unsigned()->comment('激活数');
             $table->softDeletes();
             $table->timestamps();
         });
