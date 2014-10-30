@@ -261,6 +261,8 @@ class Apps extends \Base {
     {
         $uploader = (new CUpload)->instance('app', 'apks')->upload();
 
+        if(!$uploader['result']) return $uploader;
+
         if(empty($dontSave)) {
 
             $data = $uploader['result']['data'];
