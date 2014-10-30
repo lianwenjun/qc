@@ -12,90 +12,47 @@ class V1_AppsController extends \V1_BaseController {
     {
         //
     }
-
-    /**
-     * Show the form for creating a new resource.
-     * GET /api/apps/create
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * POST /api/apps
-     *
-     * @return Response
-     */
-    public function store()
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     * GET /api/apps/{id}
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * GET /api/apps/{id}/edit
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
     /**
      * 获得单个游戏的信息
      * GET /api/v1/game/info/appid/{appid}
      *
-     * @param  int  $id
+     * @param  int  $appid
      * @return Response
      */
     public function info($appid)
     {
-        $app = Api_Apps::find($appid)->toArray();
+        $app = Api_Apps::find($appid);
         $data = [];
         if (!$app) {
-            return $this->result(['data' => $data, 'msg' => '0', 'msgbox' => '数据不存在']);
+            return $this->result(['data' => $data, 'msg' => 0, 'msgbox' => '数据不存在']);
         }
+        $app = $app->toArray();
         //对应放哪去
         $fields = [
-            'comment_count' => 'commentCnt',
-            'link' => 'downUrl', 
-            'download_counts' => 'downloadCnt', 
-            'id' => 'id', 
-            'icon' => 'logoImageUrl', 
+            'download_manual' => 'downloadCnt', 
+            'id' => 'id',
             'md5' => 'md5', 
             'title' => 'name', 
             'pack' => 'packageName',
-            'rating' => 'score',
             'size_int' => 'size',
             'version' => 'version',
             'version_code' => 'versionCode',
-            'has_ad' => 'ad',
             'author' => 'author',
-            'category' => 'categoryId',
             'summary' => 'description',
-            'images' => 'screenshotImageUrls',//
-            'is_verify' => 'secureVerify',
-            'tagList' => 'tagList',
             'changes' => 'updateContent',
-            'updated_at' => 'uploadTime',
+            
+            'updated_at' => 'uploadTime', //
+            'images' => 'screenshotImageUrls',//
+            'is_verify' => 'secureVerify',//
+            'has_ad' => 'ad', //
+            'download_link' => 'downUrl', //
+            'icon' => 'logoImageUrl', // 
+
+            'comment' => 'commentCnt', //评论统计
+            'rating' => 'score', // 评分
+            'gameCategory' => 'gameCategory', //分类名
+            'tagList' => 'tagList', //标签列表
+            'categoryId' => 'categoryId',//分类ID
         ];
         foreach ($fields as $key => $value) {
             $data[$value] = '';
@@ -103,7 +60,7 @@ class V1_AppsController extends \V1_BaseController {
         foreach ($app as $key => $value) {
             if (isset($fields[$key])) $data[$fields[$key]] = $value;
         };
-        return $this->result(['data' => $data, 'msg' => '1', 'msgbox' => '数据获取成功']);
+        return $this->result(['data' => $data, 'msg' => 1, 'msgbox' => '数据获取成功']);
     }
 
     /**
@@ -115,7 +72,11 @@ class V1_AppsController extends \V1_BaseController {
      */
     public function autoComplete($keyword)
     {
-        $apps = Api_Apps::whereStatus('stock')->ofTitle($keyword)->orderBy('id', 'desc')->get();
+        $apps = Api_Apps::whereStatus('stock')
+            ->ofTitle($keyword)
+            ->orderBy('id', 'desc')
+            ->take(10)
+            ->get();
         $data = [];
         foreach ($apps as $app) {
             $data[] = [
@@ -124,7 +85,7 @@ class V1_AppsController extends \V1_BaseController {
                 'type' => 1
             ];
         }
-        return $this->result(['data'=>$data, 'msg'=>'1', 'msgbox'=>'数据获取成功']);
+        return $this->result(['data' => $data, 'msg' => 1, 'msgbox' => '数据获取成功']);
     }
 
 }

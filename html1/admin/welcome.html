@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>游戏商店后台-欢迎</title>
-    <link rel="stylesheet" href="/app/css/common.css">
-    <link rel="stylesheet" href="/app/css/style.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/style.css">
     <base target='_self'>
 </head>
 <body>
@@ -14,77 +14,78 @@
         <!-- 左侧主要内容 -->
         <div class="content">
             <h5 class="subtitle">hi!<span>力天部落</span></h5>
-            <h5 class="exit"><a href="#">修改密码</a><a href="#"> 退出系统 </a></h5>
+            <h5><a href="#" class="change-pwd">修改密码</a><a href="#" class="signout"> 退出系统 </a></h5>
             <!-- 左侧菜单 -->
-            <div class="left-menu jq-menu">
-                <p>游戏管理</p>
-                <ul>
-                    <li><a href="/app/admin/apps/stock.html">上架游戏列表</a></li>
-                    <li><a href="/app/admin/apps/edit.html">添加编辑游戏</a></li>
-                    <li><a href="/app/admin/apps/pending.html">待审核列表</a></li>
-                    <li><a href="/app/admin/apps/nopass.html">审核不通过列表</a></li>
-                    <li><a href="/app/admin/apps/unstock.html">下架游戏列表</a></li>
-                </ul>
-            </div>
-            <div class="left-menu jq-menu">
-                <p>广告位管理</p>
-                <ul>
-                    <li><a href="/app/admin/ads/indexpics.html">首页图片位管理</a></li>
-                    <li><a href="/app/admin/ads/indexgame.html">首页游戏位管理</a></li>
-                    <li><a href="/app/admin/ads/edit.html">编辑精选管理</a></li>
-                    <li><a href="/app/admin/ads/rank.html">排行游戏位管理</a></li>
-                    <li><a href="/app/admin/ads/sort.html">分类页图片管理</a></li>
-                </ul>
-            </div>
-            <div class="left-menu jq-menu">
-                <p>系统管理</p>
-                <ul>
-                    <li><a href="/app/admin/stystem/game-sort.html">游戏分类管理</a></li>
-                    <li><a href="/app/admin/stystem/sort-label.html">分类标签管理</a></li>
-                    <li><a href="/app/admin/stystem/labels.html">标签库管理</a></li>
-                    <li><a href="/app/admin/stystem/supplier.html">供应商管理</a></li>
-                    <li><a href="/app/admin/stystem/channel.html">渠道商管理</a></li>
-                    <li><a href="/app/admin/stystem/keyword.html">关键字管理</a></li>
-                    <li><a href="/app/admin/stystem/shield-word.html">屏蔽词管理</a></li>
-                </ul>
-            </div>
-            <div class="left-menu jq-menu">
-                <p>评论管理</p>
-                <ul>
-                    <li><a href="/app/admin/comment/score.html">游戏评分列表</a></li>
-                    <li><a href="/app/admin/comment/comment.html">游戏评论列表</a></li>
-                    <li><a href="/app/admin/comment/feedback.html">应用反馈</a></li>
-                </ul>
-            </div> 
-            <div class="left-menu jq-menu">
-                <p>数据中心</p>
-                <ul>
-                    <li><a href="/app/admin/datas/download.html">游戏下载统计</a></li>
-                    <li><a href="/app/admin/datas/activation.html">平台激活统计</a></li>
-                    <li><a href="/app/admin/datas/visit.html">页面访问统计</a></li>
-                    <li><a href="/app/admin/datas/event.html">按钮事件统计</a></li>
-                </ul>
-            </div>
-            <div class="left-menu jq-menu">
-                <p>权限管理</p>
-                <ul>
-                    <li><a href="/app/admin/power/administrator.html">管理员管理</a></li>
-                    <li><a href="/app/admin/power/role.html">角色管理</a></li>
-                    <li><a href="/app/admin/power/power.html">权限管理</a></li>
-                </ul>
-            </div>
-            <div class="left-menu jq-menu">
-                <p>日志管理</p>
-                <ul>
-                    <li><a href="/app/admin/logs/log.html">日志查询</a></li>
-                </ul>
-            </div>
+            <ul>
+                <li class="menu jq-menu">
+                    <p>游戏管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/apps/stock.html">上架游戏列表</a></li>
+                        <li><a href="/html1/admin/apps/draft.html">添加编辑游戏</a></li>
+                        <li><a href="/html1/admin/apps/pending.html">待审核列表</a></li>
+                        <li><a href="/html1/admin/apps/nopass.html">审核不通过列表</a></li>
+                        <li><a href="/html1/admin/apps/unstock.html">下架游戏列表</a></li>
+                    </ul>
+                </li>
+                <li class="menu jq-menu">
+                    <p>广告位管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/ads/indexpics.html">首页图片位管理</a></li>
+                        <li><a href="/html1/admin/ads/indexgame.html">首页游戏位管理</a></li>
+                        <li><a href="/html1/admin/ads/draft.html">编辑精选管理</a></li>
+                        <li><a href="/html1/admin/ads/rank.html">排行游戏位管理</a></li>
+                        <li><a href="/html1/admin/ads/sort.html">分类页图片管理</a></li>
+                    </ul>
+                </li>
+                <li class="menu jq-menu">
+                    <p>系统管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/stystem/game-sort.html">游戏分类管理</a></li>
+                        <li><a href="/html1/admin/stystem/sort-label.html">分类标签管理</a></li>
+                        <li><a href="/html1/admin/stystem/labels.html">标签库管理</a></li>
+                        <li><a href="/html1/admin/stystem/supplier.html">供应商管理</a></li>
+                        <li><a href="/html1/admin/stystem/channel.html">渠道商管理</a></li>
+                        <li><a href="/html1/admin/stystem/keyword.html">关键字管理</a></li>
+                        <li><a href="/html1/admin/stystem/shield-word.html">屏蔽词管理</a></li>
+                    </ul>
+                </li>
+                <li class="menu jq-menu">
+                    <p>评论管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/comment/score.html">游戏评分列表</a></li>
+                        <li><a href="/html1/admin/comment/comment.html">游戏评论列表</a></li>
+                        <li><a href="/html1/admin/comment/feedback.html">应用反馈</a></li>
+                    </ul>
+                </li> 
+                <li class="menu jq-menu">
+                    <p>数据中心</p>
+                    <ul>
+                        <li><a href="/html1/admin/datas/download.html">游戏下载统计</a></li>
+                        <li><a href="/html1/admin/datas/activation.html">平台激活统计</a></li>
+                        <li><a href="/html1/admin/datas/visit.html">页面访问统计</a></li>
+                        <li><a href="/html1/admin/datas/event.html">按钮事件统计</a></li>
+                    </ul>
+                </li>
+                <li class="menu jq-menu">
+                    <p>权限管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/power/user.html">管理员管理</a></li>
+                        <li><a href="/html1/admin/power/role.html">角色管理</a></li>
+                    </ul>
+                </li>
+                <li class="menu jq-menu">
+                    <p>日志管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/logs/log.html">日志查询</a></li>
+                    </ul>
+                </li>
+            </ul>
             <!-- /左侧菜单 --> 
         </div>
         <!-- /左侧主要内容 -->
     </div>
     <!-- /左侧盒子 -->
-    <!-- 右侧主要内容 -->
+    <!-- 右侧主体盒子 -->
     <div class="main-box">
         <div class="welcome">
            <p><img src="../images/logo.jpg" alt="logo"></p> 
@@ -92,8 +93,8 @@
            <p class="title">欢迎使用游戏商店后台系统</p>
         </div>
     </div>
-    <!-- /右侧主要内容 -->
-<script type="text/javascript" src="/app/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="/app/js/my.js"></script>
+    <!-- /右侧主体盒子 -->
+<script type="text/javascript" src="/html1/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/html1/js/common.js"></script>
 </body>
 </html>

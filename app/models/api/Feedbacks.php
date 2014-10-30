@@ -1,7 +1,7 @@
 <?php
 
 class Api_Feedbacks extends \Eloquent {
-    protected $fillable = [];
+    protected $fillable = ['version', 'content', 'type', 'imei', 'os_version', 'os', 'email'];
     protected $table = 'feedbacks';
 
     public function isValid($input) {

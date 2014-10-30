@@ -1,0 +1,31 @@
+@charset "utf-8";
+/* CSS Document */
+* { margin:0; padding:0; }
+body { font-family:"Arial Normal","Arial"; font-size:18px; }
+ul li { list-style-type:none; }
+a { text-decoration:none; }
+/* 右侧内容 */
+.border-right { padding-left:230px; display:block; }
+.right-box { height:1040px; border:solid 20px #F0F0F0; }
+/* 右侧主体内容 */
+.right-title { color:#333; background:#C9C9C9;　}
+.right-title span b { margin-left:10px; line-height:40px; font-size:20px; }
+.right-title span { font-size: 16px; }
+/* 查询 */
+.search { line-height:80px; font-size:16px; background:#E3E3E3; }
+.search p { margin-left:30px; word-spacing:1em; }
+/* 上架游戏记录 */
+.load-game { height:50px; line-height:50px; margin-left:30px; font-size:16px; color:#333; }
+.load-game span b { color:#F00; }
+/* 上架游戏记录表格 */
+.games-list { margin-left:30px; } 
+.games-list th { padding:8px; font-size:16px; color:#FFF; background:#133E70; }
+.games-list td { height:40px; line-height:40px; font-size:14px; text-align:center; }
+.games-list img { width:26px; height:26px; }
+tbody tr.even td { background:#BBBBBB; }
+tbody tr.odd td { background-color:#D6D6D6; }
+span.green { color:#008000; }
+span.red { color:#FF0025; }
+/* 上下翻页块 */
+.choose-page { margin-top:20px; margin-left:30px; font-size:13px; }
+.choose-page a { padding:3px 10px; border:1px solid #ccc; color:#333; }

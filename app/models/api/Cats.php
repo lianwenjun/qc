@@ -7,4 +7,5 @@ class Api_Cats extends \Eloquent {
     protected $dates = ['deleted_at'];
     protected $softDelete = true;
     protected $table = 'cats';
+
 }

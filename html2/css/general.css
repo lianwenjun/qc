@@ -1,0 +1,22 @@
+@charset "utf-8";
+/* CSS Document */
+* { margin:0; padding:0; }
+body { font-family:"Arial Normal","Arial"; font-size:18px; }
+ul li { list-style-type:none; }
+a { text-decoration:none; }
+/* 盒子 */ 
+.page-box { min-width:1200px; height:1080px; display:block; border:solid 1px #000; }
+/* 左侧内容 */ 
+.border-left { width:230px; height:1080px; float:left; position:absolute; background:#12356D; }
+/* 左侧标题 */
+h2 { margin-top: 55px; font-size:24px; text-align:center; color:#FFF; }
+/* 左侧内容开始 */
+.content-left-title { margin-top:70px; font-size:10px; float:right; }
+h4 { padding-left:30px; color:#FF6; }
+.content-left-title a { line-height:50px; padding-right:20px; color:#69C; }
+/* 左侧菜单 */
+.main-menu p { width:186px; float:right; text-align:right; border-radius:5px; padding-right:20px; margin-top:20px; line-height:33px; color:#000; background:#F6FA7B; }
+.main-menu p:hover { background:#FFF; }
+.menu { margin-right:20px; line-height:30px; display:none; text-align:right; float:right; }
+.menu li a { font-size:14px; color:#FFF; }
+.menu li a:hover { color:#dfdf0b; }
