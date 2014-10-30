@@ -25,9 +25,9 @@ class V1_FeedbacksController extends \V1_BaseController {
         ];
         foreach ($fields as $key => $value) {
             if (isset($value[0]) && ($value[0] == ':') ) {
-                $data[$key] => $value;
+                $data[$key] = $value;
             } else {
-                $data[$key] => Input::get($value, '');
+                $data[$key] = Input::get($value, '');
             }
         }
         $valid = (new Api_Feedbacks)->isValid($data);

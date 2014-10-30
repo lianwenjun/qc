@@ -9,8 +9,8 @@ $(function(){
     });
 
     //左侧菜单列表点击事件
-    $('.jq-menu a').click(function(){
-        $('.jq-menu a').css('color','#fff');
+    $('.jq-menu li').click(function(){
+        $('.jq-menu li').css('color','#fff');
         $(this).css('color','#dfdf0b');
     });
     

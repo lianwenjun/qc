@@ -72,4 +72,16 @@ class CUtil
         return $res;
     }
 
+    //确定是否补全URL
+    public static function checkHost($url, $type = 'image') {
+        if ($type == 'apk') {
+            $host = Config::get('app.apkHost');
+        } else {
+            $host = Config::get('app.imageHost');
+        }
+        if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
+            $url = $host . $url;
+        }
+        return $url;
+    }
 }
