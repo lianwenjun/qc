@@ -15,6 +15,31 @@ $(function(){
     });
     
     //上架游戏列表页面斑马纹表格样式
-    $('.jq-zebra tbody tr:even,.jq-zebra li:even').css('background-color','#e2e2e2');
+    $('.jq-table tr:even').css('background-color','#e2e2e2');
+
+    // 日期选择
+    $('.jq-mindate').datepicker({
+        dateFormat: 'yy-mm-dd'
+    });
+
+    // 模态弹出框
+    $('.jq-stock-modal').dialog({
+        autoOpen: false,
+        modal: true,
+        choseMonth: true,
+        choseYear: true,
+        showButtonPanel: true,
+        buttons: {
+        确定: function() {
+            $( this ).dialog( "close" );
+        },
+        取消: function() {
+            $( this ).dialog( "close" );
+        }
+      }
+    });
+    $( ".jq-stock" ).click(function() {
+      $( ".jq-stock-modal" ).dialog( "open" );
+    });
 
 });
