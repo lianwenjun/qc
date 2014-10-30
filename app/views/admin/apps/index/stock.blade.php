@@ -246,6 +246,27 @@
     pageInit({{ $apps['current_page'] }}, {{ $apps['last_page'] }}, {{ $apps['total'] }});
 
     initSort();
+
+    // 日期搜索开始结束值为空情况判断
+    $('.Search_en').click(function(check){
+      var start = $('input.hasDatepicker:eq(0)');
+      var end = $('input.hasDatepicker:eq(1)');
+
+      if (start.attr('value') != '' && end.attr('value') == '') {
+        var date = new Date();
+        var today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+
+        end.attr('value', today);
+      }
+
+      if (start.attr('value') == '' && end.attr('value') != '') {
+        alert('请选择日期开始值');
+        check.preventDefault();
+
+        return false;
+      }
+    });
+
    });
 
    /**

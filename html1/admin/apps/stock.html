@@ -2,173 +2,183 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>游戏商店后台-欢迎</title>
-    <link rel="stylesheet" href="/app/css/common.css">
-    <link rel="stylesheet" href="/app/css/style.css">
+    <title>游戏管理——上架游戏列表</title>
+    <link rel="stylesheet" href="../../css/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="../../css/jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="../../css/common.css">
     <base target='_self'>
 </head>
 <body>
     <!-- 左侧盒子 -->
-    <div class="side-box">
+    <div class="side-wrap">
         <h3 class="title">游戏商店系统</h3 >
-        <!-- 左侧主要内容 -->
         <div class="content">
             <h5 class="subtitle">hi!<span>力天部落</span></h5>
-            <h5 class="exit"><a href="#">修改密码</a><a href="#"> 退出系统 </a></h5>
-             <!-- 左侧菜单 -->
-            <div class="left-menu jq-menu">
-                <p>游戏管理</p>
-                <ul>
-                    <li><a href="/app/admin/apps/stock.html">上架游戏列表</a></li>
-                    <li><a href="/app/admin/apps/edit.html">添加编辑游戏</a></li>
-                    <li><a href="/app/admin/apps/pending.html">待审核列表</a></li>
-                    <li><a href="/app/admin/apps/nopass.html">审核不通过列表</a></li>
-                    <li><a href="/app/admin/apps/unstock.html">下架游戏列表</a></li>
-                </ul>
-            </div>
-            <div class="left-menu jq-menu">
-                <p>广告位管理</p>
-                <ul>
-                    <li><a href="/app/admin/ads/indexpics.html">首页图片位管理</a></li>
-                    <li><a href="/app/admin/ads/indexgame.html">首页游戏位管理</a></li>
-                    <li><a href="/app/admin/ads/edit.html">编辑精选管理</a></li>
-                    <li><a href="/app/admin/ads/rank.html">排行游戏位管理</a></li>
-                    <li><a href="/app/admin/ads/sort.html">分类页图片管理</a></li>
-                </ul>
-            </div>
-            <div class="left-menu jq-menu">
-                <p>系统管理</p>
-                <ul>
-                    <li><a href="/app/admin/stystem/game-sort.html">游戏分类管理</a></li>
-                    <li><a href="/app/admin/stystem/sort-label.html">分类标签管理</a></li>
-                    <li><a href="/app/admin/stystem/labels.html">标签库管理</a></li>
-                    <li><a href="/app/admin/stystem/supplier.html">供应商管理</a></li>
-                    <li><a href="/app/admin/stystem/channel.html">渠道商管理</a></li>
-                    <li><a href="/app/admin/stystem/keyword.html">关键字管理</a></li>
-                    <li><a href="/app/admin/stystem/shield-word.html">屏蔽词管理</a></li>
-                </ul>
-            </div>
-            <div class="left-menu jq-menu">
-                <p>评论管理</p>
-                <ul>
-                    <li><a href="/app/admin/comment/score.html">游戏评分列表</a></li>
-                    <li><a href="/app/admin/comment/comment.html">游戏评论列表</a></li>
-                    <li><a href="/app/admin/comment/feedback.html">应用反馈</a></li>
-                </ul>
-            </div> 
-            <div class="left-menu jq-menu">
-                <p>数据中心</p>
-                <ul>
-                    <li><a href="/app/admin/datas/download.html">游戏下载统计</a></li>
-                    <li><a href="/app/admin/datas/activation.html">平台激活统计</a></li>
-                    <li><a href="/app/admin/datas/visit.html">页面访问统计</a></li>
-                    <li><a href="/app/admin/datas/event.html">按钮事件统计</a></li>
-                </ul>
-            </div>
-            <div class="left-menu jq-menu">
-                <p>权限管理</p>
-                <ul>
-                    <li><a href="/app/admin/power/administrator.html">管理员管理</a></li>
-                    <li><a href="/app/admin/power/role.html">角色管理</a></li>
-                    <li><a href="/app/admin/power/power.html">权限管理</a></li>
-                </ul>
-            </div>
-            <div class="left-menu jq-menu">
-                <p>日志管理</p>
-                <ul>
-                    <li><a href="/app/admin/logs/log.html">日志查询</a></li>
-                </ul>
-            </div>
-            <!-- /左侧菜单 -->  
+            <h5><a href="#" class="mr10">修改密码</a><a href="#">退出系统</a></h5>
+            <!-- 左侧菜单 -->
+            <ul>
+                <li class="menu jq-menu">
+                    <p>游戏管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/apps/stock.html">上架游戏列表</a></li>
+                        <li><a href="/html1/admin/apps/draft.html">添加编辑游戏</a></li>
+                        <li><a href="/html1/admin/apps/pending.html">待审核列表</a></li>
+                        <li><a href="/html1/admin/apps/nopass.html">审核不通过列表</a></li>
+                        <li><a href="/html1/admin/apps/unstock.html">下架游戏列表</a></li>
+                    </ul>
+                </li>
+                <li class="menu jq-menu">
+                    <p>广告位管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/ads/indexpics.html">首页图片位管理</a></li>
+                        <li><a href="/html1/admin/ads/indexgame.html">首页游戏位管理</a></li>
+                        <li><a href="/html1/admin/ads/draft.html">编辑精选管理</a></li>
+                        <li><a href="/html1/admin/ads/rank.html">排行游戏位管理</a></li>
+                        <li><a href="/html1/admin/ads/sort.html">分类页图片管理</a></li>
+                    </ul>
+                </li>
+                <li class="menu jq-menu">
+                    <p>系统管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/stystem/game-sort.html">游戏分类管理</a></li>
+                        <li><a href="/html1/admin/stystem/sort-label.html">分类标签管理</a></li>
+                        <li><a href="/html1/admin/stystem/labels.html">标签库管理</a></li>
+                        <li><a href="/html1/admin/stystem/supplier.html">供应商管理</a></li>
+                        <li><a href="/html1/admin/stystem/channel.html">渠道商管理</a></li>
+                        <li><a href="/html1/admin/stystem/keyword.html">关键字管理</a></li>
+                        <li><a href="/html1/admin/stystem/shield-word.html">屏蔽词管理</a></li>
+                    </ul>
+                </li>
+                <li class="menu jq-menu">
+                    <p>评论管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/comment/score.html">游戏评分列表</a></li>
+                        <li><a href="/html1/admin/comment/comment.html">游戏评论列表</a></li>
+                        <li><a href="/html1/admin/comment/feedback.html">应用反馈</a></li>
+                    </ul>
+                </li> 
+                <li class="menu jq-menu">
+                    <p>数据中心</p>
+                    <ul>
+                        <li><a href="/html1/admin/statistics/download.html">游戏下载统计</a></li>
+                        <li><a href="/html1/admin/statistics/activation.html">平台激活统计</a></li>
+                        <li><a href="/html1/admin/statistics/visit.html">页面访问统计</a></li>
+                        <li><a href="/html1/admin/statistics/event.html">按钮事件统计</a></li>
+                    </ul>
+                </li>
+                <li class="menu jq-menu">
+                    <p>权限管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/auth/user.html">管理员管理</a></li>
+                        <li><a href="/html1/admin/auth/role.html">角色管理</a></li>
+                    </ul>
+                </li>
+                <li class="menu jq-menu">
+                    <p>日志管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/logs/log.html">日志查询</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- /左侧菜单 -->   
         </div>
-        <!-- /左侧主要内容 -->
     </div>
     <!-- /左侧盒子 -->
-    <!-- 右侧主要内容 -->
-    <div class="main-box">
-        <div class="content">
+    <!-- 右侧主体盒子 -->
+    <div class="main-wrap">
+        <p class="breadcrumb">游戏管理<b>&gt;</b>上架游戏列表</p>  
+        <div class="content">   
             <!-- 查询-->
-            <div class="search">查询：
-                <select>
-                    <option>游戏名称 </option>
-                    <option>游戏包名</option>
-                    <option>游戏分类</option>
+            <div class="search">
+                <span>
+                    查询：
+                    <select class="select" name="gamename">
+                        <option value="">游戏名称</option>
+                        <option value="">游戏包名</option>
+                        <option value="">游戏分类</option>
+                    </select>
+                    <select class="select" name="gametype">
+                        <option value="">游戏分类 </option>
+                        <option value="">格斗游戏</option>
+                        <option value="">动作游戏</option>
                 </select>
-                <input class="input" type="text" placeholder="请输入" />
-                安装包：
-                <input class="input" type="text" placeholder="输入包大小 " />—<input class="input" type="text" placeholder="输入包大小 " />
-                查询：
-                <input class="input" type="text" placeholder="2014-03-13 " />—<input class="input" type="text" placeholder="2014-03-13 " />
-                <button class="button">查询</button>
+                    <input class="input" type="text" placeholder="请输入关键字" name="keyword" />
+                </span>
+                <span>日期：
+                    <input class="input jq-mindate" type="text" name="mindate" />—<input class="input jq-maxdate" type="text" name="maxdate" />
+                    <i class="button">查询</i>
+                </span>
+                <span>安装包：
+                    <input class="input" type="text" placeholder="0K" name="minspace" />—<input class="input" type="text" placeholder="10M" name="maxspace" />
+                </span>
+                <span>日期：
+                    <input class="input jq-mindate" type="text" name="mindate" />—<input class="input jq-maxdate" type="text" name="maxdate" />
+                </span>   
+                <i class="button">查询</i>
+                
             </div>
             <!-- /查询 -->
             <!-- 表格 -->
-            <div class="record-table">
-                <p class="title">上架游戏：共<span class="color-red">1213</span>条记录</p>
-                <table class="jq-zebra" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <th>游戏ID</th>
-                        <th>图标 </th>
-                        <th>游戏名称</th>
-                        <th>包名</th>
-                        <th>游戏分类</th>
-                        <th>大小</th>
-                        <th>版本号</th>
-                        <th>预览</th>
-                        <th>下载量</th>
-                        <th>上架时间</th>
-                        <th>操作</th>
-                    </tr>
-                    <tbody>
+            <div class="table">
+                <p class="title">上架游戏：共<span class="red">1213</span>条记录</p>
+                <table cellpadding="0" cellspacing="0" class="text-center">
+                    <thead>
+                        <tr>
+                            <th>游戏ID</th>
+                            <th>图标</th>
+                            <th>游戏名称</th>
+                            <th>游戏作者</th>
+                            <th>供应商</th>
+                            <th>包名</th>
+                            <th>游戏分类</th>
+                            <th>大小</th>
+                            <th>版本号</th>
+                            <th>预览</th>
+                            <th>下载量</th>
+                            <th>上架时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody class="jq-table">
                         <tr>
                             <td>12345</td>
-                            <td><img src="../images/icon1.png" alt="图标1" /></td>
+                            <td class="icon"><img src="../../images/icon1.png" alt="图标1" /></td>
                             <td>game name</td>
-                            <td>package name</td>
+                            <td>乐斗游戏</td>
+                            <td>UC九游</td>
+                            <td><span class="ellipsis">/25个字符超过省略号植物大战僵尸</span></td>
                             <td>策略游戏</td>
                             <td>180.5M</td>
                             <td>4.4.3</td>
-                            <td>点击预览</td>
+                            <td class="preview">点击预览</td>
                             <td>9,999,999,999</td>
                             <td>2014-09-03 19:09</td>
                             <td>
-                                <input type="button" value="下架" />
-                                <a href="list-update.html" target="_self" ><input type="button" value="更新" /></a>
-                                <input type="button" value="历史版本" />
+                                <span class="button jq-stock">下架</span>
+                                <div class="jq-stock-modal" title="信息">
+                                    <p>确定将该游戏下架？</p>
+                                </div> 
+                                <a href="/html1/admin/apps/update.html" class="button">更新</a>
+                                <a href="/html1/admin/apps/history.html" class="button">历史版本</a>
                             </td>               
                         </tr>
                         <tr>
                             <td>12345</td>
-                            <td><img src="../images/icon2.png" alt="图标2" /></td>
+                            <td class="icon"><img src="../../images/icon2.png" alt="图标2" /></td>
                             <td>game name</td>
-                            <td>package name</td>
+                            <td>乐斗游戏</td>
+                            <td>UC九游</td>
+                            <td><span class="ellipsis">/25个字符超过省略号</span></td>
                             <td>策略游戏</td>
                             <td>180.5M</td>
                             <td>4.4.3</td>
-                            <td>点击预览</td>
+                            <td class="preview">点击预览</td>
                             <td>9,999,999,999</td>
                             <td>2014-09-03 19:09</td>
                             <td>
-                                <input type="button" value="下架" />
-                                <a href="list-update.html" target="_self" ><input type="button" value="更新" /></a>
-                                <input type="button" value="历史版本" />
-                            </td>               
-                        </tr>
-                        <tr>
-                            <td>12345</td>
-                            <td><img src="../images/icon3.png" alt="图标3" /></td>
-                            <td>game name</td>
-                            <td>package name</td>
-                            <td>策略游戏</td>
-                            <td>180.5M</td>
-                            <td>4.4.3</td>
-                            <td>点击预览</td>
-                            <td>9,999,999,999</td>
-                            <td>2014-09-03 19:09</td>
-                            <td>
-                                <input type="button" value="下架" />
-                                <a href="list-update.html" target="_self" ><input type="button" value="更新" /></a>
-                                <input type="button" value="历史版本" />
+                                <span class="button jq-stock">下架</span>
+                                <a href="/html1/admin/apps/update.html" class="button">更新</a>
+                                <a href="/html1/admin/apps/history.html" class="button">历史版本</a>
                             </td>               
                         </tr>
                     </tbody>
@@ -177,8 +187,8 @@
             <!-- /表格 -->
             <!-- 上下翻页 -->
             <p class="pagination">
-                <span>首页</span> 
-                <span>上一页</span>
+                <span class="disabled">首页</span> 
+                <span class="disabled">上一页</span>
                 <span class="current">1</span>
                 <span>2</span>
                 <span>3</span>
@@ -193,8 +203,9 @@
             <!-- /上下翻页 -->
         </div>
     </div>
-    <!-- /右侧主要内容 -->
-<script type="text/javascript" src="/app/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="/app/js/my.js"></script>
+    <!-- /右侧主体盒子 -->
+<script type="text/javascript" src="../../js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
 </body>
 </html>

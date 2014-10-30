@@ -28,6 +28,17 @@
 <div id="wrapper-250">
       <ul class="accordion">
       
+            @if(
+                Sentry::getUser()->hasAnyAccess(
+                    [
+                        'apps.stock',
+                        'apps.draft',
+                        'apps.pending',
+                        'apps.notpass',
+                        'apps.unstock',
+                    ]
+                )
+            )
             <li id="one" class="mail"> <a href="#one">游戏管理</a>
                  <ul class="sub-menu">
                     @if(Sentry::getUser()->hasAccess('apps.stock'))
@@ -47,7 +58,19 @@
                     @endif
                  </ul>
             </li>
+            @endif
             
+            @if(
+                Sentry::getUser()->hasAnyAccess(
+                    [
+                        'appsads.index',
+                        'rankads.index',
+                        'indexads.index',
+                        'editorads.index',
+                        'catads.index',
+                    ]
+                )
+            )
             <li id="two" class="mail"> <a href="#two">广告位管理</a>
                  <ul class="sub-menu">
                     @if(Sentry::getUser()->hasAccess('appsads.index'))
@@ -67,7 +90,20 @@
                     @endif
                  </ul>
             </li>
+            @endif
             
+            @if(
+                Sentry::getUser()->hasAnyAccess(
+                    [
+                        'cat.index',
+                        'tag,index',
+                        'rating.index',
+                        'comment.index',
+                        'stopword.index',
+                        'keyword.index',
+                    ]
+                )
+            )
             <li id="three" class="mail"> <a href="#three">系统管理</a>
                  <ul class="sub-menu">
                     @if(Sentry::getUser()->hasAccess('cat.index'))
@@ -97,6 +133,16 @@
                     @endif
                 </ul>
             </li>
+            @endif
+
+            @if(
+                Sentry::getUser()->hasAnyAccess(
+                    [
+                        'users.index',
+                        'roles.index',
+                    ]
+                )
+            )
             <li id="three" class="mail"><a href="#three">管理中心</a>
                  <ul class="sub-menu">
                     @if(Sentry::getUser()->hasAccess('users.index'))
@@ -107,6 +153,7 @@
                     @endif
                  </ul>
             </li>
+            @endif
 
       </ul>
 </div>

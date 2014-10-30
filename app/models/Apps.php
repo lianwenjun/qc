@@ -136,7 +136,7 @@ class Apps extends \Base {
      */
     public function conditionParse($field, $value, $query) {
 
-        if( ($field == 'title' || $field == 'pack' ) && !empty($value)) {
+        if( ($field == 'title' || $field == 'pack' || $field == 'version') && !empty($value)) {
             $query->where($field, 'like', '%' . $value . '%');
         } elseif($field == 'cat_id' && !empty($value)) {
             $query->whereRaw("`id` in (select `app_id` from `app_cats` where `cat_id` = '{$value}')");
@@ -148,7 +148,7 @@ class Apps extends \Base {
 
                 // 时间处理
                 if(substr($field, -3) == '_at') {
-                    $value[1] = date('Y-m-d', strtotime($value[1]) + 24 * 3600);
+                    $value[1] = date('Y-m-d', strtotime($value[1] ? $value[1] : date('Ymd')) + 24 * 3600);
                 }
 
                 // 占空间大小处理
@@ -261,6 +261,8 @@ class Apps extends \Base {
     {
         $uploader = (new CUpload)->instance('app', 'apks')->upload();
 
+        if(!$uploader['result']) return $uploader;
+
         if(empty($dontSave)) {
 
             $data = $uploader['result']['data'];
@@ -293,7 +295,7 @@ class Apps extends \Base {
                 Queue::push('AppQueue@md5', ['id' => $app->id, 'filename' => $app->download_link]);
             }
         }
-
+        
         return $uploader;
     }
 
