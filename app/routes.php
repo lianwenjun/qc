@@ -142,6 +142,10 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::post('{id}/edit', ['as' => 'comment.edit', 'uses' => 'Admin_CommentsController@update']);
         Route::delete('{id}/delete', ['as' => 'comment.delete', 'uses' => 'Admin_CommentsController@destroy']);
     });
+    Route::group(['prefix' => 'feedback', 'before' => 'hasPermissions'], function() //应用反馈
+    {
+        Route::get('index', ['as' => 'feedback.index', 'uses' => 'Admin_FeedbackController@index']);
+    });
     Route::group(['prefix' => 'stopword', 'before' => 'hasPermissions'], function() //游戏屏蔽词
     {
         Route::get('index', ['as' => 'stopword.index', 'uses' => 'Admin_StopwordsController@index']);
