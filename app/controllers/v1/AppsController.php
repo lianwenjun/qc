@@ -59,7 +59,7 @@ class V1_AppsController extends \V1_BaseController {
         }
         foreach ($app as $key => $value) {
             if (isset($fields[$key])) $data[$fields[$key]] = $value;
-        };
+        }
         return $this->result(['data' => $data, 'msg' => 1, 'msgbox' => '数据获取成功']);
     }
 
