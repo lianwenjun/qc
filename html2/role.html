@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>角色管理</title>
+<link type="text/css" href="css/general.css" rel="stylesheet"/>
+<script src="js/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+<div class="page-box">   
+    <!-- 左侧内容 -->
+    <div class="border-left">
+        <!-- 标题 -->
+        <div class="left-title">
+            <h2>游戏商店系统</h2>
+        </div>
+        <!-- 内容开始 -->
+        <div class="gameplay">
+            <h4>hi,蓝翔高技学校</h4>
+            <a href="#">修改密码</a>
+            <a href="#">退出系统</a>
+        </div>
+        <!-- 菜单 -->
+        <div class="menu">
+            <ul>
+                <li>
+                    <p>游戏管理</p>
+                    <ul class="list">
+                        <li><a href="#">上架游戏列表</a></li>
+                        <li><a href="#">添加编辑游戏</a></li>
+                        <li><a href="#">待审核列表</a></li>
+                        <li><a href="#">审核不通过列表</a></li>
+                        <li><a href="#">下架游戏列表</a> </li> 
+                    </ul>
+                </li>
+                <li>
+                    <p>广告位管理</p>
+                    <ul class="list">
+                        <li><a href="#">首页图片位管理</a></li>
+                        <li><a href="#">首页游戏位管理</a></li>
+                        <li><a href="#">编辑精选管理</a></li>
+                        <li><a href="#">排行游戏位管理</a></li>
+                        <li><a href="#">分类页图片管理</a> </li> 
+                    </ul>
+                </li>
+                <li>
+                    <p>系统管理</p>
+                    <ul class="list">
+                        <li><a href="#">游戏分类管理</a></li>
+                        <li><a href="#">分类标签管理</a></li>
+                        <li><a href="#">标签库管理</a></li>
+                        <li><a href="#">供应商管理</a></li>
+                        <li><a href="#">渠道商管理</a></li>
+                        <li><a href="#">关键字管理</a></li>
+                        <li><a href="#">屏蔽词管理</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <p>评论管理</p>
+                    <ul class="list">
+                        <li><a href="#">游戏评分列表</a></li>
+                        <li><a href="#">游戏评论列表</a></li>
+                        <li><a href="#">应用反馈</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <p>数据中心</p>
+                    <ul class="list">
+                        <li><a href="#">游戏下载统计</a></li>
+                        <li><a href="#">平台激活统计</a></li>
+                        <li><a href="#">页面访问统计</a></li>
+                        <li><a href="#">按钮事件统计</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <p>权限管理</p>
+                    <ul class="list">
+                        <li><a href="#">管理员管理</a></li>
+                        <li><a href="#">角色管理</a></li>
+                        <li><a href="#">权限管理</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <p>日志管理</p>
+                    <ul class="list">
+                        <li><a href="#">日志查询</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 右侧内容 -->
+    <div class="border-right">
+        <div class="right-box">
+            <!-- 右侧主体内容 -->
+            <div  class="right-title">
+                <span><b>权限管理</b>—角色管理</span>
+            </div>
+            <!-- 查询 -->
+            <form method="post" action="" enctype="" name="forms">
+                <div class="search">
+                    <p>查询:
+                        <select name="department">
+                            <option value="">所属部门</option>
+                            <option value="">运营中心</option>
+                            <option value="">市场部</option>
+                            <option value="">商务部</option>
+                            <option value="">客服部</option>
+                            <option value="">营销服务部</option>
+                        </select>
+                        <input class="input" type="text" name="search" placeholder="请输入关键字" />
+                        <input type="button" value="查询" />
+                    </p>
+                </div>
+            </form>
+            <!-- 上架游戏记录 -->
+            <div class="load-game">
+                <span>角色：共<b>1231</b>条记录</sapn>
+                <input type="button" value="添加角色" />
+            </div>
+            <!-- 上架游戏记录表格 -->
+            <div class="games-list">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>角色ID</th>
+                        <th>角色名称</th>
+                        <th>所属部门</th>
+                        <th>添加人</th>
+                        <th>最后编辑人</th>
+                        <th>添加时间</th>
+                        <th>操作</th>
+                    </tr>
+                    <tbody>
+                        <tr class="even">
+                            <td>1234567</td>
+                            <td>超级管理员</td>
+                            <td>超级管理员</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>
+                                <input type="button" value="编辑" />
+                                <input type="button" value="删除" />
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td>1234567</td>
+                            <td>管理员</td>
+                            <td>管理员</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>
+                                <input type="button" value="编辑" />
+                                <input type="button" value="删除" />
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td>1234567</td>
+                            <td>运营专员</td>
+                            <td>运营部</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>
+                                <input type="button" value="编辑" />
+                                <input type="button" value="删除" />
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td>1234567</td>
+                            <td>产品专员</td>
+                            <td>产品部</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>
+                                <input type="button" value="编辑" />
+                                <input type="button" value="删除" />
+                            </td>
+                        </tr>
+                        <tr class="even">
+                           <td>1234567</td>
+                            <td>商务专员</td>
+                            <td>商务部</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>
+                                <input type="button" value="编辑" />
+                                <input type="button" value="删除" />
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td>1234567</td>
+                            <td>市场专员</td>
+                            <td>市场部</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>
+                                <input type="button" value="编辑" />
+                                <input type="button" value="删除" />
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td>1234567</td>
+                            <td>运营主管</td>
+                            <td>运营部</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>
+                                <input type="button" value="编辑" />
+                                <input type="button" value="删除" />
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td>1234567</td>
+                            <td>产品经理</td>
+                            <td>产品部</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>
+                                <input type="button" value="编辑" />
+                                <input type="button" value="删除" />
+                            </td>
+                        </tr>
+                        <tr class="even">
+                           <td>1234567</td>
+                            <td>市场经理</td>
+                            <td>市场部</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>
+                                <input type="button" value="编辑" />
+                                <input type="button" value="删除" />
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                           <td>1234567</td>
+                            <td>运营经理</td>
+                            <td>运营部</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>
+                                <input type="button" value="编辑" />
+                                <input type="button" value="删除" />
+                            </td>
+                        </tr>
+                        <tr class="even">
+                           <td>1234567</td>
+                            <td>运营总监</td>
+                            <td>运营部</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>
+                                <input type="button" value="编辑" />
+                                <input type="button" value="删除" />
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                           <td>1234567</td>
+                            <td>运营审计</td>
+                            <td>运营部</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>
+                                <input type="button" value="编辑" />
+                                <input type="button" value="删除" />
+                            </td>
+                        </tr>
+                        <tr class="even">
+                          <td>1234567</td>
+                            <td>测试专员</td>
+                            <td>测试部</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>
+                                <input type="button" value="编辑" />
+                                <input type="button" value="删除" />
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                           <td>1234567</td>
+                            <td>评测专员</td>
+                            <td>评测部</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>
+                                <input type="button" value="编辑" />
+                                <input type="button" value="删除" />
+                            </td>
+                        <tr class="even">
+                           <td>1234567</td>
+                            <td>评测经理</td>
+                            <td>评测部</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>
+                                <input type="button" value="编辑" />
+                                <input type="button" value="删除" />
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                           <td>1234567</td>
+                            <td>前端技术</td>
+                            <td>技术部</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>吸毒欧阳顺</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>
+                                <input type="button" value="编辑" />
+                                <input type="button" value="删除" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- 上下翻页块 -->
+            <div class="choose-page">
+                <a href="#">首页</a> 
+                <a href="#">上一页</a> 
+                <a href="#">1</a>
+                <a href="#">2</a> 
+                <a href="#">3</a> 
+                <a href="#">4</a> 
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">7</a>
+                <a href="#">8</a>
+                <a href="#">9</a> …
+                <a href="#">下一页</a> 
+                <a href="#">末页</a> 
+                共:1989页
+                当前<a href="#">7</a> 页
+                <a href="#">确定</a> 
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $(function(){
+        $("p").click(function(){
+            $(this).siblings(".menu").toggle();
+        })
+    })
+</script>
+</html>

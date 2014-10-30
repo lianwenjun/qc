@@ -1,5 +1,6 @@
 <?php
 
 class Api/Client extends \Eloquent {
-	protected $fillable = [];
+    protected $fillable = [];
+    protected $table = 'cats';
 }

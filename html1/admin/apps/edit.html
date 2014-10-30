@@ -2,135 +2,221 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>游戏管理—上架游戏列表—更新</title>
-    <link rel="stylesheet" href="/app/css/common.css">
-    <link rel="stylesheet" href="/app/css/style.css">
+    <title>游戏管理—上架游戏列表——编辑</title>
+    <link rel="stylesheet" href="../../css/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="../../css/jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="../../css/common.css">
     <base target='_self'>
 </head>
 <body>
-<!-- 主要内容盒子：开始 -->
-<div class="main-box">
-    <h2>游戏管理 <small>上架游戏列表—更新</small></h2>
-    <!-- 主要内容：开始 -->
-    <div class="content"> 
-        <!-- 游戏信息内容：开始 -->      
-        <div class="game-infos">
-            <h3 class="title">游戏信息：</h3>
-            <ul class="jq-zebra">
-                <li>
-                    <span class="left">游戏ID：</span>
-                    <span class="right">123456 </span>
+    <!-- 左侧盒子 -->
+    <div class="side-wrap">
+        <h3 class="title">游戏商店系统</h3 >
+        <div class="content">
+            <h5 class="subtitle">hi!<span>力天部落</span></h5>
+            <h5><a href="#" class="mr10">修改密码</a><a href="#">退出系统</a></h5>
+            <!-- 左侧菜单 -->
+            <ul>
+                <li class="menu jq-menu">
+                    <p>游戏管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/apps/stock.html">上架游戏列表</a></li>
+                        <li><a href="/html1/admin/apps/draft.html">添加编辑游戏</a></li>
+                        <li><a href="/html1/admin/apps/pending.html">待审核列表</a></li>
+                        <li><a href="/html1/admin/apps/nopass.html">审核不通过列表</a></li>
+                        <li><a href="/html1/admin/apps/unstock.html">下架游戏列表</a></li>
+                    </ul>
                 </li>
-                <li>
-                    <span class="left">游戏名称：</span>
-                    <span class="right">game name </span>
+                <li class="menu jq-menu">
+                    <p>广告位管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/ads/indexpics.html">首页图片位管理</a></li>
+                        <li><a href="/html1/admin/ads/indexgame.html">首页游戏位管理</a></li>
+                        <li><a href="/html1/admin/ads/draft.html">编辑精选管理</a></li>
+                        <li><a href="/html1/admin/ads/rank.html">排行游戏位管理</a></li>
+                        <li><a href="/html1/admin/ads/sort.html">分类页图片管理</a></li>
+                    </ul>
                 </li>
-                <li>
-                    <span class="left">包名：</span>
-                    <span class="right">package name </span>
+                <li class="menu jq-menu">
+                    <p>系统管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/stystem/game-sort.html">游戏分类管理</a></li>
+                        <li><a href="/html1/admin/stystem/sort-label.html">分类标签管理</a></li>
+                        <li><a href="/html1/admin/stystem/labels.html">标签库管理</a></li>
+                        <li><a href="/html1/admin/stystem/supplier.html">供应商管理</a></li>
+                        <li><a href="/html1/admin/stystem/channel.html">渠道商管理</a></li>
+                        <li><a href="/html1/admin/stystem/keyword.html">关键字管理</a></li>
+                        <li><a href="/html1/admin/stystem/shield-word.html">屏蔽词管理</a></li>
+                    </ul>
                 </li>
-                <li>
-                    <span class="left">大小：</span>
-                    <span class="right">562.01M </span>
+                <li class="menu jq-menu">
+                    <p>评论管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/comment/score.html">游戏评分列表</a></li>
+                        <li><a href="/html1/admin/comment/comment.html">游戏评论列表</a></li>
+                        <li><a href="/html1/admin/comment/feedback.html">应用反馈</a></li>
+                    </ul>
+                </li> 
+                <li class="menu jq-menu">
+                    <p>数据中心</p>
+                    <ul>
+                        <li><a href="/html1/admin/statistics/download.html">游戏下载统计</a></li>
+                        <li><a href="/html1/admin/statistics/activation.html">平台激活统计</a></li>
+                        <li><a href="/html1/admin/statistics/visit.html">页面访问统计</a></li>
+                        <li><a href="/html1/admin/statistics/event.html">按钮事件统计</a></li>
+                    </ul>
                 </li>
-                <li>
-                    <span class="left">版本：</span>
-                    <span class="right">4.4.4 </span>
+                <li class="menu jq-menu">
+                    <p>权限管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/auth/user.html">管理员管理</a></li>
+                        <li><a href="/html1/admin/auth/role.html">角色管理</a></li>
+                    </ul>
                 </li>
-                <li>
-                    <span class="left">上传时间：</span>
-                    <span class="right">2014-09-04 18:18:18</span>
+                <li class="menu jq-menu">
+                    <p>日志管理</p>
+                    <ul>
+                        <li><a href="/html1/admin/logs/log.html">日志查询</a></li>
+                    </ul>
                 </li>
-                <li class="new-version">
-                    <span class="left">上传新版本：</span>
-                    <span class="right">
-                        <input type="button" value="选择APK文件" />
-                        <input class="file-button" type="file" value="选择APK文件" />
-                        <img src="../images/new-version.jpg" alt="新版本图片" />
-                    </span>
-                </li>
-                <li>
-                    <span class="left">游戏关键字：</span>
-                    <span class="right"><input class="input" type="text" placeholder="MT online" /></span>
-                </li>
-                <li>
-                    <span class="left"><b>*</b>游戏分类：</span>
-                    <span class="right">休闲游戏，游戏扮演<input type="button" value="修改" class="button" /></span>
-                </li>
-                <li>
-                    <span class="left"><b>*</b>游戏标签：</span>
-                    <span class="right"><input class="input" type="text" placeholder="卡牌" /></span>
-                </li>
-                <li>
-                    <span class="left"><b>*</b>游戏作者：</span>
-                    <span class="right"><input class="input" type="text" placeholder="深圳市第七大道科技有限公司"/></span>
-                </li>           <li>
-                    <span class="left"><b>*</b>是否无广告：</span>
-                    <span class="right"><input type="checkbox" />勾选表示无广告</span>
-                </li>
-                <li>
-                    <span class="left"><b>*</b>是否安全认证：</span>
-                    <span class="right"><input type="checkbox" />勾选表示已认证</span>
-                </li>
-                <li>
-                    <span class="left"><b>*</b>系统要求：</span>
-                    <span class="right">
-                        <select>
-                            <option>Android</option>
-                            <option>IOS</option>
-                        </select>
-                        <input class="input" style="width:30px" type="text" placeholder="2.3"/>以上
-                    </span>
-                </li>
-                <li>
-                    <span class="left"><b>*</b>包名：</span>
-                    <span class="right"><input class="input" type="text" placeholder="package name"/></span>
-                </li>           
-                <li>
-                    <span class="left"><b>*</b>排序：</span>
-                    <span class="right"><input class="input" type="text" placeholder="9999"/></span>
-                </li>      
-                <li>
-                    <span class="left"><b>*</b>下载次数：</span>
-                    <span class="right"><input class="input" type="text" placeholder="5000万+"/></span>
-                </li>
-                <li class="textarea">
-                    <span class="left"><b>*</b> 游戏介绍：</span>
-                    <span class="right"><textarea rows="3" style="width:70%;" placeholder="输入文本…"></textarea></span>
-                </li>
-                <li class="choice-img">
-                    <span class="left"><b>*</b>游戏截图：</span>
-                    <span class="right">
-                        <input type="button" value="选择图片" />
-                        <font class="color-red">最多5张，图片规格为220*370px的JPG/PNG，每张图片的大小不得超过300KB</font>
-                    </span>
-                </li>
-                <li class="preview">
-                    <span class="left">截图预览：</span>
-                    <span class="right"> 
-                        <img src="../images/preview1.jpg" alt="预览图1" />
-                        <img src="../images/preview2.jpg" alt="预览图2" />
-                        <img src="../images/preview3.jpg" alt="预览图3" />
-                        <img src="../images/preview4.jpg" alt="预览图4" />
-                        <img src="../images/preview5.jpg" alt="预览图5" />
-                    </span>
-                </li>
-                <li class="textarea">
-                    <span class="left"> <b>*</b>新版特性：</span>
-                    <span class="right"><textarea rows="3" style="width:70%;" placeholder="输入文本…"></textarea></span>
-                </li>
-            </ul> 
+            </ul>
+            <!-- /左侧菜单 -->   
         </div>
-        <!-- 游戏信息内容：结束 --> 
-        <p class="submit-back">
-            <input type="button" value="提交" class="button" />
-            <input type="button" value="返回" class="button" />
-        </p>
-     </div>
-     <!-- 主要内容:结束 -->
-</div> 
-<!-- 主要内容盒子:结束 -->
-<script type="text/javascript" src="/app/js/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="/app/js/my.js"></script> 
+    </div>
+    <!-- /左侧盒子 -->
+    <!-- 右侧主体盒子 -->
+    <div class="main-wrap">
+        <p class="breadcrumb">游戏管理<b>&gt;</b>上架游戏列表<b>&gt;</b>编辑</p> 
+        <!-- 信息内容 --> 
+        <div class="content table infos">     
+            <h3 class="title">应用信息：</h3>
+            <form name="info-form" action="" method="post">
+                <table class="jq-table">
+                    <tr>
+                        <td class="text-right">游戏ID：</td>
+                        <td>123456 </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">游戏名称：</td>
+                        <td>game name </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">包名：</td>
+                        <td>package name </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">大小：</td>
+                        <td>562.01M </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">版本：</td>
+                        <td>4.4.4 </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">上传时间：</td>
+                        <td>2014-09-04 18:18:18</td>
+                    </tr>
+                    <tr class="new-version">
+                        <td class="text-right">上传新版本：</td>
+                        <td class="relative icon paddding-v5">
+                            <a href="#" class="button">选择APK文件</a>
+                            <input type="file" class="upload-button" style="top:37px;" />
+                            <img src="../../images/new-version.jpg" alt="新版本图片" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">游戏关键字：</td>
+                        <td><input class="input" type="text" name="gamekey" /></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><b>*</b>游戏分类：</td>
+                        <td>休闲游戏，游戏扮演<input type="button" value="修改" class="button ml10" /></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><b>*</b>游戏标签：</td>
+                        <td><input class="input" type="text" name="gamelabel" /></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><b>*</b>游戏作者：</td>
+                        <td><input class="input" type="text" name="author" placeholder="深圳市第七大道科技有限公司"/></td>
+                    </tr> 
+                    <tr>
+                        <td class="text-right"><b>*</b>游戏供应商：</td>
+                        <td>
+                            <select class="select" name="supptrer">
+                                <option value="">乐斗科技</option>
+                                <option value="">第七达到</option>
+                            </select>
+                            <i>LD</i>（供应商拼音简写）
+                        </td>
+                    </tr>           
+                    <tr>
+                        <td class="text-right"><b>*</b>是否无广告：</td>
+                        <td><label><input type="checkbox" name="ad" />勾选表示无广告</label></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><b>*</b>是否安全认证：</td>
+                        <td><label><input type="checkbox" name="identify" />勾选表示已认证<label></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><b>*</b>系统要求：</td>
+                        <td>
+                            <select name="system">
+                                <option value="">Android</option>
+                                <option value="">IOS</option>
+                            </select>
+                            <input class="input" style="width:30px" type="text" name="version" placeholder="2.3"/>以上
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><b>*</b>包名：</td>
+                        <td><input class="input" type="text" name="bagname" placeholder="package name"/></td>
+                    </tr>           
+                    <tr>
+                        <td class="text-right"><b>*</b>排序：</td>
+                        <td><input class="input" type="text" name="sort" placeholder="9999"/></td>
+                    </tr>      
+                    <tr>
+                        <td class="text-right"><b>*</b>下载次数：</td>
+                        <td>999，999，999</td>
+                    </tr>
+                    <tr class="textarea">
+                        <td class="text-right"><b>*</b> 游戏介绍：</td>
+                        <td class="padding-v5"><textarea rows="3" style="width:70%;" name="introduce" placeholder="请输入……"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><b>*</b>游戏截图：</td>
+                        <td class="right relative">
+                            <a href="#" class="button">选择图片</a>
+                            <input type="file" class="upload-button" />
+                            <i class="red">最多5张，图片规格为220*370px的JPG/PNG，每张图片的大小不得超过300KB</i>
+                        </td>
+                    </tr>
+                    <tr class="preview">
+                        <td class="text-right">截图预览：</td>
+                        <td class="padding-v5"> 
+                            <img src="../../images/preview1.jpg" alt="预览图1" />
+                            <img src="../../images/preview2.jpg" alt="预览图2" />
+                            <img src="../../images/preview3.jpg" alt="预览图3" />
+                        </td>
+                    </tr>
+                    <tr class="textarea padding-v5">
+                        <td class="text-right"> <b>*</b>新版特性：</td>
+                        <td><textarea rows="3" style="width:70%;" name="newfeature" placeholder="请输入……"></textarea></td>
+                    </tr>
+                </table>  
+                <p class="text-center padding-v5">
+                    <input type="button" value="存为草稿" class="button mr10" />
+                    <input type="submit" value="确定" class="button mr10" />
+                    <input type="button" value="返回列表" class="button mr10" />
+                </p>
+            </form>
+         </div>
+         <!-- /信息内容 --> 
+    </div> 
+    <!-- /右侧主体盒子 -->
+<script type="text/javascript" src="../../js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script> 
+<script type="text/javascript" src="../../js/jquery-ui.min.js"></script>
 </body>
 </html>

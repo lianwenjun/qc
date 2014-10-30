@@ -481,3 +481,18 @@ CREATE TABLE `record_logs` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `feedbacks` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '客户端版本',
+  `content` varchar(500) COLLATE utf8_unicode_ci NOT NULL COMMENT '反馈内容',
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '用户移动端型号',
+  `imei` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'IMEI',
+  `os_version` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '系统版本',
+  `os` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '用户系统',
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '用户邮箱',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

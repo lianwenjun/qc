@@ -13,7 +13,7 @@ class V1_BaseController extends \Controller {
             $this->layout = View::make($this->layout);
         }
     }
-    public function result($content)
+    public function result($content = [])
     {
         $res = [];
         $res['dataJson'] = isset($content['data']) ? $content['data']: '';
