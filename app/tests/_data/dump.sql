@@ -496,3 +496,24 @@ CREATE TABLE `feedbacks` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `client` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `download_link` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '下载地址',
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '名称',
+  `md5` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'APK文件MD5',
+  `size_int` int(10) unsigned NOT NULL COMMENT '游戏大小',
+  `changes` text COLLATE utf8_unicode_ci NOT NULL COMMENT '更新特性',
+  `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '版本',
+  `version_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '系统代号',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `client` (`id`, `download_link`, `title`, `md5`, `size_int`, `changes`, `version`, `version_code`, `deleted_at`, `created_at`, `updated_at`)
+VALUES
+  (1, 'http://thisisatest.apk', '游戏市场我来也', '1111111111111', 120004, '编辑点评：《梦回沙城》火热来袭\n经典战、法、道三职业，其核心玩法是很多玩家非常熟悉的自由PK，练级打宝，行会战与万人沙城战，在这里，玩家将再次开启久违的热血之路，重温兄弟情谊，怀旧激情年代，剑指沙城，为荣誉为兄弟战到底！', '0.0.1', '1001', NULL, '2014-10-27 00:00:00', '2014-10-27 00:00:00'),
+  (3, 'http://thisisatest.apk', '游戏市场我来也', '1111111111111', 120004, '编辑点评：《梦回沙城》火热来袭\n经典战、法、道三职业，其核心玩法是很多玩家非常熟悉的自由PK，练级打宝，行会战与万人沙城战，在这里，玩家将再次开启久违的热血之路，重温兄弟情谊，怀旧激情年代，剑指沙城，为荣誉为兄弟战到底！', '0.0.2', '1002', NULL, '2014-10-27 00:00:00', '2014-10-27 00:00:00'),
+  (5, 'http://thisisatest.apk', '游戏市场我来也', '1111111111111', 120004, '编辑点评：《梦回沙城》火热来袭\n经典战、法、道三职业，其核心玩法是很多玩家非常熟悉的自由PK，练级打宝，行会战与万人沙城战，在这里，玩家将再次开启久违的热血之路，重温兄弟情谊，怀旧激情年代，剑指沙城，为荣誉为兄弟战到底！', '1.0.1', '2001', NULL, '2014-10-27 00:00:00', '2014-10-27 00:00:00');
