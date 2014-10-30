@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>评论管理——应用反馈</title>
-    <link rel="stylesheet" href="../../css/common.css">
-    <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="../../css/jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="../../css/common.css">
     <base target='_self'>
 </head>
 <body>
     <!-- 左侧盒子 -->
-    <div class="side-box">
+    <div class="side">
         <h3 class="title">游戏商店系统</h3 >
         <!-- 左侧主要内容 -->
         <div class="content">
             <h5 class="subtitle">hi!<span>力天部落</span></h5>
-            <h5><a href="#" class="change-pwd">修改密码</a><a href="#">退出系统</a></h5>
+            <h5><a href="#" class="mr10">修改密码</a><a href="#">退出系统</a></h5>
             <!-- 左侧菜单 -->
             <ul>
                 <li class="menu jq-menu">
@@ -61,17 +61,17 @@
                 <li class="menu jq-menu">
                     <p>数据中心</p>
                     <ul>
-                        <li><a href="/html1/admin/datas/download.html">游戏下载统计</a></li>
-                        <li><a href="/html1/admin/datas/activation.html">平台激活统计</a></li>
-                        <li><a href="/html1/admin/datas/visit.html">页面访问统计</a></li>
-                        <li><a href="/html1/admin/datas/event.html">按钮事件统计</a></li>
+                        <li><a href="/html1/admin/statistics/download.html">游戏下载统计</a></li>
+                        <li><a href="/html1/admin/statistics/activation.html">平台激活统计</a></li>
+                        <li><a href="/html1/admin/statistics/visit.html">页面访问统计</a></li>
+                        <li><a href="/html1/admin/statistics/event.html">按钮事件统计</a></li>
                     </ul>
                 </li>
                 <li class="menu jq-menu">
                     <p>权限管理</p>
                     <ul>
-                        <li><a href="/html1/admin/power/user.html">管理员管理</a></li>
-                        <li><a href="/html1/admin/power/role.html">角色管理</a></li>
+                        <li><a href="/html1/admin/auth/user.html">管理员管理</a></li>
+                        <li><a href="/html1/admin/auth/role.html">角色管理</a></li>
                     </ul>
                 </li>
                 <li class="menu jq-menu">
@@ -87,16 +87,16 @@
     </div>
     <!-- /左侧盒子 -->
     <!-- 右侧主体盒子 -->
-    <div class="main-box">
+    <div class="main-wrap">
         <p class="breadcrumb">评论管理<b>&gt;</b>应用反馈</p>   
         <div class="content">   
             <!-- 查询-->
             <div class="search">
                 <span>查询：
                     <select class="select" name="search">
-                        <option>反馈ID</option>
-                        <option>IMEI</option>
-                        <option>内容</option>
+                        <option value="">反馈ID</option>
+                        <option value="">IMEI</option>
+                        <option value="">内容</option>
                     </select>
                     <input class="input" type="text" placeholder="请输入关键字" name="keyword" />
                 </span>
@@ -108,8 +108,8 @@
             <!-- /查询 -->
             <!-- 表格 -->
             <div class="table">
-                <p class="title">用户反馈：共<span class="color-red">1213</span>条记录</p>
-                <table class="jq-zebra" cellpadding="0" cellspacing="0">
+                <p class="title">用户反馈：共<span class="red">1213</span>条记录</p>
+                <table cellpadding="0" cellspacing="0" class="text-center">
                     <thead>
                         <tr>
                             <th>反馈ID</th>
@@ -121,7 +121,7 @@
                             <th>反馈时间</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="jq-table">
                         <tr>
                             <td>12345</td>
                             <td>SM-C35091</td>
@@ -164,7 +164,7 @@
     </div>
     <!-- /右侧主体盒子 -->
 <script type="text/javascript" src="../../js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="../../js/common.js"></script>
 <script type="text/javascript" src="../../js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
 </body>
 </html>
