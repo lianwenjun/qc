@@ -11,11 +11,11 @@ class V1_ClientController extends \V1_BaseController {
     public function checkVersion($versionCode)
     {
         $fields = [
-            'addTime' => 'AddTime',
-            'downUrl' => 'DownUrl',
+            'addTime' => 'AddTime', //
+            'downUrl' => 'DownUrl', //
             'id' => 'Id',
             'md5' => 'MD5',
-            'size_int' => 'Size',
+            'size' => 'Size', //
             'changes' => 'UpdateContent',
             'version' => 'Version',
             'version_code' => 'VersionCode',

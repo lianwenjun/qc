@@ -5,4 +5,5 @@ $URL = '/v1/game/category/all';
 $I->amOnPage($URL);
 $I->see('dataJson');
 $I->see('ImgUrl');
-$I->see('"msg":"1"');
+$I->see('ImgUrl');
+$I->see('"msg":1');

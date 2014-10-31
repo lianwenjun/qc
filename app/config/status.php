@@ -80,6 +80,13 @@
                 'hotdown' => '热门下载',
                 'suggest' => '精品推荐',
             ],
+            //首页图片，编辑广告区域
+            'bannerLocation' => [
+                'slide' => '轮播广告图',
+                'new' => '新品抢玩',
+                'hotdown' => '热门下载',
+                'suggest' => '精品推荐',
+            ],
         ],
         //关键词
         'keywords' => [

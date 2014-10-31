@@ -12,6 +12,8 @@
 */
 Route::pattern('id', '[0-9]+');
 Route::pattern('status', '[0-9]+');
+Route::pattern('pageSize', '[0-9]+');
+Route::pattern('pageIndex', '[0-9]+');
 Route::get('/', function()
 {
     return View::make('hello');
@@ -217,20 +219,26 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 
 Route::group(['prefix' => 'v1'], function() //V1版本
 {
-    Route::get('game/extend/{type}/{pageSize}/{pageIndex}', ['uses' => '']);
-    Route::get('game/cull/{type}/{pageSize}/{pageIndex}', ['uses' => '']);
-    Route::get('game/list/{area}/{pageSize}/{pageIndex}', ['uses' => '']);
-    Route::get('game/info/edit/downcount/{appid}/{imei}', ['uses' => 'V1_AppRecodersController@download']);
+    Route::get('game/extend/{type}/{pageSize}/{pageIndex}', ['uses' => 'V1_AdsController@banner']);
+    Route::get('game/cull/{type}/{pageSize}/{pageIndex}', ['uses' => 'V1_AdsController@editor']);
+    Route::get('game/list/{area}/{pageSize}/{pageIndex}', ['uses' => 'V1_AdsController@app']);
+    
     Route::get('game/info/appid/{appid}', ['uses' => 'V1_AppsController@info']);
-    Route::get('appclient/ver/info/{versionCode}', ['uses' => 'V1_ClientController@checkVersion']);
-    Route::post('game/feedback/add', ['uses' => 'V1_FeedbacksController@store']);
-    Route::get('game/search/{type}/{keyword}/{exclude}/{pageSize}/{pageIndex}', ['uses' => '']);
+    Route::get('game/search/{type}/{keyword}/{exclude}/{pageSize}/{pageIndex}', ['uses' => 'V1_AppsController@search']);
     Route::get('game/search/autocomplete/{keyword}', ['uses' => 'V1_AppsController@autoComplete']);
+    
     Route::get('game/category/all', ['api.cats.index', 'uses' => 'V1_CatsController@index']);
-    Route::post('game/update', ['uses' => '']);
+    
     Route::get('game/info/edit/downcount/request', ['uses' => 'V1_AppRecodersController@request']);
     Route::get('game/info/edit/downcount/installed', ['uses' => 'V1_AppRecodersController@installed']);
-    Route::post('client/apps/list', ['uses' => '']);
+    Route::get('game/info/edit/downcount/{appid}/{imei}', ['uses' => 'V1_AppRecodersController@download']);
+    
+    Route::post('client/apps/list', ['uses' => 'V1_AppsController@clientList']);
+    Route::post('game/update', ['uses' => 'V1_AppsController@check']);
+
+    Route::get('appclient/ver/info/{versionCode}', ['uses' => 'V1_ClientController@checkVersion']);
+    Route::post('game/feedback/add', ['uses' => 'V1_FeedbacksController@store']);
+    
     Route::get('/', ['uses' => 'V1_BaseController@result']);
 });
 
