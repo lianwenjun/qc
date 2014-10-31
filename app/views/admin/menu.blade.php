@@ -112,12 +112,6 @@
                     @if(Sentry::getUser()->hasAccess('tag.index'))
                        <li><a href="{{ URL::route('tag.index') }}" target=BoardRight>游戏标签管理</a></li>
                     @endif
-                    @if(Sentry::getUser()->hasAccess('rating.index'))
-                       <li><a href="{{ URL::route('rating.index') }}" target=BoardRight>游戏评分列表</a></li>
-                    @endif
-                    @if(Sentry::getUser()->hasAccess('comment.index'))
-                       <li><a href="{{ URL::route('comment.index') }}" target=BoardRight>游戏评论列表</a></li>
-                    @endif
                     @if(Sentry::getUser()->hasAccess('stopword.index'))
                        <li><a href="{{ URL::route('stopword.index') }}" target=BoardRight>屏蔽词管理</a></li>
                     @endif
@@ -125,6 +119,19 @@
                        <li><a href="{{ URL::route('keyword.index') }}" target=BoardRight>关键字管理</a></li>
                     @endif
                  </ul>
+            </li>
+            <li id="three" class="mail"><a href="#three">评论管理</a>
+                <ul class="sub-menu">
+                    @if(Sentry::getUser()->hasAccess('rating.index'))
+                       <li><a href="{{ URL::route('rating.index') }}" target=BoardRight>游戏评分列表</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('comment.index'))
+                       <li><a href="{{ URL::route('comment.index') }}" target=BoardRight>游戏评论列表</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('keyword.index'))
+                    <li><a href="{{ URL::route('feedback.index') }}" target=BoardRight>应用反馈</a></li>
+                    @endif
+                </ul>
             </li>
             @endif
 
