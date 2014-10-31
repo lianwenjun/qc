@@ -84,4 +84,15 @@ class CUtil
         }
         return $url;
     }
+    //
+
+    public static function setPageNum($count, $pageSize) {
+        $pageSize = intval($pageSize);
+        if ($pageSize == 0) {
+            return 1;
+        }
+        $page1 = intval($count) / $pageSize;
+        $page2 = intval($count) % $pageSize;
+        return $page2 == 0 ? intval($page1) : intval($page1) + 1;
+    }
 }

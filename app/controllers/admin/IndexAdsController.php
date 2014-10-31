@@ -20,7 +20,7 @@ class Admin_indexAdsController extends \Admin_AdsController {
                 ->paginate($this->pagesize);
         $datas = ['ads' => $ads, 
             'status' => Config::get('status.ads.status'), 
-            'location' => Config::get('status.ads.applocation'),
+            'location' => Config::get('status.ads.bannerLocation'),
             'is_top' => Config::get('status.ads.is_top') 
         ];
         $this->layout->content = View::make('admin.indexads.index', $datas);
@@ -34,7 +34,7 @@ class Admin_indexAdsController extends \Admin_AdsController {
      */
     public function create()
     {
-        $datas = ['location' => Config::get('status.ads.applocation')];
+        $datas = ['location' => Config::get('status.ads.bannerLocation')];
         $this->layout->content = View::make('admin.indexads.create', $datas);
     }
 
@@ -88,7 +88,7 @@ class Admin_indexAdsController extends \Admin_AdsController {
             return Redirect::route('indexads.index');
         }
         $datas = ['ad' => $ad, 
-            'location' => Config::get('status.ads.applocation'),
+            'location' => Config::get('status.ads.bannerLocation'),
             'app' => $app];
         $this->layout->content = View::make('admin.indexads.edit', $datas);
     }

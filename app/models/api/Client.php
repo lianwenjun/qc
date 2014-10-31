@@ -3,7 +3,7 @@
 class Api_Client extends \Eloquent {
     protected $fillable = [];
     protected $table = 'client';
-    protected $appends = ['addTime', 'downUrl'];
+    protected $appends = ['addTime', 'downUrl', 'size'];
     //获得新的
     public function scopeOfNew($query, $versionCode) {
         return $query->where('version_code', '>', $versionCode)
@@ -20,5 +20,9 @@ class Api_Client extends \Eloquent {
     //下载地址检测
     public function getDownUrlAttribute() {
         return CUtil::checkHost($this->download_link);
+    }
+    //KB转成B
+    public function getSizeAttribute() {
+        return intval($this->size_int) * 1024;
     }
 }
