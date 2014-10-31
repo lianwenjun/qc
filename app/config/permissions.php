@@ -92,6 +92,9 @@ return [
         'comment.edit' => '编辑',
         'comment.delete' => '删除',
     ],
+    '应用反馈' => [
+        'feedback.index' => '列表',
+    ],
     '屏蔽词管理' => [
         'stopword.index' => '列表',
         'stopword.create' => '新增',
