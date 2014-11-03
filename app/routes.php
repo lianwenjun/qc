@@ -243,18 +243,5 @@ Route::group(['prefix' => 'v1'], function() //V1版本
     Route::get('appclient/ver/info/{versionCode}', ['uses' => 'V1_ClientController@checkVersion']);
     Route::post('game/feedback/add', ['uses' => 'V1_FeedbacksController@store']);
     
-    Route::get('/', ['uses' => 'V1_BaseController@result']);
-});
-
-
-// 404 跳转
-Event::listen('404', function()
-{
-    return '找不到该路径。';
-});
-
-// 500 跳转
-Event::listen('500', function()
-{   
-    return '亲，服务器私奔了，工程狮们正在努力寻回。';
+    //Route::get('/', ['uses' => 'V1_BaseController@result']);
 });

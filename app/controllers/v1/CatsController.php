@@ -39,6 +39,6 @@ class V1_CatsController extends \V1_BaseController {
         foreach ($catsTmp as $index => $catTmp) {
             $datas[] = $catTmp;
         }
-        return $this->result(['data'=>$datas, 'msg'=>'1', 'msgbox'=>'数据获取成功']);
+        return $this->result(['data'=>$datas, 'msg'=>1, 'msgbox'=>'数据获取成功']);
     }
 }
