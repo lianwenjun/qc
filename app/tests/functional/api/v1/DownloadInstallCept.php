@@ -10,6 +10,6 @@ $data = [
     'device' => 'sumsung',
     'version' => '4.2',
 ];
-$URL = 'v1/game/info/edit/downcount/installed';
+$URL = 'v1/game/info/edit/download/installed';
 $I->sendAjaxGetRequest($URL, $data);
 $I->see('"msg":1');
