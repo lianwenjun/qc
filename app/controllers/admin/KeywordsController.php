@@ -19,7 +19,7 @@ class Admin_KeywordsController extends \Admin_BaseController {
         }
         //查询，默认分页
         $keywords = $where->orderBy('id', 'desc')->paginate($this->pagesize);
-        $userDatas = (new Admin_CuserClass)->getUserNameByList(['creator', 'operator'], $keywords);
+        $userDatas = (new User)->getUserNameByList(['creator', 'operator'], $keywords);
         $datas = ['keywords' => $keywords, 'userDatas' => $userDatas];
         $this->layout->content = View::make('admin.keywords.index', $datas);
     }

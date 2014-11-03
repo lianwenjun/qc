@@ -147,18 +147,18 @@ class V1_AppsController extends \V1_BaseController {
         $input = json_decode($input);
         $apps = [];
         foreach ($input as $index) {
-            if (!isset($index['versionCode'])) continue;
-            if (!isset($index['id'])) continue;
-            if (!isset($index['title'])) continue;
-            if ($index['id'] != 0){
-                $app = Api_Apps::ofNew($index['versionCode'])->find($index['id']);
+            $versionCode = isset($index->versionCode) ? $index->versionCode : 0;
+            $appId = isset($index->id) ? $index->id : 0;
+            $title = isset($index->title) ? $index->title : '';
+            if ($index->id != 0){
+                $app = Api_Apps::ofNew($versionCode)->find($appId);
             } else {
-                $app = Api_Apps::ofNew($index['versionCode'])->whereTitle($index['title'])->first();
+                $app = Api_Apps::ofNew($versionCode)->whereTitle($title)->first();
             }
             $res = $this->appFields($this->infoFields, $app);
             if ($res) $apps[] = $res;
         }
-        return $this->result(['data' => $res, 'msg' => 1, 'msgbox' => '请求成功']); 
+        return $this->result(['data' => $apps, 'msg' => 1, 'msgbox' => '请求成功']); 
     }
 
     /*
@@ -193,7 +193,7 @@ class V1_AppsController extends \V1_BaseController {
     {
         $app = Api_Apps::find($appid);
         if (!$app) {
-            return $this->result(['data' => $data, 'msg' => 0, 'msgbox' => '数据不存在']);
+            return $this->result(['data' => '[]', 'msg' => 0, 'msgbox' => '数据不存在']);
         }
         $data = $this->appFields($this->infoFields, $app);
         return $this->result(['data' => $data, 'msg' => 1, 'msgbox' => '数据获取成功']);
