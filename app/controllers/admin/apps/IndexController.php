@@ -209,16 +209,17 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
     public function history($id)
     {
 
-        $apps = new Histories();
-        $apps = $apps->lists($id, Input::all())
-                          ->paginate($this->pagesize)
-                          ->toArray();
-
         $history = new Histories;
-        $apps = $history->addCatsInfo($apps);
+        $apps = $history->lists($id, Input::all())
+                        ->paginate($this->pagesize)
+                        ->toArray();
 
-        $user = new User;
-        $apps = $user->addOperator($apps);
+        if($apps['data']) {
+            $apps = $history->addCatsInfo($apps);
+
+            $user = new User;
+            $apps = $user->addOperator($apps);
+        }
 
         return View::make('admin.apps.index.history')
                    ->with('apps', $apps)
