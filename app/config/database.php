@@ -49,7 +49,7 @@ return array(
         'mysql' => array(
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'qc',
+            'database'  => 'games',
             'username'  => 'root',
             'password'  => 'a',
             'charset'   => 'utf8',

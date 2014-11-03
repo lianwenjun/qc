@@ -2,7 +2,7 @@
 
 use Carbon\Carbon;
 use Kmd\Logviewer\Logviewer;
-use Illuminate\Pagination\Environment;
+use Illuminate\Pagination\Factory;
 
 $filters = Config::get('logviewer::filters.global');
 
@@ -148,7 +148,7 @@ Route::group(array('before' => $filters['before'], 'after' => $filters['after'])
             // PHP 5.3 does not support $this in closure scope
             // SEE: https://wiki.php.net/rfc/closures/removal-of-this
             //$paginator = new Environment($this->app['request'], $this->app['view'], $this->app['translator']);
-            $paginator = new Environment(App::make('request'), App::make('view'), App::make('translator'));
+            $paginator = new Factory(App::make('request'), App::make('view'), App::make('translator'));
 
             $view = Config::get('logviewer::p_view');
 
