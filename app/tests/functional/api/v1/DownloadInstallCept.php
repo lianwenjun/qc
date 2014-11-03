@@ -1,7 +1,7 @@
 <?php
 $I = new FunctionalTester($scenario);
 $I->wantTo('下载游戏安装');
-$appid = '5';
+$appid = '100';
 $data = [
     'appid' => $appid,
     'imei' => '44a0dfuasdfasdfasdf',

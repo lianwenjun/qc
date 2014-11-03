@@ -5,7 +5,7 @@ $I->wantTo('更新首页图片为广告');
 $data = ['username' => 'test', 'password' => 'test'];
 $I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
 
-$url = '/admin/indexads/18/edit';
+$url = '/admin/indexads/28/edit';
 $data = [
         'location' => 'suggest',
         'image' => '/ads/3/e/3ee1125c624089a91a0d50695f3c17c4.jpg',

@@ -58,10 +58,12 @@ App::error(function(Exception $exception, $code) {
         }
         return ['dataJson' => '', 'msg' => 0, 'msgbox' => '亲，服务器私奔了，工程狮们正在努力寻回'];
     }
+    /*
     if ($code == '404' ){
         return '找不到该路径。';
     }
     return '亲，服务器私奔了，工程狮们正在努力寻回。';
+    */
 });
 
 /*

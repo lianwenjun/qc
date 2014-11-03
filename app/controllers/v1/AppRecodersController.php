@@ -31,8 +31,15 @@ class V1_AppRecodersController extends \V1_BaseController {
     {
         //统计加1
         $appId = Input::get('appid');
+        if (is_null($appId)) {
+            return $this->result(['data'=>'[]', 'msg'=>0, 'msgbox'=>'游戏ID不能为空']); 
+        }
+        $app = Api_Apps::whereStatus('stock')->find($appId);
+        if (!$app) {
+            return $this->result(['data'=>'[]', 'msg'=>0, 'msgbox'=>'游戏不存在']);
+        }
+        
         $data = $this->fileds();
-        //检测输入
         $data['status'] = 'request';
         Api_RecordLog::create($data);
         $record = Api_AppRecords::firstOrCreate(['app_id' => $appId]);
@@ -50,7 +57,14 @@ class V1_AppRecodersController extends \V1_BaseController {
     public function download($appId, $imei)
     {
         //统计加1
-        $appId = $appId;
+        if (is_null($appId)) {
+            return $this->result(['data'=>'[]', 'msg'=>0, 'msgbox'=>'游戏ID不能为空']); 
+        }
+        $app = Api_Apps::whereStatus('stock')->find($appId);
+        if (!$app) {
+            return $this->result(['data'=>'[]', 'msg'=>0, 'msgbox'=>'游戏不存在']);
+        }
+        
         $data = $this->fileds();
         $data['app_id'] = $appId;
         $data['status'] = 'download';
@@ -76,6 +90,14 @@ class V1_AppRecodersController extends \V1_BaseController {
     {
         //统计加1
         $appId = Input::get('appid');
+        if (is_null($appId)) {
+            return $this->result(['data'=>'[]', 'msg'=>0, 'msgbox'=>'游戏ID不能为空']); 
+        }
+        $app = Api_Apps::whereStatus('stock')->find($appId);
+        if (!$app) {
+            return $this->result(['data'=>'[]', 'msg'=>0, 'msgbox'=>'游戏不存在']);
+        }
+
         $data = $this->fileds();
         $data['status'] = 'install';
         Api_RecordLog::create($data);

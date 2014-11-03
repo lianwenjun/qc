@@ -14,5 +14,5 @@ $fields = [
             'stocked_at' => '2014-10-10 10:10:10',
             'unstocked_at' => '1411720308',
             ];
-$I->sendAjaxPostRequest('/admin/appsads/4/edit', $fields);
+$I->sendAjaxPostRequest('/admin/appsads/8/edit', $fields);
 $I->seeSessionHasValues(['msg' => '修改成功']);

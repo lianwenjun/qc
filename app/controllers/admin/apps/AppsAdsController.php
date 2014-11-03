@@ -80,12 +80,12 @@ class Admin_Apps_AppsAdsController extends \Admin_AdsController {
         $ad = Ads::whereType($this->type)->find($id);
         //检测广告是否存在
         if (!$ad) {
-            return Redirect::route('appsads.index', '数据不存在');
+            return Redirect::route('appsads.index')->with('msg', '游戏不存在');
         }
         //检测游戏是否存在
         $app = Apps::find($ad->app_id);
         if (!$app) {
-            return Redirect::route('appsads.index', '游戏不存在');
+            return Redirect::route('appsads.index')->with('msg', '游戏不存在');
         }
         $datas = ['ad' => $ad, 
             'location' => Config::get('status.ads.applocation'),

@@ -191,7 +191,7 @@ class V1_AppsController extends \V1_BaseController {
      */
     public function info($appid)
     {
-        $app = Api_Apps::find($appid);
+        $app = Api_Apps::whereStatus('stock')->find($appid);
         if (!$app) {
             return $this->result(['data' => '[]', 'msg' => 0, 'msgbox' => '数据不存在']);
         }

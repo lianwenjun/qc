@@ -8,9 +8,9 @@ $I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
 
 //游戏不存在
 $I->amOnpage('/admin/editorads/25/edit');
-$I->seeSessionHasValues(['msg' => '没发现游戏数据']);
+$I->seeSessionHasValues(['msg' => '没发现广告数据']);
 //正常数据
-$I->amOnpage('/admin/editorads/29/edit');
+$I->amOnpage('/admin/editorads/36/edit');
 $I->see('编辑');
 $I->click('返回列表');
 
@@ -30,5 +30,5 @@ $fields = [
 //$I->click('Submit');
 
 //AJAX测试
-$I->sendAjaxPostRequest('/admin/editorads/25/edit', $fields);
+$I->sendAjaxPostRequest('/admin/editorads/36/edit', $fields);
 $I->seeSessionHasValues(['msg' => '修改成功']);

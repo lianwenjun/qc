@@ -16,7 +16,7 @@ Route::pattern('pageSize', '[0-9]+');
 Route::pattern('pageIndex', '[0-9]+');
 Route::get('/', function()
 {
-    return View::make('hello');
+    return Redirect::route('admin.index');
 });
 
 Route::get('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_UsersController@signin']);

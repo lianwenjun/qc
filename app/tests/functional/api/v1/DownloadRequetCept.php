@@ -1,7 +1,7 @@
 <?php
 $I = new FunctionalTester($scenario);
 $I->wantTo('下载游戏请求');
-$appid = '5';
+$appid = '100';
 $imei = '44a0dfuasdfasdfasdf';
 $data = [
     'appid' => $appid,
