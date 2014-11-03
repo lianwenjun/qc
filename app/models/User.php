@@ -155,4 +155,22 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return $data;
     }
 
+    public function getUserNameByList($key = [],$list = []) {
+        $userIds = [0];
+        foreach ($list as $l) {
+            foreach ($key as $k) {
+                if (!isset($userIds[$l->$k])){
+                    $userIds[] = $l->$k;
+                }
+            }
+        }
+        //能否整合进$list里呢？
+        $users = User::whereIn('id', $userIds)->get();
+        $userDatas = [0 => '系统'];
+        foreach ($users as $user) {
+            $userDatas[$user->id] = $user->username;
+        }
+        return $userDatas;
+    }
+
 }
