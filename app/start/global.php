@@ -51,6 +51,7 @@ Log::useDailyFiles(storage_path().'/logs/'.$logFile);
 */
 
 App::error(function(Exception $exception, $code) {
+    Log::error($exception);
     if (Request::segment(1) == 'v1') {
         if ($code == '404' ) {
             return ['dataJson' => '', 'msg' => 0, 'msgbox' => '找不到该路径。'];
