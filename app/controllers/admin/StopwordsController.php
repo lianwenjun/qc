@@ -11,7 +11,7 @@ class Admin_StopwordsController extends \Admin_BaseController {
     public function index()
     {
         $stopwords = Stopwords::orderBy('id', 'desc')->paginate($this->pagesize);
-        $userDatas = (new Admin_CuserClass)->getUserNameByList(['creator', 'operator'], $stopwords);
+        $userDatas = (new User)->getUserNameByList(['creator', 'operator'], $stopwords);
         $datas = ['stopwords' => $stopwords, 'userDatas' => $userDatas];
         $this->layout->content = View::make('admin.stopwords.index', $datas);
     }
