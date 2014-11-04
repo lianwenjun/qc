@@ -126,7 +126,7 @@ class Api_Apps extends \Eloquent {
 
     public function getGameCategoryAttribute() {
         $data = (new Api_Cats)->getCatsByAppId($this->id);
-        if (is_null($data)) return '';
+        if (!$data) return '';
         $tmp = array_map(function($x) {
                             return $x['title'];
                         }, 

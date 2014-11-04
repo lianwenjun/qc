@@ -128,7 +128,7 @@ $(function(){
     //提交查询
     $(".jq-submitSearch").click(function() {
         var word = $("input[name=searchWord]").val();
-        if (word === "输入关键字" || word == "") {
+        if (word === "输入关键字") {
             return;
         }
         // 查询

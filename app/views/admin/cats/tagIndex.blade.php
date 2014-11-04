@@ -103,7 +103,7 @@ $(function(){
         // 添加关键词
         var word = $("input[name=addTag]").val();
         if (word === "请输入标签名称" || word == "") {
-            $("input[name=addTag]").val("请输入标签名称");
+            $("input[name=addTag]").val("");
             return;
         }
         var parent_id = $("select[name=cats1]").val();

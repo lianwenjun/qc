@@ -27,6 +27,7 @@ class Admin_rankAdsController extends \Admin_AdsController {
 
         $datas = [
                 'ads' => $ads,
+                'status' =>  Config::get('status.ads.status'), 
                 'location' => Config::get('status.ads.ranklocation'),
                 'is_top' => Config::get('status.ads.is_top')
         ];
