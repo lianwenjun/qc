@@ -172,8 +172,8 @@ class V1_AppsController extends \V1_BaseController {
     public function clientList()
     {
         $input = Input::get('apps');
-        if (is_array($input)) {
-            return $this->result(['data' => $res, 'msg' => 0, 'msgbox' => '请输入JSON数据']);
+        if (!is_array($input)) {
+            return $this->result(['data' => '', 'msg' => 0, 'msgbox' => '请输入JSON数据']);
         }
         $res = [];
         foreach ($input as $index) {
