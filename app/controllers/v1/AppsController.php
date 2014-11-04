@@ -175,7 +175,7 @@ class V1_AppsController extends \V1_BaseController {
         if (!is_array($input)) {
             return $this->result(['data' => '', 'msg' => 0, 'msgbox' => '请输入JSON数据']);
         }
-        $res = [];
+        $apps = [];
         foreach ($input as $index) {
             if (!isset($index['pack'])) continue;
             if (!isset($index['versionCode'])) continue;
@@ -184,7 +184,7 @@ class V1_AppsController extends \V1_BaseController {
             $res = $this->appFields($this->infoFields, $app);
             if ($res) $apps[] = $res;
         }
-        return $this->result(['data' => $res, 'msg' => 1, 'msgbox' => '请求成功']);
+        return $this->result(['data' => $apps, 'msg' => 1, 'msgbox' => '请求成功']);
     }
     /**
      * 获得单个游戏的信息
