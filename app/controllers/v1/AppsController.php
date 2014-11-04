@@ -178,9 +178,7 @@ class V1_AppsController extends \V1_BaseController {
         $apps = [];
         foreach ($input as $index) {
             if (!isset($index['pack'])) continue;
-            if (!isset($index['versionCode'])) continue;
-             
-            $app = Api_Apps::ofNew($index['versionCode'])->wherePack($index['pack'])->first();
+            $app = Api_Apps::wherePack($index['pack'])->first();
             $res = $this->appFields($this->infoFields, $app);
             if ($res) $apps[] = $res;
         }

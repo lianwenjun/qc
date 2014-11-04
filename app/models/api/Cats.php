@@ -8,10 +8,10 @@ class Api_Cats extends \Eloquent {
     protected $softDelete = true;
     protected $table = 'cats';
 
-    public function getCats() {
+    public function getCatsByAppId($appId) {
         $data = [];
         $ids = Api_AppCats::select('cat_id')
-                       ->where('app_id', $this->id)
+                       ->where('app_id', $appId)
                        ->get()->toArray();
 
         if($ids) {
@@ -21,7 +21,18 @@ class Api_Cats extends \Eloquent {
         }
         return $data;
     }
-    public function getTags() {
-        
+    public function getTagsByAppId($appId) {
+        $data = [];
+        $ids = Api_AppCats::select('cat_id')
+                       ->where('app_id', $appId)
+                       ->get()->toArray();
+
+        if($ids) {
+            $data = Api_Cats::select(['id', 'title'])
+                         ->where('parent_id', '!=', 0)
+                         ->whereIn('id', $ids)
+                         ->get()->toArray();
+        }
+        return $data;
     }
 }

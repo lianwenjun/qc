@@ -12,6 +12,7 @@ class Admin_CommentsController extends \Admin_BaseController {
     {
         $query = [];
         $comments = new Comments();
+        $cate = Input::get('cate');
         $where = $comments;
         if (Input::get('cate') == 'title') {
             $query = ['%', Input::get('word'), '%'];
