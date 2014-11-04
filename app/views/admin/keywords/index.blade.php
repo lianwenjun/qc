@@ -59,7 +59,7 @@
                     
                     <td>
                         @if(Sentry::getUser()->hasAccess('keyword.update'))
-                        <a href="javacript:;" class="Search_show jq-editWord">修改</a>
+                        <a href="javascript:;" class="Search_show jq-editWord">修改</a>
                         @endif
                         @if(Sentry::getUser()->hasAccess('keyword.delete'))
                         <a href="{{ route('keyword.delete', $keyword->id) }}" class="Search_del jq-delete">删除</a>
@@ -140,7 +140,7 @@ $(function(){
         var td = $(this).parents('tr').children('td');
         var text1 = td.eq(1).html();
         var to_text1 = '<input name="textfield2" type="text" id="textfield2" value="" size="8" class="Classification_text" />';
-        var to_text8 = '<a href="javacript:;" class="Search_show jq-saveWord">确定</a> <a href="javacript:;" class="Search_show jq-chanceWord">取消</a>';
+        var to_text8 = '<a href="javascript:;" class="Search_show jq-saveWord">确定</a> <a href="javascript:;" class="Search_show jq-chanceWord">取消</a>';
         td.eq(1).html(to_text1);
         td.eq(1).find('#textfield2').val(text1);
         $(this).parent().html(to_text8);
@@ -156,7 +156,7 @@ $(function(){
         $.post(editUrl, data, function(res) {
             //错误判断
             if (res.status == 'ok') {
-                var text8 = '<a href="javacript:;" class="Search_show jq-editWord">修改</a>' + 
+                var text8 = '<a href="javascript:;" class="Search_show jq-editWord">修改</a>' + 
                             ' <a href="'+delUrl+'" class="Search_del jq-delete">删除</a>';
                 td.eq(8).html(text8);
                 td.eq(1).html(text1);
@@ -175,7 +175,7 @@ $(function(){
         var td = $(this).parents('tr').children('td');
         var text1 = td.eq(9).find('#preWord').val();
         var delUrl = td.find('#del-url').val();
-        var text8 = '<a href="javacript:;" class="Search_show jq-editWord">修改</a>'+
+        var text8 = '<a href="javascript:;" class="Search_show jq-editWord">修改</a>'+
                     ' <a href="'+delUrl+'" class="Search_del jq-delete">删除</a>';
         $(this).parent().html(text8);
         td.eq(1).html(text1);

@@ -10,20 +10,20 @@ class Admin_CommentsController extends \Admin_BaseController {
      */
     public function index()
     {
-        $query = [];
         $comments = new Comments();
-        $cate = Input::get('cate');
-        $where = $comments;
-        if (Input::get('cate') == 'title') {
-            $query = ['%', Input::get('word'), '%'];
-            $where = $comments->where('title', 'like', join($query));
-        }
-        if (Input::get('cate') == 'pack') {
-            $query = ['%', Input::get('word'), '%'];
-            $where = $comments->where('pack', 'like', join($query));
+        switch (Input::get('cate')) {
+            case 'title':
+                $query = Comments::OfTitle(Input::get('word'));
+                break;
+            case 'pack':
+                $query = Comments::OfPack(Input::get('word'));
+                break;
+            default:
+                $query = new Comments;
+                break;
         }
         //查询，默认分页
-        $datas = $where->orderBy('id', 'desc')->paginate($this->pagesize);
+        $datas = $query->orderBy('id', 'desc')->paginate($this->pagesize);
         $datas = ['comments' => $datas];
         $this->layout->content = View::make('admin.comments.index', $datas);
     }

@@ -11,11 +11,11 @@ class Comments extends \Eloquent {
     //名称搜索
     public function scopeOfTitle($query, $title) {
         $sql =  ['%', $title , '%'];
-        return $query->where('title', 'like', join($sql);
+        return $query->where('title', 'like', join($sql));
     }
     //包名搜索
     public function scopeOfPack($query, $pack) {
         $sql =  ['%', $pack , '%'];
-        return $query->where('pack', 'like', join($sql);
+        return $query->where('pack', 'like', join($sql));
     }
 }

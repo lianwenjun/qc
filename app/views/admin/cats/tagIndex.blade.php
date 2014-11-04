@@ -148,7 +148,7 @@ $(function(){
         var text4 = td.eq(4).html();
         var to_text1 = '<input name="textfield" type="text" id="textfield" value="" size="8" class="Classification_text" />';
         var to_text4 = '<input name="textfield" type="text" id="textfield" value="" size="8" class="Classification_text" />';
-        var to_text8 = '<a href="javacript:;" class="Search_show jq-saveTag">确定</a> <a href="javacript:;" class="Search_show jq-chanceTag">取消</a>';
+        var to_text8 = '<a href="javascript:;" class="Search_show jq-saveTag">确定</a> <a href="javascript:;" class="Search_show jq-chanceTag">取消</a>';
         td.eq(1).html(to_text1);
         td.eq(1).find('#textfield').val(text1);
         td.eq(4).html(to_text4);
