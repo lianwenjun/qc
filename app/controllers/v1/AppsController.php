@@ -172,10 +172,14 @@ class V1_AppsController extends \V1_BaseController {
     public function clientList()
     {
         $input = Input::get('apps');
+        if (is_array($input)) {
+            return $this->result(['data' => $res, 'msg' => 0, 'msgbox' => '请输入JSON数据']);
+        }
         $res = [];
         foreach ($input as $index) {
             if (!isset($index['pack'])) continue;
             if (!isset($index['versionCode'])) continue;
+             
             $app = Api_Apps::ofNew($index['versionCode'])->wherePack($index['pack'])->first();
             $res = $this->appFields($this->infoFields, $app);
             if ($res) $apps[] = $res;

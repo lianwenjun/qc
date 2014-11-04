@@ -8,8 +8,14 @@ class Api_Apps extends \Eloquent {
     protected $table = 'apps';
     protected $fillable = [];
     //新增字段
-    protected $appends = ['rating', 'comment', 'tagList', 'categoryId', 'gameCategory'];
+    protected $appends = ['rating', 'comment', 'tagList', 'categoryId'];
     //按名称搜索游戏名字
+    public function scopeOfSelect($query, $select = []) {
+        if (is_null($select)) { 
+            return $query;
+        }
+        return $query->select($select);
+    }
     public function scopeOfTitle($query, $title) {
         $sql = '%' . $title . '%';
         $query = $query->where('title', 'like', $sql);
@@ -109,7 +115,7 @@ class Api_Apps extends \Eloquent {
         return $data;
     }
     //拉取游戏相关的分类[问题，单个和多个时候如何分]
-    public function getCat() {
+    /*public function setCatAttribute() {
         $data = [];
         $ids = Api_AppCats::select('cat_id')
                        ->where('app_id', $this->id)
@@ -120,11 +126,14 @@ class Api_Apps extends \Eloquent {
                          ->whereIn('id', $ids)
                          ->get();
         }
-        return $data;
+        return $this->attributes['cat'] = $data;
     }
+    public function getCatAttribute() {
+        return $this->attributes['cat'];
+    }*/
     //获取分类列表[问题，单个和多个时候如何分]
     public function getCategoryIdAttribute() {
-        $data = $this->getCat();
+        $data = (new Api_Cats)->getCats();
         $tmp = [];
         foreach ($data as $cat) {
             $tmp[] = $cat->id;
@@ -132,12 +141,17 @@ class Api_Apps extends \Eloquent {
         return join(',', $tmp);
     }
     //获取分类列表[问题，单个和多个时候如何分]
+    public function setGameCategoryAttribute() {
+        $data = (new Api_Cats)->getCats();
+        $tmp = array_map(function($x) {
+                            return $x->title;
+                        }, 
+                        $data
+        );
+        return $this->attributes['gameCategory'] = join(',', $tmp);
+    }
+
     public function getGameCategoryAttribute() {
-        $data = $this->getCat();
-        $tmp = [];
-        foreach ($data as $cat) {
-            $tmp[] = $cat->title;
-        }
-        return join(',', $tmp);
+        return $this->attributes['gameCategory'];
     }
 }
