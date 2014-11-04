@@ -13,6 +13,7 @@ public/apks/*
 public/icons/*
 public/pictures/*
 public/catads/*
+public/cateads/*
 public/ads/*
 *.apk
 app/config/database.php

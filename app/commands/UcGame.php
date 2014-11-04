@@ -344,7 +344,7 @@ class UcGame extends Command {
             'is_verify'     => $package['secureLevel'] == 0 ? 'yes' : 'no',
             'has_ad'        => $package['ad'] == 0 ? 'no' : 'yes',
             'md5'           => $package['extendInfo']['signMd5'],
-            'status'        => 'new',
+            'status'        => 'publish',
             'source'        => 'uc',
             ];
 

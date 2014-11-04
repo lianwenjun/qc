@@ -1,0 +1,254 @@
+<?php
+
+class V1_AdsController extends \V1_BaseController {
+    //编辑精选的字段对应
+    private $editorFileds = [
+            'download_link' => 'downUrl',
+            'title' => 'name',
+            'version_code' => 'versionCode',
+            'size_int' => 'size',
+            'version' => 'version',
+            'icon' => 'logourl',
+            'md5' => 'md5',
+            'gameCategory' => 'gameCategory',
+            'pack' => 'packageName',
+    ];
+    //游戏广告的字段对应
+    private $appFiles = [
+        'comment' => 'commentCnt',
+        'download_link' => 'downUrl',
+        'download_manual' => 'downloadCnt',
+        'gameCategory' => 'gameCategory',
+        'id' => 'id',
+        'icon' => 'logoImageurl',
+        'md5' => 'md5',
+        'title' => 'name',
+        'pack' => 'packageName',
+        'rating' => 'score',
+        'size_int' => 'size',
+        'version' => 'version',
+        'version_code' => 'versionCode',
+    ];
+    //字段对应处理，应该可以放置
+    private function appFields($fields, $app) {
+        if (is_null($app)) return [];
+        $app = $app->toArray();
+        $data = [];
+        foreach ($fields as $key => $value) {
+            $data[$value] = '';
+        }
+        foreach ($app as $key => $value) {
+            if (isset($fields[$key])) $data[$fields[$key]] = $value;
+        }
+        return $data;
+    }
+    //取首页广告图片列表
+    private function indexAds($location, $pageSize, $pageIndex) {
+        $start = (intval($pageIndex) - 1) * intval($pageSize);
+        $query = Api_Ads::whereType('index')->whereLocation($location)->isStock();
+        $count = $query->count();
+        $ads = $query->orderBy('id', 'desc')->skip($start)->take($pageSize)->get();
+        $data = [];
+        foreach ($ads as $ad) {
+            $tmp['id'] = $ad->app_id;
+            $tmp['ImgUrl'] = $ad->image;
+            $data[] = $tmp;
+        }
+        return ['count' => $count, 'ads' => $data];
+    }
+    //首页游戏位广告列表
+    private function appAds($location, $pageSize, $pageIndex) {
+        //检测类型
+        $types = [
+                'hot' => 'hotdown', 
+                'new' => 'new',
+                'search' => 'search'
+        ];
+        if (!isset($types[$location])) {
+            return ['count' => 0, 'ads' => []];
+        }
+        $location = $types[$location];
+        
+        $start = (intval($pageIndex) - 1) * intval($pageSize);
+        $query = Api_Ads::whereType('app')->whereLocation($location)->isStock();
+        $count = $query->count();
+        $ads = $query->orderBy('id', 'desc')->skip($start)->take($pageSize)->get();
+        $data = [];
+        $appIds = [0];
+        foreach ($ads as $ad) {
+            $appIds[] = $ad->app_id;
+            $data[] = $ad->app_id;
+        }
+        $apps = Api_apps::whereIn('id', $appIds)->get();
+        $appTmp = [];
+        foreach ($apps as $app) {
+            $appTmp[$app->id] = $this->appFields($this->appFiles, $app);   
+        }
+        $res = [];
+        foreach ($data as $ad) {
+            $tmp = isset($appTmp[$ad]) ? $appTmp[$ad] : [];
+            $res[] = $tmp;
+        }
+        return ['count' => $count, 'ads' => $res];
+    }
+    //首页排行位广告列表
+    private function rankAds($location, $pageSize, $pageIndex) {
+        //检测类型
+        $types = ['hot' => 'hot', 
+                'new' => 'new',
+                'surge' => 'up'
+        ];
+        if (!isset($types[$location]) ) {
+            return ['count' => 0, 'ads' => []];
+        }
+        $location = $types[$location];
+        
+        $start = (intval($pageIndex) - 1) * intval($pageSize);
+        $query = Api_Ads::whereType('rank')->whereLocation($location)->isStock();
+        $count = $query->count();
+        $ads = $query->orderBy('id', 'desc')->skip($start)->take($pageSize)->get();
+        $data = [];
+        $appIds = [0];
+        foreach ($ads as $ad) {
+            $tmp['id'] = $ad->app_id;
+            $appIds[] = $ad->app_id;
+            $data[] = $tmp;
+        }
+        $apps = Api_apps::whereIn('id', $appIds)->get();
+        $appTmp = [];
+        foreach ($apps as $app) {
+            $appTmp[$app->id] = $this->appFields($this->appFiles, $app);   
+        }
+        $res = [];
+        foreach ($data as $ad) {
+            $tmp = isset($appTmp[$ad['id']]) ? $appTmp[$ad['id']] : [];
+            $res[] = $tmp + $ad;
+        }
+        return ['count' => $count, 'ads' => $res];
+    }
+    //首页排行位广告列表
+    private function edtiorAds($top, $pageSize, $pageIndex) {
+        $start = (intval($pageIndex) - 1) * intval($pageSize);
+        $query = Api_Ads::whereType('editor')->IsStock();
+        if ($top == 'yes') {
+            $query->isTop();
+        }
+        $count = $query->count();
+        $ads = $query->orderBy('id', 'desc')->skip($start)->take($pageSize)->get();
+        $data = [];
+        $appIds = [0];
+        foreach ($ads as $ad) {
+            $tmp['id'] = $ad->app_id;
+            $tmp['ImgUrl'] = $ad->image;
+            $tmp['advert'] = $ad->word;
+            $appIds[] = $ad->app_id;
+            $data[] = $tmp;
+        }
+        $apps = Api_apps::whereIn('id', $appIds)->get();
+        $appTmp = [];
+        foreach ($apps as $app) {
+            $appTmp[$app->id] = $this->appFields($this->editorFileds, $app);   
+        }
+        $res = [];
+        foreach ($data as $ad) {
+            $tmp = isset($appTmp[$ad['id']]) ? $appTmp[$ad['id']] : [];
+            $res[] = $tmp + $ad;
+        }
+        return ['count' => $count, 'ads' => $res];
+    }
+    /**
+     * 首页广告
+     * GET /v1/game/extend/{type}/{pageSize}/{pageIndex}
+     * @param $type string 类型
+     * @param $pageSize string 每页条数
+     * @param $pageIndex string 当前请求页码
+     * @return Response
+     */
+    public function banner($type, $pageSize, $pageIndex)
+    {
+        if (intval($pageSize) < 1) {
+            return $this->result(['data' => '[]', 'msg' => 0, 'msgbox' => '每页条数大于0']); 
+        };
+        $pageIndex = intval($pageIndex) > 0 ? $pageIndex : 1;
+        switch ($type) {
+            case 'banner':
+                $res = $this->indexAds('slide', $pageSize, $pageIndex);
+                break;
+            case 'hot':
+                $res = $this->indexAds('hotdown', $pageSize, $pageIndex);
+                break;
+            case 'new':
+                $res = $this->indexAds('new', $pageSize, $pageIndex);
+                break;
+            default:
+                return $this->result(['data' => '[]', 'msg' => 0, 'msgbox' => '分类不存在']);
+        }
+        $data['pageCount'] =  CUtil::setPageNum($res['count'], $pageSize);
+        $data['recordCount'] = $res['count'];
+        $data['modelList'] = $res['ads'];
+        return $this->result(['data' => $data, 'msg' => 1, 'msgbox' => '数据获取成功']); 
+    }
+    /**
+     * 编辑推荐
+     * GET /v1/game/cull{type}/{pageSize}/{pageIndex}
+     * @param $type string 类型
+     * @param $pageSize string 每页条数
+     * @param $pageIndex string 当前请求页码
+     * @return Response
+     */
+    public function editor($type, $pageSize, $pageIndex)
+    {
+        if (intval($pageSize) < 1) {
+            return $this->result(['data' => '[]', 'msg' => 0, 'msgbox' => '每页条数大于0']); 
+        };
+        $pageIndex = intval($pageIndex) > 0 ? $pageIndex : 1;
+        
+        switch ($type) {
+            case 'cull':
+                $top = 'yes';
+                $res = $this->edtiorAds($top, $pageSize, $pageIndex);
+                break;
+            case 'all':
+                $top = 'no';
+                $res = $this->edtiorAds($top, $pageSize, $pageIndex);
+                break;
+            default:
+                return $this->result(['data' => '[]', 'msg' => 0, 'msgbox' => '分类不存在']);
+        }
+        $data['pageCount'] =  CUtil::setPageNum($res['count'], $pageSize);
+        $data['recordCount'] = $res['count'];
+        
+        $data['modelList'] = $res['ads'];
+        return $this->result(['data' => $data, 'msg' => 1, 'msgbox' => '数据获取成功']);
+    }
+    /**
+     * 游戏广告
+     * GET /v1/game/list/{area}/{pageSize}/{pageIndex}
+     * @param $type string 类型
+     * @param $pageSize string 每页条数
+     * @param $pageIndex string 当前请求页码
+     * @return Response
+     */
+    public function app($type, $pageSize, $pageIndex)
+    {
+        if (intval($pageSize) < 1) {
+            return $this->result(['data' => '[]', 'msg' => 0, 'msgbox' => '每页条数大于0']); 
+        };
+        switch ($pageSize) {
+            case '4':
+                $res = $this->appAds($type, $pageSize, $pageIndex);
+                break;
+            case '10':
+                $res = $this->rankAds($type, $pageSize, $pageIndex);
+                break;
+            default:
+                return $this->result(['data' => '[]', 'msg' => 0, 'msgbox' => '每页条数大于0']); 
+        }
+        $pageIndex = intval($pageIndex) > 0 ? $pageIndex : 1;
+        
+        $data['pageCount'] =  CUtil::setPageNum($res['count'], $pageSize);
+        $data['recordCount'] = $res['count'];
+        $data['modelList'] = $res['ads'];
+        return $this->result(['data' => $data, 'msg' => 1, 'msgbox' => '数据获取成功']);
+    }
+}

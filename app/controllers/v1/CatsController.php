@@ -3,7 +3,7 @@
 class V1_CatsController extends \V1_BaseController {
     /**
      * 获得分类列表信息
-     * GET /api/v1/game/category/all
+     * GET /v1/game/category/all
      * @return Response json
      */
     public function index()
@@ -17,6 +17,7 @@ class V1_CatsController extends \V1_BaseController {
             $catsTmp[$cat->id]['id'] = $cat->id;
             $catsTmp[$cat->id]['title'] = $cat->title;
             $catsTmp[$cat->id]['ImgUrl'] = '';
+            $catsTmp[$cat->id]['GameCount'] = 0;
         }
         //这个请求可以合并到MODEL里去
         $catImgs = Api_CatAds::whereIn('cat_id', $catIds)->get();
@@ -25,10 +26,19 @@ class V1_CatsController extends \V1_BaseController {
         foreach ($catImgs as $catImg) {
             $catsTmp[$catImg->cat_id]['ImgUrl'] = $catImg->image;
         }
+        //这步需要精简
+        $appsCount = DB::table('app_cats')
+                     ->select(DB::raw('count(*) as app_count, cat_id'))
+                     ->whereIn('cat_id', $catIds)
+                     ->groupBy('cat_id')
+                     ->get();
+        foreach ($appsCount as $app) {
+                $catsTmp[$app->cat_id]['appcount'] = $app->app_count;
+        }
         $datas = [];
         foreach ($catsTmp as $index => $catTmp) {
             $datas[] = $catTmp;
         }
-        return $this->result(['data'=>$datas, 'msg'=>'1', 'msgbox'=>'数据获取成功']);
+        return $this->result(['data'=>$datas, 'msg'=>1, 'msgbox'=>'数据获取成功']);
     }
 }

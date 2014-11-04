@@ -15,7 +15,7 @@ class Admin_AdsController extends \Admin_BaseController {
     {
         $ad = Ads::whereType($this->type)->isStock()->find($id);
         if (!$ad) {
-            return Redirect::route($this->indexRoute)->with('msg', '亲，#'.$id.'下架失败了');
+            return Redirect::route($this->indexRoute)->with('msg', '亲，#'.$id.'不存在');
         }
         $ad->is_stock = 'no';
         if ($ad->save()){
@@ -37,7 +37,7 @@ class Admin_AdsController extends \Admin_BaseController {
         $ad = Ads::whereType($this->type)->find($id);
         $msg = '#' . $id . '删除失败';
         if (!$ad) {
-            return Redirect::route($this->indexRoute)->with('msg', $msg);
+            return Redirect::route($this->indexRoute)->with('msg', '#' . $id . '不存在');
         }
         if ($ad->delete()){
             $msg = '#' . $id . '删除成功';

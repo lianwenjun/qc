@@ -5,10 +5,10 @@ $I->wantTo('游戏排行广告位修改');
 $data = ['username' => 'test', 'password' => 'test'];
 $I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
 
-$I->amOnPage('/admin/rankads/17/edit');
+$I->amOnPage('/admin/rankads/49/edit');
 $I->see('最新');
-$I->click('返回列表');
-$url = '/admin/rankads/17/edit';
+$I->see('返回列表');
+$url = '/admin/rankads/49/edit';
 $data = [
         'location' => 'hot',
         'sort' => '1',

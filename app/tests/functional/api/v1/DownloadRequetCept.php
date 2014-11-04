@@ -1,7 +1,7 @@
 <?php
 $I = new FunctionalTester($scenario);
 $I->wantTo('下载游戏请求');
-$appid = '5';
+$appid = '100';
 $imei = '44a0dfuasdfasdfasdf';
 $data = [
     'appid' => $appid,
@@ -11,7 +11,7 @@ $data = [
     'device' => 'sumsung',
     'version' => '4.2',
 ];
-$URL = 'v1/game/info/edit/downcount/request';
+$URL = 'v1/game/info/edit/download/request';
 $I->sendAjaxGetRequest($URL, $data);
 $I->see('"msg":1');
 

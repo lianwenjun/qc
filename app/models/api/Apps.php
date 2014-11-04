@@ -15,6 +15,18 @@ class Api_Apps extends \Eloquent {
         $query = $query->where('title', 'like', $sql);
         return $query;
     }
+    //获得新的
+    public function scopeOfNew($query, $versionCode) {
+        return $query->where('version_code', '>', $versionCode)
+                    ->orderBy('version_code', 'desc');
+    }
+    //设置ID
+    public function setIdAttribute() {
+        return $this->attributes['id'] = $this->id; 
+    }
+    public function getIdAttribute() {
+        return intval($this->attributes['id']);
+    }
     //设置ICON
     public function setIconAttribute() {
         return $this->attributes['icon'] = $this->icon; 
@@ -79,9 +91,9 @@ class Api_Apps extends \Eloquent {
     //获得评分
     public function getRatingAttribute() {
         $rating = Api_Ratings::where('app_id', $this->id)->first();
-        return $rating ? $rating->manual : 0;
+        return $rating ? intval($rating->manual) : 0;
     }
-    //获取标签列表
+    //获取标签列表[问题，单个和多个时候如何分]
     public function getTagListAttribute() {
         $data = [];
         $ids = Api_AppCats::select('cat_id')
@@ -96,7 +108,7 @@ class Api_Apps extends \Eloquent {
         }
         return $data;
     }
-    //拉取游戏相关的分类
+    //拉取游戏相关的分类[问题，单个和多个时候如何分]
     public function getCat() {
         $data = [];
         $ids = Api_AppCats::select('cat_id')
@@ -110,7 +122,7 @@ class Api_Apps extends \Eloquent {
         }
         return $data;
     }
-    //获取分类列表
+    //获取分类列表[问题，单个和多个时候如何分]
     public function getCategoryIdAttribute() {
         $data = $this->getCat();
         $tmp = [];
@@ -119,7 +131,7 @@ class Api_Apps extends \Eloquent {
         }
         return join(',', $tmp);
     }
-    //获取分类列表
+    //获取分类列表[问题，单个和多个时候如何分]
     public function getGameCategoryAttribute() {
         $data = $this->getCat();
         $tmp = [];

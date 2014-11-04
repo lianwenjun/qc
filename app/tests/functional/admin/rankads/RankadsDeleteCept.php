@@ -6,8 +6,8 @@ $data = ['username' => 'test', 'password' => 'test'];
 $I->sendAjaxRequest('PUT', '/admin/users/signin', $data);
 
 //存在测试
-$I->sendAjaxRequest('DELETE' ,'/admin/rankads/15/delete');
-$I->seeSessionHasValues(['msg' => '#15删除成功']);
+$I->sendAjaxRequest('DELETE' ,'/admin/rankads/49/delete');
+$I->seeSessionHasValues(['msg' => '#49删除成功']);
 //不存在测试
 $I->sendAjaxRequest('DELETE' ,'/admin/rankads/1/delete');
 $I->seeSessionHasValues(['msg' => '#1不存在']);
