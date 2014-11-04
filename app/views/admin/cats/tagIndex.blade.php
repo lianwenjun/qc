@@ -50,7 +50,6 @@
                 <td width="10%">操作</td>
             </tr>
             @forelse($tags as $tag)
-                @if (isset($cats[$tag->parent_id]))
                     <tr class="jq-tr">
                         <td>{{ $tag->id }}</td>
                         <td>{{ $tag->title }}</td>
@@ -73,7 +72,6 @@
                             <input id="preSort" value="{{ $tag->sort }}" type="hidden"/>
                         </td>
                     </tr>
-                @endif
             @empty
                 <tr class="no-data">
                     <td colspan="9">没数据</td>
