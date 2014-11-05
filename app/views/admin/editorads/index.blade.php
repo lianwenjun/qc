@@ -37,7 +37,6 @@
                 <td width="6%">游戏ID</td>
                 <td width="4%">图片</td>
                 <td width="9%">游戏名称</td>
-                 <td width="6%">所属类别</td>
                 <td width="13%">上架时间</td>
                 <td width="13%">下线时间</td>
                 <td width="7%">状态</td>
@@ -50,7 +49,6 @@
                     <td>{{ $ad->id }}</td>
                     <td><img src="{{ $ad->image }}" width="28" height="28" /></td>
                     <td>{{ $ad->title }}</td>
-                    <td>{{ isset($location[$ad->location]) ? $location[$ad->location] : '' }}</td>
                     <td {{ Config::get('status.ads.timeColor')[CUtil::adsStatus($ad)] }}>{{ $ad->stocked_at }}</td>
                     <td {{ Config::get('status.ads.timeColor')[CUtil::adsStatus($ad)] }}>{{ $ad->unstocked_at }}</td>
                     <td {{ Config::get('status.ads.statusColor')[CUtil::adsStatus($ad)] }}>{{ Config::get('status.ads.status')[CUtil::adsStatus($ad)] }}</td>

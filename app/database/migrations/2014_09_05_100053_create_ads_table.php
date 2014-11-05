@@ -21,7 +21,7 @@ class CreateAdsTable extends Migration {
             $table->string('image', 255)->comment('图片路径');
             $table->string('word', 255)->comment('广告词');
             $table->integer('sort')->default(0)->unsigned()->comment('排序');
-            $table->enum('type', ['index', 'app', 'editor', 'rank'])->comment('广告位分类');
+            $table->enum('type', ['banner', 'app'])->comment('广告位分类');
             $table->enum('is_stock', ['yes', 'no'])->default('no')->comment('是否上架');
             $table->enum('is_top', ['yes', 'no'])->default('no')->comment('是否置顶');
             $table->timestamp('stocked_at')->comment('上架时间');

@@ -25,14 +25,6 @@
             <input name="app_id" type="hidden" val="">
             <!--数据选择区开始-->
             <input name="title" type="hidden" val="">
-            <tr>
-                <td class="Search_lei">广告区域：</td>
-                <td>
-                <span style="float:left">
-                    {{ Form::select('location', $location, Session::get('input.location', ''), ['class'=>'Search_select']); }}
-                 </span>
-               </td>
-            </tr>
           
             <tr>
                 <td class="Search_lei"><span class="required">*</span>游戏截图：</td>
