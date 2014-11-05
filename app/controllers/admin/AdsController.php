@@ -3,6 +3,7 @@
 class Admin_AdsController extends \Admin_BaseController {
 
     protected $type = '';
+    protected $location = '';
     protected $indexRoute = '';
     /**
      * 下架游戏位广告

@@ -2,7 +2,8 @@
 
 class Admin_indexAdsController extends \Admin_AdsController {
 
-    protected $type = 'index';
+    protected $type = 'banner';
+    protected $location = ['banner_hot', 'banner_slide', 'banner_new'];
     protected $indexRoute = 'indexads.index';
     /**
      * 显示首页图片位管理
@@ -16,6 +17,7 @@ class Admin_indexAdsController extends \Admin_AdsController {
                 ->ofStatus(Input::get('status'))
                 ->ofLocation(Input::get('location'))
                 ->isTop(Input::get('is_top'))
+                ->IsLocation($this->location)
                 ->whereType($this->type)
                 ->orderBy('id', 'desc')
                 ->paginate($this->pagesize);

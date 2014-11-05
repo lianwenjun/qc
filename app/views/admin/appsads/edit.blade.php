@@ -53,23 +53,7 @@
                          </span>
                        </td>
                     </tr>
-
-                    <tr class="Search_biao_two">
-                        <td  class="Search_lei"><span class="required">*</span>游戏截图：</td>
-                        <td><a id="browse" href="javascript:;" class="Search_Update">图片上传</a> <span style="color:#C00">（焦点图480*200，专题图230*120）</span></td>
-                    </tr>
-
-                    <tr class="Search_biao_one">
-                        <td  class="Search_lei">截图预览：</td>
-                        <td class="Search_img">
-                            <div class="Update_img">
-                                <ul id="listdata">
-                                    <li><img src="{{ $ad->image }}" /></li>
-                                    <input name="image" type="hidden" value="{{ $ad->image }}" />
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+                    
                     <tr class="Search_biao_two">
                         <td  class="Search_lei">广告置顶：</td>
                         <td>{{ Form::checkbox('is_top', 'yes', $ad->is_top == 'yes') }}
@@ -113,42 +97,6 @@ $(function(){
         stepSecond: 10
     });
 
-    UPLOADURL = '{{ route("appsads.upload") }}';
-    
-    var uploader = new plupload.Uploader({ //实例化一个plupload上传对象
-        browse_button : 'browse',
-        url : UPLOADURL,
-        runtimes: 'html5,flash',
-        max_file_size : '1mb',
-        flash_swf_url : '{{ asset("js/admin/plupload/Moxie.swf") }}',
-        filters: { 
-            mime_types : [ //只允许上传图片文件
-                { title : "图片文件", extensions : "jpg,gif,png" }
-            ]
-        }
-    });
-    uploader.init(); //初始化
-
-    //绑定文件添加进队列事件
-    uploader.bind('FilesAdded',function(uploader,files){
-        for(var i = 0, len = files.length; i<len; i++){
-            uploader.start();
-        }
-    });
-    //文件上传完后
-    uploader.bind('FileUploaded', function(up, file, object) {
-        var myData;
-        try {
-            myData = eval(object.response);
-        } catch(err) {
-            myData = eval('(' + object.response + ')');
-        }
-        if (myData.result){
-            $("#listdata li img").attr('src', myData.result.path);
-            $("#listdata input[name=image]").val(myData.result.path);
-        }
-    });
-
     // 提交表单
     $('.jq-ads-edit-submit').click(function() {
         // 验证
@@ -156,13 +104,11 @@ $(function(){
             ignore: '',
             rules: {
                 app_id: "required",
-                image: "required",
                 stocked_at: "required",
                 unstocked_at: "required",
             },
             messages: {
                 app_id: {required: '游戏为必填'},
-                image: {required: '图片为必填'},
                 stocked_at: {required: '上线时间为必填'},
                 unstocked_at: {required: '下架时间为必填'},
             }

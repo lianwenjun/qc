@@ -45,7 +45,7 @@ class V1_AdsController extends \V1_BaseController {
     //取首页广告图片列表
     private function indexAds($location, $pageSize, $pageIndex) {
         $start = (intval($pageIndex) - 1) * intval($pageSize);
-        $query = Api_Ads::whereType('index')->whereLocation($location)->isStock();
+        $query = Api_Ads::whereType('banner')->whereLocation($location)->isStock();
         $count = $query->count();
         $ads = $query->orderBy('id', 'desc')->skip($start)->take($pageSize)->get();
         $data = [];
@@ -60,9 +60,9 @@ class V1_AdsController extends \V1_BaseController {
     private function appAds($location, $pageSize, $pageIndex) {
         //检测类型
         $types = [
-                'hot' => 'hotdown', 
-                'new' => 'new',
-                'search' => 'search'
+                'hot' => 'app_hot', 
+                'new' => 'app_new',
+                'search' => 'app_search'
         ];
         if (!isset($types[$location])) {
             return ['count' => 0, 'ads' => []];
@@ -94,9 +94,9 @@ class V1_AdsController extends \V1_BaseController {
     //首页排行位广告列表
     private function rankAds($location, $pageSize, $pageIndex) {
         //检测类型
-        $types = ['hot' => 'hot', 
-                'new' => 'new',
-                'surge' => 'up'
+        $types = ['hot' => 'app_hot', 
+                'new' => 'app_new',
+                'surge' => 'app_rise'
         ];
         if (!isset($types[$location]) ) {
             return ['count' => 0, 'ads' => []];
@@ -104,7 +104,7 @@ class V1_AdsController extends \V1_BaseController {
         $location = $types[$location];
         
         $start = (intval($pageIndex) - 1) * intval($pageSize);
-        $query = Api_Ads::whereType('rank')->whereLocation($location)->isStock();
+        $query = Api_Ads::whereType('app')->whereLocation($location)->isStock();
         $count = $query->count();
         $ads = $query->orderBy('id', 'desc')->skip($start)->take($pageSize)->get();
         $data = [];
@@ -129,7 +129,7 @@ class V1_AdsController extends \V1_BaseController {
     //首页排行位广告列表
     private function edtiorAds($top, $pageSize, $pageIndex) {
         $start = (intval($pageIndex) - 1) * intval($pageSize);
-        $query = Api_Ads::whereType('editor')->IsStock();
+        $query = Api_Ads::whereType('banner')->whereLocation('banner_suggest')->IsStock();
         if ($top == 'yes') {
             $query->isTop();
         }
@@ -172,13 +172,13 @@ class V1_AdsController extends \V1_BaseController {
         $pageIndex = intval($pageIndex) > 0 ? $pageIndex : 1;
         switch ($type) {
             case 'banner':
-                $res = $this->indexAds('slide', $pageSize, $pageIndex);
+                $res = $this->indexAds('banner_slide', $pageSize, $pageIndex);
                 break;
             case 'hot':
-                $res = $this->indexAds('hotdown', $pageSize, $pageIndex);
+                $res = $this->indexAds('banner_hot', $pageSize, $pageIndex);
                 break;
             case 'new':
-                $res = $this->indexAds('new', $pageSize, $pageIndex);
+                $res = $this->indexAds('banner_new', $pageSize, $pageIndex);
                 break;
             default:
                 return $this->result(['data' => '[]', 'msg' => 0, 'msgbox' => '分类不存在']);

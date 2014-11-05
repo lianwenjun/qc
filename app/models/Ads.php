@@ -16,7 +16,6 @@ class Ads extends \Eloquent {
             'create' => [
                 'app_id' => 'required|integer',
                 'title' => 'required',
-                'location' => 'required',
                 'is_top' => 'in:yes,no',
                 'sort' => 'integer',
                 'stocked_at' => 'required',
@@ -40,11 +39,11 @@ class Ads extends \Eloquent {
     * @param Input::all()
     * @respone data
     */
-    public function ofCreate($type) {
+    public function ofCreate($type, $location = '') {
         $fields = [
             'app_id' => Input::get('app_id'),
             'title' => Input::get('title'),
-            'location' => Input::get('location'),
+            'location' => $location ? $location : Input::get('location'),
             'image' => Input::get('image', ''),
             'is_top' => Input::get('is_top', 'no'),
             'stocked_at' => Input::get('stocked_at'),
@@ -90,6 +89,11 @@ class Ads extends \Eloquent {
             return $query;
         }
         return $query->where('is_top', $type); 
+    }
+    public function scopeIsLocation($query, $location) {
+        if (!$location) return $query;
+        if (!is_array($location)) return $query;
+        return $query->whereIn('location', $location);
     }
 
     //游戏名称查询

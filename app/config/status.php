@@ -66,33 +66,27 @@
             //排行广告区域
             'ranklocation' => [
                 '' => '所有',
-                'new' => '最新',
-                'hot' => '最热',
-                'up' => '飙升',
+                'app_new' => '最新',
+                'app_hot' => '最热',
+                'app_rise' => '飙升',
             ],
             //首页，图片，编辑广告区域
             'location' => [
-                '' => '所有',
-                'search' => '搜索页推广',
-                'new' => '新品抢玩',
-                'hotdown' => '热门下载',
-                'suggest' => '精品推荐',
+                'banner_suggest' => '编辑推荐',
             ],
             //首页，图片，编辑广告区域
             'applocation' => [
-                '' => '所有',
-                'search' => '搜索页推广',
-                'new' => '新品抢玩',
-                'hotdown' => '热门下载',
-                'suggest' => '精品推荐',
+                '' => '所属类别',
+                'app_new' => '新品抢玩',
+                'app_hot' => '热门下载',
+                'app_search' => '搜索页推广',
             ],
             //首页图片，编辑广告区域
             'bannerLocation' => [
                 '' => '所有',
-                'slide' => '轮播广告图',
-                'new' => '新品抢玩',
-                'hotdown' => '热门下载',
-                'suggest' => '精品推荐',
+                'banner_slide' => '轮播广告图',
+                'banner_new' => '新品抢玩',
+                'banner_hot' => '热门下载',
             ],
         ],
         //关键词

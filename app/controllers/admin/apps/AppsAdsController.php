@@ -19,6 +19,12 @@ class Admin_Apps_AppsAdsController extends \Admin_AdsController {
                 ->whereType($this->type)
                 ->orderBy('id', 'desc')
                 ->paginate($this->pagesize);
+        //下面的需要改下
+        $appsModel = new Apps();
+        foreach ($ads as &$ad) {
+            $app = $appsModel->find($ad->app_id);
+            if ($app) $ad->image = $app->icon;
+        }
         $datas = ['ads' => $ads, 
             'status' => Config::get('status.ads.status'), 
             'location' => Config::get('status.ads.applocation'),

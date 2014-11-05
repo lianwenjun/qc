@@ -44,32 +44,6 @@
                     </tr>
 
                     <tr>
-                        <td  class="Search_lei"><span class="required">*</span>游戏截图：</td>
-                        <td>
-                            @if(Sentry::getUser()->hasAccess('appsads.upload'))
-                            <a id="browse" href="javascrip:;" class="Search_Update">图片上传</a>
-                            @endif
-                            <span style="color:#C00">（焦点图480*200，专题图230*120）</span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td  class="Search_lei">截图预览：</td>
-                        <td class="Search_img">
-                        <div class="Update_img">
-                            <ul id="listdata">
-                                <li>
-                                    <!--a href="javascript">删除</a-->
-                                    <img src="{{ Session::get('input.image', '') }}" />
-                                </li>
-                                <input name="image" type="hidden" value="{{ Session::get('input.image', '') }}" />
-                            </ul>
-                        </div>
-
-                        </td>
-                    </tr>
-
-                    <tr>
                         <td  class="Search_lei">广告置顶：</td>
                         <td>
                             {{ Form::checkbox('is_top', 'yes', Session::get('input.is_top') ? true : false) }} 
@@ -163,42 +137,6 @@ $(function(){
             stepMinute: 10,
             stepSecond: 10
     });
-    //图片上传
-    UPLOADURL = '{{ route("appsads.upload") }}';
-
-    var uploader = new plupload.Uploader({ //实例化一个plupload上传对象
-        browse_button : 'browse',
-        url : UPLOADURL,
-        runtimes: 'html5,flash',
-        max_file_size : '1mb',
-        flash_swf_url : '{{ asset("js/admin/plupload/Moxie.swf") }}',
-        filters: {
-            mime_types : [ //只允许上传图片文件
-                { title : "图片文件", extensions : "jpg,gif,png" }
-            ]
-        }
-    });
-    uploader.init(); //初始化
-
-    //绑定文件添加进队列事件
-    uploader.bind('FilesAdded',function(uploader,files){
-        for(var i = 0, len = files.length; i<len; i++){
-            uploader.start();
-        }
-    });
-    //文件上传完后
-    uploader.bind('FileUploaded', function(up, file, object) {
-        var myData;
-        try {
-            myData = eval(object.response);
-        } catch(err) {
-            myData = eval('(' + object.response + ')');
-        }
-        if (myData.result){
-            $("#listdata li img").attr('src', myData.result.path);
-            $("#listdata input[name=image]").val(myData.result.path);
-        }
-    });
 
     // 提交表单
     $('.jq-ads-create-submit').click(function() {
@@ -207,13 +145,11 @@ $(function(){
             ignore: '',
             rules: {
                 app_id: "required",
-                image: "required",
                 stocked_at: "required",
                 unstocked_at: "required",
             },
             messages: {
                 app_id: {required: '游戏为必填'},
-                image: {required: '图片为必填'},
                 stocked_at: {required: '上线时间为必填'},
                 unstocked_at: {required: '下架时间为必填'},
             }

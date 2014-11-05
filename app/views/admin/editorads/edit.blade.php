@@ -49,15 +49,6 @@
                 </tr>
               
                 <tr>
-                    <td class="Search_lei">广告区域：</td>
-                    <td>
-                    <span style="float:left">
-                            {{ Form::select('location', $location, $ad->location, ['class'=>'Search_select']) }}
-                     </span>
-                   </td>
-                </tr>
-              
-                <tr>
                     <td class="Search_lei"><span class="required">*</span>游戏截图：</td>
                     <td><a id="browse" href="javascript:;" class="Search_Update">图片上传</a> <span style="color:#C00">（焦点图480*200，专题图230*120）</span></td>
                 </tr>
