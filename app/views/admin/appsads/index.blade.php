@@ -13,6 +13,9 @@
             <ul>
                 <li>
                     <span><b>查询：</b>
+                        {{ Form::select('is_top', $is_top, Input::get('is_top')); }}
+                    </span>
+                    <span>
                         {{ Form::select('status', $status, Input::get('status')); }}
                     </span>
                     <span>
