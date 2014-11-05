@@ -164,7 +164,7 @@ html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅�
 .wraper{padding: 30px; overflow: hidden;}
 .wraper_img{width: 80px; float: left; height: 80px; margin-left: 20px;  background:#fff; border: solid #999 1px; overflow: hidden; position: relative; color: #ccc; font-size: 18px; text-align: center; line-height: 80px; padding: 2px;}
 .wraper_img img{height: 80px; width: 80px; font-size: 0px; overflow: hidden; position: absolute; top:2px; left: 2px;}
-.btn-wraper{float: left; margin-left:30px; margin-top: 27px;}
+.btn-wraper{float: left; margin-left:120px; margin-top: -36px;}
 .wraper_buttom{display: block; width: 100%; text-align: center; background: #f3f4f6; padding: 15px 0px; border-top:#ddd solid 1px; }
 
 .fileinput-button {

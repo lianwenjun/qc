@@ -62,7 +62,7 @@ $(function(){
             top: '20%',
             loaded:function() {
                 $("body").css("overflow-y","hidden");
-                $(".jbox-content").html('<div class="jbox-waraper" style=""><div class="wraper"><div class="wraper_img"><span>暂无图片</span><div id="file-list"></div></div><div class="btn-wraper"><input type="button" value="选择图片并上传" id="browse" /></div></div><div class="wraper_buttom"><input class="Search_show jq-catads-sure" type="button" value="确定" id="upload-btn"/></div></div>');
+                $(".jbox-content").html('<div class="jbox-waraper" style=""><div class="wraper"><div class="wraper_img"><span>暂无图片</span><div id="file-list"></div></div><div class="btn-wraper">图片为210x128px<input type="button" value="选择图片并上传" id="browse" /></div></div><div class="wraper_buttom"><input class="Search_show jq-catads-sure" type="button" value="确定" id="upload-btn"/></div></div>');
                 var uploader = new plupload.Uploader({ //实例化一个plupload上传对象
                     browse_button : 'browse',
                     url : '{{ route("catads.upload") }}',

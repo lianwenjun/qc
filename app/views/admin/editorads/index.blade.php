@@ -18,10 +18,6 @@
                     <span>
                         {{ Form::select('status', $status, Input::get('status')); }}
                     </span>
-                    <span>
-                        {{ Form::select('location', $location, Input::get('location')); }}
-                    </span>
-                         
                     <span><input value="{{ Input::get('word'); }}" maxlength="16" name="word" type="text" class="Search_wenben" size="20" value="" placeholder="输入游戏名称"/></span>
                     <input name="" type="submit" value="搜索" class="Search_en" />
                 </li>     
