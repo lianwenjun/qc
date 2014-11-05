@@ -16,7 +16,7 @@ class Feedbacks extends \Eloquent {
     public function lists($data)
     {
         $query = Feedbacks::select('id', 'type', 'imei', 'version', 'email', 'content', 'created_at');
-        $query = (new Feedback)->queryParse($query, $data);
+        $query = (new CFeedback)->queryParse($query, $data);
         $list = $query->orderBy('created_at')->paginate($this->pageSize);
 
         return $list;
