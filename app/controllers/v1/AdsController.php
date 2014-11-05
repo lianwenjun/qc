@@ -79,7 +79,7 @@ class V1_AdsController extends \V1_BaseController {
             $appIds[] = $ad->app_id;
             $data[] = $ad->app_id;
         }
-        $apps = Api_apps::whereIn('id', $appIds)->get();
+        $apps = Api_Apps::whereIn('id', $appIds)->get();
         $appTmp = [];
         foreach ($apps as $app) {
             $appTmp[$app->id] = $this->appFields($this->appFiles, $app);   
@@ -114,7 +114,7 @@ class V1_AdsController extends \V1_BaseController {
             $appIds[] = $ad->app_id;
             $data[] = $tmp;
         }
-        $apps = Api_apps::whereIn('id', $appIds)->get();
+        $apps = Api_Apps::whereIn('id', $appIds)->get();
         $appTmp = [];
         foreach ($apps as $app) {
             $appTmp[$app->id] = $this->appFields($this->appFiles, $app);   
@@ -144,7 +144,7 @@ class V1_AdsController extends \V1_BaseController {
             $appIds[] = $ad->app_id;
             $data[] = $tmp;
         }
-        $apps = Api_apps::whereIn('id', $appIds)->get();
+        $apps = Api_Apps::whereIn('id', $appIds)->get();
         $appTmp = [];
         foreach ($apps as $app) {
             $appTmp[$app->id] = $this->appFields($this->editorFileds, $app);   
