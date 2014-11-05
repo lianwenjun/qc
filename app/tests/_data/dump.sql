@@ -520,8 +520,10 @@ CREATE TABLE `feedbacks` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `feedbacks` (`id`, `version`, `content`, `type`, `imei`, `os_version`, `os`, `email`, `deleted_at`, `created_at`, `updated_at`) VALUES (1, '1.0.1', '今天过节不收礼,收礼只收脑白金呀!脑白金!', 'SM-G3509I', 'A0000045F37F88', 'asdasd', 'asdasd', '674217474@sina.com', NULL, '2014-10-14 10:33:12', '2014-10-14 10:33:12');
-
+INSERT INTO `feedbacks` (`id`, `version`, `content`, `type`, `imei`, `os_version`, `os`, `email`, `deleted_at`, `created_at`, `updated_at`) VALUES 
+(1, '1.0.1', '应用反馈列表第一行内容', 'SM-G3509I', 'A0000045F37F88', 'asdasd', 'asdasd', '674217474@sina.com', NULL, '2014-10-14 10:33:12', '2014-10-14 10:33:12'),
+(2, '1.0.1', '应用反馈列表第二行内容', 'SM-G3509I', 'ABCDEF45F37F88', 'asdasd', 'asdasd', '674217474@sina.com', NULL, '2014-10-16 10:33:12', '2014-10-14 10:33:12'),
+(3, '1.0.1', '应用反馈列表第三行内容', 'SM-G3509I', 'A0000045F37F88', 'asdasd', 'asdasd', '674217474@sina.com', NULL, '2014-10-18 10:33:12', '2014-10-14 10:33:12');
 
 CREATE TABLE `client` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
