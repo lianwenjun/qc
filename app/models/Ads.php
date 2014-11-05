@@ -84,6 +84,13 @@ class Ads extends \Eloquent {
     public function scopeIsStock($query, $type='yes') {
         return $query->where('is_stock', $type); 
     }
+    //是否置顶
+    public function scopeIsTop($query, $type) {
+        if (!$type) {
+            return $query;
+        }
+        return $query->where('is_top', $type); 
+    }
 
     //游戏名称查询
     public function scopeTitleLike($query, $word) {

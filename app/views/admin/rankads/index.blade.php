@@ -15,20 +15,10 @@
                     <span><b>查询：</b>  
                     </span>
                     <span>
-                         <select name="status">
-                            <option value="">状态</option>
-                            @foreach(Config::get('status.ads.status') as $k=>$v)
-                                <option value="{{ $k }}">{{ $v }}</option>
-                            @endforeach
-                         </select>
+                        {{ Form::select('status', $status, Input::get('status')); }}
                     </span>
                     <span>
-                         <select name="location">
-                           <option value="">所属类别</option>
-                            @foreach($location as $k=>$v)
-                                <option value="{{ $k }}">{{ $v }}</option>
-                            @endforeach
-                         </select>
+                        {{ Form::select('location', $location, Input::get('location')); }}
                     </span>
                     <span><input maxlength="16" placeholder="输入游戏名称" type="text" class="Search_wenben" size="20" value="" /></span>
                     <input name="" type="submit" value="搜索" class="Search_en" />

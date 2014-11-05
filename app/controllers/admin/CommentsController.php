@@ -10,19 +10,20 @@ class Admin_CommentsController extends \Admin_BaseController {
      */
     public function index()
     {
-        $query = [];
         $comments = new Comments();
-        $where = $comments;
-        if (Input::get('cate') == 'title') {
-            $query = ['%', Input::get('word'), '%'];
-            $where = $comments->where('title', 'like', join($query));
-        }
-        if (Input::get('cate') == 'pack') {
-            $query = ['%', Input::get('word'), '%'];
-            $where = $comments->where('pack', 'like', join($query));
+        switch (Input::get('cate')) {
+            case 'title':
+                $query = Comments::OfTitle(Input::get('word'));
+                break;
+            case 'pack':
+                $query = Comments::OfPack(Input::get('word'));
+                break;
+            default:
+                $query = new Comments;
+                break;
         }
         //查询，默认分页
-        $datas = $where->orderBy('id', 'desc')->paginate($this->pagesize);
+        $datas = $query->orderBy('id', 'desc')->paginate($this->pagesize);
         $datas = ['comments' => $datas];
         $this->layout->content = View::make('admin.comments.index', $datas);
     }
@@ -40,25 +41,18 @@ class Admin_CommentsController extends \Admin_BaseController {
         //检测是否存在该数据
         $comments = new Comments();
         $comment = $comments->find($id);
-        $res = ['status'=>'ok', 'msg'=>'suss'];
-        if(!$comment){
-            $res['msg'] = '#' . $id . ' is valid';
-            $res['status'] = 'error';
-            return Response::json($res);   
+        if(!$comment) {
+            return Response::json(['status'=>'error', 'msg'=>'#' . $id . ' is valid']);   
         }
         $validator = Validator::make(Input::all(), $comments->rules);
         if ($validator->fails()) {
-            $res['msg'] = '验证失败';
-            $res['status'] = 'error';
-            return Response::json($res);
+            return Response::json(['status'=>'error', 'msg'=>'验证失败']);
         }
         $comment->content = Input::get('content');
         if (!$comment->save()) {
-            $res['msg'] = '保存失败';
-            $res['status'] = 'error';
-            return Response::json($res);
+            return Response::json(['status'=>'error', 'msg'=>'保存失败']);
         }
-        return Response::json($res);
+        return Response::json(['status'=>'ok', 'msg'=>'suss']);
     }
 
     /**

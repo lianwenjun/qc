@@ -8,13 +8,20 @@ class Api_Apps extends \Eloquent {
     protected $table = 'apps';
     protected $fillable = [];
     //新增字段
-    protected $appends = ['rating', 'comment', 'tagList', 'categoryId', 'gameCategory'];
+    protected $appends = ['rating', 'comment', 'tagList', 'categoryId', 'gameCategory', 'catIds'];
     //按名称搜索游戏名字
+    public function scopeOfSelect($query, $select = []) {
+        if (is_null($select)) { 
+            return $query;
+        }
+        return $query->select($select);
+    }
     public function scopeOfTitle($query, $title) {
         $sql = '%' . $title . '%';
         $query = $query->where('title', 'like', $sql);
         return $query;
     }
+    
     //获得新的
     public function scopeOfNew($query, $versionCode) {
         return $query->where('version_code', '>', $versionCode)
@@ -95,49 +102,36 @@ class Api_Apps extends \Eloquent {
     }
     //获取标签列表[问题，单个和多个时候如何分]
     public function getTagListAttribute() {
-        $data = [];
-        $ids = Api_AppCats::select('cat_id')
-                       ->where('app_id', $this->id)
-                       ->get()->toArray();
-
-        if($ids) {
-            $data = Api_Cats::select(['id', 'title'])
-                         ->where('parent_id', '!=', 0)
-                         ->whereIn('id', $ids)
-                         ->get()->toArray();
-        }
-        return $data;
+        return (new Api_Cats)->getTagsByAppId($this->id);
     }
-    //拉取游戏相关的分类[问题，单个和多个时候如何分]
-    public function getCat() {
-        $data = [];
-        $ids = Api_AppCats::select('cat_id')
-                       ->where('app_id', $this->id)
-                       ->get()->toArray();
-
-        if($ids) {
-            $data = Api_Cats::where('parent_id', 0)
-                         ->whereIn('id', $ids)
-                         ->get();
-        }
-        return $data;
+    public function getCatIdsAttribute() {
+        $cats = Api_AppCats::where('app_id', $this->id)->get();
+        if (!$cats) return [];
+        return array_map(function($x) {
+                            return $x['cat_id'];
+                        }, 
+                        $cats->toArray()
+        );
     }
+    
     //获取分类列表[问题，单个和多个时候如何分]
     public function getCategoryIdAttribute() {
-        $data = $this->getCat();
+        $data = (new Api_Cats)->getCatsByAppId($this->id);
         $tmp = [];
         foreach ($data as $cat) {
             $tmp[] = $cat->id;
         }
         return join(',', $tmp);
     }
-    //获取分类列表[问题，单个和多个时候如何分]
+
     public function getGameCategoryAttribute() {
-        $data = $this->getCat();
-        $tmp = [];
-        foreach ($data as $cat) {
-            $tmp[] = $cat->title;
-        }
+        $data = (new Api_Cats)->getCatsByAppId($this->id);
+        if (!$data) return '';
+        $tmp = array_map(function($x) {
+                            return $x['title'];
+                        }, 
+                        $data->toArray()
+        );
         return join(',', $tmp);
     }
 }

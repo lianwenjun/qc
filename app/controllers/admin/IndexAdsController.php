@@ -15,13 +15,14 @@ class Admin_indexAdsController extends \Admin_AdsController {
         $ads = Ads::ofTitle(Input::get('word'))
                 ->ofStatus(Input::get('status'))
                 ->ofLocation(Input::get('location'))
+                ->isTop(Input::get('is_top'))
                 ->whereType($this->type)
                 ->orderBy('id', 'desc')
                 ->paginate($this->pagesize);
         $datas = ['ads' => $ads, 
-            'status' => Config::get('status.ads.status'), 
+            'status' =>  Config::get('status.ads.status'), 
             'location' => Config::get('status.ads.bannerLocation'),
-            'is_top' => Config::get('status.ads.is_top') 
+            'is_top' =>  Config::get('status.ads.is_top')
         ];
         $this->layout->content = View::make('admin.indexads.index', $datas);
     }
