@@ -54,7 +54,19 @@ class V1_AdsController extends \V1_BaseController {
             $tmp['ImgUrl'] = $ad->image;
             $data[] = $tmp;
         }
-        return ['count' => $count, 'ads' => $data];
+        $res = [];
+        if (count($data) >= 4 || $location != 'banner_slide'){
+            $res = $data;
+        } else {
+            while ($location == 'banner_slide' && count($res) < 4) {
+                foreach ($data as $value) {
+                    if (count($res) < 4) {
+                        $res[] = $value;
+                    }
+                }
+            }
+        }
+        return ['count' => $count, 'ads' => $res];
     }
     //首页游戏位广告列表
     private function appAds($location, $pageSize, $pageIndex, $isTop = 'no') {

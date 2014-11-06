@@ -241,6 +241,7 @@ Route::group(['prefix' => 'v1/api'], function() //V1版本
     Route::post('client/apps/list', ['uses' => 'V1_AppsController@clientList']);
     Route::post('game/update', ['uses' => 'V1_AppsController@check']);
 
+    Route::get('appclient/ver/update/{versionCode}', ['uses' => 'V1_ClientController@checkVersion']);
     Route::get('appclient/ver/info/{versionCode}', ['uses' => 'V1_ClientController@checkVersion']);
     Route::post('game/feedback/add', ['uses' => 'V1_FeedbacksController@store']);
     
