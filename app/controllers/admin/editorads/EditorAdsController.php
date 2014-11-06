@@ -16,6 +16,7 @@ class Admin_EditorAdsController extends \Admin_AdsController {
         $ads = Ads::ofTitle(Input::get('word'))
                 ->ofStatus(Input::get('status'))
                 ->ofLocation(Input::get('location'))
+                ->isTop(Input::get('is_top'))
                 ->whereType($this->type)
                 ->IsLocation($this->location)
                 ->orderBy('id', 'desc')

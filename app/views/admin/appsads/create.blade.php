@@ -151,7 +151,7 @@ $(function(){
             },
             messages: {
                 app_id: {required: '游戏为必填'},
-                location: {required: '分类为必填'}
+                location: {required: '分类为必填'},
                 stocked_at: {required: '上线时间为必填'},
                 unstocked_at: {required: '下架时间为必填'},
             }
