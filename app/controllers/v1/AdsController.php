@@ -62,7 +62,8 @@ class V1_AdsController extends \V1_BaseController {
         $types = [
                 'hot' => 'app_hot', 
                 'new' => 'app_new',
-                'search' => 'app_search'
+                'search' => 'app_search',
+                'surge' => 'app_rise'
         ];
         if (!isset($types[$location])) {
             return ['count' => 0, 'ads' => []];
@@ -184,10 +185,10 @@ class V1_AdsController extends \V1_BaseController {
             return $this->result(['data' => '[]', 'msg' => 0, 'msgbox' => '每页条数大于0']); 
         };
         $types = ['4' => 'yes', '10' => 'no'];
-        if (!isset($types[$type])) {
+        if (!isset($types[$pageSize])) {
             return $this->result(['data' => '[]', 'msg' => 0, 'msgbox' => '分类不存在']);
         }
-        $res = $this->appAds($type, $pageSize, $pageIndex, $types[$type]);
+        $res = $this->appAds($type, $pageSize, $pageIndex, $types[$pageSize]);
             
         $pageIndex = intval($pageIndex) > 0 ? $pageIndex : 1;
         $data['pageCount'] =  CUtil::setPageNum($res['count'], $pageSize);
