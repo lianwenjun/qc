@@ -1,0 +1,486 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>上架游戏列表</title>
+<link type="text/css" href="css/common.css" rel="stylesheet"/>
+<script src="js/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+<div class="page-box">   
+    <!-- 左侧内容 -->
+    <div class="border-left">
+        <!-- 标题 -->
+        <div class="left-title">
+            <h2>游戏商店系统</h2>
+        </div>
+        <!-- 内容开始 -->
+        <div class="content">
+            <h4>hi,蓝翔高技学校</h4>
+            <a href="#">修改密码</a>
+            <a href="#">退出系统</a>
+        </div>
+        <!-- 菜单 -->
+        <div class="menu">
+            <ul>
+                <li>
+                    <p>游戏管理</p>
+                    <ul class="list">
+                        <li><a href="putaway.html">上架游戏列表</a></li>
+                        <li><a href="add.html">添加编辑游戏</a></li>
+                        <li><a href="authstr.html">待审核列表</a></li>
+                        <li><a href="nopass.html">审核不通过列表</a></li>
+                        <li><a href="unstock.html">下架游戏列表</a> </li> 
+                    </ul>
+                </li>
+                <li>
+                    <p>广告位管理</p>
+                    <ul class="list">
+                        <li><a href="picture.html">首页图片位管理</a></li>
+                        <li><a href="games.html">首页游戏位管理</a></li>
+                        <li><a href="selection.html">编辑精选管理</a></li>
+                        <li><a href="rank.html">排行游戏位管理</a></li>
+                        <li><a href="classify.html">分类页图片管理</a> </li> 
+                    </ul>
+                </li>
+                <li>
+                    <p>系统管理</p>
+                    <ul class="list">
+                        <li><a href="#">游戏分类管理</a></li>
+                        <li><a href="#">分类标签管理</a></li>
+                        <li><a href="#">标签库管理</a></li>
+                        <li><a href="#">供应商管理</a></li>
+                        <li><a href="#">渠道商管理</a></li>
+                        <li><a href="#">关键字管理</a></li>
+                        <li><a href="#">屏蔽词管理</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <p>评论管理</p>
+                    <ul class="list">
+                        <li><a href="score.html">游戏评分列表</a></li>
+                        <li><a href="comments.html">游戏评论列表</a></li>
+                        <li><a href="feedback.html">应用反馈</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <p>数据中心</p>
+                    <ul class="list">
+                        <li><a href="#">游戏下载统计</a></li>
+                        <li><a href="#">平台激活统计</a></li>
+                        <li><a href="#">页面访问统计</a></li>
+                        <li><a href="#">按钮事件统计</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <p>权限管理</p>
+                    <ul class="list">
+                        <li><a href="administrator.html">管理员管理</a></li>
+                        <li><a href="auth/role.html">角色管理</a></li>
+                        <li><a href="auth.thml">权限管理</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <p>日志管理</p>
+                    <ul class="list">
+                        <li><a href="log.html">日志查询</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 右侧内容 -->
+    <div class="border-right">
+        <div class="right-box">
+            <!-- 右侧主体内容 -->
+            <div  class="right-title">
+                <span><b>游戏管理</b>—上架游戏列表</span>
+            </div>
+            <!-- 查询 -->
+            <form method="post" action="" enctype="" name="forms">
+                <div class="search">
+                    <p>查询:
+                        <select name="sort">
+                            <option value="">游戏分类</option>
+                            <option value="">体育竞技</option>
+                            <option value="">策略卡牌</option>
+                            <option value="">动作游戏</option>
+                            <option value="">格斗游戏</option>
+                        </select>
+                        <select name="gamename">
+                            <option value="">游戏名称</option>
+                            <option value="">游戏包名</option>
+                            <option value="">游戏标签</option>
+                            <option value="">游戏分类</option>
+                            <option value="">版本号</option>
+                        </select>
+                        <input class="input" type="text" name="search" placeholder="请输入关键字" />
+                        安装包大小：
+                        <input class="input" type="text" placeholder="Ok" />—<input class="input" type="text" placeholder="10m" />
+                        <input type="button" value="查询" />
+                        日期：
+                        <input class="input" type="text" placeholder="" />
+                    </p>
+                </div>
+            </form>
+            <!-- 上架游戏记录 -->
+            <div class="table-load">
+                <span>上架游戏：共<b>1231</b>条记录</sapn>
+            </div>
+            <!-- 上架游戏记录表格 -->
+            <div class="table">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>游戏ID</th>
+                        <th>图标</th>
+                        <th class="tag">游戏名称<img src="images/tag.png"/></th>
+                        <th>游戏作者</th>
+                        <th>供应商</th>
+                        <th>包名</th>
+                        <th>游戏分类</th>
+                        <th class="tag">大小<img src="images/tag-1.png"/></th>
+                        <th>版本号</th>
+                        <th>预览</th>
+                        <th class="tag">下载量<img src="images/tag-1.png"/></th>
+                        <th class="tag">上架时间<img src="images/tag-1.png"/></th>
+                        <th>操作</th>
+                    </tr>
+                    <tbody>
+                        <tr class="even">
+                            <td>1234567</td>
+                            <td class="icon"><img src="images/icon.jpg"/></td>
+                            <td><span class="blue">我叫MT  online</span></td>
+                            <td>10个字符(超过省略号)</td>
+                            <td>UC九游</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>策略游戏</td>
+                            <td>183.50M</td>
+                            <td>4.43</td>
+                            <td><span class="blue">点击预览</span></td>
+                            <td>9,999,999,999</td>
+                            <td>2014-10-16  16:29:53</td>
+                            <td class="operation">
+                                <input type="button" value="下架" />
+                                <input type="button" value="更新" />
+                                <input type="button" value="历史版本" />
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td>1234567</td>
+                            <td class="icon"><img src="images/icon-1.jpg"/></td>
+                            <td><span class="blue">我叫MT  online</span></td>
+                            <td>巨象互动</td>
+                            <td>UC九游</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>策略游戏</td>
+                            <td>183.50M</td>
+                            <td>4.43</td>
+                            <td><span class="blue">点击预览</span></td>
+                            <td>9,999,999,999</td>
+                            <td>2014-10-16  16:29:53</td>
+                            <td class="operation">
+                                <input type="button" value="下架" />
+                                <input type="button" value="更新" />
+                                <input type="button" value="历史版本" />
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td>1234567</td>
+                            <td class="icon"><img src="images/icon-2.jpg"/></td>
+                            <td><span class="blue">我叫MT  online</span></td>
+                            <td>成都晨月</td>
+                            <td>UC九游</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>策略游戏</td>
+                            <td>183.50M</td>
+                            <td>4.43</td>
+                            <td><span class="blue">点击预览</span></td>
+                            <td>9,999,999,999</td>
+                            <td>2014-10-16  16:29:53</td>
+                            <td class="operation">
+                                <input type="button" value="下架" />
+                                <input type="button" value="更新" />
+                                <input type="button" value="历史版本" />
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td>1234567</td>
+                            <td class="icon"><img src="images/icon-3.jpg"/></td>
+                            <td><span class="blue">我叫MT  online</span></td>
+                            <td>4399</td>
+                            <td>UC九游</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>策略游戏</td>
+                            <td>183.50M</td>
+                            <td>4.43</td>
+                            <td><span class="blue">点击预览</span></td>
+                            <td>9,999,999,999</td>
+                            <td>2014-10-16  16:29:53</td>
+                            <td class="operation">
+                                <input type="button" value="下架" />
+                                <input type="button" value="更新" />
+                                <input type="button" value="历史版本" />
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td>1234567</td>
+                            <td class="icon"><img src="images/icon-4.jpg"/></td>
+                            <td><span class="blue">我叫MT  online</span></td>
+                            <td>乐逗游戏</td>
+                            <td>UC九游</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>策略游戏</td>
+                            <td>183.50M</td>
+                            <td>4.43</td>
+                            <td><span class="blue">点击预览</span></td>
+                            <td>9,999,999,999</td>
+                            <td>2014-10-16  16:29:53</td>
+                            <td class="operation">
+                                <input type="button" value="下架" />
+                                <input type="button" value="更新" />
+                                <input type="button" value="历史版本" />
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td>1234567</td>
+                            <td class="icon"><img src="images/icon.jpg"/></td>
+                            <td><span class="blue">我叫MT  online</span></td>
+                            <td>第七大道</td>
+                            <td>UC九游</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>策略游戏</td>
+                            <td>183.50M</td>
+                            <td>4.43</td>
+                            <td><span class="blue">点击预览</span></td>
+                            <td>9,999,999,999</td>
+                            <td>2014-10-16  16:29:53</td>
+                            <td class="operation">
+                                <input type="button" value="下架" />
+                                <input type="button" value="更新" />
+                                <input type="button" value="历史版本" />
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td>1234567</td>
+                            <td class="icon"><img src="images/icon-1.jpg"/></td>
+                            <td><span class="blue">我叫MT  online</span></td>
+                            <td>墨麟</td>
+                            <td>UC九游</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>策略游戏</td>
+                            <td>183.50M</td>
+                            <td>4.43</td>
+                            <td><span class="blue">点击预览</span></td>
+                            <td>9,999,999,999</td>
+                            <td>2014-10-16  16:29:53</td>
+                            <td class="operation">
+                                <input type="button" value="下架" />
+                                <input type="button" value="更新" />
+                                <input type="button" value="历史版本" />
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td>1234567</td>
+                            <td class="icon"><img src="images/icon-2.jpg"/></td>
+                            <td><span class="blue">我叫MT  online</span></td>
+                            <td>触控科技</td>
+                            <td>乐逗游戏</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>策略游戏</td>
+                            <td>183.50M</td>
+                            <td>4.43</td>
+                            <td><span class="blue">点击预览</span></td>
+                            <td>9,999,999,999</td>
+                            <td>2014-10-16  16:29:53</td>
+                            <td class="operation">
+                                <input type="button" value="下架" />
+                                <input type="button" value="更新" />
+                                <input type="button" value="历史版本" />
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td>1234567</td>
+                            <td class="icon"><img src="images/icon-3.jpg"/></td>
+                            <td><span class="blue">我叫MT  online</span></td>
+                            <td>神奇时代</td>
+                            <td>乐逗游戏</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>策略游戏</td>
+                            <td>183.50M</td>
+                            <td>4.43</td>
+                            <td><span class="blue">点击预览</span></td>
+                            <td>9,999,999,999</td>
+                            <td>2014-10-16  16:29:53</td>
+                            <td class="operation">
+                                <input type="button" value="下架" />
+                                <input type="button" value="更新" />
+                                <input type="button" value="历史版本" />
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td>1234567</td>
+                            <td class="icon"><img src="images/icon-4.jpg"/></td>
+                            <td><span class="blue">我叫MT  online</span></td>
+                            <td>顽石互动</td>
+                            <td>乐逗游戏</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>策略游戏</td>
+                            <td>183.50M</td>
+                            <td>4.43</td>
+                            <td><span class="blue">点击预览</span></td>
+                            <td>9,999,999,999</td>
+                            <td>2014-10-16  16:29:53</td>
+                            <td class="operation">
+                                <input type="button" value="下架" />
+                                <input type="button" value="更新" />
+                                <input type="button" value="历史版本" />
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td>1234567</td>
+                            <td class="icon"><img src="images/icon.jpg"/></td>
+                            <td><span class="blue">我叫MT  online</span></td>
+                            <td>银汉游戏</td>
+                            <td>乐逗游戏</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>策略游戏</td>
+                            <td>183.50M</td>
+                            <td>4.43</td>
+                            <td><span class="blue">点击预览</span></td>
+                            <td>9,999,999,999</td>
+                            <td>2014-10-16  16:29:53</td>
+                            <td class="operation">
+                                <input type="button" value="下架" />
+                                <input type="button" value="更新" />
+                                <input type="button" value="历史版本" />
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td>1234567</td>
+                            <td class="icon"><img src="images/icon-1.jpg"/></td>
+                            <td><span class="blue">我叫MT  online</span></td>
+                            <td>掌上明珠</td>
+                            <td>91市场</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>策略游戏</td>
+                            <td>183.50M</td>
+                            <td>4.43</td>
+                            <td><span class="blue">点击预览</span></td>
+                            <td>9,999,999,999</td>
+                            <td>2014-10-16  16:29:53</td>
+                            <td class="operation">
+                                <input type="button" value="下架" />
+                                <input type="button" value="更新" />
+                                <input type="button" value="历史版本" />
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td>1234567</td>
+                            <td class="icon"><img src="images/icon-2.jpg" /></td>
+                            <td><span class="blue">我叫MT  online</span></td>
+                            <td>蓝港在线</td>
+                            <td>91市场</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>策略游戏</td>
+                            <td>183.50M</td>
+                            <td>4.43</td>
+                            <td><span class="blue">点击预览</span></td>
+                            <td>9,999,999,999</td>
+                            <td>2014-10-16  16:29:53</td>
+                            <td class="operation">
+                                <input type="button" value="下架" />
+                                <input type="button" value="更新" />
+                                <input type="button" value="历史版本" />
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td>1234567</td>
+                            <td class="icon"><img src="images/icon-3.jpg" /></td>
+                            <td><span class="blue">我叫MT  online</span></td>
+                            <td>艾格拉斯</td>
+                            <td>91市场</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>策略游戏</td>
+                            <td>183.50M</td>
+                            <td>4.43</td>
+                            <td><span class="blue">点击预览</span></td>
+                            <td>9,999,999,999</td>
+                            <td>2014-10-16  16:29:53</td>
+                            <td class="operation">
+                                <input type="button" value="下架" />
+                                <input type="button" value="更新" />
+                                <input type="button" value="历史版本" />
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td>1234567</td>
+                            <td class="icon"><img src="images/icon-4.jpg" /></td>
+                            <td><span class="blue">我叫MT  online</span></td>
+                            <td>人人游戏</td>
+                            <td>91市场</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>策略游戏</td>
+                            <td>183.50M</td>
+                            <td>4.43</td>
+                            <td><span class="blue">点击预览</span></td>
+                            <td>9,999,999,999</td>
+                            <td>2014-10-16  16:29:53</td>
+                            <td class="operation">
+                                <input type="button" value="下架" />
+                                <input type="button" value="更新" />
+                                <input type="button" value="历史版本" />
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td>1234567</td>
+                            <td class="icon"><img src="images/icon.jpg" /></td>
+                            <td><span class="blue">我叫MT  online</span></td>
+                            <td>慕和网络</td>
+                            <td>91市场</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>策略游戏</td>
+                            <td>183.50M</td>
+                            <td>4.43</td>
+                            <td><span class="blue">点击预览</span></td>
+                            <td>9,999,999,999</td>
+                            <td>2014-10-16  16:29:53</td>
+                            <td class="operation">
+                                <input type="button" value="下架" />
+                                <input type="button" value="更新" />
+                                <input type="button" value="历史版本" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- 上下翻页块 -->
+            <div class="pagination">
+                <a href="#">首页</a> 
+                <a href="#">上一页</a> 
+                <a href="#">1</a>
+                <a href="#">2</a> 
+                <a href="#">3</a> 
+                <a href="#">4</a> 
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">7</a>
+                <a href="#">8</a>
+                <a href="#">9</a> …
+                <a href="#">下一页</a> 
+                <a href="#">末页</a> 
+                共:1989页
+                当前<a href="#">7</a> 页
+                <a href="#">确定</a> 
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $(function(){
+        $("p").click(function(){
+            $(this).siblings(".list").slideToggle();
+        })
+    })
+</script>
+</html>

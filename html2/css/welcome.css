@@ -12,11 +12,11 @@ a { text-decoration: none; }
 /* 左侧标题 */
 h2 { margin-top: 55px; font-size:24px; text-align:center; color:#FFF; }
 /* 左侧内容开始 */
-.gameplay { margin-top:70px; font-size:10px; float:right; }
+.content { margin-top:70px; font-size:12px; float:right; }
 h4 { padding-left:30px; color:#FF6; }
-.gameplay a { line-height:50px; padding-right:20px; color:#69C; }
+.content a { line-height:50px; padding-right:20px; color:#BDDEFF; }
 /* 左侧菜单 */
-.menu p { width:186px; float:right; text-align:right; border-radius:5px; padding-right:20px; margin-top:20px; line-height:33px; color:#000; background:#F6FA7B; }
+.menu p { width:186px; float:right; text-align:right; border-radius:5px 0 0 5px; padding-right:20px; margin-top:20px; line-height:33px; color:#000; background:#DEDE0B; }
 .menu p:hover { background:#FFF; }
 .list { margin-right:20px; line-height:30px; display:none; text-align:right; float:right; }
 .list li a { font-size:14px; color:#FFF; }
@@ -25,5 +25,5 @@ h4 { padding-left:30px; color:#FF6; }
 .border-right { padding-left:230px; display:block; }
 .right-box { height:1040px; text-align:center; border:solid 20px #F0F0F0; }
 .right-box p { margin-top:100px; color:#333; font-size:48px; }
-span.blue { color:#00F; }
-span.black { color:#000; font-weight:700; font-size:72px; }
+span.user { color:#00F; }
+span.title { color:#000; font-weight:700; font-size:72px; }

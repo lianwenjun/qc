@@ -13,10 +13,11 @@ a { text-decoration: none; }
 .right-title span { font-size: 16px; }
 .right-title span b { margin-left:10px; line-height:40px; font-size: 20px; }
 h3 { font-size:20px; color:#333; line-height:45px; margin-left:30px; }
-.right-main { font-size:16px; color:#333; font-weight:400; margin:34px; }
-.right-main ul li { line-height:40px; padding-left:100px; }
-.right-main li.odd { background:#BCBCBC; }
-.right-main li.even { background:#F6F6F6; }
-img { vertical-align: middle; }
-span.red { color:#F00; }
-.right-main p { line-height:80px; text-align:center; word-spacing:3em; background:#D6D6D6; }
+.right-main { font-size:16px; color:#333; font-weight:400; margin-left:30px; }
+.right-main table { width:1500px; line-height:40px; }
+.right-main tr.odd { background:#BCBCBC; }
+.right-main tr.even { background:#F6F6F6; }
+.red { color:#F00; }
+.text-right { text-align:right; }
+.icon img { width:79px; height:64px; vertical-align: middle; }
+.submit-back { width:1500px; line-height:80px; text-align:center; word-spacing:3em; background:#D6D6D6; }

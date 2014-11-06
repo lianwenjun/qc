@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>评分列表</title>
-<link type="text/css" href="css/general.css" rel="stylesheet"/>
+<title>评论列表</title>
+<link type="text/css" href="css/common.css" rel="stylesheet"/>
 <script src="js/jquery-1.9.1.min.js"></script>
 </head>
 <body>
@@ -15,7 +15,7 @@
             <h2>游戏商店系统</h2>
         </div>
         <!-- 内容开始 -->
-        <div class="gameplay">
+        <div class="content">
             <h4>hi,蓝翔高技学校</h4>
             <a href="#">修改密码</a>
             <a href="#">退出系统</a>
@@ -26,21 +26,21 @@
                 <li>
                     <p>游戏管理</p>
                     <ul class="list">
-                        <li><a href="#">上架游戏列表</a></li>
-                        <li><a href="#">添加编辑游戏</a></li>
-                        <li><a href="#">待审核列表</a></li>
-                        <li><a href="#">审核不通过列表</a></li>
-                        <li><a href="#">下架游戏列表</a> </li> 
+                        <li><a href="putaway.html">上架游戏列表</a></li>
+                        <li><a href="add.html">添加编辑游戏</a></li>
+                        <li><a href="authstr.html">待审核列表</a></li>
+                        <li><a href="nopass.html">审核不通过列表</a></li>
+                        <li><a href="unstock.html">下架游戏列表</a> </li> 
                     </ul>
                 </li>
                 <li>
                     <p>广告位管理</p>
                     <ul class="list">
-                        <li><a href="#">首页图片位管理</a></li>
-                        <li><a href="#">首页游戏位管理</a></li>
-                        <li><a href="#">编辑精选管理</a></li>
-                        <li><a href="#">排行游戏位管理</a></li>
-                        <li><a href="#">分类页图片管理</a> </li> 
+                        <li><a href="picture.html">首页图片位管理</a></li>
+                        <li><a href="games.html">首页游戏位管理</a></li>
+                        <li><a href="selection.html">编辑精选管理</a></li>
+                        <li><a href="rank.html">排行游戏位管理</a></li>
+                        <li><a href="classify.html">分类页图片管理</a> </li> 
                     </ul>
                 </li>
                 <li>
@@ -58,9 +58,9 @@
                 <li>
                     <p>评论管理</p>
                     <ul class="list">
-                        <li><a href="#">游戏评分列表</a></li>
-                        <li><a href="#">游戏评论列表</a></li>
-                        <li><a href="#">应用反馈</a></li>
+                        <li><a href="score.html">游戏评分列表</a></li>
+                        <li><a href="comments.html">游戏评论列表</a></li>
+                        <li><a href="feedback.html">应用反馈</a></li>
                     </ul>
                 </li>
                 <li>
@@ -75,15 +75,15 @@
                 <li>
                     <p>权限管理</p>
                     <ul class="list">
-                        <li><a href="#">管理员管理</a></li>
-                        <li><a href="#">角色管理</a></li>
-                        <li><a href="#">权限管理</a></li>
+                        <li><a href="administrator.html">管理员管理</a></li>
+                        <li><a href="auth/role.html">角色管理</a></li>
+                        <li><a href="auth.thml">权限管理</a></li>
                     </ul>
                 </li>
                 <li>
                     <p>日志管理</p>
                     <ul class="list">
-                        <li><a href="#">日志查询</a></li>
+                        <li><a href="log.html">日志查询</a></li>
                     </ul>
                 </li>
             </ul>
@@ -94,7 +94,7 @@
         <div class="right-box">
             <!-- 右侧主体内容 -->
             <div  class="right-title">
-                <span><b>评论管理</b>—游戏评分列表</span>
+                <span><b>评论管理</b>—游戏评论列表</span>
             </div>
             <!-- 查询 -->
             <form method="post" action="" enctype="" name="forms">
@@ -103,263 +103,266 @@
                         <select name="gamename">
                             <option value="">游戏名称</option>
                             <option value="">包名</option>
+                            <option value="">内容</option>
                         </select>
                         <input class="input" type="text" name="search" placeholder="请输入关键字" />
+                        日期：
+                        <input class="input" type="text" placeholder="" />—<input class="input" type="text" placeholder="" />
                         <input type="button" value="查询" />
                     </p>
                 </div>
             </form>
             <!-- 上架游戏记录 -->
-            <div class="load-game">
+            <div class="table-load">
                 <span>游戏评分：共<b>1231</b>条记录</sapn>
             </div>
             <!-- 上架游戏记录表格 -->
-            <div class="games-list">
+            <div class="table">
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                         <th>游戏ID</th>
-                        <th>图标</th>
                         <th>游戏名称</th>
                         <th>包名</th>
-                        <th>游戏分类</th>
-                        <th>大小</th>
-                        <th>游戏总分</th>
-                        <th>评分次数</th>
-                        <th>游戏平均分</th>
-                        <th>干扰后分值</th>
+                        <th>IMEI辨识码</th>
+                        <th>用户机型</th>
+                        <th>系统版本</th>
+                        <th>用户IP</th>
+                        <th>评分</th>
+                        <th>评论内容</th>
+                        <th>评论时间</th>
                         <th>操作人</th>
                         <th>操作</th>
                     </tr>
                     <tbody>
                         <tr class="even">
                             <td>1234567</td>
-                            <td class="icon"><img src="../game/img/preview1.png"/></td>
                             <td>我叫MT  online</td>
                             <td>25个字符(超过省略号).....</td>
-                            <td>策略游戏</td>
-                            <td>183.50M</td>
-                            <td>500,500,500</td>
-                            <td>500,500,500</td>
+                            <td>A0000045F37F88</td>
+                            <td>SM-G3509I</td>
+                            <td>Android4.4.1</td>
+                            <td>100.100.100.100</td>
                             <td>4.73</td>
-                            <td>4.73</td>
+                            <td>今天过节不收礼,收礼只收脑白金呀!脑白金!</td>
+                            <td>2014-10-16 16:29:53</td>
                             <td>吸毒欧阳顺</td>
-                            <td><input type="button" value="编辑" /></td>
+                            <td class="operation"><input type="button" value="编辑" /></td>
                         </tr>
                         <tr class="odd">
                             <td>1234567</td>
-                            <td class="icon"><img src="../game/img/preview1.png"/></td>
                             <td>我叫MT  online</td>
                             <td>25个字符(超过省略号).....</td>
-                            <td>策略游戏</td>
-                            <td>183.50M</td>
-                            <td>500,500,500</td>
-                            <td>500,500,500</td>
+                            <td>A0000045F37F88</td>
+                            <td>SM-G3509I</td>
+                            <td>Android4.4.1</td>
+                            <td>100.100.100.100</td>
                             <td>4.73</td>
-                            <td>4.73</td>
+                            <td>今天过节不收礼,收礼只收脑白金呀!脑白金!</td>
+                            <td>2014-10-16 16:29:53</td>
                             <td>吸毒欧阳顺</td>
-                            <td><input type="button" value="编辑" /></td>
+                            <td class="operation"><input type="button" value="编辑" /></td>
+                        </tr>
+                        <tr class="even">
+                           <td>1234567</td>
+                            <td>我叫MT  online</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>A0000045F37F88</td>
+                            <td>SM-G3509I</td>
+                            <td>Android4.4.1</td>
+                            <td>100.100.100.100</td>
+                            <td>4.73</td>
+                            <td>今天过节不收礼,收礼只收脑白金呀!脑白金!</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>吸毒欧阳顺</td>
+                            <td class="operation"><input type="button" value="编辑" /></td>
+                        </tr>
+                        <tr class="odd">
+                           <td>1234567</td>
+                            <td>我叫MT  online</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>A0000045F37F88</td>
+                            <td>SM-G3509I</td>
+                            <td>Android4.4.1</td>
+                            <td>100.100.100.100</td>
+                            <td>4.73</td>
+                            <td>今天过节不收礼,收礼只收脑白金呀!脑白金!</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>吸毒欧阳顺</td>
+                            <td class="operation"><input type="button" value="编辑" /></td>
+                        </tr>
+                        <tr class="even">
+                           <td>1234567</td>
+                            <td>我叫MT  online</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>A0000045F37F88</td>
+                            <td>SM-G3509I</td>
+                            <td>Android4.4.1</td>
+                            <td>100.100.100.100</td>
+                            <td>4.73</td>
+                            <td>今天过节不收礼,收礼只收脑白金呀!脑白金!</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>吸毒欧阳顺</td>
+                            <td class="operation"><input type="button" value="编辑" /></td>
+                        </tr>
+                        <tr class="odd">
+                            <td>1234567</td>
+                            <td>我叫MT  online</td>
+                            <td>25个字符(超过省略号).....</td>
+                            <td>A0000045F37F88</td>
+                            <td>SM-G3509I</td>
+                            <td>Android4.4.1</td>
+                            <td>100.100.100.100</td>
+                            <td>4.73</td>
+                            <td>今天过节不收礼,收礼只收脑白金呀!脑白金!</td>
+                            <td>2014-10-16 16:29:53</td>
+                            <td>吸毒欧阳顺</td>
+                            <td class="operation"><input type="button" value="编辑" /></td>
                         </tr>
                         <tr class="even">
                             <td>1234567</td>
-                            <td class="icon"><img src="../game/img/preview1.png"/></td>
                             <td>我叫MT  online</td>
                             <td>25个字符(超过省略号).....</td>
-                            <td>策略游戏</td>
-                            <td>183.50M</td>
-                            <td>500,500,500</td>
-                            <td>500,500,500</td>
+                            <td>A0000045F37F88</td>
+                            <td>SM-G3509I</td>
+                            <td>Android4.4.1</td>
+                            <td>100.100.100.100</td>
                             <td>4.73</td>
-                            <td>4.73</td>
+                            <td>今天过节不收礼,收礼只收脑白金呀!脑白金!</td>
+                            <td>2014-10-16 16:29:53</td>
                             <td>吸毒欧阳顺</td>
-                            <td><input type="button" value="编辑" /></td>
+                            <td class="operation"><input type="button" value="编辑" /></td>
                         </tr>
                         <tr class="odd">
                             <td>1234567</td>
-                            <td class="icon"><img src="../game/img/preview1.png"/></td>
                             <td>我叫MT  online</td>
                             <td>25个字符(超过省略号).....</td>
-                            <td>策略游戏</td>
-                            <td>183.50M</td>
-                            <td>500,500,500</td>
-                            <td>500,500,500</td>
+                            <td>A0000045F37F88</td>
+                            <td>SM-G3509I</td>
+                            <td>Android4.4.1</td>
+                            <td>100.100.100.100</td>
                             <td>4.73</td>
-                            <td>4.73</td>
+                            <td>今天过节不收礼,收礼只收脑白金呀!脑白金!</td>
+                            <td>2014-10-16 16:29:53</td>
                             <td>吸毒欧阳顺</td>
-                            <td><input type="button" value="编辑" /></td>
+                            <td class="operation"><input type="button" value="编辑" /></td>
                         </tr>
                         <tr class="even">
                             <td>1234567</td>
-                            <td class="icon"><img src="../game/img/preview1.png"/></td>
                             <td>我叫MT  online</td>
                             <td>25个字符(超过省略号).....</td>
-                            <td>策略游戏</td>
-                            <td>183.50M</td>
-                            <td>500,500,500</td>
-                            <td>500,500,500</td>
+                            <td>A0000045F37F88</td>
+                            <td>SM-G3509I</td>
+                            <td>Android4.4.1</td>
+                            <td>100.100.100.100</td>
                             <td>4.73</td>
-                            <td>4.73</td>
+                            <td>今天过节不收礼,收礼只收脑白金呀!脑白金!</td>
+                            <td>2014-10-16 16:29:53</td>
                             <td>吸毒欧阳顺</td>
-                            <td><input type="button" value="编辑" /></td>
+                            <td class="operation"><input type="button" value="编辑" /></td>
                         </tr>
                         <tr class="odd">
                             <td>1234567</td>
-                            <td class="icon"><img src="../game/img/preview1.png"/></td>
                             <td>我叫MT  online</td>
                             <td>25个字符(超过省略号).....</td>
-                            <td>策略游戏</td>
-                            <td>183.50M</td>
-                            <td>500,500,500</td>
-                            <td>500,500,500</td>
+                            <td>A0000045F37F88</td>
+                            <td>SM-G3509I</td>
+                            <td>Android4.4.1</td>
+                            <td>100.100.100.100</td>
                             <td>4.73</td>
-                            <td>4.73</td>
+                            <td>今天过节不收礼,收礼只收脑白金呀!脑白金!</td>
+                            <td>2014-10-16 16:29:53</td>
                             <td>吸毒欧阳顺</td>
-                            <td><input type="button" value="编辑" /></td>
+                            <td class="operation"><input type="button" value="编辑" /></td>
                         </tr>
                         <tr class="even">
                             <td>1234567</td>
-                            <td class="icon"><img src="../game/img/preview1.png"/></td>
                             <td>我叫MT  online</td>
                             <td>25个字符(超过省略号).....</td>
-                            <td>策略游戏</td>
-                            <td>183.50M</td>
-                            <td>500,500,500</td>
-                            <td>500,500,500</td>
+                            <td>A0000045F37F88</td>
+                            <td>SM-G3509I</td>
+                            <td>Android4.4.1</td>
+                            <td>100.100.100.100</td>
                             <td>4.73</td>
-                            <td>4.73</td>
+                            <td>今天过节不收礼,收礼只收脑白金呀!脑白金!</td>
+                            <td>2014-10-16 16:29:53</td>
                             <td>吸毒欧阳顺</td>
-                            <td><input type="button" value="编辑" /></td>
+                            <td class="operation"><input type="button" value="编辑" /></td>
                         </tr>
                         <tr class="odd">
                             <td>1234567</td>
-                            <td class="icon"><img src="../game/img/preview1.png"/></td>
                             <td>我叫MT  online</td>
                             <td>25个字符(超过省略号).....</td>
-                            <td>策略游戏</td>
-                            <td>183.50M</td>
-                            <td>500,500,500</td>
-                            <td>500,500,500</td>
+                            <td>A0000045F37F88</td>
+                            <td>SM-G3509I</td>
+                            <td>Android4.4.1</td>
+                            <td>100.100.100.100</td>
                             <td>4.73</td>
-                            <td>4.73</td>
+                            <td>今天过节不收礼,收礼只收脑白金呀!脑白金!</td>
+                            <td>2014-10-16 16:29:53</td>
                             <td>吸毒欧阳顺</td>
-                            <td><input type="button" value="编辑" /></td>
+                            <td class="operation"><input type="button" value="编辑" /></td>
                         </tr>
                         <tr class="even">
                             <td>1234567</td>
-                            <td class="icon"><img src="../game/img/preview1.png"/></td>
                             <td>我叫MT  online</td>
                             <td>25个字符(超过省略号).....</td>
-                            <td>策略游戏</td>
-                            <td>183.50M</td>
-                            <td>500,500,500</td>
-                            <td>500,500,500</td>
+                            <td>A0000045F37F88</td>
+                            <td>SM-G3509I</td>
+                            <td>Android4.4.1</td>
+                            <td>100.100.100.100</td>
                             <td>4.73</td>
-                            <td>4.73</td>
+                            <td>今天过节不收礼,收礼只收脑白金呀!脑白金!</td>
+                            <td>2014-10-16 16:29:53</td>
                             <td>吸毒欧阳顺</td>
-                            <td><input type="button" value="编辑" /></td>
+                            <td class="operation"><input type="button" value="编辑" /></td>
                         </tr>
                         <tr class="odd">
                             <td>1234567</td>
-                            <td class="icon"><img src="../game/img/preview1.png"/></td>
                             <td>我叫MT  online</td>
                             <td>25个字符(超过省略号).....</td>
-                            <td>策略游戏</td>
-                            <td>183.50M</td>
-                            <td>500,500,500</td>
-                            <td>500,500,500</td>
+                            <td>A0000045F37F88</td>
+                            <td>SM-G3509I</td>
+                            <td>Android4.4.1</td>
+                            <td>100.100.100.100</td>
                             <td>4.73</td>
-                            <td>4.73</td>
+                            <td>今天过节不收礼,收礼只收脑白金呀!脑白金!</td>
+                            <td>2014-10-16 16:29:53</td>
                             <td>吸毒欧阳顺</td>
-                            <td><input type="button" value="编辑" /></td>
+                            <td class="operation"><input type="button" value="编辑" /></td>
                         </tr>
                         <tr class="even">
-                            <td>1234567</td>
-                            <td class="icon"><img src="../game/img/preview1.png"/></td>
+                           <td>1234567</td>
                             <td>我叫MT  online</td>
                             <td>25个字符(超过省略号).....</td>
-                            <td>策略游戏</td>
-                            <td>183.50M</td>
-                            <td>500,500,500</td>
-                            <td>500,500,500</td>
+                            <td>A0000045F37F88</td>
+                            <td>SM-G3509I</td>
+                            <td>Android4.4.1</td>
+                            <td>100.100.100.100</td>
                             <td>4.73</td>
-                            <td>4.73</td>
+                            <td>今天过节不收礼,收礼只收脑白金呀!脑白金!</td>
+                            <td>2014-10-16 16:29:53</td>
                             <td>吸毒欧阳顺</td>
-                            <td><input type="button" value="编辑" /></td>
+                            <td class="operation"><input type="button" value="编辑" /></td>
                         </tr>
                         <tr class="odd">
-                            <td>1234567</td>
-                            <td class="icon"><img src="../game/img/preview1.png"/></td>
+                           <td>1234567</td>
                             <td>我叫MT  online</td>
                             <td>25个字符(超过省略号).....</td>
-                            <td>策略游戏</td>
-                            <td>183.50M</td>
-                            <td>500,500,500</td>
-                            <td>500,500,500</td>
+                            <td>A0000045F37F88</td>
+                            <td>SM-G3509I</td>
+                            <td>Android4.4.1</td>
+                            <td>100.100.100.100</td>
                             <td>4.73</td>
-                            <td>4.73</td>
+                            <td>今天过节不收礼,收礼只收脑白金呀!脑白金!</td>
+                            <td>2014-10-16 16:29:53</td>
                             <td>吸毒欧阳顺</td>
-                            <td><input type="button" value="编辑" /></td>
-                        </tr>
-                        <tr class="even">
-                            <td>1234567</td>
-                            <td class="icon"><img src="../game/img/preview1.png"/></td>
-                            <td>我叫MT  online</td>
-                            <td>25个字符(超过省略号).....</td>
-                            <td>策略游戏</td>
-                            <td>183.50M</td>
-                            <td>500,500,500</td>
-                            <td>500,500,500</td>
-                            <td>4.73</td>
-                            <td>4.73</td>
-                            <td>吸毒欧阳顺</td>
-                            <td><input type="button" value="编辑" /></td>
-                        </tr>
-                        <tr class="odd">
-                            <td>1234567</td>
-                            <td class="icon"><img src="../game/img/preview1.png"/></td>
-                            <td>我叫MT  online</td>
-                            <td>25个字符(超过省略号).....</td>
-                            <td>策略游戏</td>
-                            <td>183.50M</td>
-                            <td>500,500,500</td>
-                            <td>500,500,500</td>
-                            <td>4.73</td>
-                            <td>4.73</td>
-                            <td>吸毒欧阳顺</td>
-                            <td><input type="button" value="编辑" /></td>
-                        </tr>
-                        <tr class="even">
-                            <td>1234567</td>
-                            <td class="icon"><img src="../game/img/preview1.png"/></td>
-                            <td>我叫MT  online</td>
-                            <td>25个字符(超过省略号).....</td>
-                            <td>策略游戏</td>
-                            <td>183.50M</td>
-                            <td>500,500,500</td>
-                            <td>500,500,500</td>
-                            <td>4.73</td>
-                            <td>4.73</td>
-                            <td>吸毒欧阳顺</td>
-                            <td><input type="button" value="编辑" /></td>
-                        </tr>
-                        <tr class="odd">
-                            <td>1234567</td>
-                            <td class="icon"><img src="../game/img/preview1.png"/></td>
-                            <td>我叫MT  online</td>
-                            <td>25个字符(超过省略号).....</td>
-                            <td>策略游戏</td>
-                            <td>183.50M</td>
-                            <td>500,500,500</td>
-                            <td>500,500,500</td>
-                            <td>4.73</td>
-                            <td>4.73</td>
-                            <td>吸毒欧阳顺</td>
-                            <td><input type="button" value="编辑" /></td>
+                            <td class="operation"><input type="button" value="编辑" /></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <!-- 上下翻页块 -->
-            <div class="choose-page">
+            <div class="pagination">
                 <a href="#">首页</a> 
                 <a href="#">上一页</a> 
                 <a href="#">1</a>
@@ -384,7 +387,7 @@
 <script>
     $(function(){
         $("p").click(function(){
-            $(this).siblings(".menu").toggle();
+            $(this).siblings(".list").toggle();
         })
     })
 </script>
