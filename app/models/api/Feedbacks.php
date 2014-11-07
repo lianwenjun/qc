@@ -12,7 +12,6 @@ class Api_Feedbacks extends \Eloquent {
             'imei' => 'required',
             'os_version' => 'required',
             'os' => 'required',
-            'email' => 'required'
         ];
         //返回消息没了
         return Validator::make($input, $rules)->passes();
