@@ -102,7 +102,19 @@ class V1_AdsController extends \V1_BaseController {
             $tmp = isset($appTmp[$ad]) ? $appTmp[$ad] : [];
             $res[] = $tmp;
         }
-        return ['count' => $count, 'ads' => $res];
+        $data = [];
+        if (count($res) >= 4 || $isTop != 'yes'){
+            $data = $res;
+        } else {
+            while ($location == 'yes' && count($data) < 4) {
+                foreach ($res as $value) {
+                    if (count($data) < 4) {
+                        $data[] = $value;
+                    }
+                }
+            }
+        }
+        return ['count' => $count, 'ads' => $data];
     }
     
     //首页排行位广告列表

@@ -213,6 +213,12 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::post('{id}/edit', ['as' => 'catads.edit', 'uses' => 'Admin_Cat_CatAdsController@update']);
     });
 
+    Route::group(['prefix' => 'appsapk', 'before' => 'hasPermissions'], function() //分类推广
+    {
+        Route::get('index', ['as' => 'appsapk.index', 'uses' => 'Admin_Cat_CatAdsController@index']);
+        Route::post('upload', ['as' => 'catads.upload', 'uses' => 'Admin_Cat_CatAdsController@upload']);
+        Route::post('{id}/edit', ['as' => 'catads.edit', 'uses' => 'Admin_Cat_CatAdsController@update']);
+    });
 
     Route::get('searchapps', ['as' => 'searchapps', 'uses' => 'Admin_IndexController@searchApps']);//智能匹配列表
     Route::get('appsinfo/{id}', ['as' => 'appsinfo', 'uses' => 'Admin_IndexController@appsinfo']);//近期添加列表

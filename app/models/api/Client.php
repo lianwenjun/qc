@@ -19,7 +19,7 @@ class Api_Client extends \Eloquent {
     }
     //下载地址检测
     public function getDownUrlAttribute() {
-        return CUtil::checkHost($this->download_link);
+        return CUtil::checkHost($this->download_link, 'apk');
     }
     //KB转成B
     public function getSizeAttribute() {
