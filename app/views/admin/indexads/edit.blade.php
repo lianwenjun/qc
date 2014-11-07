@@ -60,7 +60,7 @@
                 <td class="Search_lei">广告区域：</td>
                 <td>
                 <span style="float:left">
-                      {{ Form::select('location', $location, $ad->location, ['class'=>'Search_select']) }}
+                      {{ Form::select('location', $location, $ad->location, ['class'=>'Search_select', 'disabled' => 'disabled']) }}
                  </span>
                </td>
             </tr>
