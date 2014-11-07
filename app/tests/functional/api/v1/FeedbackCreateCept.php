@@ -18,7 +18,6 @@ $data = [
     'AppVersion' => '123456',
     'Content' => '44a0dfuasdfasdfasdf',
     'UserEmail' => '',
-    'IMEI' => '123197917203edfcfdadefdfdda',
     'Device' => 'sumsung',
     'SystemVersion' => '4.2',
 ];
