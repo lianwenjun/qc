@@ -10,7 +10,7 @@ $data = [
     'Device' => 'sumsung',
     'SystemVersion' => '4.2',
 ];
-$URL = '/v1/game/feedback/add';
+$URL = '/v1/api/game/feedback/add';
 $I->sendAjaxPostRequest($URL, $data);
 $I->see('"msg":1');
 //错误测试
@@ -22,6 +22,6 @@ $data = [
     'Device' => 'sumsung',
     'SystemVersion' => '4.2',
 ];
-$URL = '/v1/game/feedback/add';
+$URL = '/v1/api/game/feedback/add';
 $I->sendAjaxPostRequest($URL, $data);
 $I->see('"msg":0');

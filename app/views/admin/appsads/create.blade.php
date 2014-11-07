@@ -28,14 +28,14 @@
                                 <option value="{{ route('searchapps').'?type=name' }}">游戏名称</option>
                                 <option value="{{ route('searchapps').'?type=appid' }}">游戏ID</option>
                             </select>
-                            <input id="autocomplete" maxlength="16" type="text" class="Search_text jq-searchapps" placeholder="输入时自动匹配" style="width:25%" />
+                            <input id="autocomplete" maxlength="32" type="text" class="Search_text jq-searchapps" placeholder="输入时自动匹配" style="width:25%" />
                         </td>
                     </tr>
                     <input name="app_id" type="hidden" val="">
                     <!--数据选择区开始-->
                     <input name="title" type="hidden" val="">
                     <tr>
-                        <td  class="Search_lei">广告区域：</td>
+                        <td class="Search_lei"><span class="required">*</span>广告区域：</td>
                         <td>
                         <span style="float:left">
                             {{ Form::select('location', $location, Session::get('input.location', ''), ['class'=>'Search_select']); }}
@@ -44,33 +44,7 @@
                     </tr>
 
                     <tr>
-                        <td  class="Search_lei"><span class="required">*</span>游戏截图：</td>
-                        <td>
-                            @if(Sentry::getUser()->hasAccess('appsads.upload'))
-                            <a id="browse" href="javascrip:;" class="Search_Update">图片上传</a>
-                            @endif
-                            <span style="color:#C00">（焦点图480*200，专题图230*120）</span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td  class="Search_lei">截图预览：</td>
-                        <td class="Search_img">
-                        <div class="Update_img">
-                            <ul id="listdata">
-                                <li>
-                                    <!--a href="javascript">删除</a-->
-                                    <img src="{{ Session::get('input.image', '') }}" />
-                                </li>
-                                <input name="image" type="hidden" value="{{ Session::get('input.image', '') }}" />
-                            </ul>
-                        </div>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td  class="Search_lei">广告置顶：</td>
+                        <td class="Search_lei">广告置顶：</td>
                         <td>
                             {{ Form::checkbox('is_top', 'yes', Session::get('input.is_top') ? true : false) }} 
                           是　<span style=" color:#C00">（选中后无论上架广告数量，该广告均会在轮播中出现）</span></td>
@@ -78,7 +52,7 @@
 
                     <tr>
 
-                        <td  class="Search_lei"><span class="required">*</span>上线时间：</td>
+                        <td class="Search_lei"><span class="required">*</span>上线时间：</td>
                         <td>
                             <h6>从 </h6> <h6><input type="text" name="stocked_at" class="Search_text jq-ui-timepicker" value="{{ Session::get('input.stocked_at', '') }}"></h6>
                             <h6> 到 </h6> <h6><input type="text" name="unstocked_at" class="Search_text jq-ui-timepicker" value="{{ Session::get('input.unstocked_at', '')}}"></h6></td>
@@ -163,42 +137,6 @@ $(function(){
             stepMinute: 10,
             stepSecond: 10
     });
-    //图片上传
-    UPLOADURL = '{{ route("appsads.upload") }}';
-
-    var uploader = new plupload.Uploader({ //实例化一个plupload上传对象
-        browse_button : 'browse',
-        url : UPLOADURL,
-        runtimes: 'html5,flash',
-        max_file_size : '1mb',
-        flash_swf_url : '{{ asset("js/admin/plupload/Moxie.swf") }}',
-        filters: {
-            mime_types : [ //只允许上传图片文件
-                { title : "图片文件", extensions : "jpg,gif,png" }
-            ]
-        }
-    });
-    uploader.init(); //初始化
-
-    //绑定文件添加进队列事件
-    uploader.bind('FilesAdded',function(uploader,files){
-        for(var i = 0, len = files.length; i<len; i++){
-            uploader.start();
-        }
-    });
-    //文件上传完后
-    uploader.bind('FileUploaded', function(up, file, object) {
-        var myData;
-        try {
-            myData = eval(object.response);
-        } catch(err) {
-            myData = eval('(' + object.response + ')');
-        }
-        if (myData.result){
-            $("#listdata li img").attr('src', myData.result.path);
-            $("#listdata input[name=image]").val(myData.result.path);
-        }
-    });
 
     // 提交表单
     $('.jq-ads-create-submit').click(function() {
@@ -207,13 +145,13 @@ $(function(){
             ignore: '',
             rules: {
                 app_id: "required",
-                image: "required",
+                location: "required",
                 stocked_at: "required",
                 unstocked_at: "required",
             },
             messages: {
                 app_id: {required: '游戏为必填'},
-                image: {required: '图片为必填'},
+                location: {required: '分类为必填'},
                 stocked_at: {required: '上线时间为必填'},
                 unstocked_at: {required: '下架时间为必填'},
             }

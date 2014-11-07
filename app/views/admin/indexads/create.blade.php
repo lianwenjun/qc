@@ -27,7 +27,7 @@
                                 <option value="{{ route('searchapps').'?type=name' }}">游戏名称</option>
                                 <option value="{{ route('searchapps').'?type=appid' }}">游戏ID</option>
                     </select>
-                    <input maxlength="16" id="autocomplete" type="text" class="Search_text" placeholder="输入时自动匹配" style="width:25%" />
+                    <input maxlength="32" id="autocomplete" type="text" class="Search_text" placeholder="输入时自动匹配" style="width:25%" />
                 </td>
             </tr>
             <input name="app_id" type="hidden" val="">
@@ -35,7 +35,7 @@
             <input name="title" type="hidden" val="">
 
             <tr>
-                <td  class="Search_lei">广告区域：</td>
+                <td class="Search_lei"><span class="required">*</span>广告区域：</td>
                 <td>
                 <span style="float:left">
                       {{ Form::select('location', $location, Session::get('input.location', ''), ['class'=>'Search_select']); }}
@@ -45,7 +45,7 @@
 
             <tr>
                 <td class="Search_lei"><span class="required">*</span>游戏截图：</td>
-                <td><a id="browse" href="javascript:;" class="Search_Update">图片上传</a> <span style="color:#C00">（焦点图480*200，专题图230*120）</span></td>
+                <td><a id="browse" href="javascript:;" class="Search_Update">图片上传</a> <span style="color:#C00">（焦点图480x195px，专题图223x129px）</span></td>
             </tr>
 
             <tr>
@@ -202,12 +202,14 @@ $(function(){
             ignore: '',
             rules: {
                 app_id: "required",
+                location: "required",
                 image: "required",
                 stocked_at: "required",
                 unstocked_at: "required",
             },
             messages: {
                 app_id: {required: '游戏为必填'},
+                location: {required: '分类为必填'},
                 image: {required: '图片为必填'},
                 stocked_at: {required: '上线时间为必填'},
                 unstocked_at: {required: '下架时间为必填'},

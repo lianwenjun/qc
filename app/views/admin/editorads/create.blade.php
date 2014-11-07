@@ -19,24 +19,16 @@
                                 <option value="{{ route('searchapps').'?type=name' }}">游戏名称</option>
                                 <option value="{{ route('searchapps').'?type=appid' }}">游戏ID</option>
                     </select>
-                    <input maxlength="16" id="autocomplete" type="text" class="Search_text" placeholder="输入时自动匹配" style="width:25%" />
+                    <input maxlength="32" id="autocomplete" type="text" class="Search_text" placeholder="输入时自动匹配" style="width:25%" />
                 </td>
             </tr>
             <input name="app_id" type="hidden" val="">
             <!--数据选择区开始-->
             <input name="title" type="hidden" val="">
-            <tr>
-                <td class="Search_lei">广告区域：</td>
-                <td>
-                <span style="float:left">
-                    {{ Form::select('location', $location, Session::get('input.location', ''), ['class'=>'Search_select']); }}
-                 </span>
-               </td>
-            </tr>
           
             <tr>
                 <td class="Search_lei"><span class="required">*</span>游戏截图：</td>
-                <td><a id="browse" href="javascript:;" class="Search_Update">图片上传</a> <span style="color:#C00">（焦点图480*200，专题图230*120）</span></td>
+                <td><a id="browse" href="javascript:;" class="Search_Update">图片上传</a> <span style="color:#C00">（置顶图452x236px，列表图229x129px）</span></td>
             </tr>
           
             <tr>
@@ -62,7 +54,7 @@
             <tr>
                 <td class="Search_lei">广告置顶：</td>
                 <td>{{ Form::checkbox('is_top', 'yes', Session::get('input.is_top') ? true : false) }} 
-                  是　<span style=" color:#C00">（选中后无论上架广告数量，该广告均会在轮播中出现）</span></td>
+                  是　<span style=" color:#C00">（置顶用于首页的2条）</span></td>
             </tr>
           
             <tr>

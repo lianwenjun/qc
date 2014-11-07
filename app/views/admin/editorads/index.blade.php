@@ -13,31 +13,12 @@
             <ul>
                 <li>
                     <span><b>查询：</b>
-                        <select name="is_top">
-                            <option value="">是否置顶</option>
-                            @foreach($is_top as $k=>$v)
-                                <option value="{{ $k }}">{{ $v }}</option>
-                            @endforeach
-                        </select>
+                        {{ Form::select('is_top', $is_top, Input::get('is_top')); }}
                     </span>
                     <span>
-                         <select name="status">
-                            <option value="">状态</option>
-                            @foreach($status as $k=>$v)
-                                <option value="{{ $k }}">{{ $v }}</option>
-                            @endforeach
-                         </select>
+                        {{ Form::select('status', $status, Input::get('status')); }}
                     </span>
-                    <span>
-                         <select name="location">
-                           <option value="">所属类别</option>
-                            @foreach($location as $k=>$v)
-                                <option value="{{ $k }}">{{ $v }}</option>
-                            @endforeach
-                         </select>
-                    </span>
-                         
-                    <span><input maxlength="16" name="word" type="text" class="Search_wenben" size="20" value="" placeholder="输入游戏名称"/></span>
+                    <span><input value="{{ Input::get('word'); }}" maxlength="16" name="word" type="text" class="Search_wenben" size="20" value="" placeholder="输入游戏名称"/></span>
                     <input name="" type="submit" value="搜索" class="Search_en" />
                 </li>     
             </ul>
@@ -52,12 +33,11 @@
                 <td width="6%">游戏ID</td>
                 <td width="4%">图片</td>
                 <td width="9%">游戏名称</td>
-                 <td width="6%">所属类别</td>
                 <td width="13%">上架时间</td>
                 <td width="13%">下线时间</td>
                 <td width="7%">状态</td>
-                <!--td width="7%">排列序号</td>-->
                 <td width="20%">广告词</td>
+                <td width="7%">是否置顶</td>
                 <td width="15%">操作</td>
             </tr>
             @forelse($ads as $ad)
@@ -65,12 +45,11 @@
                     <td>{{ $ad->id }}</td>
                     <td><img src="{{ $ad->image }}" width="28" height="28" /></td>
                     <td>{{ $ad->title }}</td>
-                    <td>{{ isset($location[$ad->location]) ? $location[$ad->location] : '' }}</td>
                     <td {{ Config::get('status.ads.timeColor')[CUtil::adsStatus($ad)] }}>{{ $ad->stocked_at }}</td>
                     <td {{ Config::get('status.ads.timeColor')[CUtil::adsStatus($ad)] }}>{{ $ad->unstocked_at }}</td>
                     <td {{ Config::get('status.ads.statusColor')[CUtil::adsStatus($ad)] }}>{{ Config::get('status.ads.status')[CUtil::adsStatus($ad)] }}</td>
-                    <!--<td>{{ $ad->sort }}</td>-->
                     <td>{{ $ad->word }}</td>
+                    <td>{{ Config::get('status.ads.is_top')[$ad->is_top] }}</td>
                     <td>
                         @if($ad->is_stock == 'yes' && Sentry::getUser()->hasAccess('editorads.unstock'))
                             <a href="{{ URL::route('editorads.unstock', $ad->id) }}" target=BoardRight class="Search_show">下架</a>

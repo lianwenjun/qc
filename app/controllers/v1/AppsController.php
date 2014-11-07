@@ -8,7 +8,7 @@ class V1_AppsController extends \V1_BaseController {
         'download_manual' => 'downloadCnt',
         'gameCategory' => 'gameCategory',
         'id' => 'id',
-        'icon' => 'logoImageurl',
+        'icon' => 'logoImageUrl',
         'md5' => 'md5',
         'title' => 'name',
         'pack' => 'packageName',
@@ -172,15 +172,17 @@ class V1_AppsController extends \V1_BaseController {
     public function clientList()
     {
         $input = Input::get('apps');
-        $res = [];
+        if (!is_array($input)) {
+            return $this->result(['data' => '', 'msg' => 0, 'msgbox' => '请输入JSON数据']);
+        }
+        $apps = [];
         foreach ($input as $index) {
             if (!isset($index['pack'])) continue;
-            if (!isset($index['versionCode'])) continue;
-            $app = Api_Apps::ofNew($index['versionCode'])->wherePack($index['pack'])->first();
+            $app = Api_Apps::wherePack($index['pack'])->first();
             $res = $this->appFields($this->infoFields, $app);
             if ($res) $apps[] = $res;
         }
-        return $this->result(['data' => $res, 'msg' => 1, 'msgbox' => '请求成功']);
+        return $this->result(['data' => $apps, 'msg' => 1, 'msgbox' => '请求成功']);
     }
     /**
      * 获得单个游戏的信息

@@ -221,7 +221,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 //Route::post('/admin/appsads/imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_Apps_AppsAdsController@upload']);
 
 
-Route::group(['prefix' => 'v1'], function() //V1版本
+Route::group(['prefix' => 'v1/api'], function() //V1版本
 {
     Route::get('game/extend/{type}/{pageSize}/{pageIndex}', ['uses' => 'V1_AdsController@banner']);
     Route::get('game/cull/{type}/{pageSize}/{pageIndex}', ['uses' => 'V1_AdsController@editor']);
@@ -241,6 +241,7 @@ Route::group(['prefix' => 'v1'], function() //V1版本
     Route::post('client/apps/list', ['uses' => 'V1_AppsController@clientList']);
     Route::post('game/update', ['uses' => 'V1_AppsController@check']);
 
+    Route::get('appclient/ver/update/{versionCode}', ['uses' => 'V1_ClientController@checkVersion']);
     Route::get('appclient/ver/info/{versionCode}', ['uses' => 'V1_ClientController@checkVersion']);
     Route::post('game/feedback/add', ['uses' => 'V1_FeedbacksController@store']);
     

@@ -2,7 +2,8 @@
 
 class Admin_EditorAdsController extends \Admin_AdsController {
     
-    protected $type = 'editor';
+    protected $type = 'banner';
+    protected $location = ['banner_suggest'];
     protected $indexRoute = 'editorads.index';
     /**
      * 编辑精选广告列表
@@ -15,7 +16,9 @@ class Admin_EditorAdsController extends \Admin_AdsController {
         $ads = Ads::ofTitle(Input::get('word'))
                 ->ofStatus(Input::get('status'))
                 ->ofLocation(Input::get('location'))
+                ->isTop(Input::get('is_top'))
                 ->whereType($this->type)
+                ->IsLocation($this->location)
                 ->orderBy('id', 'desc')
                 ->paginate($this->pagesize);
         $datas = ['ads' => $ads, 
@@ -34,7 +37,7 @@ class Admin_EditorAdsController extends \Admin_AdsController {
      */
     public function create()
     {
-        $datas = ['location' => Config::get('status.ads.applocation')];
+        $datas = ['location' => Config::get('status.ads.location')];
         $this->layout->content = View::make('admin.editorads.create', $datas);
     }
 
@@ -59,7 +62,7 @@ class Admin_EditorAdsController extends \Admin_AdsController {
                 ->with('msg', '游戏不存在')
                 ->with('input', Input::all());
         }
-        $ad = (new Ads)->ofCreate($this->type);
+        $ad = (new Ads)->ofCreate($this->type, 'banner_suggest');
         if ($ad->save()) {
             return Redirect::route('editorads.index')->with('msg', '添加成功');
         }
@@ -88,7 +91,7 @@ class Admin_EditorAdsController extends \Admin_AdsController {
             return Redirect::route('editorads.index')->with('msg', '没发现游戏数据');
         }
         $datas = ['ad' => $ad, 
-            'location' => Config::get('status.ads.applocation'),
+            'location' => Config::get('status.ads.location'),
             'app' => $app];
         $this->layout->content = View::make('admin.editorads.edit', $datas);
     }
@@ -102,7 +105,7 @@ class Admin_EditorAdsController extends \Admin_AdsController {
      */
     public function update($id)
     {
-        $ad = Ads::whereType($this->type)->find($id);
+        $ad = Ads::whereType($this->type)->whereLocation($this->location)->find($id);
         //检测广告是否存在
         if (!$ad) {
             return Redirect::route('editorads.index')->with('msg', '#' . $id .'不存在');

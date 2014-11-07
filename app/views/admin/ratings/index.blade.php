@@ -85,7 +85,7 @@ $(function(){
         var td = $(this).parents('tr').children('td');
         var text6 = td.eq(6).html();
         var to_text1 = '<input name="textfield" type="text" id="textfield" value="" size="8" class="Classification_text jq-edit-input" />';
-        var to_text7 = '<a href="javacript:;" class="Search_show jq-saveWord">确定</a> <a href="javacript:;" class="Search_show jq-chanceWord">取消</a>';
+        var to_text7 = '<a href="javascript:;" class="Search_show jq-saveWord">确定</a> <a href="javascript:;" class="Search_show jq-chanceWord">取消</a>';
         td.eq(6).html(to_text1);
         td.eq(6).find('#textfield').val(text6);
         $(this).parent().html(to_text7);
@@ -110,7 +110,7 @@ $(function(){
         $.post(editUrl, data, function(res) {
             //错误判断
             if (res.status == 'ok') {
-                var text8 = '<a href="javacript:;" class="Search_show jq-editWord">修改</a>'
+                var text8 = '<a href="javascript:;" class="Search_show jq-editWord">修改</a>'
                 td.eq(7).html(text8);
                 td.eq(6).html(text6);
                 return;
@@ -124,7 +124,7 @@ $(function(){
     $(".jq-chanceWord").live('click', function() {
         var td = $(this).parents('tr').children('td');
         var text1 = td.find('#preWord').val();
-        var text8 = '<a href="javacript:;" class="Search_show jq-editWord">修改</a> '
+        var text8 = '<a href="javascript:;" class="Search_show jq-editWord">修改</a> '
         $(this).parent().html(text8);
         td.eq(6).html(text1);
     });

@@ -2,7 +2,8 @@
 
 class Admin_rankAdsController extends \Admin_AdsController {
 
-    protected $type = 'rank';
+    protected $type = 'app';
+    protected $location = ['banner_hot', 'banner_slide', 'banner_new'];
     protected $indexRoute = 'rankads.index';
     /**
      * 显示排行广告列表
@@ -27,6 +28,7 @@ class Admin_rankAdsController extends \Admin_AdsController {
 
         $datas = [
                 'ads' => $ads,
+                'status' =>  Config::get('status.ads.status'), 
                 'location' => Config::get('status.ads.ranklocation'),
                 'is_top' => Config::get('status.ads.is_top')
         ];

@@ -10,6 +10,7 @@ class Admin_Cat_CatAdsController extends \Admin_BaseController {
      */
     public function index()
     {
+        
         $catAds = CatAds::orderBy('id', 'desc')->paginate($this->pagesize);
         $datas = ['catads' => $catAds];
         $this->layout->content = View::make('admin.catads.index', $datas);

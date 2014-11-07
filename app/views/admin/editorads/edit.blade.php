@@ -49,17 +49,8 @@
                 </tr>
               
                 <tr>
-                    <td class="Search_lei">广告区域：</td>
-                    <td>
-                    <span style="float:left">
-                            {{ Form::select('location', $location, $ad->location, ['class'=>'Search_select']) }}
-                     </span>
-                   </td>
-                </tr>
-              
-                <tr>
                     <td class="Search_lei"><span class="required">*</span>游戏截图：</td>
-                    <td><a id="browse" href="javacript:;" class="Search_Update">图片上传</a> <span style="color:#C00">（焦点图480*200，专题图230*120）</span></td>
+                    <td><a id="browse" href="javascript:;" class="Search_Update">图片上传</a> <span style="color:#C00">（置顶图229x129px，列表图452x236px）</span></td>
                 </tr>
               
                 <tr>
@@ -84,7 +75,7 @@
                 <tr>
                     <td class="Search_lei">广告置顶：</td>
                     <td>{{ Form::checkbox('is_top', 'yes', $ad->is_top == 'yes') }}
-                      是　<span style=" color:#C00">（选中后无论上架广告数量，该广告均会在轮播中出现）</span></td>
+                      是　<span style=" color:#C00">（置顶用于首页的2条）</span></td>
                 </tr>
               
                 <tr>

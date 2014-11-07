@@ -30,11 +30,7 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         foreach ($tags as $tag) {
             $catData[$tag->parent_id]['list'][] = $tag->toarray(); 
         }
-        $appsCount = DB::table('app_cats')
-                     ->select(DB::raw('count(*) as app_count, cat_id'))
-                     ->whereIn('cat_id', $catIds)
-                     ->groupBy('cat_id')
-                     ->get();
+        $appsCount = (new AppCats)->getCountByTagIds($catIds);
         foreach ($appsCount as $app) {
                 $catData[$app->cat_id]['appcount'] = $app->app_count;
         }
@@ -139,25 +135,25 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         $tagIds = [];
         $tagDatas = [];
         foreach ($tags as $tag) {
-            $tagIds[] = $tagIds;
+            $tagIds[] = $tag->id;
             $tagDatas[$tag->id]['data'] = $tag->toarray();
             $tagDatas[$tag->id]['count'] = 0;
             $tagDatas[$tag->id]['editurl'] = route('tag.edit', $tag->id);
             $tagDatas[$tag->id]['delurl'] = route('tag.delete', $tag->id);
         }
+        
         //统计该标签游戏数量
         //空判断
         if (empty($tagIds)){
             $tagIds = [0];
         }
-        $appsCount = DB::table('app_cats')
-                     ->select(DB::raw('count(*) as app_count, cat_id'))
-                     ->whereIn('cat_id', $tagIds)
-                     ->groupBy('cat_id')
-                     ->get();
+        
+        $appsCount = (new AppCats)->getCountByTagIds($tagIds);
+                     
         foreach ($appsCount as $app) {
             $tagDatas[$app->cat_id]['count'] = $app->app_count;
         }
+        
         return Response::json(['status'=>'ok', 'msg'=>'suss', 'data'=>$tagDatas]);
     }
 

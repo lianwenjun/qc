@@ -56,4 +56,12 @@ class AppCats extends \Eloquent {
         return $ids;
     }
 
+    //统计同标签下的游戏
+    public function getCountByTagIds($tagIds) {
+        $res = AppCats::whereIn('cat_id', $tagIds)
+                     ->select(DB::raw('count(*) as app_count, cat_id'))
+                     ->groupBy('cat_id')
+                     ->get();
+        return $res;
+    }
 }

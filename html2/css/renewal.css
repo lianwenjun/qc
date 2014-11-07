@@ -1,0 +1,16 @@
+@charset "utf-8";
+/* CSS Document */
+/* 右侧主体内容 */
+.right-title { color:#333; background:#C9C9C9; }
+.right-title span { font-size: 16px; }
+.right-title span b { margin-left:10px; line-height:40px; font-size: 20px; }
+.right-main { font-size:16px; color:#333; font-weight:400; margin-left:30px; }
+.right-main table { width:1500px; line-height:40px; }
+.right-main tr.odd { background:#BCBCBC; }
+.right-main tr.even { background:#D6D6D6; }
+.text-right { text-align:right; padding-right:20px; }
+.icon img { width:79px; height:64px; vertical-align: middle; }
+.img-explain { color:#F00; font-size:13px; }
+.preview img { width:90px; height:155px; }
+.draft { padding-left:300px; line-height:40px; color:#F00; font-size:13px; text-decoration:underline; background:#D6D6D6; }
+.submit-back { width:1500px; line-height:80px; text-align:center; word-spacing:3em; background:#D6D6D6; }

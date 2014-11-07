@@ -1,0 +1,69 @@
+@charset "utf-8";
+/* CSS Document */
+/*　重置css */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { padding: 0;margin: 0; }
+table { border-collapse: collapse;border-spacing: 0; }
+fieldset,img { border: 0; }
+address,caption,cite,code,dfn,em,strong,th,var { font-weight: normal; font-style: normal; }
+ol,ul { list-style: none; }
+caption,th { text-align: left; }
+h1,h2,h3,h4,h5,h6 { font-weight: normal; font-size: 100%; }
+q:before,q:after { content:''; }
+abbr,acronym { border: 0; }
+
+/* 自定义　*/
+* { margin:0; padding:0; }
+body { font-family:"Arial Normal","Arial"; color:#000; font-size:18px; }
+ul li { list-style-type:none; }
+a { text-decoration:none; }
+input { font-size:13px; }
+h2 { margin-top: 55px; font-size:24px; text-align:center; color:#FFF; }
+h4 { padding-left:30px; color:#FF6; }
+h3 { font-size:20px; color:#333; line-height:45px; margin-left:30px; }
+
+/* 盒子 */ 
+.page-box { min-width:1600px; height:1080px; display:block; border:solid 1px #000; }
+
+/* 左侧内容 */ 
+.box-left { width:230px; height:1080px; float:left; position:absolute; background:#12356D; }
+/* 左侧内容开始 */
+.content { margin-top:70px; font-size:12px; float:right; }
+.content a { line-height:50px; padding-right:20px; color:#BDDEFF; }
+/* 左侧菜单 */
+.menu p { width:186px; float:right; text-align:right; border-radius:5px 0 0 5px; padding-right:20px; margin-top:20px; line-height:33px; color:#000; background:#DEDE0B; cursor:pointer; }
+.menu p:hover { background:#FFF; }
+.list { margin-right:20px; line-height:30px; display:none; text-align:right; float:right; }
+.list li a { font-size:14px; color:#FFF; }
+.list li a:hover { color:#dfdf0b; }
+
+/* 右侧内容 */
+.box-right { padding-left:230px; display:block; }
+.right-box { height:1040px; border:solid 20px #F0F0F0; overflow:scroll; }
+/* 右侧主体内容 */
+.right-title { color:#333; background:#E9E9E9; border:solid 1px #DEDEDE;　}
+.right-title span b { margin-left:10px; line-height:40px; font-size:20px; }
+.right-title span { font-size: 16px; }
+/* 查询 */
+.search { margin-top:30px; margin-left:30px; line-height:50px; font-size:16px; background:#F6F6F6; border:solid 1px #DEDEDE; }
+.search p { margin-left:30px; word-spacing:1em; }
+/* 新增分类 */
+.classified { margin-top:30px; margin-left:30px; }
+/* 上架游戏 */
+.table-load { height:50px; line-height:50px; margin-left:30px; font-size:16px; color:#333; }
+.table-load span b { color:#F00; }
+.table-load input { margin-left:30px; }
+.table-load span.right { float:right; margin-top:10px; }
+.table { margin-left:30px; } 
+.table th { padding:8px; font-size:16px; color:#FFF; background:#133E70; }
+.tag img { width:22px; height:20px; margin-left:5px; vertical-align:middle; }
+.table td { height:40px; line-height:40px; font-size:14px; text-align:center; }
+.icon img { width:26px; height:26px; }
+.gray input { color:#A1A1A1; }
+.table tr.even { background:#E9E9E9; }
+.table tr.odd { background:#F6F6F6; }
+.table span.green { color:#008000; }
+.table span.red { color:#FF0025; }
+.table span.blue { color:#00F; }
+/* 上下翻页块 */
+.pagination { margin-top:20px; margin-left:30px; font-size:13px; }
+.pagination a { padding:3px 10px; border:1px solid #ccc; color:#333; }
