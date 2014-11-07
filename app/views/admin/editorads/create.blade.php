@@ -25,10 +25,15 @@
             <input name="app_id" type="hidden" val="">
             <!--数据选择区开始-->
             <input name="title" type="hidden" val="">
-          
+            <tr>
+                <td class="Search_lei">广告置顶：</td>
+                <td>{{ Form::checkbox('is_top', 'yes', Session::get('input.is_top') ? true : false) }} 
+                  是　<span style=" color:#C00">（置顶用于首页Banner的2条）</span></td>
+            </tr>
+            
             <tr>
                 <td class="Search_lei"><span class="required">*</span>游戏截图：</td>
-                <td><a id="browse" href="javascript:;" class="Search_Update">图片上传</a> <span style="color:#C00">（置顶图452x236px，列表图229x129px）</span></td>
+                <td><a id="browse" href="javascript:;" class="Search_Update">图片上传</a> <span class="jq-picTips" style="color:#C00">（置顶图229x129px，列表图452x236px）</span></td>
             </tr>
           
             <tr>
@@ -49,12 +54,6 @@
             <tr>
                 <td class="Search_lei">广告词：</td>
                 <td><input name="word" type="text" class="Search_text" value="{{ Session::get('input.word', '') }}" placeholder="" style="width:60%" /></td>
-            </tr>
-          
-            <tr>
-                <td class="Search_lei">广告置顶：</td>
-                <td>{{ Form::checkbox('is_top', 'yes', Session::get('input.is_top') ? true : false) }} 
-                  是　<span style=" color:#C00">（置顶用于首页的2条）</span></td>
             </tr>
           
             <tr>
@@ -144,41 +143,103 @@ $(function(){
             stepSecond: 10
     });
     //图片上传
-    UPLOADURL = '{{ route("appsads.upload") }}';
-    
-    var uploader = new plupload.Uploader({ //实例化一个plupload上传对象
-        browse_button : 'browse',
-        url : UPLOADURL,
-        runtimes: 'html5,flash',
-        max_file_size : '1mb',
-        flash_swf_url : '{{ asset("js/admin/plupload/Moxie.swf") }}',
-        filters: { 
-            mime_types : [ //只允许上传图片文件
-                { title : "图片文件", extensions : "jpg,gif,png" }
-            ]
-        }
-    });
-    uploader.init(); //初始化
+    var createUploader = function(uploadurl, pixel) {
+        var uploader = new plupload.Uploader({ //实例化一个plupload上传对象
+            browse_button : 'browse',
+            url : uploadurl,
+            runtimes: 'html5,flash',
+            max_file_size : '1mb',
+            
+            flash_swf_url : '{{ asset("js/admin/plupload/Moxie.swf") }}',
+            filters: { 
+                mime_types : [ //只允许上传图片文件
+                    { title : "图片文件", extensions : "jpg,gif,png" }
+                ],
+                file_pixel_size : pixel,
+            },
+            init: {
+                Error: function(up, err) {
+                    $('.jq-picTips').html(err.message);
+                }
+            }
+        });
 
-    //绑定文件添加进队列事件
-    uploader.bind('FilesAdded',function(uploader,files){
-        for(var i = 0, len = files.length; i<len; i++){
-            uploader.start();
+        //绑定文件添加进队列事件
+        uploader.bind('FilesAdded',function(uploader,files){
+            for(var i = 0, len = files.length; i<len; i++){
+                uploader.start();
+            }
+        });
+        //文件上传完后
+        uploader.bind('FileUploaded', function(up, file, object) {
+            var myData;
+            try {
+                myData = eval(object.response);
+            } catch(err) {
+                myData = eval('(' + object.response + ')');
+            }
+            if (myData.result){
+                $("#listdata li img").attr('src', myData.result.path);
+                $("#listdata input[name=image]").val(myData.result.path);
+            }
+        });
+        
+        uploader.init();
+        return uploader;
+    }
+    UPLOADURL = '{{ route("appsads.upload") }}';
+    var theUploader = createUploader(UPLOADURL, '452x236');
+
+    var destroy = function(pixel){
+        if(theUploader) {
+            theUploader.destroy();
+        }
+        theUploader = createUploader(UPLOADURL, pixel);
+    }
+    
+    //首页选择
+    $( "input[name=is_top]" ).click(function(){
+        if ($( "input[name=is_top]:checked").val()){
+            destroy('229x129');
+            $('.jq-picTips').html('置顶图229x129px');
+        } else {
+            DEFAULT_PIXEL = '452x236';
+            destroy(DEFAULT_PIXEL);
+            $('.jq-picTips').html('列表图452x236px');
         }
     });
-    //文件上传完后
-    uploader.bind('FileUploaded', function(up, file, object) {
-        var myData;
-        try {
-            myData = eval(object.response);
-        } catch(err) {
-            myData = eval('(' + object.response + ')');
+    // 图片大小限制
+    plupload.addFileFilter('file_pixel_size', function(limitSize, file, cb) {
+        var self = this, img = new o.Image();
+        var sizes = limitSize.split('x');
+
+        function finalize(result) {
+
+            img.destroy();
+            img = null;
+
+            if (!result) {
+                self.trigger('Error', {
+                    code : plupload.IMAGE_DIMENSIONS_ERROR,
+                    message : file.name + "图片规格应该为 " + limitSize  + " 像素.",
+                    file : file
+                });
+            }
+            cb(result);
         }
-        if (myData.result){
-            $("#listdata li img").attr('src', myData.result.path);
-            $("#listdata input[name=image]").val(myData.result.path);
-        }
+
+        img.onload = function() {
+            finalize((img.width == sizes[0] && img.height == sizes[1]));
+        };
+
+        img.onerror = function() {
+            finalize(false);
+        };
+
+        img.load(file.getSource());
     });
+
+    
     // 提交表单
     $('.jq-ads-create-submit').click(function() {
         // 验证
