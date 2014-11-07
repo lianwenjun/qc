@@ -1,29 +1,8 @@
 @charset "utf-8";
 /* CSS Document */
-/* 重置 */
-* { margin:0; padding:0; }
-body { font-family:"Arial Normal","Arial"; font-size:18px; }
-ul li { list-style-type: none; }
-a { text-decoration: none; }
-/* 盒子 */ 
-.page-box { min-width:1200px; height:1080px; display:block; border:solid 1px #000; }
-/* 左侧内容 */ 
-.border-left { width:230px; height:1080px; float:left; position:absolute; background:#12356D; }
-/* 左侧标题 */
-h2 { margin-top: 55px; font-size:24px; text-align:center; color:#FFF; }
-/* 左侧内容开始 */
-.content { margin-top:70px; font-size:12px; float:right; }
-h4 { padding-left:30px; color:#FF6; }
-.content a { line-height:50px; padding-right:20px; color:#BDDEFF; }
-/* 左侧菜单 */
-.menu p { width:186px; float:right; text-align:right; border-radius:5px 0 0 5px; padding-right:20px; margin-top:20px; line-height:33px; color:#000; background:#DEDE0B; }
-.menu p:hover { background:#FFF; }
-.list { margin-right:20px; line-height:30px; display:none; text-align:right; float:right; }
-.list li a { font-size:14px; color:#FFF; }
-.list li a:hover { color:#dfdf0b; }
-/* 右侧内容　*/
+/* 欢迎页面样式　*/
 .border-right { padding-left:230px; display:block; }
-.right-box { height:1040px; text-align:center; border:solid 20px #F0F0F0; }
-.right-box p { margin-top:100px; color:#333; font-size:48px; }
-span.user { color:#00F; }
-span.title { color:#000; font-weight:700; font-size:72px; }
+.welcome { height:1040px; text-align:center; border:solid 20px #F0F0F0; }
+.welcome p { margin-top:100px; color:#333; font-size:48px; }
+.welcome span.user { color:#00F; }
+.welcome span.title { color:#000; font-weight:700; font-size:72px; }
