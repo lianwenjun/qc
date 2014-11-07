@@ -1,25 +1,16 @@
 @charset "utf-8";
 /* CSS Document */
-/* 重置 */
-* { margin:0; padding:0; }
-body { font-family:"Arial Normal","Arial"; font-size:18px; }
-ul li { list-style-type: none; }
-a { text-decoration: none; }
-/* 右侧内容　*/
-.border-right { padding-left:230px; display:block; }
-.right-box { height:1040px; border:solid 20px #F0F0F0; overflow:scroll; }
 /* 右侧主体内容 */
 .right-title { color:#333; background:#C9C9C9; }
 .right-title span { font-size: 16px; }
 .right-title span b { margin-left:10px; line-height:40px; font-size: 20px; }
-h3 { font-size:20px; color:#333; line-height:45px; margin-left:30px; }
 .right-main { font-size:16px; color:#333; font-weight:400; margin-left:30px; }
 .right-main table { width:1500px; line-height:40px; }
 .right-main tr.odd { background:#BCBCBC; }
 .right-main tr.even { background:#D6D6D6; }
 .text-right { text-align:right; padding-right:20px; }
 .icon img { width:79px; height:64px; vertical-align: middle; }
-.red { color:#F00; font-size:13px; }
+.img-explain { color:#F00; font-size:13px; }
 .preview img { width:90px; height:155px; }
-p.red { padding-left:300px; line-height:40px; text-decoration:underline; background:#D6D6D6; }
+.draft { padding-left:300px; line-height:40px; color:#F00; font-size:13px; text-decoration:underline; background:#D6D6D6; }
 .submit-back { width:1500px; line-height:80px; text-align:center; word-spacing:3em; background:#D6D6D6; }
