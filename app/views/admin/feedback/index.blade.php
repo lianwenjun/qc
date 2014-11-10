@@ -20,18 +20,18 @@
             <ul>
                 <li>
                     <span><b>查询：</b>
-                        <select name="cate">
-                            <option value="id" {{ Input::get('cate') == 'id' ? 'selected="selected"' : '' }} >反馈ID</option>
-                            <option value="imei" {{ Input::get('cate') == 'imei' ? 'selected="selected"' : '' }} >IMEI</option>
-                            <option value="content" {{ Input::get('cate') == 'content' ? 'selected="selected"' : '' }} >内容</option>
+                        <select name="type">
+                            <option value="id" {{ Input::get('type') == 'id' ? 'selected="selected"' : '' }} >反馈ID</option>
+                            <option value="imei" {{ Input::get('type') == 'imei' ? 'selected="selected"' : '' }} >IMEI</option>
+                            <option value="content" {{ Input::get('type') == 'content' ? 'selected="selected"' : '' }} >内容</option>
                         </select>
                     </span>
                     <span>
                         <input maxlength="16" name="keyword" type="text" class="Search_wenben" size="20" value="{{ Input::get('keyword') }}" placeholder="输入关键字" />
                     </span>
                     <span>
-                        <b>日期：</b><input name="date[]" type="text" class="Search_wenben" value="{{ isset(Input::get('date')[0]) ? Input::get('date')[0] : '' }}"/>
-                        <b>-</b><input name="date[]" type="text" class="Search_wenben" value="{{ isset(Input::get('date')[1]) ? Input::get('date')[1] : '' }}"/>
+                        <b>日期：</b><input name="created_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('created_at')[0]) ? Input::get('created_at')[0] : '' }}"/>
+                        <b>-</b><input name="created_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('created_at')[1]) ? Input::get('created_at')[1] : '' }}"/>
                     </span>
                     <input type="submit" value="搜索" class="Search_en" />
                 </li>
@@ -85,7 +85,7 @@ $(function(){
     pageInit({{ $lists->getCurrentPage() }}, {{ $lists->getLastPage() }}, {{ $lists->getTotal() }});
 
     // 日期控件
-    $('input[name="date[]"]').datepicker({dateFormat: 'yy-mm-dd'});
+    $('input[name="created_at[]"]').datepicker({dateFormat: 'yy-mm-dd'});
 
 });
 </script>

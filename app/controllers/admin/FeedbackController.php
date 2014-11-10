@@ -10,8 +10,11 @@ class Admin_FeedbackController extends \Admin_BaseController {
      */
     public function index()
     {
-        $model = new Feedbacks();
-        $lists = $model->lists(Input::all());
+        $feedbacks = new Feedbacks();
+        $lists = $feedbacks->lists(Input::all())
+                                        ->orderBy('created_at', 'desc')
+                                        ->paginate($this->pagesize);
+
         return View::make('admin.feedback.index')->with('lists', $lists);
     }
 
