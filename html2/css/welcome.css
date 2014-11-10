@@ -1,8 +1,8 @@
 @charset "utf-8";
 /* CSS Document */
 /* 欢迎页面样式　*/
-.border-right { padding-left:230px; display:block; }
-.welcome { height:1040px; text-align:center; border:solid 20px #F0F0F0; }
-.welcome p { margin-top:100px; color:#333; font-size:48px; }
-.welcome span.user { color:#00F; }
-.welcome span.title { color:#000; font-weight:700; font-size:72px; }
+.border-right { padding-left: 230px;display: block; }
+.welcome { height: 1040px;text-align: center; }
+.welcome p { margin-top: 100px;color: #333;font-size: 28px; }
+.welcome span.user { color: #00f; }
+.welcome span.title { color: #000;font-size: 40px; }
