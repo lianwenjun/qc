@@ -149,7 +149,7 @@
             <td>{{ $app['version'] }}</td>
             <td>
               @if(Sentry::getUser()->hasAccess('apps.preview'))
-              <a href="javascript:;" data-id="{{ $app['id'] }}" class="Search_Look jq-preview">点击预览</a>
+              <a href="javascript:;" data-id="{{ $app['id'] }}" class="Search_Look jq-preview">预览</a>
               @endif
             </td>
             <td>{{ $app['download_counts'] }}</td>

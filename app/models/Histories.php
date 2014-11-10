@@ -102,6 +102,8 @@ class Histories extends \Eloquent {
         foreach($apps['data'] as $key => $app) {
             $cats = unserialize($app['cats']);
 
+            // print_r($cats);die;
+
             $cateNames = [];
             foreach($cats as $cat) {
                 $catNames[] = $cat['title'];
