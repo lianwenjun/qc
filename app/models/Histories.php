@@ -66,7 +66,7 @@ class Histories extends \Eloquent {
 
         if(empty($info)) return false;
 
-        $info['cates']  = unserialize($info['cates']);
+        $info['cats']  = unserialize($info['cats']);
         $info['tags']   = unserialize($info['tags']);
         $info['images'] = unserialize($info['images']);
 
@@ -96,18 +96,18 @@ class Histories extends \Eloquent {
      *
      * @return array
      */
-    public function addCatesInfo($apps)
+    public function addCatsInfo($apps)
     {
 
         foreach($apps['data'] as $key => $app) {
-            $cates = unserialize($app['cates']);
+            $cats = unserialize($app['cats']);
 
             $cateNames = [];
-            foreach($cates as $cate) {
-                $cateNames[] = $cate['title'];
+            foreach($cats as $cat) {
+                $catNames[] = $cat['title'];
             }
 
-            $apps['data'][$key] += [ 'cate_name' => implode(', ', $cateNames)];
+            $apps['data'][$key] += [ 'cat_name' => implode(', ', $catNames)];
         }
 
         return $apps;

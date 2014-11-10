@@ -24,10 +24,10 @@ class CreateHistoriesTable extends Migration {
             $table->string('md5', 32)->comment('APK md5值');
             $table->string('version', 32)->comment('游戏版本');
             $table->string('version_code', 32)->comment('版本代号');
-            $table->string('author', 128)->comment('游戏作者');
-            $table->text('summary')->comment('游戏简介');
+            $table->string('author', 128)->nullable()->comment('游戏作者');
+            $table->text('summary')->nullable()->comment('游戏简介');
             $table->text('images')->comment('游戏图片');
-            $table->text('changes')->comment('游戏特性');
+            $table->text('changes')->nullable()->comment('游戏特性');
             $table->string('reason', 20)->comment('审核不过原因');
             $table->integer('download_counts')->default(0)->unsigned()->comment('总下载量');
             $table->string('download_manual', 32)->comment('人工用于显示下载量');
