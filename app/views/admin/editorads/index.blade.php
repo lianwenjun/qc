@@ -18,10 +18,6 @@
                     <span>
                         {{ Form::select('status', $status, Input::get('status')); }}
                     </span>
-                    <span>
-                        {{ Form::select('location', $location, Input::get('location')); }}
-                    </span>
-                         
                     <span><input value="{{ Input::get('word'); }}" maxlength="16" name="word" type="text" class="Search_wenben" size="20" value="" placeholder="输入游戏名称"/></span>
                     <input name="" type="submit" value="搜索" class="Search_en" />
                 </li>     
@@ -40,8 +36,8 @@
                 <td width="13%">上架时间</td>
                 <td width="13%">下线时间</td>
                 <td width="7%">状态</td>
-                <!--td width="7%">排列序号</td>-->
                 <td width="20%">广告词</td>
+                <td width="7%">是否置顶</td>
                 <td width="15%">操作</td>
             </tr>
             @forelse($ads as $ad)
@@ -52,8 +48,8 @@
                     <td {{ Config::get('status.ads.timeColor')[CUtil::adsStatus($ad)] }}>{{ $ad->stocked_at }}</td>
                     <td {{ Config::get('status.ads.timeColor')[CUtil::adsStatus($ad)] }}>{{ $ad->unstocked_at }}</td>
                     <td {{ Config::get('status.ads.statusColor')[CUtil::adsStatus($ad)] }}>{{ Config::get('status.ads.status')[CUtil::adsStatus($ad)] }}</td>
-                    <!--<td>{{ $ad->sort }}</td>-->
                     <td>{{ $ad->word }}</td>
+                    <td>{{ Config::get('status.ads.is_top')[$ad->is_top] }}</td>
                     <td>
                         @if($ad->is_stock == 'yes' && Sentry::getUser()->hasAccess('editorads.unstock'))
                             <a href="{{ URL::route('editorads.unstock', $ad->id) }}" target=BoardRight class="Search_show">下架</a>

@@ -20,7 +20,7 @@ class V1_AdsController extends \V1_BaseController {
         'download_manual' => 'downloadCnt',
         'gameCategory' => 'gameCategory',
         'id' => 'id',
-        'icon' => 'logoImageurl',
+        'icon' => 'logoImageUrl',
         'md5' => 'md5',
         'title' => 'name',
         'pack' => 'packageName',
@@ -54,7 +54,19 @@ class V1_AdsController extends \V1_BaseController {
             $tmp['ImgUrl'] = $ad->image;
             $data[] = $tmp;
         }
-        return ['count' => $count, 'ads' => $data];
+        $res = [];
+        if (count($data) >= 4 || $location != 'banner_slide'){
+            $res = $data;
+        } else {
+            while ($location == 'banner_slide' && count($res) < 4) {
+                foreach ($data as $value) {
+                    if (count($res) < 4) {
+                        $res[] = $value;
+                    }
+                }
+            }
+        }
+        return ['count' => $count, 'ads' => $res];
     }
     //首页游戏位广告列表
     private function appAds($location, $pageSize, $pageIndex, $isTop = 'no') {
@@ -62,7 +74,8 @@ class V1_AdsController extends \V1_BaseController {
         $types = [
                 'hot' => 'app_hot', 
                 'new' => 'app_new',
-                'search' => 'app_search'
+                'search' => 'app_search',
+                'surge' => 'app_rise'
         ];
         if (!isset($types[$location])) {
             return ['count' => 0, 'ads' => []];
@@ -89,7 +102,19 @@ class V1_AdsController extends \V1_BaseController {
             $tmp = isset($appTmp[$ad]) ? $appTmp[$ad] : [];
             $res[] = $tmp;
         }
-        return ['count' => $count, 'ads' => $res];
+        $data = [];
+        if (count($res) >= 4 || $isTop != 'yes'){
+            $data = $res;
+        } else {
+            while ($location == 'yes' && count($data) < 4) {
+                foreach ($res as $value) {
+                    if (count($data) < 4) {
+                        $data[] = $value;
+                    }
+                }
+            }
+        }
+        return ['count' => $count, 'ads' => $data];
     }
     
     //首页排行位广告列表
@@ -184,10 +209,10 @@ class V1_AdsController extends \V1_BaseController {
             return $this->result(['data' => '[]', 'msg' => 0, 'msgbox' => '每页条数大于0']); 
         };
         $types = ['4' => 'yes', '10' => 'no'];
-        if (!isset($types[$type])) {
+        if (!isset($types[$pageSize])) {
             return $this->result(['data' => '[]', 'msg' => 0, 'msgbox' => '分类不存在']);
         }
-        $res = $this->appAds($type, $pageSize, $pageIndex, $types[$type]);
+        $res = $this->appAds($type, $pageSize, $pageIndex, $types[$pageSize]);
             
         $pageIndex = intval($pageIndex) > 0 ? $pageIndex : 1;
         $data['pageCount'] =  CUtil::setPageNum($res['count'], $pageSize);

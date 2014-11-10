@@ -9,7 +9,7 @@ class V1_CatsController extends \V1_BaseController {
     public function index()
     {
         $cats = Api_Cats::where('parent_id', 0)->get();
-        $catIds = [0];
+        $catIds = [];
         $catsTmp = [];
         //这循环有点糟糕
         foreach ($cats as $cat) {
@@ -18,6 +18,9 @@ class V1_CatsController extends \V1_BaseController {
             $catsTmp[$cat->id]['title'] = $cat->title;
             $catsTmp[$cat->id]['ImgUrl'] = '';
             $catsTmp[$cat->id]['GameCount'] = 0;
+        }
+        if (!$catIds) {
+            return $this->result(['data'=>'[]', 'msg'=>0, 'msgbox'=>'没分类']);
         }
         //这个请求可以合并到MODEL里去
         $catImgs = Api_CatAds::whereIn('cat_id', $catIds)->get();
@@ -33,7 +36,7 @@ class V1_CatsController extends \V1_BaseController {
                      ->groupBy('cat_id')
                      ->get();
         foreach ($appsCount as $app) {
-                $catsTmp[$app->cat_id]['appcount'] = $app->app_count;
+                $catsTmp[$app->cat_id]['GameCount'] = $app->app_count;
         }
         $datas = [];
         foreach ($catsTmp as $index => $catTmp) {

@@ -14,6 +14,6 @@ return array(
     */
 
     'debug' => true,
-    'imageHost' => 'http://192.168.5.132',//图片路径
-    'apkHost' => 'http://192.168.5.132',//APK路径
+    'imageHost' => 'http://192.168.5.132:8080',//图片路径
+    'apkHost' => 'http://192.168.5.132:8080',//APK路径
 );

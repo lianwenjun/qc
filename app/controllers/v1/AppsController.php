@@ -8,7 +8,7 @@ class V1_AppsController extends \V1_BaseController {
         'download_manual' => 'downloadCnt',
         'gameCategory' => 'gameCategory',
         'id' => 'id',
-        'icon' => 'logoImageurl',
+        'icon' => 'logoImageUrl',
         'md5' => 'md5',
         'title' => 'name',
         'pack' => 'packageName',

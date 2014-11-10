@@ -28,14 +28,14 @@
                                 <option value="{{ route('searchapps').'?type=name' }}">游戏名称</option>
                                 <option value="{{ route('searchapps').'?type=appid' }}">游戏ID</option>
                             </select>
-                            <input id="autocomplete" maxlength="16" type="text" class="Search_text jq-searchapps" placeholder="输入时自动匹配" style="width:25%" />
+                            <input id="autocomplete" maxlength="32" type="text" class="Search_text jq-searchapps" placeholder="输入时自动匹配" style="width:25%" />
                         </td>
                     </tr>
                     <input name="app_id" type="hidden" val="">
                     <!--数据选择区开始-->
                     <input name="title" type="hidden" val="">
                     <tr>
-                        <td  class="Search_lei">广告区域：</td>
+                        <td class="Search_lei"><span class="required">*</span>广告区域：</td>
                         <td>
                         <span style="float:left">
                             {{ Form::select('location', $location, Session::get('input.location', ''), ['class'=>'Search_select']); }}
@@ -44,7 +44,7 @@
                     </tr>
 
                     <tr>
-                        <td  class="Search_lei">广告置顶：</td>
+                        <td class="Search_lei">广告置顶：</td>
                         <td>
                             {{ Form::checkbox('is_top', 'yes', Session::get('input.is_top') ? true : false) }} 
                           是　<span style=" color:#C00">（选中后无论上架广告数量，该广告均会在轮播中出现）</span></td>
@@ -52,7 +52,7 @@
 
                     <tr>
 
-                        <td  class="Search_lei"><span class="required">*</span>上线时间：</td>
+                        <td class="Search_lei"><span class="required">*</span>上线时间：</td>
                         <td>
                             <h6>从 </h6> <h6><input type="text" name="stocked_at" class="Search_text jq-ui-timepicker" value="{{ Session::get('input.stocked_at', '') }}"></h6>
                             <h6> 到 </h6> <h6><input type="text" name="unstocked_at" class="Search_text jq-ui-timepicker" value="{{ Session::get('input.unstocked_at', '')}}"></h6></td>
@@ -145,11 +145,13 @@ $(function(){
             ignore: '',
             rules: {
                 app_id: "required",
+                location: "required",
                 stocked_at: "required",
                 unstocked_at: "required",
             },
             messages: {
                 app_id: {required: '游戏为必填'},
+                location: {required: '分类为必填'},
                 stocked_at: {required: '上线时间为必填'},
                 unstocked_at: {required: '下架时间为必填'},
             }

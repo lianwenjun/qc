@@ -213,6 +213,12 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::post('{id}/edit', ['as' => 'catads.edit', 'uses' => 'Admin_Cat_CatAdsController@update']);
     });
 
+    Route::group(['prefix' => 'appsapk', 'before' => 'hasPermissions'], function() //分类推广
+    {
+        Route::get('index', ['as' => 'appsapk.index', 'uses' => 'Admin_Cat_CatAdsController@index']);
+        Route::post('upload', ['as' => 'catads.upload', 'uses' => 'Admin_Cat_CatAdsController@upload']);
+        Route::post('{id}/edit', ['as' => 'catads.edit', 'uses' => 'Admin_Cat_CatAdsController@update']);
+    });
 
     Route::get('searchapps', ['as' => 'searchapps', 'uses' => 'Admin_IndexController@searchApps']);//智能匹配列表
     Route::get('appsinfo/{id}', ['as' => 'appsinfo', 'uses' => 'Admin_IndexController@appsinfo']);//近期添加列表
@@ -221,7 +227,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 //Route::post('/admin/appsads/imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_Apps_AppsAdsController@upload']);
 
 
-Route::group(['prefix' => 'v1'], function() //V1版本
+Route::group(['prefix' => 'v1/api'], function() //V1版本
 {
     Route::get('game/extend/{type}/{pageSize}/{pageIndex}', ['uses' => 'V1_AdsController@banner']);
     Route::get('game/cull/{type}/{pageSize}/{pageIndex}', ['uses' => 'V1_AdsController@editor']);
@@ -241,6 +247,7 @@ Route::group(['prefix' => 'v1'], function() //V1版本
     Route::post('client/apps/list', ['uses' => 'V1_AppsController@clientList']);
     Route::post('game/update', ['uses' => 'V1_AppsController@check']);
 
+    Route::get('appclient/ver/update/{versionCode}', ['uses' => 'V1_ClientController@checkVersion']);
     Route::get('appclient/ver/info/{versionCode}', ['uses' => 'V1_ClientController@checkVersion']);
     Route::post('game/feedback/add', ['uses' => 'V1_FeedbacksController@store']);
     

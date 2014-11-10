@@ -84,7 +84,7 @@
             ],
             //首页图片，编辑广告区域
             'bannerLocation' => [
-                '' => '所有',
+                '' => '所属类别',
                 'banner_slide' => '轮播广告图',
                 'banner_new' => '新品抢玩',
                 'banner_hot' => '热门下载',

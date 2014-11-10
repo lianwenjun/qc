@@ -3,19 +3,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>日志查询</title>
-<link type="text/css" href="css/general.css" rel="stylesheet"/>
+<link type="text/css" href="css/common.css" rel="stylesheet"/>
+<link type="text/css" href="css/renewal.css" rel="stylesheet"/>
 <script src="js/jquery-1.9.1.min.js"></script>
 </head>
 <body>
 <div class="page-box">   
     <!-- 左侧内容 -->
-    <div class="border-left">
+    <div class="box-left">
         <!-- 标题 -->
         <div class="left-title">
             <h2>游戏商店系统</h2>
         </div>
         <!-- 内容开始 -->
-        <div class="gameplay">
+        <div class="content">
             <h4>hi,蓝翔高技学校</h4>
             <a href="#">修改密码</a>
             <a href="#">退出系统</a>
@@ -26,21 +27,21 @@
                 <li>
                     <p>游戏管理</p>
                     <ul class="list">
-                        <li><a href="#">上架游戏列表</a></li>
-                        <li><a href="#">添加编辑游戏</a></li>
-                        <li><a href="#">待审核列表</a></li>
-                        <li><a href="#">审核不通过列表</a></li>
-                        <li><a href="#">下架游戏列表</a> </li> 
+                        <li><a href="putaway.html">上架游戏列表</a></li>
+                        <li><a href="add.html">添加编辑游戏</a></li>
+                        <li><a href="authstr.html">待审核列表</a></li>
+                        <li><a href="nopass.html">审核不通过列表</a></li>
+                        <li><a href="unstock.html">下架游戏列表</a> </li> 
                     </ul>
                 </li>
                 <li>
                     <p>广告位管理</p>
                     <ul class="list">
-                        <li><a href="#">首页图片位管理</a></li>
-                        <li><a href="#">首页游戏位管理</a></li>
-                        <li><a href="#">编辑精选管理</a></li>
-                        <li><a href="#">排行游戏位管理</a></li>
-                        <li><a href="#">分类页图片管理</a> </li> 
+                        <li><a href="picture.html">首页图片位管理</a></li>
+                        <li><a href="games.html">首页游戏位管理</a></li>
+                        <li><a href="selection.html">编辑精选管理</a></li>
+                        <li><a href="rank.html">排行游戏位管理</a></li>
+                        <li><a href="classify.html">分类页图片管理</a> </li> 
                     </ul>
                 </li>
                 <li>
@@ -58,9 +59,9 @@
                 <li>
                     <p>评论管理</p>
                     <ul class="list">
-                        <li><a href="#">游戏评分列表</a></li>
-                        <li><a href="#">游戏评论列表</a></li>
-                        <li><a href="#">应用反馈</a></li>
+                        <li><a href="score.html">游戏评分列表</a></li>
+                        <li><a href="comments.html">游戏评论列表</a></li>
+                        <li><a href="feedback.html">应用反馈</a></li>
                     </ul>
                 </li>
                 <li>
@@ -75,22 +76,22 @@
                 <li>
                     <p>权限管理</p>
                     <ul class="list">
-                        <li><a href="#">管理员管理</a></li>
-                        <li><a href="#">角色管理</a></li>
-                        <li><a href="#">权限管理</a></li>
+                        <li><a href="administrator.html">管理员管理</a></li>
+                        <li><a href="auth/role.html">角色管理</a></li>
+                        <li><a href="auth.thml">权限管理</a></li>
                     </ul>
                 </li>
                 <li>
                     <p>日志管理</p>
                     <ul class="list">
-                        <li><a href="#">日志查询</a></li>
+                        <li><a href="log.html">日志查询</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
     </div>
     <!-- 右侧内容 -->
-    <div class="border-right">
+    <div class="box-right">
         <div class="right-box">
             <!-- 右侧主体内容 -->
             <div  class="right-title">
@@ -114,11 +115,11 @@
                 </div>
             </form>
             <!-- 上架游戏记录 -->
-            <div class="load-game">
+            <div class="table-load">
                 <span>操作日志：共<b>1231</b>条记录</sapn>
             </div>
             <!-- 上架游戏记录表格 -->
-            <div class="games-list">
+            <div class="table">
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                         <th>序号</th>
@@ -277,7 +278,7 @@
                 </table>
             </div>
             <!-- 上下翻页块 -->
-            <div class="choose-page">
+            <div class="pagination">
                 <a href="#">首页</a> 
                 <a href="#">上一页</a> 
                 <a href="#">1</a>
@@ -302,7 +303,7 @@
 <script>
     $(function(){
         $("p").click(function(){
-            $(this).siblings(".menu").toggle();
+            $(this).siblings(".list").toggle();
         })
     })
 </script>
