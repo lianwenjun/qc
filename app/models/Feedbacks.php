@@ -4,7 +4,6 @@ class Feedbacks extends \Eloquent {
     protected $fillable = [];
     protected $table = 'feedbacks';
     protected $softDelete = true;
-    public $pageSize = 16;
 
     /**
      * 应用反馈列表
@@ -17,9 +16,8 @@ class Feedbacks extends \Eloquent {
     {
         $query = Feedbacks::select('id', 'type', 'imei', 'version', 'email', 'content', 'created_at');
         $query = (new CFeedback)->queryParse($query, $data);
-        $list = $query->orderBy('created_at')->paginate($this->pageSize);
 
-        return $list;
+        return $query;
     }
 
 }

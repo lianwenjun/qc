@@ -37,7 +37,9 @@ class Admin_indexAdsController extends \Admin_AdsController {
      */
     public function create()
     {
-        $datas = ['location' => Config::get('status.ads.bannerLocation')];
+        $location = Config::get('status.ads.bannerLocation');
+        $location = array_slice($location, 1);
+        $datas = ['location' => $location];
         $this->layout->content = View::make('admin.indexads.create', $datas);
     }
 
@@ -90,8 +92,11 @@ class Admin_indexAdsController extends \Admin_AdsController {
         if (!$app) {
             return Redirect::route('indexads.index');
         }
+        $location = Config::get('status.ads.bannerLocation');
+        $location = array_slice($location, 1);
+        $datas = ['location' => $location];
         $datas = ['ad' => $ad, 
-            'location' => Config::get('status.ads.bannerLocation'),
+            'location' => $location,
             'app' => $app];
         $this->layout->content = View::make('admin.indexads.edit', $datas);
     }
