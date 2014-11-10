@@ -12,9 +12,9 @@ class CFeedback
      **/
     public function queryParse($query, $data)
     {
-        if($data) {
+        if ($data) {
             //关键字处理
-            if(isset($data['keyword']) && !empty($data['keyword'])) {
+            if (isset($data['keyword']) && !empty($data['keyword'])) {
                 switch($data['type']) {
                     case 'id':
                         $query->where('id', $data['keyword']);
@@ -29,10 +29,17 @@ class CFeedback
             }
 
             //时间处理
-            if(isset($data['created_at']) && is_array($data['created_at']) && count($data['created_at'])==2) {
-
-                if($data['created_at'][0] !== '' || $data['created_at'][1] !== '') {
-                    $data['created_at'][1] = $data['created_at'][1] ? date('Y-m-d', strtotime($data['created_at'][1]) + 24 * 3600) : date('Y-m-d', time());
+            if (
+                isset($data['created_at'])
+                && is_array($data['created_at'])
+                && count($data['created_at'])==2
+            ) {
+                if ($data['created_at'][0] !== '' || $data['created_at'][1] !== '') {
+                    if ($data['created_at'][1]) {
+                        $data['created_at'][1] = date('Y-m-d', strtotime($data['created_at'][1]) + 24 * 3600);
+                    } else {
+                        $data['created_at'][1] = date('Y-m-d', time());
+                    }
                     $query->whereBetween('created_at', $data['created_at']);
                 }
             }
