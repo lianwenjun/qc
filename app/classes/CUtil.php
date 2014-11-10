@@ -74,6 +74,7 @@ class CUtil
 
     //确定是否补全URL
     public static function checkHost($url, $type = 'image') {
+        if (empty($url)) return $url;
         if ($type == 'apk') {
             $host = Config::get('app.apkHost');
         } else {
