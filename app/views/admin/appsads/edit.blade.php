@@ -22,7 +22,7 @@
 
                     <tr class="Search_biao_two">
                         <td  class="Search_lei">包名：</td>
-                        <td>{{ $app->package }}</td>
+                        <td>{{ $app->pack }}</td>
                     </tr>
 
                     <tr class="Search_biao_one">
