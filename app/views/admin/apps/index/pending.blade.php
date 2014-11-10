@@ -139,7 +139,7 @@
             <td>{{ !empty($app['cat_name']) ? $app['cat_name'] : '/' }}</td>
             <td>{{ $app['size'] }}</td>
             <td>{{ $app['version'] }}</td>
-            <td><a href="javascript:;" data-id="{{ $app['id'] }}" class="Search_Look jq-preview">点击预览</a></td>
+            <td><a href="javascript:;" data-id="{{ $app['id'] }}" class="Search_Look jq-preview">预览</a></td>
             <td>{{ date('Y-m-d H:i', strtotime($app['updated_at'])) }}</td>
             <td>
                 @if(Sentry::getUser()->hasAccess('apps.putStock'))

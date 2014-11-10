@@ -116,10 +116,10 @@
             <td><img src="{{ asset($app['icon']) }}" width="28" height="28" /></td>
             <td>{{ $app['title'] }}</td>
             <td>{{ $app['pack'] }}</td>
-            <td>{{ !empty($app['cate_name']) ? $app['cate_name'] : '/' }}</td>
+            <td>{{ !empty($app['cat_name']) ? $app['cat_name'] : '/' }}</td>
             <td>{{ $app['size'] }}</td>
             <td>{{ $app['version'] }}</td>
-            <td><a href="javascript:;" data-id="{{ $app['id'] }}" data-type="history" class="Search_Look jq-preview">点击预览</a></td>
+            <td><a href="javascript:;" data-id="{{ $app['id'] }}" data-type="history" class="Search_Look jq-preview">预览</a></td>
             <td>{{ $app['stocked_at'] != '0000-00-00 00:00:00' ? date('Y-m-d H:i', strtotime($app['stocked_at'])) : '' }}</td>
             <td>{{ $app['unstocked_at'] != '0000-00-00 00:00:00' ? date('Y-m-d H:i', strtotime($app['unstocked_at'])) : '' }}</td>
             <td> {{ isset($app['operator']) ? $app['operator'] : '' }} </td>
