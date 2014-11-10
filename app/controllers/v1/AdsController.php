@@ -47,7 +47,7 @@ class V1_AdsController extends \V1_BaseController {
         $start = (intval($pageIndex) - 1) * intval($pageSize);
         $query = Api_Ads::whereType('banner')->whereLocation($location)->isStock();
         $count = $query->count();
-        $ads = $query->orderBy('id', 'desc')->skip($start)->take($pageSize)->get();
+        $ads = $query->orderBy('id', 'desc')->orderBy('is_top', 'desc')->skip($start)->take($pageSize)->get();
         $data = [];
         foreach ($ads as $ad) {
             $tmp['id'] = $ad->app_id;
@@ -85,7 +85,7 @@ class V1_AdsController extends \V1_BaseController {
         $start = (intval($pageIndex) - 1) * intval($pageSize);
         $query = Api_Ads::whereType('app')->whereLocation($location)->isStock()->isTop($isTop);
         $count = $query->count();
-        $ads = $query->orderBy('id', 'desc')->skip($start)->take($pageSize)->get();
+        $ads = $query->orderBy('id', 'desc')->orderBy('is_top', 'desc')->skip($start)->take($pageSize)->get();
         $data = [];
         $appIds = [0];
         foreach ($ads as $ad) {
@@ -106,7 +106,7 @@ class V1_AdsController extends \V1_BaseController {
         if (count($res) >= 4 || $isTop != 'yes'){
             $data = $res;
         } else {
-            while ($location == 'yes' && count($data) < 4) {
+            while ($isTop == 'yes' && count($data) < 4) {
                 foreach ($res as $value) {
                     if (count($data) < 4) {
                         $data[] = $value;
