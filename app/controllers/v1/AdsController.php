@@ -85,7 +85,7 @@ class V1_AdsController extends \V1_BaseController {
         $start = (intval($pageIndex) - 1) * intval($pageSize);
         $query = Api_Ads::whereType('app')->whereLocation($location)->isStock()->isTop($isTop);
         $count = $query->count();
-        $ads = $query->orderBy('id', 'desc')->orderBy('is_top', 'desc')->skip($start)->take($pageSize)->get();
+        $ads = $query->orderBy('id', 'desc')->skip($start)->take($pageSize)->get();
         $data = [];
         $appIds = [0];
         foreach ($ads as $ad) {
