@@ -1,9 +1,6 @@
 <?php
 
 class Feedbacks extends \Eloquent {
-    protected $fillable = [];
-    protected $table = 'feedbacks';
-    protected $softDelete = true;
 
     /**
      * 应用反馈列表
@@ -14,7 +11,8 @@ class Feedbacks extends \Eloquent {
      **/
     public function lists($data)
     {
-        $query = Feedbacks::select('id', 'type', 'imei', 'version', 'email', 'content', 'created_at');
+        $listCol = ['id', 'type', 'imei', 'version', 'email', 'content', 'created_at'];
+        $query = Feedbacks::select($listCol);
         $query = (new CFeedback)->queryParse($query, $data);
 
         return $query;
