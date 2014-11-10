@@ -66,7 +66,7 @@ class Histories extends \Eloquent {
 
         if(empty($info)) return false;
 
-        $info['cates']  = unserialize($info['cates']);
+        $info['cats']  = unserialize($info['cats']);
         $info['tags']   = unserialize($info['tags']);
         $info['images'] = unserialize($info['images']);
 
