@@ -14,7 +14,7 @@ class Admin_FeedbackController extends \Admin_BaseController {
         $lists = $feedbacks->lists(Input::all())
                                         ->orderBy('created_at', 'desc')
                                         ->paginate($this->pagesize);
-                                        
+
         return View::make('admin.feedback.index')->with('lists', $lists);
     }
 
