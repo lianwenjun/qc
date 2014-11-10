@@ -17,7 +17,7 @@ class CFeedback
             if (isset($data['keyword']) && !empty($data['keyword'])) {
                 switch($data['type']) {
                     case 'id':
-                        $query->where('id', $data['keyword']);
+                        $query->whereId('id', $data['keyword']);
                         break;
                     case 'imei':
                         $query->where('imei', 'like', '%' . $data['keyword'] . '%');
