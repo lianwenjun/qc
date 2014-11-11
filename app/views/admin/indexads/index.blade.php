@@ -29,7 +29,9 @@
     </form>
                     
     <div class="Search_cunt">共 <strong>{{ $ads->getTotal() }}</strong> 条信息 </div>
-                     
+     @if (Session::get('msg'))
+        <div class="Search_cunt">{{ Session::get('msg')}}</div>
+    @endif               
         <div class="Search_biao">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr class="Search_biao_title">

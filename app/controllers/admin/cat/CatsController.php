@@ -211,7 +211,7 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
                 $tag->delete();
             }
             //删除广告的分类
-            $catAdsModel = new catAds;
+            $catAdsModel = new CatAds;
             $catAds = $catAdsModel->where('cat_id', $id)->first();
             isset($catAds) ? $catAds->delete() : '';
         }

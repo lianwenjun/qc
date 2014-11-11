@@ -67,7 +67,7 @@
 
             <tr>
                 <td class="Search_lei"><span class="required">*</span>游戏截图：</td>
-                <td><a id="browse" href="javascript:;" class="Search_Update">图片上传</a> <span class="jq-picTips" style="color:#C00">（焦点图480*200，专题图230*120）</span></td>
+                <td><a id="browse" href="javascript:;" class="Search_Update">图片上传</a> <span class="jq-picTips" style="color:#C00">（焦点图480x195px，专题图223x129px）</span></td>
             </tr>
 
             <tr>

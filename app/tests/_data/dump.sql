@@ -505,6 +505,9 @@ CREATE TABLE `record_logs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+/*----------------------------------------------------------
+| 测试 feedbacks 数据库
+----------------------------------------------------------*/
 CREATE TABLE `feedbacks` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '客户端版本',
