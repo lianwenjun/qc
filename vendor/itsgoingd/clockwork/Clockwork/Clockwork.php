@@ -18,7 +18,7 @@ class Clockwork implements LoggerInterface
 	/**
 	 * Clockwork version
 	 */
-	const VERSION = '1.5';
+	const VERSION = '1.6';
 
 	/**
 	 * Array of data sources, these objects provide data to be stored in a request object
@@ -104,8 +104,16 @@ class Clockwork implements LoggerInterface
 		$this->request->timelineData = array_merge($this->request->timelineData, $this->timeline->finalize());
 
 		// sort log and timeline data by time
-		uasort($this->request->log, function($a, $b){ return $a['time'] * 10000 - $b['time'] * 10000; });
-		uasort($this->request->timelineData, function($a, $b){ return $a['start'] * 10000 - $b['start'] * 10000; });
+		uasort($this->request->log, function($a, $b)
+		{
+			if ($a['time'] == $b['time']) return 0;
+			return $a['time'] < $b['time'] ? -1 : 1;
+		});
+		uasort($this->request->timelineData, function($a, $b)
+		{
+			if ($a['start'] == $b['start']) return 0;
+			return $a['start'] < $b['start'] ? -1 : 1;
+		});
 
 		return $this;
 	}

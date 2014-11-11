@@ -6,6 +6,7 @@ $str = "application: label='心情调节器' icon='res/drawable-hdpi/logo.png'";
 preg_match('/^application: label=\'.+\' icon=\'(.+)\'$/', $str, $matches);
 print_r($matches);
 
+echo json_encode($matches, JSON_UNESCAPED_UNICODE);
 
 $str = "application-label:'Network debug assistant'";
 preg_match('/^application-label:\'(.+)\'$/', $str, $matches);
