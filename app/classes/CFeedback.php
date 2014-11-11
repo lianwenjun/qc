@@ -15,19 +15,13 @@ class CFeedback
         if ($data) {
             // 关键字处理
             if (isset($data['keyword']) && !empty($data['keyword'])) {
-                switch($data['type']) {
-                    case 'id':
-                        $query->where('id', $data['keyword']);
-                        break;
-                    case 'imei':
-                        $query->where('imei', 'like', '%' . $data['keyword'] . '%');
-                        break;
-                    case 'content':
-                        $query->where('content', 'like', '%' . $data['keyword'] . '%');
-                        break;
+                if ($data['type'] == 'id') {
+                    $query->where('id', $data['keyword']);
+                } elseif (in_array($data['type'], ['imei', 'content'])) {
+                    $query->where($data['type'], 'like', '%' . $data['keyword'] . '%');
                 }
             }
-
+            
             // 时间处理
             if (isset($data['created_at']) && !empty($data['created_at'])) {
                 if ($data['created_at'][1] !== '') {
