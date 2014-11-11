@@ -9,21 +9,15 @@ $I->amOnRoute('feedback.index');
 $I->see('应用反馈列表');
 
 // ID搜索
-$I->selectOption('type', 'id');
-$I->fillField('keyword', '1');
-$I->click('.Search_en');
+$I->amOnPage('/admin/feedback/index?type=id&keyword=1&created_at[]=&created_at[]=');
 $I->see('应用反馈列表第一行内容', '//table');
 
 // IMEI搜索
-$I->selectOption('type', 'imei');
-$I->fillField('keyword', 'ABCDEF');
-$I->click('.Search_en');
+$I->amOnPage('/admin/feedback/index?type=imei&keyword=ABCDEF&created_at[]=&created_at[]=');
 $I->see('应用反馈列表第二行内容', '//table');
 
 // 内容搜索
-$I->selectOption('type', 'content');
-$I->fillField('keyword', '第二行');
-$I->click('.Search_en');
+$I->amOnPage('/admin/feedback/index?type=content&keyword=第二行&created_at[]=&created_at[]=');
 $I->see('应用反馈列表第二行内容', '//table');
 
 // 时间搜索
