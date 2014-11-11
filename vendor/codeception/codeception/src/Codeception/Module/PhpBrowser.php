@@ -2,6 +2,7 @@
 
 namespace Codeception\Module;
 
+use Codeception\Exception\TestRuntime;
 use Codeception\Lib\Connector\Guzzle;
 use Codeception\Lib\InnerBrowser;
 use Codeception\Lib\Interfaces\MultiSession;
@@ -82,7 +83,7 @@ class PhpBrowser extends InnerBrowser implements Remote, MultiSession
         foreach ($this->config['curl'] as $key => $val) {
             if (defined($key)) $defaults['config']['curl'][constant($key)] = $val;
         }
-        $this->guzzle = new Client(['defaults' => $defaults]);
+        $this->guzzle = new Client(['base_url' => $this->config['url'], 'defaults' => $defaults]);
         $this->_initializeSession();
     }
 
@@ -98,6 +99,24 @@ class PhpBrowser extends InnerBrowser implements Remote, MultiSession
     public function setHeader($header, $value)
     {
         $this->client->setHeader($header, $value);
+    }
+    
+    public function amHttpAuthenticated($username, $password)
+    {
+        $this->client->setAuth($username, $password);
+    }
+
+    public function amOnUrl($url)
+    {
+        $urlParts = parse_url($url);
+        if (!isset($urlParts['host']) or !isset($urlParts['scheme'])) {
+            throw new TestRuntime("Wrong URL passes, host and scheme not set");
+        }
+        $host = $urlParts['scheme'].'://'.$urlParts['host'];
+        $this->_reconfigure(['url' => $host]);
+        $page = substr($url, strlen($host));
+        $this->debugSection('Host', $host);
+        $this->amOnPage($page);
     }
 
     public function amOnSubdomain($subdomain)

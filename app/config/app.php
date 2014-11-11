@@ -126,7 +126,7 @@ return array(
         'Clockwork\Support\Laravel\ClockworkServiceProvider',
         'Mews\Captcha\CaptchaServiceProvider',
         'DaveJamesMiller\Breadcrumbs\ServiceProvider',
-        'Kmd\Logviewer\LogviewerServiceProvider',
+        'BankDev\Logviewer\LogviewerServiceProvider',
         'JildertMiedema\LaravelPlupload\LaravelPluploadServiceProvider',
 
     ),

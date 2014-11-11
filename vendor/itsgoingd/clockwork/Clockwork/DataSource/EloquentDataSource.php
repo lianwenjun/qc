@@ -3,7 +3,8 @@ namespace Clockwork\DataSource;
 
 use Clockwork\Request\Request;
 
-use Illuminate\Database\Connection;
+use Illuminate\Database\DatabaseManager;
+use Illuminate\Events\Dispatcher as EventDispatcher;
 
 /**
  * Data source for Eloquent (Laravel 4 ORM), provides database queries
@@ -11,16 +12,45 @@ use Illuminate\Database\Connection;
 class EloquentDataSource extends DataSource
 {
 	/**
-	 * Database connection for which the queries are retrieved
+	 * Database manager
 	 */
-	protected $connection;
+	protected $databaseManager;
 
 	/**
-	 * Create a new data source instance, takes a database connection as an argument
+	 * Internal array where queries are stored
+	 * @var array
 	 */
-	public function __construct(Connection $connection)
+	protected $queries = array();
+
+	/**
+	 * Create a new data source instance, takes a database manager and an event dispatcher as arguments
+	 */
+	public function __construct(DatabaseManager $databaseManager, EventDispatcher $eventDispatcher)
 	{
-		$this->connection = $connection;
+		$this->databaseManager = $databaseManager;
+		$this->eventDispatcher = $eventDispatcher;
+	}
+
+	/**
+	 * Start listening to eloquent queries
+	 */
+	public function listenToEvents()
+	{
+		$this->eventDispatcher->listen('illuminate.query', array($this, 'registerQuery'));
+	}
+
+	/**
+	 * Log the query into the internal store
+	 * @return array
+	 */
+	public function registerQuery($query, $bindings, $time, $connection)
+	{
+		$this->queries[] = array(
+			'query'      => $query,
+			'bindings'   => $bindings,
+			'time'       => $time,
+			'connection' => $connection
+		);
 	}
 
 	/**
@@ -34,15 +64,15 @@ class EloquentDataSource extends DataSource
 	}
 
 	/**
-	 * Takes a query and array of bindings as arguments, returns runnable query with upper-cased keywords
+	 * Takes a query, an array of bindings and the connection as arguments, returns runnable query with upper-cased keywords
 	 */
-	protected function createRunnableQuery($query, $bindings)
+	protected function createRunnableQuery($query, $bindings, $connection)
 	{
 		# add bindings to query
-		$bindings = $this->connection->prepareBindings($bindings);
+		$bindings = $this->databaseManager->connection($connection)->prepareBindings($bindings);
 
 		foreach ($bindings as $binding) {
-			$binding = $this->connection->getPdo()->quote($binding);
+			$binding = $this->databaseManager->connection($connection)->getPdo()->quote($binding);
 
 			$query = preg_replace('/\?/', $binding, $query, 1);
 		}
@@ -59,16 +89,17 @@ class EloquentDataSource extends DataSource
 	}
 
 	/**
-	 * Returns an array of runnable queries and their durations from a database connection
+	 * Returns an array of runnable queries and their durations from the internal array
 	 */
 	protected function getDatabaseQueries()
 	{
 		$queries = array();
 
-		foreach ($this->connection->getQueryLog() as $query)
+		foreach ($this->queries as $query)
 			$queries[] = array(
-				'query'    => $this->createRunnableQuery($query['query'], $query['bindings']),
-				'duration' => $query['time'],
+				'query'      => $this->createRunnableQuery($query['query'], $query['bindings'], $query['connection']),
+				'duration'   => $query['time'],
+				'connection' => $query['connection']
 			);
 
 		return $queries;
