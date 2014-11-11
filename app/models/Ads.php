@@ -69,6 +69,7 @@ class Ads extends \Eloquent {
         $ad->location = Input::get('location', $ad->location);
         $ad->is_top = Input::get('is_top', 'no');
         $ad->sort = Input::get('sort', $ad->sort);
+        $ad->image = Input::get('image', $ad->image);
         $ad->stocked_at = Input::get('stocked_at', $ad->stocked_at);
         $ad->unstocked_at = Input::get('unstocked_at', $ad->unstocked_at);
         $ad->is_stock = 'yes';

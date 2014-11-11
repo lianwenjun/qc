@@ -8,7 +8,7 @@ class V1_CatsController extends \V1_BaseController {
      */
     public function index()
     {
-        $cats = Api_Cats::where('parent_id', 0)->get();
+        $cats = Api_Cats::where('parent_id', 0)->orderBy('sort', 'desc')->get();
         $catIds = [];
         $catsTmp = [];
         //这循环有点糟糕

@@ -65,7 +65,21 @@ class Admin_Apps_AppsAdsController extends \Admin_AdsController {
             return Redirect::route('appsads.create')->with('msg', '添加失败')
                         ->with('input', Input::all());
         }
-
+        //检测游戏是否存在
+        $app = Apps::whereStatus('stock')->find(Input::get('app_id'));
+        if (!$app) {
+            return Redirect::route('indexads.create')
+                ->with('msg', '#' . Input::get('app_id') . '游戏不存在')
+                ->with('input', Input::all());
+        }
+        //检查该游戏广告是否重复了
+        $ad = Ads::whereType($this->type)->IsLocation(Input::get('location'))->
+                where('app_id', Input::get('app_id'))->get();
+        if ($ad){
+            return Redirect::route('editorads.create')
+                ->with('msg', '该分类游戏已经存在')
+                ->with('input', Input::all());
+        }
         $ad = $ads->ofCreate($this->type);
         if ($ad->save()) {
             return Redirect::route('appsads.index')->with('msg', '添加成功');
@@ -90,7 +104,7 @@ class Admin_Apps_AppsAdsController extends \Admin_AdsController {
             return Redirect::route('appsads.index')->with('msg', '游戏不存在');
         }
         //检测游戏是否存在
-        $app = Apps::find($ad->app_id);
+        $app = Apps::whereStatus('stock')->find($ad->app_id);
         if (!$app) {
             return Redirect::route('appsads.index')->with('msg', '游戏不存在');
         }
@@ -120,6 +134,13 @@ class Admin_Apps_AppsAdsController extends \Admin_AdsController {
         if (!$valid){
             Log::error('广告分类更新');
             return Redirect::route('appsads.edit', $id)->with('msg', '添加失败');
+        }
+        //检测游戏是否存在
+        $app = Apps::whereStatus('stock')->find($ad->app_id);
+        if (!$app) {
+            $ad->is_stock = 'no';
+            $ad->save();
+            return Redirect::route('indexads.index')->with('msg', 'APP不存在了');
         }
         $ad = (new Ads)->ofUpdate($ad);
         if ($ad->save()) {
