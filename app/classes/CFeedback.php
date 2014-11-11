@@ -13,7 +13,7 @@ class CFeedback
     public function queryParse($query, $data)
     {
         if ($data) {
-            //关键字处理
+            // 关键字处理
             if (isset($data['keyword']) && !empty($data['keyword'])) {
                 switch($data['type']) {
                     case 'id':
@@ -28,7 +28,7 @@ class CFeedback
                 }
             }
 
-            //时间处理
+            // 时间处理
             if (isset($data['created_at']) && !empty($data['created_at'])) {
                 if ($data['created_at'][1] !== '') {
                     $data['created_at'][1] = date('Y-m-d', strtotime($data['created_at'][1]) + 24 * 3600);
