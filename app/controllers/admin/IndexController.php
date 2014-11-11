@@ -77,7 +77,7 @@ class Admin_IndexController extends \Admin_BaseController {
     */
     public function appsinfo($id) {
         $app = Apps::select('id', 'title', 'icon', 'pack', 'size', 'version', 'created_at')
-                    ->where('status', 'stock')->where('id', $id)->first();
+                    ->whereStatus('stock')->find($id);
         if (!empty($app)) {
             return Response::json(['data' => $app, 'status'=>'ok']);
         }

@@ -16,7 +16,9 @@
     <div class="Theme_title"><h1>广告位管理 <span>首页图片位管理</span><b>添加游戏</b></h1></div>
                      
     <div class="Search_title">游戏信息</div>
-                     
+    @if (Session::get('msg'))
+        <div class="Search_title">{{ Session::get('msg')}}</div>
+    @endif                 
     <div class="Search_biao">
         <form action="{{ Request::url('indexads.create') }}" method="post">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
