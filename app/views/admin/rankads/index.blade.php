@@ -13,14 +13,12 @@
             <ul>
                 <li>
                     <span><b>查询：</b>  
-                    </span>
-                    <span>
                         {{ Form::select('status', $status, Input::get('status')); }}
                     </span>
                     <span>
                         {{ Form::select('location', $location, Input::get('location')); }}
                     </span>
-                    <span><input maxlength="16" placeholder="输入游戏名称" type="text" class="Search_wenben" size="20" value="" /></span>
+                    <span><input name="word" maxlength="16" placeholder="输入游戏名称" type="text" class="Search_wenben" size="20" value="" /></span>
                     <input name="" type="submit" value="搜索" class="Search_en" />
                     </li>   
               </ul>

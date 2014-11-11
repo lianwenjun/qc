@@ -3,6 +3,7 @@
 class Admin_Apps_AppsAdsController extends \Admin_AdsController {
 
     protected $type = 'app';
+    protected $location = ['app_hot', 'app_search', 'app_new'];
     protected $indexRoute = 'appsads.index';
     /**
      * 首页游戏位广告列表
@@ -16,7 +17,8 @@ class Admin_Apps_AppsAdsController extends \Admin_AdsController {
         $ads = Ads::ofTitle(Input::get('word'))
                 ->ofStatus(Input::get('status'))
                 ->ofLocation(Input::get('location'))
-                ->isTop(Input::get('is_top'))
+                ->isTop('yes')
+                ->IsLocation($this->location)
                 ->whereType($this->type)
                 ->orderBy('id', 'desc')
                 ->paginate($this->pagesize);
@@ -42,7 +44,8 @@ class Admin_Apps_AppsAdsController extends \Admin_AdsController {
      */
     public function create()
     {
-        $datas = ['location' => Config::get('status.ads.applocation')];
+        $datas = ['location' => array_slice(Config::get('status.ads.applocation'), 1)];
+        
         $this->layout->content = View::make('admin.appsads.create', $datas);
     }
 
@@ -68,19 +71,22 @@ class Admin_Apps_AppsAdsController extends \Admin_AdsController {
         //检测游戏是否存在
         $app = Apps::whereStatus('stock')->find(Input::get('app_id'));
         if (!$app) {
-            return Redirect::route('indexads.create')
+            return Redirect::route('appsads.create')
                 ->with('msg', '#' . Input::get('app_id') . '游戏不存在')
                 ->with('input', Input::all());
         }
         //检查该游戏广告是否重复了
-        $ad = Ads::whereType($this->type)->IsLocation(Input::get('location'))->
-                where('app_id', Input::get('app_id'))->get();
+        $ad = Ads::whereType($this->type)->IsLocation(Input::get('location'))
+                ->isTop('yes')
+                ->whereLocation(Input::get('location'))
+                ->where('app_id', Input::get('app_id'))->first();
         if ($ad){
-            return Redirect::route('editorads.create')
+            return Redirect::route('appsads.create')
                 ->with('msg', '该分类游戏已经存在')
                 ->with('input', Input::all());
         }
         $ad = $ads->ofCreate($this->type);
+        $ad->is_top = 'yes';
         if ($ad->save()) {
             return Redirect::route('appsads.index')->with('msg', '添加成功');
         } else {
@@ -98,7 +104,8 @@ class Admin_Apps_AppsAdsController extends \Admin_AdsController {
      */
     public function edit($id)
     {
-        $ad = Ads::whereType($this->type)->find($id);
+        $ad = Ads::whereType($this->type)->IsLocation(Input::get('location'))
+                ->isTop('yes')->find($id);
         //检测广告是否存在
         if (!$ad) {
             return Redirect::route('appsads.index')->with('msg', '游戏不存在');
@@ -109,7 +116,7 @@ class Admin_Apps_AppsAdsController extends \Admin_AdsController {
             return Redirect::route('appsads.index')->with('msg', '游戏不存在');
         }
         $datas = ['ad' => $ad, 
-            'location' => Config::get('status.ads.applocation'),
+            'location' => array_slice(Config::get('status.ads.applocation'), 1),
             'app' => $app];
         $this->layout->content = View::make('admin.appsads.edit', $datas);
     }
@@ -126,7 +133,8 @@ class Admin_Apps_AppsAdsController extends \Admin_AdsController {
      */
     public function update($id)
     {
-        $ad = Ads::whereType($this->type)->find($id);
+        $ad = Ads::whereType($this->type)->IsLocation(Input::get('location'))
+                ->isTop('yes')->find($id);
         if (!$ad) {
             return Redirect::route('appsads.index')->with('msg', '亲，数据不存在');
         }
@@ -143,6 +151,7 @@ class Admin_Apps_AppsAdsController extends \Admin_AdsController {
             return Redirect::route('indexads.index')->with('msg', 'APP不存在了');
         }
         $ad = (new Ads)->ofUpdate($ad);
+        $ad->is_top = 'yes';
         if ($ad->save()) {
             return Redirect::route('appsads.index')->with('msg', '修改成功');
         }
