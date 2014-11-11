@@ -1,8 +1,0 @@
-@charset "utf-8";
-/* CSS Document */
-/* 欢迎页面样式　*/
-.border-right { padding-left: 230px;display: block; }
-.welcome { height: 1040px;text-align: center; }
-.welcome p { margin-top: 100px;color: #333;font-size: 28px; }
-.welcome span.user { color: #00f; }
-.welcome span.title { color: #000;font-size: 40px; }
