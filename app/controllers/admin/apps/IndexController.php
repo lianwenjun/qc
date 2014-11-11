@@ -346,6 +346,11 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
         } elseif ($app->update(['status' => 'unstock', 'stocked_at' => date('Y-m-d H:i:s')])) {
             Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经下架"]);
+
+            // 下架广告位
+            if($ads = Ads::where('app_id', $id)) {
+                $ads->update(['is_stock' => 'no']);
+            }
         } else {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}下架操作失败了"]);
         }

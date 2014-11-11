@@ -56,10 +56,18 @@ class Admin_EditorAdsController extends \Admin_AdsController {
                 ->with('input', Input::all());
         }
         //检测游戏是否存在
-        $app = Apps::find(Input::get('app_id'));
+        $app = Apps::whereStatus('stock')->find(Input::get('app_id'));
         if (!$app) {
             return Redirect::route('editorads.create')
                 ->with('msg', '游戏不存在')
+                ->with('input', Input::all());
+        }
+        //检查该游戏广告是否重复了
+        $ad = Ads::whereType($this->type)->IsLocation(Input::get('location'))->
+                where('app_id', Input::get('app_id'))->get();
+        if ($ad){
+            return Redirect::route('editorads.create')
+                ->with('msg', '该分类游戏已经存在')
                 ->with('input', Input::all());
         }
         $ad = (new Ads)->ofCreate($this->type, 'banner_suggest');
@@ -86,7 +94,7 @@ class Admin_EditorAdsController extends \Admin_AdsController {
             return Redirect::route('editorads.index')->with('msg', '没发现广告数据');
         }
         //检测游戏是否存在
-        $app = Apps::find($ad->app_id);
+        $app = Apps::whereStatus('stock')->find($ad->app_id);
         if (!$app) {
             return Redirect::route('editorads.index')->with('msg', '没发现游戏数据');
         }
@@ -114,6 +122,12 @@ class Admin_EditorAdsController extends \Admin_AdsController {
         if (!$valid) {
             Log::error($validator->messages());
             return Redirect::route('editorads.edit', $id)->with('msg', '修改失败,格式不对');
+        }
+        $app = Apps::whereStatus('stock')->find($ad->app_id);
+        if (!$app) {
+            $ad->is_stock = 'no';
+            $ad->save();
+            return Redirect::route('indexads.index')->with('msg', 'APP不存在了');
         }
         $ad = (new Ads)->ofUpdate($ad);
         if ($ad->save()) {

@@ -117,6 +117,10 @@ $I->amOnPage('/register');
 
 
 
+
+
+
+
 ### attachFile
  
 Attaches file from Codeception data directory to upload field.
@@ -644,6 +648,22 @@ $I->seeLink('Logout','/logout'); // matches <a href="/logout">Logout</a>
  * `param null` $url
 
 
+### seeNumberOfElements
+ 
+Tests number of $elements on page
+
+``` php
+<?php
+$I->seeNumberOfElements('tr', 10);
+$I->seeNumberOfElements('tr', [0,10]); //between 0 and 10 elements
+?>
+```
+ * `param` $selector
+ * `param mixed` $expected:
+- string: strict number
+- array: range of numbers [0,10]  
+
+
 ### seeOptionIsSelected
  
 Checks if option is selected in select field.
@@ -742,7 +762,7 @@ You need to perform an ajax request specifying the HTTP method.
 
 ``` php
 <?php
-$I->sendAjaxRequest('PUT', /posts/7', array('title' => 'new title');
+$I->sendAjaxRequest('PUT', /posts/7', array('title' => 'new title'));
 
 ```
 
