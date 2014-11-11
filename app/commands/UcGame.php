@@ -51,7 +51,7 @@ class UcGame extends Command {
      */
     public function fire()
     {
-        $this->_gameField     = 'game.name,game.deleted';
+        $this->_gameField     = 'game.name,game.deleted,game.createTime,game.categoryId';
 
         $this->_platformField = 'platform.id,platform.platformId,'.
                                 'platform.logoImageUrl,platform.active,'.
@@ -173,7 +173,7 @@ class UcGame extends Command {
      */
     protected function page($from, $to)
     {
-        for ($i = 564; $i <= $this->_totalPage; $i++) {
+        for ($i = 1; $i <= $this->_totalPage; $i++) {
 
             $this->_error = false;
             $this->info(sprintf('正在拉取第%d页', $i));
@@ -185,7 +185,7 @@ class UcGame extends Command {
                 $this->info(sprintf('第%d页拉取完成', $i));
 
                 // 入库
-                $this->store($info);
+                //$this->store($info);
 
             } else {
                 $this->_retry[] = $i;
@@ -198,24 +198,41 @@ class UcGame extends Command {
                 $this->info('((●゜c_゜●))b 重新拉取失败的页码 ');
                 $this->retry($from, $to);
             }
-
-            // 设置增量时间
-            $this->deltaConfig();
         }
+
+        // 设置增量抓取配置
+        $delta_config = [
+            'from' => date('Y-m-d H:i:s', time() - 60 * 30),
+        ];
+
+        // 写入配置文件
+        $this->deltaConfig($delta_config);
     }
 
     /**
-     * 设置增量时间
+     * 设置增量配置
      *
      * @return void
      */
-    protected function deltaConfig()
+    protected function deltaConfig($conf)
     {
-        $delta = ['from' => date('Y-m-d H:i:s', time())];
+        $delta = [];
+        foreach ($conf as $key => $value) {
+            if (empty($value)) {
+                continue;
+            }
+
+            $delta[$key] = $value;
+        }
+
+        if (empty($delta)) {
+            return false;
+        }
+
         ob_start();
         echo "<?php \n// 此文件由命令生成, 九游增量配置\nreturn ";
         var_export($delta);
-        echo ";";
+        echo ";\n";
         $content = ob_get_contents();
 
         file_put_contents($this->_config, $content);
@@ -335,6 +352,7 @@ class UcGame extends Command {
             'size_int'      => intval($platform['size']/1024),
             'version'       => $package['extendInfo']['versionName'],
             'version_code'  => $package['extendInfo']['versionCode'],
+            'author'        => '九游安卓',
             'summary'       => $platform['description'],
             'images'        => serialize($images),
             'changes'       => $package['upgradeDescription'],
@@ -346,7 +364,7 @@ class UcGame extends Command {
             'md5'           => $package['extendInfo']['signMd5'],
             'status'        => 'publish',
             'source'        => 'uc',
-            ];
+        ];
 
         return $data;
     }
@@ -360,26 +378,96 @@ class UcGame extends Command {
      */
     protected function store($info)
     {
-        if(isset($info['data']['list'])) {
-            foreach($info['data']['list'] as $item) {
-                
-                if(isset($item['deleted']) && $item['deleted'] == 0) {
+        if (!isset($info['data']['list'])) {
+            return;
+        }
 
-                    $package = $this->_package($item);
-                    $platform = $this->_platform($item);
-                    if(!empty($package) && !empty($platform)) {
-                        $data = $this->_parse($item['name'], $package, $platform);
+        foreach($info['data']['list'] as $item) {
 
-                        // TODO 判断重复
-
-                        // TODO 评分
-
-                        // TODO 分类
-
-                        Apps::create($data);
-                    }
-                }
+            if (!isset($item['deleted']) || $item['deleted'] != 0) {
+                continue;
             }
+            
+            $package  = $this->_package($item);
+            $platform = $this->_platform($item);
+
+            if (empty($package) || empty($platform)) {
+                continue;
+            }
+
+            $data = $this->_parse($item['name'], $package, $platform);
+
+            // 获取对应过来的分类id 为0则忽略插入或更新的操作
+            $cat_id = $this->cats($item['categoryId']);
+
+            // 判断数据库中是否存在该apk对应的app记录 有就更新信息 无则创建一条记录
+            $record = Apps::where('pack', $data['pack'])
+                          ->first();
+
+            if (isset($record->id)) {
+                $this->_updateApkInfo($record->id, $data, $cat_id, $platform['score']);
+            } else {
+                $this->_createApkInfo($data, $cat_id, $platform['score']);
+            }
+        }
+    }
+
+    /**
+     * 更新apk对应的app记录
+     *
+     * @param $app_id int 游戏id
+     * @param $app_info array 游戏信息
+     * @param $cat_id int 游戏分类id
+     * @param $avg_score double 游戏平均评分
+     *
+     * @return void
+     */
+    private function _updateApkInfo($app_id, $app_info, $cat_id, $avg_score) {
+        // 更新apk包信息
+        Apps::where('id', $app_id)
+            ->update($app_info);
+
+        // 更新平均评分
+        Ratings::where('app_id', $app_id)
+               ->update(['avg' => $avg_score,]);
+
+        // 分类id不为0则更新分类id
+        if ($cat_id != 0) {
+            AppCats::where('app_id', $app_id)
+               ->update(['cat_id' => $cat_id,]);
+        }
+    }
+
+    /**
+     * 创建apk对应的app记录
+     *
+     * @param $apk_info array 游戏信息
+     * @param $cat_id int 游戏分类id
+     * @param $avg_score double 游戏平均评分
+     *
+     * @return void
+     */
+    private function _createApkInfo($apk_info, $cat_id, $avg_score) {
+        // 插入apk包信息 生成app_id
+        $insert = Apps::create($apk_info);
+
+        // 创建评分记录 插入平均评分
+        Ratings::create([
+                            'app_id' => $insert->id,
+                            'title'  => $apk_info['title'],
+                            'pack'   => $apk_info['pack'],
+                            'total'  => 0,
+                            'counts' => 0,
+                            'avg'    => $avg_score,
+                            'manual' => 0,
+                        ]);
+
+        // 分类id不为0则创建游戏分类记录 插入分类id
+        if ($cat_id != 0) {
+            AppCats::create([
+                                'app_id' => $insert->id,
+                                'cat_id' => $cat_id,
+                            ]);
         }
     }
 
@@ -409,7 +497,9 @@ class UcGame extends Command {
             14 => '4.0',
             15 => '4.0.3',
             16 => '4.1',
-            // 17?
+            17 => '4.2',
+            18 => '4.3',
+            19 => '4.4',
         ];
 
         return in_array($sdkVersion, array_keys($data)) ? $data[$sdkVersion] : '';
@@ -425,39 +515,39 @@ class UcGame extends Command {
     protected function cats($cat)
     {
         $data = [
-            1 => 0,   // 休闲
-            2 => 0,   // 竞速
-            3 => 0,   // 角色
-            4 => 0,   // 策略
-            5 => 0,   // 冒险
-            6 => 0,   // 动作
-            7 => 0,   // 模拟
-            8 => 0,   // 体育
-            9 => 0,   // 射击
-            10 => 0,  // 棋牌
+            1 => 1,   // 休闲
+            2 => 4,   // 竞速
+            3 => 5,   // 角色
+            4 => 6,   // 策略
+            5 => 7,   // 冒险
+            6 => 8,   // 动作
+            7 => 9,   // 模拟
+            8 => 10,   // 体育
+            9 => 8,   // 射击
+            10 => 2,  // 棋牌
             11 => 0,  // 格斗
             12 => 0,  // 益智
             13 => 0,  // 回合
             14 => 0,  // 即时
-            18 => 0,  // 赛车
+            18 => 4,  // 赛车
             19 => 0,  // 其他
             25 => 0,  // 养成
             35 => 0,  // 页面
-            36 => 0,  // 策略·页面
-            37 => 0,  // 角色·页面
-            38 => 0,  // 休闲·页面
-            39 => 0,  // 策略·页面·端游
-            40 => 0,  // 模拟·页面
+            36 => 6,  // 策略·页面
+            37 => 5,  // 角色·页面
+            38 => 1,  // 休闲·页面
+            39 => 6,  // 策略·页面·端游
+            40 => 9,  // 模拟·页面
             41 => 0,  // 社交
-            48 => 0,  // 角色·页面·端游
-            49 => 0,  // 休闲·页面·端游
-            50 => 0,  // 模拟·页面·端游
+            48 => 5,  // 角色·页面·端游
+            49 => 1,  // 休闲·页面·端游
+            50 => 9,  // 模拟·页面·端游
             51 => 0,  // 其他·页面·端游
-            53 => 0,  // 塔防
+            53 => 3,  // 塔防
             54 => 0,  // 创意奇趣
             55 => 0,  // XBOX LIVE
             56 => 0,  // 软件
-            57 => 0,  // 音乐
+            57 => 12,  // 音乐
         ];
 
         return in_array($cat, array_keys($data)) ? $data[$cat] : 0;

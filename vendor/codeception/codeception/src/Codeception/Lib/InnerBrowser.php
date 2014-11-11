@@ -16,6 +16,8 @@ use Symfony\Component\CssSelector\CssSelector;
 use Symfony\Component\CssSelector\Exception\ParseException;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\DomCrawler\Field\FormField;
+use Symfony\Component\DomCrawler\Field\InputFormField;
 
 class InnerBrowser extends Module implements Web
 {
@@ -133,6 +135,14 @@ class InnerBrowser extends Module implements Web
     protected function submitFormWithButton($button)
     {
         $form    = $this->getFormFor($button);
+
+        // Only now do we know which submit button was pressed.
+        // Add it to the form object.
+        $buttonNode = $button->getNode(0);
+        if ($buttonNode->getAttribute("name")) {
+            $f = new InputFormField($buttonNode);
+            $form->set($f);
+        }
 
         $this->debugSection('Uri', $form->getUri());
         $this->debugSection($form->getMethod(), $form->getValues());
@@ -337,8 +347,16 @@ class InnerBrowser extends Module implements Web
     protected function getFormUrl($form)
     {
         $action = $form->attr('action');
+
+        $currentUrl = $this->client->getHistory()->current()->getUri();
+        // empty url
         if ((!$action) or ($action == '#')) {
-            $action = $this->client->getHistory()->current()->getUri();
+            $action = $currentUrl;
+        }
+        // relative url
+        if ((strpos($action, '/') !== 0) and !preg_match('~^https?://~', $action)) {
+            $path = pathinfo($currentUrl);
+            $action = $path['dirname'] . '/' . $action;
         }
         return $action;
     }
@@ -360,28 +378,19 @@ class InnerBrowser extends Module implements Web
             return $this->forms[$action];
         }
 
-        /** @var \DOMElement $autoSubmit */
-        $autoSubmit = new \DOMElement('input');
-        $autoSubmit = $form->current()->appendChild($autoSubmit);
-        $autoSubmit->setAttribute('type', 'submit'); // for forms with no submits
-        $autoSubmit->setAttribute('name', 'codeception_added_auto_submit');
-
-        // Symfony2.1 DOM component requires name for each field.
         $formSubmits = $form->filter('*[type=submit]');
-        $values = null;
 
-        // If there are more than one submit (+1 auto_added) in one form we should add value of actually clicked one
-        if ($formSubmits->count() > 2) {
-            $nodeItem = $node->getNode(0);
-            foreach ($formSubmits as $formSubmit) {
-                if ($formSubmit === $nodeItem) {
-                    $values = array($nodeItem->getAttribute('name') => $nodeItem->getAttribute('value'));
-                    break;
-                }
-            }
+        // Inject a submit button if there isn't one.
+        if ($formSubmits->count() == 0) {
+            $autoSubmit = new \DOMElement('input');
+            $form->rewind();
+            $autoSubmit = $form->current()->appendChild($autoSubmit);
+            $autoSubmit->setAttribute('type', 'submit'); // for forms with no submits
+            $autoSubmit->setAttribute('name', 'codeception_added_auto_submit');
         }
-        $form = $formSubmits->form($values);
-        $this->forms[$action] = $form;
+
+        // Retrieve the store the Form object.
+        $this->forms[$action] = $form->form();
 
         return $this->forms[$action];
     }
@@ -517,6 +526,9 @@ class InnerBrowser extends Module implements Web
                  "file $filename not found in Codeception data path. Only files stored in data path accepted"
             );
         }
+        if (is_array($form[$field->attr('name')])) {
+            $this->fail("Field {$field->attr('name')} is ignored on upload, field {$field->attr('name')} is treated as array.");
+        }
         $form[$field->attr('name')]->upload($path);
     }
 
@@ -569,7 +581,7 @@ class InnerBrowser extends Module implements Web
      *
      * ``` php
      * <?php
-     * $I->sendAjaxRequest('PUT', /posts/7', array('title' => 'new title');
+     * $I->sendAjaxRequest('PUT', '/posts/7', array('title' => 'new title'));
      *
      * ```
      *
@@ -619,7 +631,8 @@ class InnerBrowser extends Module implements Web
         } catch (ParseException $e) {
         }
         if (!Locator::isXPath($selector)) {
-            return null;
+            codecept_debug("XPath `$selector` is malformed!");
+            return new \Symfony\Component\DomCrawler\Crawler;
         }
 
         return @$this->crawler->filterXPath($selector);
