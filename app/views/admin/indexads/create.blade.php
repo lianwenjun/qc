@@ -17,7 +17,9 @@
                      
     <div class="Search_title">游戏信息</div>
     @if (Session::get('msg'))
-        <div class="Search_title">{{ Session::get('msg')}}</div>
+    <div class="tips">
+        <div class="fail">{{ Session::get('msg')}}</div>
+    </div>
     @endif                 
     <div class="Search_biao">
         <form action="{{ Request::url('indexads.create') }}" method="post">

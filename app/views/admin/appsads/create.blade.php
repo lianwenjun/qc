@@ -10,9 +10,9 @@
     
     <div class="Search_title">游戏信息</div>
     <!-- 提示 -->
-    @if(Session::has('tips'))
+    @if(Session::has('msg'))
     <div class="tips">
-        <div class="{{ Session::get('tips')['success'] ? 'success' : 'fail' }}">{{ Session::get('tips')['message'] }}</div>
+        <div class="fail">{{ Session::get('msg') }}</div>
     </div>
     @endif
     <!-- /提示 -->

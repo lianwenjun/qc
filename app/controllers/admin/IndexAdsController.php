@@ -68,7 +68,7 @@ class Admin_indexAdsController extends \Admin_AdsController {
         $ad = Ads::whereType($this->type)->IsLocation(Input::get('location'))->
                 where('app_id', Input::get('app_id'))->get();
         if ($ad){
-            return Redirect::route('editorads.create')
+            return Redirect::route('indexads.create')
                 ->with('msg', '该分类游戏已经存在')
                 ->with('input', Input::all());
         }
