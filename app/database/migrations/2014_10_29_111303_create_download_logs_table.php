@@ -13,7 +13,7 @@ class CreateDownloadLogsTable extends Migration {
     public function up()
     {
         //记录表
-        Schema::connection('mysql2')->create('download_logs', function(Blueprint $table)
+        Schema::connection('logs')->create('download_logs', function(Blueprint $table)
         {
             $table->increments('id');
             $table->integer('app_id')->comment('游戏ID');
