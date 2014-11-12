@@ -30,7 +30,7 @@ return array(
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
         ),
-        'mysql2' => array(
+        'logs' => array(
             'driver'    => 'mysql',
             'host'      => 'localhost',
             'database'  => 'logs',
