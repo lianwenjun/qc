@@ -23,15 +23,22 @@ class Admin_Apps_AppsAdsController extends \Admin_AdsController {
                 ->orderBy('id', 'desc')
                 ->paginate($this->pagesize);
         //下面的需要改下
+        $appIds = [0];
+        foreach ($ads as $ad) {
+            $appIds[] = $ad->app_id;
+        }
         $appsModel = new Apps();
-        foreach ($ads as &$ad) {
-            $app = $appsModel->find($ad->app_id);
-            if ($app) $ad->image = $app->icon;
+        $apps = Apps::whereIn('id', $appIds)->get();
+        $list = [];
+        foreach ($apps as $app) {
+            $list[$app->id] = $app->icon;
+        }
+        foreach ($ads as $ad) {
+            $ad->image = isset($list[$ad->app_id]) ? $list[$ad->app_id] : '';
         }
         $datas = ['ads' => $ads, 
             'status' => Config::get('status.ads.status'), 
             'location' => Config::get('status.ads.applocation'),
-            'is_top' => Config::get('status.ads.is_top')
         ];
         $this->layout->content = View::make('admin.appsads.index', $datas);
     }
