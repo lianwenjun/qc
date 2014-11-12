@@ -55,9 +55,9 @@ App::error(function(Exception $exception, $code) {
     Log::error($exception);
     if (Request::segment(1) == 'v1') {
         if ($code == '404' ) {
-            return ['dataJson' => '', 'msg' => 0, 'msgbox' => '找不到该路径。'];
+            return json_encode(['dataJson' => '', 'msg' => 0, 'msgbox' => '找不到该路径。'], JSON_UNESCAPED_UNICODE);
         }
-        return ['dataJson' => '', 'msg' => 0, 'msgbox' => '亲，服务器私奔了，工程狮们正在努力寻回'];
+        return json_encode(['dataJson' => '', 'msg' => 0, 'msgbox' => '亲，服务器私奔了，工程狮们正在努力寻回'], JSON_UNESCAPED_UNICODE);
     }
     /*
     if ($code == '404' ){

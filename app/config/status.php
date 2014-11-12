@@ -77,10 +77,9 @@
             //首页，图片，编辑广告区域
             'applocation' => [
                 '' => '所属类别',
-                'app_new' => '新品抢玩[最新]',
-                'app_hot' => '热门下载[最热]',
+                'app_new' => '新品抢玩',
+                'app_hot' => '热门下载',
                 'app_search' => '搜索页推广',
-                'app_rise' => '飙升',
             ],
             //首页图片，编辑广告区域
             'bannerLocation' => [

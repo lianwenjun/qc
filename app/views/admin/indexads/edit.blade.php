@@ -85,13 +85,6 @@
             </tr>
 
             <tr>
-                <td  class="Search_lei">广告置顶：</td>
-                <td>
-                    {{ Form::checkbox('is_top', 'yes', $ad->is_top == 'yes') }}
-                  是　<span style=" color:#C00">（选中后无论上架广告数量，该广告均会在轮播中出现）</span></td>
-            </tr>
-
-            <tr>
                 <td class="Search_lei"><span class="required">*</span>上线时间：</td>
                 <td> 
                     <h6>从 </h6> <h6><input type="text" name="stocked_at" class="Search_text jq-ui-timepicker" value="{{ $ad->stocked_at }}"></h6>
