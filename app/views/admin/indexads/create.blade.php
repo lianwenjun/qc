@@ -17,7 +17,9 @@
                      
     <div class="Search_title">游戏信息</div>
     @if (Session::get('msg'))
-        <div class="Search_title">{{ Session::get('msg')}}</div>
+    <div class="tips">
+        <div class="fail">{{ Session::get('msg')}}</div>
+    </div>
     @endif                 
     <div class="Search_biao">
         <form action="{{ Request::url('indexads.create') }}" method="post">
@@ -66,11 +68,7 @@
                 </td>
             </tr>
 
-            <tr>
-                <td class="Search_lei">广告置顶：</td>
-                <td>{{ Form::checkbox('is_top', 'yes', Session::get('input.is_top') ? true : false) }} 
-                  是　<span style=" color:#C00">（选中后无论上架广告数量，该广告均会在轮播中出现）</span></td>
-            </tr>
+            
 
             <tr>
                 <td class="Search_lei"><span class="required">*</span>上线时间：</td>

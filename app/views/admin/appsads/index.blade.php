@@ -13,9 +13,6 @@
             <ul>
                 <li>
                     <span><b>查询：</b>
-                        {{ Form::select('is_top', $is_top, Input::get('is_top')); }}
-                    </span>
-                    <span>
                         {{ Form::select('status', $status, Input::get('status')); }}
                     </span>
                     <span>
@@ -43,7 +40,6 @@
                 <td width="13%">上架时间</td>
                 <td width="13%">下线时间</td>
                 <td width="7%">状态</td>
-                <td width="7%">是否置顶</td>
                 <td width="15%">操作</td>
             </tr>
             @forelse($ads as $ad)
@@ -57,7 +53,6 @@
                     <td {{ Config::get('status.ads.timeColor')[CUtil::adsStatus($ad)] }}>{{ $ad->unstocked_at }}</td>
                     <td {{ Config::get('status.ads.statusColor')[CUtil::adsStatus($ad)] }}>{{ Config::get('status.ads.status')[CUtil::adsStatus($ad)] }}</td>
                     
-                    <td>{{ Config::get('status.ads.is_top')[$ad->is_top] }}</td>
                     <td>
                         @if($ad->is_stock == 'yes' && Sentry::getUser()->hasAccess('appsads.unstock'))
                             <a href="{{ URL::route('appsads.unstock', $ad->id) }}" target=BoardRight class="Search_show">下架</a>

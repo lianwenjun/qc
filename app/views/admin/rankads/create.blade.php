@@ -9,10 +9,9 @@
     <div class="Theme_title"><h1>广告位管理 <span>排行游戏位管理</span><b>添加游戏</b></h1></div>
                      
     <div class="Search_title">游戏信息</div>
-    <!-- 提示 -->
-    @if(Session::has('tips'))
+    @if(Session::has('msg'))
     <div class="tips">
-        <div class="{{ Session::get('tips')['success'] ? 'success' : 'fail' }}">{{ Session::get('tips')['message'] }}</div>
+        <div class="fail">{{ Session::get('msg') }}</div>
     </div>
     @endif
     <!-- /提示 -->                 
@@ -23,8 +22,8 @@
                 <td width="134" class="Search_lei"><span class="required">*</span>请输入游戏名称：</td>
                 <td>
                     <select class="Search_select jq-select-autocate" name="autocate">
-                                <option value="{{ route('searchapps').'?type=name' }}">游戏名称</option>
-                                <option value="{{ route('searchapps').'?type=appid' }}">游戏ID</option>
+                        <option value="{{ route('searchapps').'?type=name' }}">游戏名称</option>
+                        <option value="{{ route('searchapps').'?type=appid' }}">游戏ID</option>
                     </select>
                     <input maxlength="16" id="autocomplete" type="text" class="Search_text" style="width:25%" placeholder="输入时自动匹配"/>　
                 </td>

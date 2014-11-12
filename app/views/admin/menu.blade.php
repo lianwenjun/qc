@@ -76,6 +76,9 @@
                     @if(Sentry::getUser()->hasAccess('appsads.index'))
                        <li><a href="{{ URL::route('appsads.index') }}" target=BoardRight>游戏广告位管理</a></li>
                     @endif
+                    @if(Sentry::getUser()->hasAccess('rankads.index'))
+                       <li><a href="{{ URL::route('rankads.index') }}" target=BoardRight>排行广告位管理</a></li>
+                    @endif
                     @if(Sentry::getUser()->hasAccess('indexads.index'))
                        <li><a href="{{ URL::route('indexads.index') }}" target=BoardRight>首页图片位管理</a></li>
                     @endif

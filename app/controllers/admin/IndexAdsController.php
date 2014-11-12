@@ -16,7 +16,6 @@ class Admin_indexAdsController extends \Admin_AdsController {
         $ads = Ads::ofTitle(Input::get('word'))
                 ->ofStatus(Input::get('status'))
                 ->ofLocation(Input::get('location'))
-                ->isTop(Input::get('is_top'))
                 ->IsLocation($this->location)
                 ->whereType($this->type)
                 ->orderBy('id', 'desc')
@@ -24,7 +23,6 @@ class Admin_indexAdsController extends \Admin_AdsController {
         $datas = ['ads' => $ads, 
             'status' =>  Config::get('status.ads.status'), 
             'location' => Config::get('status.ads.bannerLocation'),
-            'is_top' =>  Config::get('status.ads.is_top')
         ];
         $this->layout->content = View::make('admin.indexads.index', $datas);
     }
@@ -65,10 +63,10 @@ class Admin_indexAdsController extends \Admin_AdsController {
                 ->with('input', Input::all());
         }
         //检查该游戏广告是否重复了
-        $ad = Ads::whereType($this->type)->IsLocation(Input::get('location'))->
-                where('app_id', Input::get('app_id'))->get();
+        $ad = Ads::whereType($this->type)->whereLocation(Input::get('location'))->
+                where('app_id', Input::get('app_id'))->first();
         if ($ad){
-            return Redirect::route('editorads.create')
+            return Redirect::route('indexads.create')
                 ->with('msg', '该分类游戏已经存在')
                 ->with('input', Input::all());
         }
