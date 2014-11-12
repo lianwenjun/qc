@@ -406,11 +406,9 @@ class CGame_Uc extends CGame_Base
             // 更新apk包信息
             Apps::where('id', $format['id'])
                 ->update($format['info']);
-
             // 更新平均评分
             Ratings::where('app_id', $format['id'])
                    ->update(['avg' => $format['avg_score'],]);
-
             // 分类id不为0则更新分类id
             if ($format['cat_id'] != 0) {
                 AppCats::where('app_id', $format['id'])
@@ -429,7 +427,6 @@ class CGame_Uc extends CGame_Base
                 'avg'    => $format['avg_score'],
                 'manual' => 0,
             ]);
-
             // 分类id不为0则创建游戏分类记录 插入分类id
             if ($format['cat_id'] != 0) {
                 AppCats::create([
