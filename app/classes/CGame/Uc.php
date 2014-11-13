@@ -203,15 +203,15 @@ class CGame_Uc extends CGame_Base
                 echo "((●゜c_゜●))b 重新拉取失败的页码\n";
                 $this->retry($this->_from, $this->_to);
             }
+
+            // 设置增量抓取配置
+            $delta_config = [
+                'from' => date('Y-m-d H:i:s', time() - 60 * 10),
+            ];
+
+            // 写入配置文件
+            $this->appendConfig($delta_config);
         }
-
-        // 设置增量抓取配置
-        $delta_config = [
-            'from' => date('Y-m-d H:i:s', time() - 60 * 30),
-        ];
-
-        // 写入配置文件
-        $this->appendConfig($delta_config);
     }
 
     /**
@@ -272,6 +272,7 @@ class CGame_Uc extends CGame_Base
     /**
      * 全量获取游戏数据
      *
+     * @return void
      */
     public function all()
     {
@@ -289,6 +290,7 @@ class CGame_Uc extends CGame_Base
     /**
      * 增量获取游戏数据
      *
+     * @return void
      */
     public function append()
     {
@@ -374,10 +376,8 @@ class CGame_Uc extends CGame_Base
             }
 
             $data = $this->_parse($item['name'], $package, $platform);
-
             // 获取对应过来的分类id 为0则忽略插入或更新的操作
             $cat_id = $this->cats($item['categoryId']);
-
             // 判断数据库中是否存在该apk对应的app记录 有就更新信息 无则创建一条记录
             $record = Apps::where('pack', $data['pack'])
                           ->first();
@@ -388,7 +388,7 @@ class CGame_Uc extends CGame_Base
                 'cat_id'    => $cat_id,
                 'avg_score' => $platform['score'],
             ];
-
+            // 入库操作
             $this->store($format);
         }
     }
