@@ -7,33 +7,45 @@ use Symfony\Component\Console\Input\InputArgument;
 /**
  * 抓取各平台游戏数据的命令行工具类
  *
+ * @author RavenLee
  */
 class CollectGame extends Command
 {
     /**
+     * 命令名称
      *
+     * @var string
      */
     protected $name = 'collect:game';
 
     /**
+     * 命令注释
      *
+     * @var string
      */
     protected $description = '拉取第三方平台游戏';
 
+    /**
+     * Create a new command instance
+     *
+     * @return void
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
     /**
+     * Execute the console command
      *
+     * @return mixed
      */
     public function fire()
     {
         $platform = $this->argument('platform');
         $gettype  = $this->argument('gettype');
 
-        $class = 'CGame_'.ucfirst($platform);
+        $class   = 'CGame_'.ucfirst($platform);
         $collect = new $class;
 
         if (!is_a($collect, 'CGame_Base')) {
@@ -52,7 +64,9 @@ class CollectGame extends Command
     }
 
     /**
+     * 获取执行命令的参数
      *
+     * @return array
      */
     protected function getArguments()
     {
