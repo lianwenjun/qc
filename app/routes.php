@@ -245,9 +245,9 @@ Route::group(['prefix' => 'v1/api'], function() //V1版本
     Route::get('game/category/all', ['api.cats.index', 'uses' => 'V1_CatsController@index']);
     
 
-    Route::get('game/info/edit/download/request', ['uses' => 'V1_AppRecodersController@request']);
-    Route::get('game/info/edit/download/installed', ['uses' => 'V1_AppRecodersController@installed']);
-    Route::get('game/info/edit/downcount/{appid}/{imei}', ['uses' => 'V1_AppRecodersController@download']);
+    Route::get('game/info/edit/download/request', ['uses' => 'V1_AppDownloadController@request']);
+    Route::get('game/info/edit/download/installed', ['uses' => 'V1_AppDownloadController@installed']);
+    Route::get('game/info/edit/downcount/{appid}/{imei}', ['uses' => 'V1_AppDownloadController@download']);
     
     Route::post('client/apps/list', ['uses' => 'V1_AppsController@clientList']);
     Route::post('game/update', ['uses' => 'V1_AppsController@check']);

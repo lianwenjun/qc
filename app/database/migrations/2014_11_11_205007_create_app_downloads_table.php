@@ -24,7 +24,7 @@ class CreateAppDownloadsTable extends Migration {
             $table->integer('download')->default(0)->unsigned()->comment('下载数');
             $table->integer('install')->default(0)->unsigned()->comment('安装数');
             $table->integer('active')->default(0)->unsigned()->comment('激活数');
-            $table->string('count_date', 32)->comment('统计日期');
+            $table->date('count_date')->comment('统计日期');
             $table->timestamps();
         });
     }
