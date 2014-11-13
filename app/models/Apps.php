@@ -104,7 +104,7 @@ class Apps extends \Base {
         $data = $this->beforeQueryParse($data);
 
         foreach($data as $key => $value) {
-            if(! in_array($key, $this->searchEnable)) break;
+            if(! in_array($key, $this->searchEnable)) continue;
             $query = $this->conditionParse($key, $value, $query);
         }
 
