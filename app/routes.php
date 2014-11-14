@@ -222,6 +222,12 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 
     Route::get('searchapps', ['as' => 'searchapps', 'uses' => 'Admin_IndexController@searchApps']);//智能匹配列表
     Route::get('appsinfo/{id}', ['as' => 'appsinfo', 'uses' => 'Admin_IndexController@appsinfo']);//近期添加列表
+
+    // 数据中心
+    Route::group(['prefix' => 'statistics'], function()
+    {
+        Route::get('statistics/appdownloads', ['as' => 'statistics.appdownloads', 'uses' => 'Admin_StatisticsController@appDownloads']);
+    });
 });
 //图片
 //Route::post('/admin/appsads/imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_Apps_AppsAdsController@upload']);
@@ -240,9 +246,9 @@ Route::group(['prefix' => 'v1/api'], function() //V1版本
     Route::get('game/category/all', ['api.cats.index', 'uses' => 'V1_CatsController@index']);
     
 
-    Route::get('game/info/edit/download/request', ['uses' => 'V1_AppRecodersController@request']);
-    Route::get('game/info/edit/download/installed', ['uses' => 'V1_AppRecodersController@installed']);
-    Route::get('game/info/edit/downcount/{appid}/{imei}', ['uses' => 'V1_AppRecodersController@download']);
+    Route::get('game/info/edit/download/request', ['uses' => 'V1_AppDownloadController@request']);
+    Route::get('game/info/edit/download/installed', ['uses' => 'V1_AppDownloadController@installed']);
+    Route::get('game/info/edit/downcount/{appid}/{imei}', ['uses' => 'V1_AppDownloadController@download']);
     
     Route::post('client/apps/list', ['uses' => 'V1_AppsController@clientList']);
     Route::post('game/update', ['uses' => 'V1_AppsController@check']);

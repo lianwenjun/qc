@@ -69,6 +69,14 @@ class V1_AppsController extends \V1_BaseController {
             ->skip($start)->take($pageSize)
             ->orderBy('id', 'desc')
             ->get();
+        if ($exclude != '0' && !is_null($apps)) {   
+            $appIds = array_map(function($x){
+                return $x['id'];
+            }, $apps->toArray());
+            //缓存APC
+            Cache::add('author.apps.' . $exclude, serialize($appIds), '10');
+        }
+        
         return ['count' => $count, 'apps' => $apps];
         
     }
@@ -80,13 +88,18 @@ class V1_AppsController extends \V1_BaseController {
             $appIds[] = $app->app_id;
         }
         $start = (intval($pageIndex) - 1) * intval($pageSize);
+        //当$exclude 不为0的时候，检查该游戏的作者的数据
+        $exIds = []; 
+        if ($exclude != '0') {       
+            $exIds = Cache::get('author.apps.' . $exclude, '');
+            $exIds = is_null($exIds) ? unserialize($exIds) : [];
+        }
+        $appIds = array_except($appIds, [$exclude] + $exIds);
         $count = Api_Apps::whereStatus('stock')
             ->whereIn('id', $appIds)
-            ->whereNotIn('id', [$exclude])
             ->count();
         $apps = Api_Apps::whereStatus('stock')
             ->whereIn('id', $appIds)
-            ->whereNotIn('id', [$exclude])
             ->skip($start)->take($pageSize)
             ->orderBy('id', 'desc')
             ->get();

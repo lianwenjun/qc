@@ -15,15 +15,13 @@ class Admin_EditorAdsController extends \Admin_AdsController {
     {
         $ads = Ads::ofTitle(Input::get('word'))
                 ->ofStatus(Input::get('status'))
-                ->ofLocation(Input::get('location'))
                 ->isTop(Input::get('is_top'))
                 ->whereType($this->type)
-                ->IsLocation($this->location)
+                ->isLocation($this->location)
                 ->orderBy('id', 'desc')
                 ->paginate($this->pagesize);
         $datas = ['ads' => $ads, 
             'status' => Config::get('status.ads.status'), 
-            'location' => Config::get('status.ads.applocation'),
             'is_top' => Config::get('status.ads.is_top')
         ];
         $this->layout->content = View::make('admin.editorads.index', $datas);
@@ -63,9 +61,11 @@ class Admin_EditorAdsController extends \Admin_AdsController {
                 ->with('input', Input::all());
         }
         //检查该游戏广告是否重复了
-        $ad = Ads::whereType($this->type)->IsLocation(Input::get('location'))->
-                where('app_id', Input::get('app_id'))->get();
-        if ($ad){
+        $ad = Ads::whereType($this->type)->whereLocation(Input::get('location'))
+            ->where('app_id', Input::get('app_id'))
+            ->isTop(Input::get('is_top'))
+            ->count();
+        if ($ad > 0){
             return Redirect::route('editorads.create')
                 ->with('msg', '该分类游戏已经存在')
                 ->with('input', Input::all());

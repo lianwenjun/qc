@@ -1,15 +1,11 @@
 <?php
 
-class V1_AppRecodersController extends \V1_BaseController {
+class V1_AppDownloadController extends \V1_BaseController {
     //字段处理
     private function fileds() {
         $fields = [
             'app_id' => 'appid',
-            'imei' => 'imei', 
-            'uuid' => 'uuid',
-            'type' => 'type',
             'ip' => 'ip',
-            'os_version' => 'version',
         ];
         foreach ($fields as $key => $value) {
             $data[$key] = Input::get($value, '');
@@ -18,7 +14,7 @@ class V1_AppRecodersController extends \V1_BaseController {
     }
     /**
      * 请求
-     * GET /v1/game/info/edit/downcount/request
+     * GET /v1/game/info/edit/download/request
      * @param int appid
      * @param string imei
      * @param string uuid
@@ -31,8 +27,8 @@ class V1_AppRecodersController extends \V1_BaseController {
     {
         //统计加1
         $appId = Input::get('appid');
-        if (is_null($appId)) {
-            return $this->result(['data'=>'[]', 'msg'=>0, 'msgbox'=>'游戏ID不能为空']); 
+        if (is_null($appId) || is_null(Input::get('uuid')) || is_null(Input::get('imei'))) {
+            return $this->result(['data'=>'[]', 'msg'=>0, 'msgbox'=>'输入参数不能为空']); 
         }
         $app = Api_Apps::whereStatus('stock')->find($appId);
         if (!$app) {
@@ -41,15 +37,21 @@ class V1_AppRecodersController extends \V1_BaseController {
         
         $data = $this->fileds();
         $data['status'] = 'request';
-        Api_RecordLog::create($data);
-        $record = Api_AppRecords::firstOrCreate(['app_id' => $appId]);
-        $record->increment('request');
+        $account = (new Api_Accounts)->ofCreate();
+        
+        $data['account_id'] = $account->id;
+        $model = new Api_AppDownloadLogs();
+        foreach ($data as $key => $value) {
+            $model->$key = $value;
+        }
+        $model->save();
+        $model->addCount();
         return $this->result(['data'=>'[]', 'msg'=>1, 'msgbox'=>'数据获取成功']); 
     }
 
     /**
      * 下载
-     * GET /v1/game/info/edit/downcount/installed
+     * GET /v1/game/info/edit/downcount/{appid}/{imei}
      * @param int $appId
      * @param string imei
      * @return Json
@@ -68,16 +70,21 @@ class V1_AppRecodersController extends \V1_BaseController {
         $data = $this->fileds();
         $data['app_id'] = $appId;
         $data['status'] = 'download';
-        $data['imei'] = $imei;
-        Api_RecordLog::create($data);
-        $record = Api_AppRecords::firstOrCreate(['app_id' => $appId]);
-        $record->increment('download');
+        $account = (new Api_Accounts)->ofCreate($imei);
+        
+        $data['account_id'] = $account->id;
+        $model = new Api_AppDownloadLogs();
+        foreach ($data as $key => $value) {
+            $model->$key = $value;
+        }
+        $model->save();
+        $model->addCount();
         return $this->result(['data'=>'[]', 'msg'=>1, 'msgbox'=>'数据获取成功']);
     }
 
     /**
      * 安装
-     * GET /v1/game/info/edit/downcount/installed
+     * GET /v1/game/info/edit/download/installed
      * @param int appid
      * @param string imei
      * @param string uuid
@@ -97,12 +104,19 @@ class V1_AppRecodersController extends \V1_BaseController {
         if (!$app) {
             return $this->result(['data'=>'[]', 'msg'=>0, 'msgbox'=>'游戏不存在']);
         }
-
         $data = $this->fileds();
         $data['status'] = 'install';
-        Api_RecordLog::create($data);
-        $record = Api_AppRecords::firstOrCreate(['app_id' => $appId]);
-        $record->increment('install');
+        
+        $account = (new Api_Accounts)->ofCreate();
+        $data['account_id'] = $account->id;
+        
+        $table = Config::get('db_downloadlogs.table');
+        $model = new Api_AppDownloadLogs($table);
+        foreach ($data as $key => $value) {
+            $model->$key = $value;
+        }
+        $model->save();
+        $model->addCount();
         return $this->result(['data'=>'[]', 'msg'=>1, 'msgbox'=>'数据获取成功']);
     }
 }

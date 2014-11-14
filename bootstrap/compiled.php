@@ -10536,7 +10536,7 @@ class Cookie
     protected $httpOnly;
     public function __construct($name, $value = null, $expire = 0, $path = '/', $domain = null, $secure = false, $httpOnly = true)
     {
-        if (preg_match('/[=,; 	
+        if (preg_match('/[=,;   
 ]/', $name)) {
             throw new \InvalidArgumentException(sprintf('The cookie name "%s" contains invalid characters.', $name));
         }

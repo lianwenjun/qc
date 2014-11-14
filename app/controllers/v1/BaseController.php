@@ -19,6 +19,7 @@ class V1_BaseController extends \Controller {
         $res['dataJson'] = isset($content['data']) ? $content['data']: '';
         $res['msg'] = isset($content['msg']) ? $content['msg'] : 1;
         $res['msgbox'] = isset($content['msgbox']) ? $content['msgbox'] : '';
+        //return $res;
         return json_encode($res, JSON_UNESCAPED_UNICODE);
     }
 

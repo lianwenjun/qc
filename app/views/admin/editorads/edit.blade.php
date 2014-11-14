@@ -51,6 +51,7 @@
                     <td class="Search_lei">广告置顶：</td>
                     <td>{{ Form::checkbox('is_top', 'yes', $ad->is_top == 'yes', ['disabled'=>"true"]) }}
                       是　<span style=" color:#C00">（置顶用于首页的2条）</span></td>
+                    <input name="is_top" type="hidden" value="{{ $ad->is_top }}" />
                 </tr>
                 
                 <tr>
