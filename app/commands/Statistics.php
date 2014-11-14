@@ -120,9 +120,10 @@ class Statistics extends Command
             $this->info("{$tb}表处理完毕");
         }
 
-        $today_data = $db_mysql->table('app_downloads')
-                               ->where('count_date', date('Y-m-d H:i:s', strtotime('today')))
-                               ->get();
+        // 计算下载占比(安装量/下载量)
+        $today = date('Y-m-d H:i:s', strtotime('today'));
+        $this->info("正在计算下载占比...");
+        $db_mysql->statement("update `app_downloads` set `download_percent` = `install`/`download`*100 where `count_date` = '{$today}'");
 
         $this->info("游戏下载统计汇总完毕");
     }
