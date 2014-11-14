@@ -15,10 +15,17 @@ class Admin_StatisticsController extends Admin_BaseController
     {
         $app_downloads = new AppDownloads();
 
-        $list = $app_downloads->lists(Input::all(), $this->pagesize);
+        $list = $app_downloads->lists(Input::all())
+                              ->paginate($this->pagesize)
+                              ->toArray();
+
+        $all_cats = (new Cats)->allCats();
+        foreach ($all_cats as $key => $value) {
+            $cats[$value->id] = $value->title;
+        }
 
         return View::make('admin.statistics.appdownloads')
-                   ->with('cats', (new Cats)->allCats())
+                   ->with('cats', $cats)
                    ->with('list', $list);
     }
 }
