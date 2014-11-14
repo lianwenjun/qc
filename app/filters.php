@@ -106,3 +106,38 @@ Route::filter('csrf', function()
         throw new Illuminate\Session\TokenMismatchException;
     }
 });
+
+/*
+|--------------------------------------------------------------------------
+| activityLog Filter
+|--------------------------------------------------------------------------
+| 根据条件判断是否触发事件
+|
+*/
+
+Route::filiter('activityLog', function()
+{
+    $method = Request::method();
+    $routeName = Route::getCurrentRoute();
+    $activity = $method . '_' . $routeName;
+    if ($activity == 'put_apps.pending.edit') {
+        $status = DB::table('apps')
+                    ->find(Route::input('id'))
+                    ->status;
+
+        $activity = $status . '_' . $activity;
+    }
+    $activityLogs = Config::get('activityLogs');
+
+    if (Route::input('id')) {
+        $contentId = Route::input('id');
+    } elseif (Route::input('ids')) {
+        $contentId = Route::input('ids');
+    } elseif (Session::has('log.contentId')) {
+        $contentId = Session::get('log.contentId');
+    }
+
+    if (isset($contentId) && in_array($activity, $activityLogs)) {
+        Event::fire('actionLog', [$activity, $contentId]);
+    }
+});

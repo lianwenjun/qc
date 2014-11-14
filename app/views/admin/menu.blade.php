@@ -135,12 +135,20 @@
             </li>
             @endif
 
+            @if(
+                Sentry::getUser()->hasAnyAccess(
+                    [
+                        'statistics.appdownloads',
+                    ]
+                )
+            )
             <li id="three" class="mail">
                 <a href="#three">数据中心</a>
                 <ul class="sub-menu">
                     <li><a href="{{ URL::route('statistics.appdownloads') }}" target=BoardRight>游戏下载统计</a></li>
                 </ul>
             </li>
+            @endif
 
             @if(
                 Sentry::getUser()->hasAnyAccess(

@@ -15,10 +15,14 @@ class CFeedback
         if ($data) {
             // 关键字处理
             if (isset($data['keyword']) && !empty($data['keyword'])) {
-                if ($data['type'] == 'id') {
-                    $query->where('id', $data['keyword']);
-                } elseif (in_array($data['type'], ['imei', 'content'])) {
-                    $query->where($data['type'], 'like', '%' . $data['keyword'] . '%');
+                switch ($data['type']) {
+                    case 'id':
+                        $query->where('id', $data['keyword']);
+                        break;
+                    case 'imei':
+                    case 'content':
+                        $query->where($data['type'], 'like', '%' . $data['keyword'] . '%');
+                        break;
                 }
             }
             
