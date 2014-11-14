@@ -12,3 +12,4 @@
 */
 Artisan::add(new UcGame);
 Artisan::add(new CollectGame);
+Artisan::add(new DownloadLogsTable);
