@@ -72,6 +72,7 @@ class Ads extends \Eloquent {
         $ad->image = Input::get('image', $ad->image);
         $ad->stocked_at = Input::get('stocked_at', $ad->stocked_at);
         $ad->unstocked_at = Input::get('unstocked_at', $ad->unstocked_at);
+        $ad->word = Input::get('word', $ad->word);
         $ad->is_stock = 'yes';
         return $ad;
     }
