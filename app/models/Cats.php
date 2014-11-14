@@ -16,15 +16,17 @@ class Cats extends \Eloquent {
                 'word' => 'required|unique:cats,title,NULL,id,parent_id,0,deleted_at,NULL',
                 ];
     //过滤标签
-    public $tagsCreateRules = [
-                'word' => 'required|unique:cats,title,0,parent_id',
+    public function tagsCreateRules($parent_id) {
+        return [
+                'word' => 'required|unique:cats,title,NULL,NULL,parent_id,'.$parent_id,
                 'parent_id' => 'required|integer',
                 ];
+    }
     //过滤标签添加
 
-    public function tagsUpdateRules($id) {
+    public function tagsUpdateRules($id, $parent_id) {
         return [
-                'word' => 'required|unique:cats,title,'.$id .',id,deleted_at,NULL',
+                'word' => 'required|unique:cats,title,'.$id .',id,deleted_at,NULL,parent_id,'.$parent_id,
                 'sort' => 'integer',
                 ];
     }

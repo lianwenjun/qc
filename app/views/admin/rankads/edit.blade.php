@@ -12,42 +12,42 @@
         <form action="{{ Request::url() }}" method="post">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <!--数据选择区开始-->
-            <tr class="Search_biao_two">
+            <tr>
                 <td  class="Search_lei">游戏ID：</td>
                 <td>{{ $ad->app_id }}</td>
             </tr>
 
-            <tr class="Search_biao_one">
+            <tr>
                 <td  class="Search_lei">游戏名称：</td>
                 <td>{{ $app->title }}</td>
             </tr>
 
-            <tr class="Search_biao_two">
+            <tr>
                 <td  class="Search_lei">包名：</td>
                 <td>{{ $app->package }}</td>
             </tr>
 
-            <tr class="Search_biao_one">
+            <tr>
                 <td  class="Search_lei">大小：</td>
                 <td>{{ $app->size }}</td>
             </tr>
 
-            <tr class="Search_biao_two">
+            <tr>
                 <td  class="Search_lei">版本号：</td>
                 <td>{{ $app->version }}</td>
             </tr>
 
-            <tr class="Search_biao_one">
+            <tr>
                 <td  class="Search_lei">上传时间：</td>
                 <td class="Search_apk">{{ $app->created_at }}</td>
             </tr>
 
-            <tr class="Search_biao_two">
+            <tr>
                 <td  class="Search_lei">ICON：</td>
                 <td><span class="Search_apk"><img src="{{ $app->icon }}" width="90" height="90" /></span></td>
             </tr>
             <!--数据选择区结束-->
-            <tr class="Search_biao_two">
+            <tr>
                 <td  class="Search_lei">广告区域：</td>
                 <td>
                     <span style="float:left">
@@ -56,12 +56,12 @@
                 </td>
             </tr>
 
-            <tr class="Search_biao_one">
+            <tr>
                 <td  class="Search_lei">排序：</td>
-                <td><input name="sort" type="text" class="Search_input" value="{{ $ad->sort }}" size="15" /></td>
+                <td><input maxlength="6" name="sort" type="text" class="Search_input jq-edit-input" value="{{ $ad->sort }}" size="15" /></td>
             </tr>
 
-            <tr class="Search_biao_two">
+            <tr>
                 <td  class="Search_lei"><span class="required">*</span>上线时间：</td>
                 <td>
                     <h6>从 </h6> <h6><input type="text" name="stocked_at" class="Search_text jq-ui-timepicker" value="{{ $ad->stocked_at }}"></h6>
@@ -69,7 +69,7 @@
                 </td>
             </tr>
 
-            <tr class="Search_biao_one">
+            <tr>
                 <td colspan="2" align="center"  class="Search_submit">
                     <input name="" type="submit" value="提 交" />
                     <a href="{{ URL::route('rankads.index') }}" target=BoardRight>返回列表</a>
@@ -85,6 +85,13 @@
 <script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-zh-CN.js') }}"></script>
 <script type="text/javascript">
 $(function(){
+    $("tr:odd").addClass("Search_biao_two");
+    $("tr:even").addClass("Search_biao_one");
+    $(".jq-edit-input").live('keyup', function(){    
+            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0')));    
+        }).bind("paste",function(){  //CTR+V事件处理    
+            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0')));     
+        }).css("ime-mode", "disabled");
     $(".jq-ui-timepicker").datetimepicker({
         showSecond: true,
         timeFormat: 'HH:mm:ss',

@@ -42,7 +42,7 @@
             </tr>
             @forelse($ads as $ad)                   
                 <tr class="jq-tr">
-                    <td>{{ $ad->id }}</td>
+                    <td>{{ $ad->app_id }}</td>
                     <td><img src="{{ $ad->image }}" width="28" height="28" /></td>
                     <td>{{ $ad->title }}</td>
                     <td>{{ isset($location[$ad->location]) ? $location[$ad->location] : '' }}</td>

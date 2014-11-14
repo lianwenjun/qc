@@ -42,7 +42,7 @@
 
             <tr>
                 <td  class="Search_lei">排序：</td>
-                <td><input name="sort" type="text" class="Search_input" value="{{ Session::get('input.sort', 0) }}" size="15" /></td>
+                <td><input maxlength="6" name="sort" type="text" class="Search_input jq-edit-input" value="{{ Session::get('input.sort', 0) }}" size="15" /></td>
             </tr>
 
             <tr>
@@ -103,6 +103,11 @@ $(function(){
     });
     $("tr:odd").addClass("Search_biao_two");
     $("tr:even").addClass("Search_biao_one");
+    $(".jq-edit-input").live('keyup', function(){    
+            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0')));    
+        }).bind("paste",function(){  //CTR+V事件处理    
+            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0')));     
+        }).css("ime-mode", "disabled");
     //自动匹配
     AUTOURL = "{{ route('searchapps').'?type=name' }}";
     $('.jq-select-autocate').change(function(){

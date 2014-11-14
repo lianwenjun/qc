@@ -92,9 +92,9 @@ $(function(){
     });
     //输入强制
     $(".jq-edit-input").live('keyup', function(){    
-            $(this).val($(this).val().replace(/[^0-9.]/g,''));    
+            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0'))); 
         }).bind("paste",function(){  //CTR+V事件处理    
-            $(this).val($(this).val().replace(/[^0-9.]/g,''));     
+            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0')));     
         }).css("ime-mode", "disabled"); //CSS设置输入法不可用    
     //提交
     $(".jq-saveWord").live('click', function() {

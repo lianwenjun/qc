@@ -37,6 +37,7 @@
                 <td width="13%">下线时间</td>
                 <td width="7%">状态</td>
                 <td width="20%">广告词</td>
+                <td width="7%">排列序号</td>
                 <td width="7%">是否置顶</td>
                 <td width="15%">操作</td>
             </tr>
@@ -49,6 +50,7 @@
                     <td {{ Config::get('status.ads.timeColor')[CUtil::adsStatus($ad)] }}>{{ $ad->unstocked_at }}</td>
                     <td {{ Config::get('status.ads.statusColor')[CUtil::adsStatus($ad)] }}>{{ Config::get('status.ads.status')[CUtil::adsStatus($ad)] }}</td>
                     <td>{{ $ad->word }}</td>
+                    <td>{{ $ad->sort }}</td>
                     <td>{{ Config::get('status.ads.is_top')[$ad->is_top] }}</td>
                     <td>
                         @if($ad->is_stock == 'yes' && Sentry::getUser()->hasAccess('editorads.unstock'))

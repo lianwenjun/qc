@@ -59,7 +59,10 @@
                 <td class="Search_lei">广告词：</td>
                 <td><input name="word" type="text" class="Search_text" value="{{ Session::get('input.word', '') }}" placeholder="" style="width:60%" /></td>
             </tr>
-          
+            <tr>
+                <td  class="Search_lei">排序：</td>
+                <td><input maxlength="6" name="sort" type="text" class="Search_input jq-edit-input" value="{{ $ad->sort }}" size="15" /></td>
+            </tr>
             <tr>
                 <td class="Search_lei"><span class="required">*</span>上线时间：</td>
                 <td>
@@ -116,6 +119,11 @@ function getAppInfo(url){
 $(function(){
     $("tr:odd").addClass("Search_biao_two");
     $("tr:even").addClass("Search_biao_one");
+    $(".jq-edit-input").live('keyup', function(){    
+            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0')));    
+        }).bind("paste",function(){  //CTR+V事件处理    
+            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0')));     
+        }).css("ime-mode", "disabled");
     //自动匹配
     //切换
     AUTOURL = "{{ route('searchapps').'?type=name' }}";

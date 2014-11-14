@@ -77,7 +77,10 @@
                     <td class="Search_lei">广告词：</td>
                     <td><input name="word" type="text" class="Search_text" value="{{ $ad->word }}" style="width:60%" /></td>
                 </tr>
-              
+                <tr>
+                    <td  class="Search_lei">排序：</td>
+                    <td><input maxlength="6" name="sort" type="text" class="Search_input jq-edit-input" value="{{ $ad->sort }}" size="15" /></td>
+                </tr>
                 <tr>
                     <td class="Search_lei"><span class="required">*</span>上线时间：</td>
                     <td>
@@ -85,7 +88,7 @@
                         <h6> 到 </h6> <h6><input type="text" name="unstocked_at" class="Search_text jq-ui-timepicker" value="{{ $ad->unstocked_at }}" /></h6>
                     </td>
                 </tr>
-              
+                
                 <tr>
                     <td colspan="2" align="center"  class="Search_submit">
                         <input class="jq-ads-edit-submit" type="button" value="确定" />
@@ -111,6 +114,11 @@ function uploadToHtml(img){
 $(function(){
     $("tr:odd").addClass("Search_biao_two");
     $("tr:even").addClass("Search_biao_one");
+    $(".jq-edit-input").live('keyup', function(){    
+            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0')));    
+        }).bind("paste",function(){  //CTR+V事件处理    
+            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0')));     
+        }).css("ime-mode", "disabled");
     //时间插件
     $(".jq-ui-timepicker").datetimepicker({
             showSecond: true,

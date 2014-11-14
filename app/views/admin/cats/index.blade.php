@@ -57,6 +57,7 @@
                                 <li class="user_one"><strong>分类名称：</strong><p class="jq-title">{{ $cat['data']['title']}}</p></li>
                                 <li class="user_two"><strong>游戏数量：</strong>{{ $cat['appcount']}}</li>
                                 <li class="user_one"><strong>搜索次数：</strong>{{ $cat['data']['search_total'] }}</li>
+                                <li class="user_one"><strong>排序</strong>{{ $cat['data']['search_total'] }}</li>
                                 <li class="user_two">
                                     <strong>标签管理：</strong>
                                     @if (Sentry::getUser()->hasAccess('cat.show'))
@@ -157,7 +158,7 @@ $(function(){
     var catText = '<table align="center" border="0" cellspacing="0" cellpadding="0" class="add_Classification">' +
                     '<tr>' + 
                         '<td width="114" align="right">分类名称：</td>' + 
-                        '<td height="40"><input name="cat" maxlength="15" type="text" class="add_Classification_text"/></td>' + 
+                        '<td height="40"><input name="cat" maxlength="6" type="text" class="add_Classification_text"/></td>' + 
                     '</tr><tr>' + 
                         '<td colspan="2" style=" text-align:center; padding:15px 0px;">'+
                         '<input name="" type="button" value="添加" class="Search_en jq-addcat" /></td>'+
@@ -174,7 +175,7 @@ $(function(){
                         '</td></tr><tr>' + 
                         '<td align="right" valign="top">标签名称：</td>' +
                         '<td height="40">' + 
-                            '<input name="tag" maxlength="15" type="text"  class="add_Classification_text"/>' +
+                            '<input name="tag" maxlength="6" type="text"  class="add_Classification_text"/>' +
                         '</td></tr><tr>' +
                         '<td colspan="2" style=" text-align:center; padding:15px 0px;">' +
                             '<input name="" type="button" value="添加" class="Search_en jq-addTag" />' +
@@ -219,7 +220,7 @@ $(function(){
                     $.jBox.close();
                     return;
                 }
-                returnMsgBox('添加标签失败');
+                returnMsgBox(res.msg);
             });
         }
         $('.jq-addTag').click(function(){
@@ -304,7 +305,7 @@ $(function(){
     $(".jq-editcat").live('click', function() {
         var li = $(this).parents('ul').children('li');
         var title = li.eq(0).find('.jq-title').html();
-        var to_title = '<input name="editcat" type="text" value="" />';
+        var to_title = '<input name="editcat" maxlength="6" type="text" value="" />';
         li.eq(0).find('.jq-title').html(to_title);
         li.eq(0).find('input[name=editcat]').val(title);
         li.find('.user_button').html(updatecat);
@@ -373,7 +374,7 @@ $(function(){
     $(".jq-editTag").live('click', function() {
         var li = $(this).parents().children('li');
         var title = li.eq(0).find('.jq-title').html();
-        var to_title = '<input name="edit_tag" type="text" value="" />';
+        var to_title = '<input name="edit_tag" maxlength="6" type="text" value="" />';
         li.eq(0).find('.jq-title').html(to_title);
         li.eq(0).find('input[name=edit_tag]').val(title);
         li.eq(5).html(updateTag);
@@ -391,6 +392,7 @@ $(function(){
                 li.eq(0).find('.jq-title').html(title);
                 li.find('.user_button').html(buttonTag);
                 $(".jq-tagClick-"+tagId).text(title);
+                location.href = location.href;
             }
         });
     });
@@ -406,6 +408,7 @@ $(function(){
                     $(".jq-tagClick-"+tagId).remove();
                 }   
             });
+            location.href = location.href;
         };
         delMsgBox(del);
     });

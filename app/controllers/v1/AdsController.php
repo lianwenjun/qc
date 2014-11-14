@@ -50,7 +50,9 @@ class V1_AdsController extends \V1_BaseController {
         if ($count == 0){
             return ['count' => 0, 'ads' => []];
         }
-        $ads = $query->orderBy('id', 'desc')->orderBy('is_top', 'desc')->skip($start)->take($pageSize)->get();
+        $ads = $query->orderBy('sort', 'desc')
+                ->orderBy('id', 'desc')
+                ->skip($start)->take($pageSize)->get();
         $data = [];
         foreach ($ads as $ad) {
             $tmp['id'] = $ad->app_id;
@@ -91,7 +93,9 @@ class V1_AdsController extends \V1_BaseController {
         if ($count == 0){
             return ['count' => 0, 'ads' => []];
         }
-        $ads = $query->orderBy('id', 'desc')->skip($start)->take($pageSize)->get();
+        $ads = $query->orderBy('sort', 'desc')
+                ->orderBy('id', 'desc')
+                ->skip($start)->take($pageSize)->get();
         $data = [];
         $appIds = [0];
         foreach ($ads as $ad) {
@@ -134,7 +138,10 @@ class V1_AdsController extends \V1_BaseController {
         if ($count == 0){
             return ['count' => 0, 'ads' => []];
         }
-        $ads = $query->orderBy('id', 'desc')->skip($start)->take($pageSize)->get();
+        $ads = $query
+            ->orderBy('sort', 'desc')
+            ->orderBy('id', 'desc')
+            ->skip($start)->take($pageSize)->get();
         $data = [];
         $appIds = [0];
         foreach ($ads as $ad) {

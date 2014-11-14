@@ -63,7 +63,8 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         foreach ($cats as $cat) {
             $catsArr[$cat->id] = $cat->title;
         }
-        $datas = ['tags' => $tags, 'cats' => $catsArr];
+        $datas = ['tags' => $tags, 'cats' => $catsArr,
+        'cats1' => ['' => '所有分类'] + $catsArr];
         $this->layout->content = View::make('admin.cats.tagIndex', $datas);
     }
 
@@ -104,10 +105,10 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         //检测输入
         Log::error(Input::all());
         $catModel = new Cats;
-        $validator = Validator::make(Input::all(), $catModel->tagsCreateRules);
+        $validator = Validator::make(Input::all(), $catModel->tagsCreateRules(Input::get('parent_id')));
         if ($validator->fails()){
             Log::error($validator->messages());
-            return Response::json(['status'=>'error', 'msg'=>'word is must need']);
+            return Response::json(['status'=>'error', 'msg'=>'标签重复了']);
         }
         //保存数据
         $catModel->title = Input::get('word');
@@ -173,7 +174,7 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
             return Response::json(['status' => 'error', 'msg' => 'cat is valid']);   
         }
         //检测输入
-        $validator = Validator::make(Input::all(), $catModel->tagsUpdateRules($id));
+        $validator = Validator::make(Input::all(), $catModel->tagsUpdateRules($id, $cat->parent_id));
         if ($validator->fails()){
             Log::error($validator->messages());
             return Response::json(['status'=>'error', 'msg'=>'标签重复了']);

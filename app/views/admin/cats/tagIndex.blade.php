@@ -7,7 +7,7 @@
         <ul>
             <li>
                 <span><b>标签名称：</b>
-                    <input name="addTag" maxlength="16" type="text" class="Search_wenben" size="20" value="" placeholder="请输入标签名称" /></span>
+                    <input name="addTag" maxlength="6" type="text" class="Search_wenben" size="20" value="" placeholder="请输入标签名称" /></span>
                 <span>
                     <b>游戏分类：</b>
                     <select name="cats1">
@@ -25,13 +25,13 @@
                 <span>
                     <b>查询：</b>
                     <select name="cats2">
-                        @foreach ($cats as $index => $value)
+                        @foreach ($cats1 as $index => $value)
                             <option value="{{ $index }}">{{ $value }}</option>
                         @endforeach
                     </select>
                 </span>
                 <span>
-                    <input maxlength="16" name="searchTag" type="text" class="Search_wenben" size="20" value="" placeholder="输入关键字" />
+                    <input maxlength="6" name="searchTag" type="text" class="Search_wenben" size="20" value="" placeholder="输入关键字" />
                 </span>
                 <input name="" type="submit" value="搜索" class="Search_en jq-submitSearch" />
             </li>       
@@ -116,7 +116,7 @@ $(function(){
         $.post(url, data, function(res) {
             //错误判断
             if (res.status != 'ok') {
-                returnMsgBox('添加' + word + '失败');
+                returnMsgBox(res.msg);
                 return;
             }
             //成功返回刷新页面
@@ -144,8 +144,8 @@ $(function(){
         var td = $(this).parents('tr').children('td');
         var text1 = td.eq(1).html();
         var text4 = td.eq(4).html();
-        var to_text1 = '<input name="textfield" type="text" id="textfield" value="" size="8" class="Classification_text" />';
-        var to_text4 = '<input name="textfield" type="text" id="textfield" value="" size="8" class="Classification_text" />';
+        var to_text1 = '<input name="textfield" type="text" maxlength="6" id="textfield" value="" size="8" class="Classification_text" />';
+        var to_text4 = '<input name="textfield" type="text" maxlength="6" id="textfield" value="" size="8" class="Classification_text jq-edit-input" />';
         var to_text8 = '<a href="javascript:;" class="Search_show jq-saveTag">确定</a> <a href="javascript:;" class="Search_show jq-chanceTag">取消</a>';
         td.eq(1).html(to_text1);
         td.eq(1).find('#textfield').val(text1);
@@ -153,6 +153,11 @@ $(function(){
         td.eq(4).find('#textfield').val(text4);
         $(this).parent().html(to_text8);
     });
+    $(".jq-edit-input").live('keyup', function(){    
+            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0')));    
+        }).bind("paste",function(){  //CTR+V事件处理    
+            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0')));     
+        }).css("ime-mode", "disabled");
     //提交
     $(".jq-saveTag").live('click', function() {
         var td = $(this).parents('tr').children('td');
