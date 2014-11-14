@@ -115,7 +115,7 @@ Route::filter('csrf', function()
 |
 */
 
-Route::filiter('activityLog', function()
+Route::filter('activityLog', function()
 {
     $method = Request::method();
     $routeName = Route::getCurrentRoute();
