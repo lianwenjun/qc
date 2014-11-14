@@ -223,6 +223,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
     Route::get('searchapps', ['as' => 'searchapps', 'uses' => 'Admin_IndexController@searchApps']);//智能匹配列表
     Route::get('appsinfo/{id}', ['as' => 'appsinfo', 'uses' => 'Admin_IndexController@appsinfo']);//近期添加列表
 
+    // 数据中心
     Route::group(['prefix' => 'statistics'], function()
     {
         Route::get('statistics/appdownloads', ['as' => 'statistics.appdownloads', 'uses' => 'Admin_StatisticsController@appDownloads']);

@@ -325,25 +325,25 @@ class CGame_Uc extends CGame_Base
         $images = array_slice($platform['screenshotImageUrls'], 0, 6);
 
         $data = [
-            'icon'          => $platform['logoImageUrl'],
-            'title'         => $name,
-            'pack'          => $package['extendInfo']['packageName'],
-            'size'          => CUtil::friendlyFilesize($platform['size']),
-            'size_int'      => intval($platform['size']/1024),
-            'version'       => $package['extendInfo']['versionName'],
-            'version_code'  => $package['extendInfo']['versionCode'],
-            'author'        => '九游安卓',
-            'summary'       => $platform['description'],
-            'images'        => serialize($images),
-            'changes'       => $package['upgradeDescription'],
-            'download_link' => $package['downUrl'],
-            'os'            => 'Android',
-            'os_version'    => $this->sdkAlias($package['extendInfo']['minSdkVersion']),
-            'is_verify'     => $package['secureLevel'] == 0 ? 'yes' : 'no',
-            'has_ad'        => $package['ad'] == 0 ? 'no' : 'yes',
-            'md5'           => $package['extendInfo']['signMd5'],
-            'status'        => 'publish',
-            'source'        => 'uc',
+            'icon'              => $platform['logoImageUrl'],
+            'title'             => $name,
+            'pack'              => $package['extendInfo']['packageName'],
+            'size'              => CUtil::friendlyFilesize($platform['size']),
+            'size_int'          => intval($platform['size']/1024),
+            'version'           => $package['extendInfo']['versionName'],
+            'version_code'      => $package['extendInfo']['versionCode'],
+            'author'            => '九游安卓',
+            'summary'           => $platform['description'],
+            'images'            => serialize($images),
+            'changes'           => $package['upgradeDescription'],
+            'download_link'     => $package['downUrl'],
+            'os'                => 'Android',
+            'os_version'        => $this->sdkAlias($package['extendInfo']['minSdkVersion']),
+            'is_verify'         => $package['secureLevel'] == 0 ? 'yes' : 'no',
+            'has_ad'            => $package['ad'] == 0 ? 'no' : 'yes',
+            'md5'               => $package['extendInfo']['signMd5'],
+            'status'            => 'publish',
+            'source'            => 'uc',
         ];
 
         return $data;
@@ -415,6 +415,8 @@ class CGame_Uc extends CGame_Base
                        ->update(['cat_id' => $format['cat_id'],]);
             }
         } else {
+            // 随机给新添加的apk初始化下载量显示数
+            $format['info']['download_manual'] = rand(70000, 100000);
             // 插入apk包信息 生成app_id
             $insert = Apps::create($format['info']);
             // 创建评分记录 插入平均评分
