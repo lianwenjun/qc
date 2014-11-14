@@ -14,7 +14,7 @@ class V1_AppDownloadController extends \V1_BaseController {
     }
     /**
      * 请求
-     * GET /v1/game/info/edit/downcount/request
+     * GET /v1/game/info/edit/download/request
      * @param int appid
      * @param string imei
      * @param string uuid
@@ -40,18 +40,18 @@ class V1_AppDownloadController extends \V1_BaseController {
         $account = (new Api_Accounts)->ofCreate();
         
         $data['account_id'] = $account->id;
-        $table = Config::get('db_downloadlogs.table');
-        $model = new Api_AppDownloadLogs($table);
+        $model = new Api_AppDownloadLogs();
         foreach ($data as $key => $value) {
             $model->$key = $value;
         }
         $model->save();
+        $model->addCount();
         return $this->result(['data'=>'[]', 'msg'=>1, 'msgbox'=>'数据获取成功']); 
     }
 
     /**
      * 下载
-     * GET /v1/game/info/edit/downcount/installed
+     * GET /v1/game/info/edit/downcount/{appid}/{imei}
      * @param int $appId
      * @param string imei
      * @return Json
@@ -73,18 +73,18 @@ class V1_AppDownloadController extends \V1_BaseController {
         $account = (new Api_Accounts)->ofCreate($imei);
         
         $data['account_id'] = $account->id;
-        $table = Config::get('db_downloadlogs.table');
-        $model = new Api_AppDownloadLogs($table);
+        $model = new Api_AppDownloadLogs();
         foreach ($data as $key => $value) {
             $model->$key = $value;
         }
         $model->save();
+        $model->addCount();
         return $this->result(['data'=>'[]', 'msg'=>1, 'msgbox'=>'数据获取成功']);
     }
 
     /**
      * 安装
-     * GET /v1/game/info/edit/downcount/installed
+     * GET /v1/game/info/edit/download/installed
      * @param int appid
      * @param string imei
      * @param string uuid
@@ -109,12 +109,14 @@ class V1_AppDownloadController extends \V1_BaseController {
         
         $account = (new Api_Accounts)->ofCreate();
         $data['account_id'] = $account->id;
+        
         $table = Config::get('db_downloadlogs.table');
         $model = new Api_AppDownloadLogs($table);
         foreach ($data as $key => $value) {
             $model->$key = $value;
         }
         $model->save();
+        $model->addCount();
         return $this->result(['data'=>'[]', 'msg'=>1, 'msgbox'=>'数据获取成功']);
     }
 }

@@ -47,6 +47,9 @@ class V1_AdsController extends \V1_BaseController {
         $start = (intval($pageIndex) - 1) * intval($pageSize);
         $query = Api_Ads::whereType('banner')->whereLocation($location)->isStock();
         $count = $query->count();
+        if ($count == 0){
+            return ['count' => 0, 'ads' => []];
+        }
         $ads = $query->orderBy('id', 'desc')->orderBy('is_top', 'desc')->skip($start)->take($pageSize)->get();
         $data = [];
         foreach ($ads as $ad) {
@@ -55,7 +58,7 @@ class V1_AdsController extends \V1_BaseController {
             $data[] = $tmp;
         }
         $res = [];
-        if (count($data) >= 4 || $location != 'banner_slide'){
+        if (count($data) >= 4 || $location != 'banner_slide' || count($data) == 0){
             $res = $data;
         } else {
             while ($location == 'banner_slide' && count($res) < 4) {
@@ -85,6 +88,9 @@ class V1_AdsController extends \V1_BaseController {
         $start = (intval($pageIndex) - 1) * intval($pageSize);
         $query = Api_Ads::whereType('app')->whereLocation($location)->isStock()->isTop($isTop);
         $count = $query->count();
+        if ($count == 0){
+            return ['count' => 0, 'ads' => []];
+        }
         $ads = $query->orderBy('id', 'desc')->skip($start)->take($pageSize)->get();
         $data = [];
         $appIds = [0];
@@ -103,7 +109,7 @@ class V1_AdsController extends \V1_BaseController {
             $res[] = $tmp;
         }
         $data = [];
-        if (count($res) >= 4 || $isTop != 'yes'){
+        if (count($res) >= 4 || $isTop != 'yes' || count($data) == 0){
             $data = $res;
         } else {
             while ($isTop == 'yes' && count($data) < 4) {
@@ -125,6 +131,9 @@ class V1_AdsController extends \V1_BaseController {
             $query->isTop();
         }
         $count = $query->count();
+        if ($count == 0){
+            return ['count' => 0, 'ads' => []];
+        }
         $ads = $query->orderBy('id', 'desc')->skip($start)->take($pageSize)->get();
         $data = [];
         $appIds = [0];
@@ -143,6 +152,7 @@ class V1_AdsController extends \V1_BaseController {
         $res = [];
         foreach ($data as $ad) {
             $tmp = isset($appTmp[$ad['id']]) ? $appTmp[$ad['id']] : [];
+            if (empty($tmp)) continue;
             $res[] = $tmp + $ad;
         }
         return ['count' => $count, 'ads' => $res];
