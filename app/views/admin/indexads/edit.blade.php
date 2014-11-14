@@ -121,9 +121,9 @@ $(function(){
     $("tr:odd").addClass("Search_biao_two");
     $("tr:even").addClass("Search_biao_one");
     $(".jq-edit-input").live('keyup', function(){    
-            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0')));    
+            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0').slice(0,6)));  
         }).bind("paste",function(){  //CTR+V事件处理    
-            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0')));     
+            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0').slice(0,6)));     
         }).css("ime-mode", "disabled");
     //时间插件
     $(".jq-ui-timepicker").datetimepicker({
