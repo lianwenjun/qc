@@ -228,6 +228,7 @@ class CGame_Uc extends CGame_Base
         $content = ob_get_contents();
 
         file_put_contents($this->_config, $content);
+        ob_end_clean();
     }
 
     /**

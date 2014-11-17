@@ -81,24 +81,30 @@ class Statistics extends Command
     {
         $this->info("=====开始进行游戏下载统计数据汇总=====");
 
+        $yesterday = date('Y-m-d H:i:s', strtotime('yesterday'));
+
         $db_logs = DB::connection('logs');
         $log_tables = $db_logs->table('logtables')
-                              ->where('type', 'download')->get();
+                              ->where('type', 'download')
+                              ->where('updated_at', '>', $yesterday)
+                              ->lists('name');
 
-        foreach ($log_tables as $key => $value) {
-            $this->info("正在处理{$value->name}表...");
+        foreach ($log_tables as $key => $name) {
+            $this->info("正在处理{$name}表的数据...");
 
-            $db_logs->table($value->name)->chunk(1000, function($data)
-            {
-                foreach ($data as $k => $v) {
-                    // 更新app_downloads表
-                    (new AppDownloads)->dupInsert($v->app_id, $v->status);
-                }
-            });
+            $db_logs->table($name)
+                    ->where('created_at', '>', $yesterday)
+                    ->chunk(1000, function($data)
+                    {
+                        $appDownloads = new AppDownloads;
+                        foreach ($data as $k => $v) {
+                            // 更新app_downloads表
+                            $appDownloads->dupInsert($v->app_id, $v->status);
+                        }
+                    });
         }
         // 计算下载占比
-        $countDate = date('Y-m-d', strtotime('yesterday'));
-        (new AppDownloads)->countPercent($countDate);
+        (new AppDownloads)->countPercent(date('Y-m-d', strtotime($yesterday)));
 
         $this->info("=====游戏下载统计汇总完毕=====");
     }
