@@ -115,29 +115,29 @@ Route::filter('csrf', function()
 |
 */
 
-Route::filiter('activityLog', function()
-{
-    $method = Request::method();
-    $routeName = Route::getCurrentRoute();
-    $activity = $method . '_' . $routeName;
-    if ($activity == 'put_apps.pending.edit') {
-        $status = DB::table('apps')
-                    ->find(Route::input('id'))
-                    ->status;
+// Route::filiter('activityLog', function()
+// {
+//     $method = Request::method();
+//     $routeName = Route::getCurrentRoute();
+//     $activity = $method . '_' . $routeName;
+//     if ($activity == 'put_apps.pending.edit') {
+//         $status = DB::table('apps')
+//                     ->find(Route::input('id'))
+//                     ->status;
 
-        $activity = $status . '_' . $activity;
-    }
-    $activityLogs = Config::get('activityLogs');
+//         $activity = $status . '_' . $activity;
+//     }
+//     $activityLogs = Config::get('activityLogs');
 
-    if (Route::input('id')) {
-        $contentId = Route::input('id');
-    } elseif (Route::input('ids')) {
-        $contentId = Route::input('ids');
-    } elseif (Session::has('log.contentId')) {
-        $contentId = Session::get('log.contentId');
-    }
+//     if (Route::input('id')) {
+//         $contentId = Route::input('id');
+//     } elseif (Route::input('ids')) {
+//         $contentId = Route::input('ids');
+//     } elseif (Session::has('log.contentId')) {
+//         $contentId = Session::get('log.contentId');
+//     }
 
-    if (isset($contentId) && in_array($activity, $activityLogs)) {
-        Event::fire('actionLog', [$activity, $contentId]);
-    }
-});
+//     if (isset($contentId) && in_array($activity, $activityLogs)) {
+//         Event::fire('actionLog', [$activity, $contentId]);
+//     }
+// });
