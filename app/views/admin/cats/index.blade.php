@@ -57,14 +57,14 @@
                                 <li class="user_one"><strong>分类名称：</strong><p class="jq-title">{{ $cat['data']['title']}}</p></li>
                                 <li class="user_two"><strong>游戏数量：</strong>{{ $cat['appcount']}}</li>
                                 <li class="user_one"><strong>搜索次数：</strong>{{ $cat['data']['search_total'] }}</li>
-                                <li class="user_one"><strong>排序</strong>{{ $cat['data']['search_total'] }}</li>
-                                <li class="user_two">
+                                <li class="user_two"><strong>排序</strong><p class="jq-title">{{ $cat['data']['sort'] }}</p></li>
+                                <li class="user_one">
                                     <strong>标签管理：</strong>
                                     @if (Sentry::getUser()->hasAccess('cat.show'))
                                     <a data-url="{{ URL::route('cat.show', $cat['data']['id']) }}" class="jq-showcat" href="javascript:;">{{ count($cat['list']) }}（点击查看标签信息）</a>
                                     @endif
                                 </li>
-                                <li class="user_one"><strong>添加时间：</strong>{{ $cat['data']['created_at'] }}</li>
+                                <li class="user_two"><strong>添加时间：</strong>{{ $cat['data']['created_at'] }}</li>
                                 <li class="user_button">
                                     @if (Sentry::getUser()->hasAccess('cat.edit'))
                                     <a class="Search_show jq-editcat" href="javascript:;">修 改</a>
@@ -188,7 +188,8 @@ $(function(){
             $.post(createUrl, {word:cat}, function(res){
                 if ( res.status == 'ok' ){
                     $.jBox.close();
-                    return;
+                    returnMsgBox('添加分类成功');
+                    return location.href = location.href;
                 }
                 returnMsgBox('添加分类失败');
             });
@@ -218,7 +219,8 @@ $(function(){
             $.post(createUrl, {parent_id:parent_id,word:tag}, function(res){
                 if ( res.status == 'ok' ){
                     $.jBox.close();
-                    return;
+                    returnMsgBox('添加标签成功');
+                    return location.href = location.href;
                 }
                 returnMsgBox(res.msg);
             });
@@ -252,7 +254,6 @@ $(function(){
             ,
             closed:function(){
                 $("body").css("overflow-y","auto");
-                location.href = location.href;
             }
            
         });
@@ -276,7 +277,6 @@ $(function(){
             ,
             closed:function(){
                 $("body").css("overflow-y","auto");
-                location.href = location.href;
             }
            
         });  
@@ -305,22 +305,28 @@ $(function(){
     $(".jq-editcat").live('click', function() {
         var li = $(this).parents('ul').children('li');
         var title = li.eq(0).find('.jq-title').html();
+        var sort = li.eq(3).find('.jq-title').html();
         var to_title = '<input name="editcat" maxlength="6" type="text" value="" />';
+        var to_sort = '<input class="jq-edit-input" name="sort" maxlength="6" type="text" value="" />';
         li.eq(0).find('.jq-title').html(to_title);
         li.eq(0).find('input[name=editcat]').val(title);
-        li.find('.user_button').html(updatecat);
+        li.eq(3).find('.jq-title').html(to_sort);
+        li.eq(3).find('input[name=sort]').val(sort);
+        li.eq(6).html(updatecat);
     });
     //确定修改分类
     $(".jq-updatecat").live('click', function() {
         var li = $(this).parents('ul').children('li');
         var title = li.eq(0).find('input[name=editcat]').val();
-        var data = {word:title};
+        var sort = li.eq(3).find('input[name=sort]').val();
+        var data = {word:title, sort:sort};
         var editUrl = $(this).parents().children('input[name=edit_url]').val();
         $.post(editUrl, data, function(res) {
             if (res.status == 'ok'){
                 returnMsgBox('修改成功');
-                li.eq(0).find('.jq-title').html(title);
-                li.find('.user_button').html(buttoncat);
+                return location.href = location.href;
+            } else {
+                returnMsgBox(res.msg);
             }
         });
     });
@@ -340,7 +346,7 @@ $(function(){
                                     '<li class="user_one"><strong>标签ID：</strong>'+tagdata.data.id+'</li>'+
                                     '<li class="user_two"><strong>搜索次数：</strong>'+tagdata.data.search_total+'</li>'+
                                     '<li class="user_one"><strong>游戏数量：</strong>'+tagdata.count+'</li>'+
-                                    '<li class="user_one"><strong>添加时间：</strong>'+tagdata.data.created_at+'</li>'+
+                                    '<li class="user_two"><strong>添加时间：</strong>'+tagdata.data.created_at+'</li>'+
                                     '<li class="user_button">'+buttonTag+'</li>'+
                                     '<input type="hidden" name="pre_title" value="'+tagdata.data.title+'"/>' + 
                                     '<input type="hidden" name="edit_url" value="'+tagdata.editurl+'"/>' + 
@@ -364,6 +370,7 @@ $(function(){
         var tagId = tag.attr('data-tag-id');
         var title = $(".jq-tagDisplay-"+tagId+' ul input[name=pre_title]').val();
         $(".jq-tagDisplay-"+tagId+' ul li p').html(title);
+        $(".jq-tagDisplay-"+tagId+' .user_button').html(buttonTag);
         //新选择
         $(this).addClass('scrollText_hover');
         var tagId = $(this).attr('data-tag-id');
@@ -372,7 +379,7 @@ $(function(){
     });
     //点击修改标签
     $(".jq-editTag").live('click', function() {
-        var li = $(this).parents().children('li');
+        var li = $(this).parent().parent().find('li');
         var title = li.eq(0).find('.jq-title').html();
         var to_title = '<input name="edit_tag" maxlength="6" type="text" value="" />';
         li.eq(0).find('.jq-title').html(to_title);
@@ -388,11 +395,9 @@ $(function(){
         var tagId = $(this).parents().find('input[name=tag_id]').val();
         $.post(editUrl, data, function(res) {
             if (res.status == 'ok'){
-                returnMsgBox('修改成功');
-                li.eq(0).find('.jq-title').html(title);
-                li.find('.user_button').html(buttonTag);
+                returnMsgBox('修改标签成功');
                 $(".jq-tagClick-"+tagId).text(title);
-                location.href = location.href;
+                return location.href = location.href;
             }
         });
     });
@@ -406,11 +411,11 @@ $(function(){
                 if (res.status == 'ok') {
                     $(".jq-tagDisplay-"+tagId).hide();
                     $(".jq-tagClick-"+tagId).remove();
+                    delMsgBox('删除成功');
+                    location.href = location.href;
                 }   
             });
-            location.href = location.href;
-        };
-        delMsgBox(del);
+        }
     });
     //点击删除分类
     $(".jq-delcat").live('click', function(){
