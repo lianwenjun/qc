@@ -115,7 +115,7 @@ Route::filter('csrf', function()
 |
 */
 
-// Route::filiter('activityLog', function()
+// Route::filter('activityLog', function()
 // {
 //     $method = Request::method();
 //     $routeName = Route::getCurrentRoute();
@@ -141,3 +141,4 @@ Route::filter('csrf', function()
 //         Event::fire('actionLog', [$activity, $contentId]);
 //     }
 // });
+
