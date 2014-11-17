@@ -12,9 +12,10 @@
         "itsgoingd/clockwork": "1.*",
         "mews/captcha": "dev-master",
         "davejamesmiller/laravel-breadcrumbs": "dev-master",
-	"bankdev/logviewer": "dev-master",
         "jildertmiedema/laravel-plupload": "dev-master",
-        "codeception/codeception": "*"
+        "codeception/codeception": "*",
+        "bankdev/logviewer": "dev-master",
+        "regulus/activity-log": "0.3.0"
     },
     "autoload": {
         "classmap": [
