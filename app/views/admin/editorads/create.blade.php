@@ -61,7 +61,7 @@
             </tr>
             <tr>
                 <td  class="Search_lei">排序：</td>
-                <td><input maxlength="6" name="sort" type="text" class="Search_input jq-edit-input" value="{{ $ad->sort }}" size="15" /></td>
+                <td><input maxlength="6" name="sort" type="text" class="Search_input jq-edit-input" value="0" size="15" /></td>
             </tr>
             <tr>
                 <td class="Search_lei"><span class="required">*</span>上线时间：</td>
@@ -177,8 +177,8 @@ $(function(){
         });
 
         //绑定文件添加进队列事件
-        uploader.bind('FilesAdded',function(uploader,files){
-            for(var i = 0, len = files.length; i<len; i++){
+        uploader.bind('FilesAdded',function(uploader,files) {
+            for(var i = 0, len = files.length; i<len; i++) {
                 uploader.start();
             }
         });
@@ -190,7 +190,7 @@ $(function(){
             } catch(err) {
                 myData = eval('(' + object.response + ')');
             }
-            if (myData.result){
+            if (myData.result) {
                 $("#listdata li img").attr('src', myData.result.path);
                 $("#listdata input[name=image]").val(myData.result.path);
             }
@@ -201,7 +201,6 @@ $(function(){
     }
     UPLOADURL = '{{ route("appsads.upload") }}';
     var theUploader = createUploader(UPLOADURL, '452x236');
-
     var destroy = function(pixel){
         if(theUploader) {
             theUploader.destroy();
@@ -209,15 +208,19 @@ $(function(){
         theUploader = createUploader(UPLOADURL, pixel);
     }
     
-    //首页选择
-    $( "input[name=is_top]" ).click(function(){
-        if ($( "input[name=is_top]:checked").val()){
+    //首页选择，清空图片
+    $( "input[name=is_top]" ).click(function() {
+        if ($( "input[name=is_top]:checked").val()) {
             destroy('229x129');
             $('.jq-picTips').html('置顶图229x129px');
+            $("#listdata li img").attr('src', '');
+            $("#listdata input[name=image]").val('');
         } else {
             DEFAULT_PIXEL = '452x236';
             destroy(DEFAULT_PIXEL);
             $('.jq-picTips').html('列表图452x236px');
+            $("#listdata li img").attr('src', '');
+            $("#listdata input[name=image]").val('');
         }
     });
     // 图片大小限制

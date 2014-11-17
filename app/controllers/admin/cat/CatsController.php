@@ -180,10 +180,8 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
             return Response::json(['status'=>'error', 'msg'=>'标签重复了']);
         }
         //保存数据
-        $cat->title = Input::get('word');
-        if (!empty(Input::get('sort', 0))){
-            $cat->sort = Input::get('sort', 0);
-        }
+        $cat->title = Input::get('word', $cat->title);
+        $cat->sort = Input::get('sort', $cat->sort);
         $cat->save();
         return Response::json(['status'=>'ok', 'msg'=>'suss']);
     }

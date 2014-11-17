@@ -70,7 +70,7 @@
 
             <tr>
                 <td  class="Search_lei">排序：</td>
-                <td><input maxlength="6" name="sort" type="text" class="Search_input jq-edit-input" value="{{ $ad->sort }}" size="15" /></td>
+                <td><input maxlength="6" name="sort" type="text" class="Search_input jq-edit-input" value="0" size="15" /></td>
             </tr>
 
             <tr>
@@ -263,6 +263,8 @@ $(function(){
             $('input[name=is_top]').removeAttr('disabled');
         }
         destroy(pixel);
+        $("#listdata li img").attr('src', '');
+        $("#listdata input[name=image]").val('');
     });
     // 提交表单
     $('.jq-ads-create-submit').click(function() {
