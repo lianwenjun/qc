@@ -228,6 +228,7 @@ class CGame_Uc extends CGame_Base
         $content = ob_get_contents();
 
         file_put_contents($this->_config, $content);
+        ob_end_clean();
     }
 
     /**
@@ -333,7 +334,7 @@ class CGame_Uc extends CGame_Base
             'version'           => $package['extendInfo']['versionName'],
             'version_code'      => $package['extendInfo']['versionCode'],
             'author'            => '九游安卓',
-            'summary'           => $platform['description'],
+            'summary'           => str_replace("\n", '<br>', $platform['description']),
             'images'            => serialize($images),
             'changes'           => $package['upgradeDescription'],
             'download_link'     => $package['downUrl'],

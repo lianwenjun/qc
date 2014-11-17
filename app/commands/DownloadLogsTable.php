@@ -43,7 +43,7 @@ class DownloadLogsTable extends Command {
         //获得需要生成的表的数
         $this->num = $this->num - $this->getNeedNum();
         if ($this->num < 1) {
-            $this->info('不需要建立新表啦');
+            $this->info(date('Y-m-d H:i:s') . ' : 不需要建立新表啦');
             return;
         }
         //获得现有的表名
@@ -63,7 +63,7 @@ class DownloadLogsTable extends Command {
             $this->createName($data);
             //新建表
             $this->newTable($name);
-            $this->info('新建立' . $this->db . '.' . $name . '表');
+            $this->info(date('Y-m-d H:i:s') . ' : 新建立' . $this->db . '.' . $name . '表');
         }
         $this->info('总共建立了' . $this->num . '张下载日志表');
     }

@@ -87,7 +87,7 @@ class Cats extends \Eloquent {
      */
     public function allCats()
     {
-        return Cats::select(['id', 'title', 'search_total', 'created_at'])
+        return Cats::select(['id', 'title', 'search_total', 'sort', 'created_at'])
                     ->where('parent_id', 0)
                     ->orderBy('sort', 'desc')
                     ->get();

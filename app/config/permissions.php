@@ -121,5 +121,7 @@ return [
     ],
     '日志管理' => [
         'log.index' => '列表',
+    '数据中心' => [
+        'statistics.appdownloads' => '游戏下载统计',
     ],
 ];
