@@ -172,7 +172,7 @@ ul.ui-sortable li.placeholder:before {
             <tr class="Search_biao_two">
                <td class="Search_lei"><span class="required">*</span>包名：</td>
                <td>
-                  <input name="version_code" type="text" value="{{ $app->version_code }}" class="upload-version_code-val Search_text">
+                  <input name="version_code" type="text" value="{{ $app->version_code }}" class="upload-version_code-val Search_input">
                </td>
             </tr>
             <tr class="Search_biao_one">
@@ -619,8 +619,8 @@ ul.ui-sortable li.placeholder:before {
                     author: "required",
                     os_version: "required",
                     version_code: "required",
-                    sort: "required",
-                    download_manual: "required",
+                    sort: {required: true, number: true, maxlength: 9},
+                    download_manual: {required: true, number: true},
                     summary: "required",
                     "images[]":{ maxImages: true, images: true }
                 },
@@ -630,8 +630,8 @@ ul.ui-sortable li.placeholder:before {
                     os_version: {required: '系统要求为必填!'},
                     author: {required: '游戏作者为必填!'},
                     version_code: {required: '包名为必填!'},
-                    sort: {required: '排序为必填!'},
-                    download_manual: {required: '下载次数为必填!'},
+                    sort: {required: '排序为必填!', number: '排序必须为数字', maxlength: '最大只能是9位数字'},
+                    download_manual: {required: '下载次数为必填!', number: '下载次数必须为数字'},
                     summary: {required: '简介为必填!'}
                 },
                 errorPlacement: function(error, element) { 
