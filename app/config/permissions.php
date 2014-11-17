@@ -119,4 +119,7 @@ return [
         'roles.edit' => '编辑',
         'roles.delete' => '删除',
     ],
+    '日志管理' => [
+        'log.index' => '列表',
+    ],
 ];
