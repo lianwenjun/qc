@@ -11,8 +11,8 @@ class Feedbacks extends \Eloquent {
      **/
     public function lists($data)
     {
-        $selectLists = ['id', 'type', 'imei', 'version', 'email', 'content', 'created_at'];
-        $query = Feedbacks::select($selectLists);
+        $columns = ['id', 'type', 'imei', 'version', 'email', 'content', 'created_at'];
+        $query = Feedbacks::select($columns);
         $query = (new CFeedback)->queryParse($query, $data);
 
         return $query;

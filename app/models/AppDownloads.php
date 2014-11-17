@@ -120,4 +120,67 @@ class AppDownloads extends \Base
         return $query;
     }
 
+    /**
+     * 统计汇总脚本使用 插入记录时判断是否已经有记录 有则更新 无则创建
+     *
+     * @param $appId int 游戏id
+     * @param $title string 游戏名称
+     * @param $status string 统计字段:request,download,install,active
+     *
+     * @return void
+     */
+    public function dupInsert($appId, $status)
+    {
+        $yesterday = date('Y-m-d', strtotime('yesterday'));
+        // 查询游戏信息
+        $appInfo = (new Apps)->info($appId);
+
+        $dates = $this->select('count_date')
+                      ->where('app_id', $appId)
+                      ->where('count_date', $yesterday)
+                      ->get()->toArray();
+        $dates = array_column($dates, 'count_date');
+
+        if (in_array($yesterday, $dates)) {
+            $this->incrAt($appId, $yesterday, $status);
+        } else {
+            $this->insert([
+                'app_id'     => $appId,
+                'title'      => $appInfo->title,
+                $status      => 1,
+                'count_date' => $yesterday,
+            ]);
+        }
+    }
+
+    /**
+     * 累加统计字段
+     *
+     * @param $appId int 游戏id
+     * @param $countDate string 统计日期
+     * @param $incr string 累加字段
+     *
+     * @return void
+     */
+    public function incrAt($appId, $countDate, $incr)
+    {
+        $this->where('app_id', $appId)
+             ->where('count_date', $countDate)
+             ->increment($incr);
+    }
+
+    /**
+     * 计算下载占比(安装量/下载量)
+     *
+     * @return void
+     */
+    public function countPercent($countDate)
+    {
+        $sql = "UPDATE `app_downloads`
+                SET `download_percent` = `install`/`download`*100
+                WHERE `count_date` = '{$countDate}'";
+
+        DB::statement($sql);
+    }
+
 }
