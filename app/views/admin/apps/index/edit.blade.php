@@ -5,6 +5,7 @@
 <script src="{{ asset('js/admin/select2.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/admin/select2_locale_zh-CN.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/admin/plupload/plupload.full.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/admin/plupload/i18n/zh_CN.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/admin/tinymce/tinymce.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/admin/tinymce/jquery.tinymce.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/admin/jquery-sortable.js') }}" type="text/javascript"></script>
@@ -364,6 +365,7 @@ ul.ui-sortable li.placeholder:before {
 
             $('.jq-initCates').text('');
             $('.jq-initTags').text('');
+            $('.jq-cat').html('');
 
             // 分类提交
             var cats = [];
@@ -448,7 +450,7 @@ ul.ui-sortable li.placeholder:before {
                 },
 
                 Error: function(up, err) {
-                    console.log(err.code + ": " + err.message);
+                  alert(err.message);
                 }
             }
         });
