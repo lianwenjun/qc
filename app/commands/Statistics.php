@@ -30,7 +30,7 @@ class Statistics extends Command
      * @var array
      */
     private $_arguments_map = [
-        'appdownload' => '_appDownload',
+        'appdownloads' => '_appDownloads',
     ];
 
     /**
@@ -77,73 +77,30 @@ class Statistics extends Command
      *
      * @return void
      */
-    private function _appDownload()
+    private function _appDownloads()
     {
         $this->info("=====开始进行游戏下载统计数据汇总=====");
 
         $db_logs = DB::connection('logs');
         $log_tables = $db_logs->table('logtables')
-                              ->where('type', 'download')
-                              ->get();
+                              ->where('type', 'download')->get();
 
         foreach ($log_tables as $key => $value) {
             $this->info("正在处理{$value->name}表...");
 
-            $result = null;
-            $offset = 0;
-            $limit = 1000;
-            // 分段获取数据
-            do {
-                $result = $db_logs->table($value->name)
-                                  ->select('id', 'status')
-                                  ->skip($offset)->take($limit)
-                                  ->get();
-                // app统计记录，app_downloads表存在则更新，不存在则插入
-                foreach ($result as $k => $v) {
-                    // 查询游戏名称
-                    $title = $db_mysql->table('apps')->where('id', $v->app_id)->pluck('title');
-                    $this->_appDownloadDupInsert($v->app_id, $title, $v->status);
+            $db_logs->table($value->name)->chunk(1000, function($data)
+            {
+                foreach ($data as $k => $v) {
+                    // 更新app_downloads表
+                    (new AppDownloads)->dupInsert($v->app_id, $v->status);
                 }
-
-                $offset += $limit;
-            } while (!empty($result));
+            });
         }
         // 计算下载占比
-        $this->_appDownloadCountPercent();
+        $countDate = date('Y-m-d', strtotime('yesterday'));
+        (new AppDownloads)->countPercent($countDate);
 
         $this->info("=====游戏下载统计汇总完毕=====");
-    }
-
-    /**
-     * 创建app_downloads表数据记录，有则更新，无则插入
-     *
-     * @return void
-     */
-    private function _appDownloadDupInsert($app_id, $title, $status)
-    {
-        $count_date = date('Y-m-d', strtotime('yesterday'));
-
-        $sql = "insert into `app_downloads` (app_id, title, {$status}, count_date)
-                values ({$app_id}, {$title}, 1, {$count_date})
-                on duplicate key update {$status} = {$status}+1";
-
-        DB::connection('mysql')->table('app_downloads')->statement($sql);
-    }
-
-    /**
-     * 计算下载占比(安装量/下载量)
-     *
-     * @return void
-     */
-    private function _appDownloadCountPercent()
-    {
-        $count_date = date('Y-m-d', strtotime('yesterday'));
-
-        $sql = "update `app_downloads`
-                set `download_percent` = `install`/`download`*100
-                where `count_date` = '{$count_date}'";
-
-        DB::connection('mysql')->statement($sql);
     }
 
 }

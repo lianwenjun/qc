@@ -69,11 +69,11 @@
             <tr class="Search_biao_{{ $key%2 == 0 ? 'one' : 'two'}}">
                 <td>{{ $row['app_id'] }}</td>
                 <td>{{ $row['title'] }}</td>
-                <td>{{ $cats[$row['cat_id']] }}</td>
+                <td>{{ $row['cat'] }}</td>
                 <td>{{ $row['request'] }}</td>
                 <td>{{ $row['download'] }}</td>
                 <td>{{ $row['install'] }}</td>
-                <td>15%</td>
+                <td>{{ $row['download_percent'] }}</td>
             </tr>
             @endforeach
             @if(empty($list['total']))
