@@ -228,6 +228,12 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
     {
         Route::get('statistics/appdownloads', ['as' => 'statistics.appdownloads', 'uses' => 'Admin_StatisticsController@appDownloads']);
     });
+
+    Route::group(['prefix' => 'log', 'before' => 'hasPermissions'], function()  // 日志管理
+    {
+        Route::get('index', ['as' => 'log.index', 'uses' => 'Admin_LogController@index']);
+    });
+
 });
 //图片
 //Route::post('/admin/appsads/imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_Apps_AppsAdsController@upload']);

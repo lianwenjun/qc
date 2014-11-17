@@ -4,65 +4,64 @@
  *
  */
 
-Event::listen('actionLog', function($activity, $contentId)
+Event::listen('actionLog', function($logData)
 {
-    // 获取contentType
-    $contentTypeArr = [
-        'app' => '游戏',
-        'appsads' => '广告',
-        'rankads' => '广告',
-        'indexads' => '广告',
-        'editorads' => '广告',
-        'catads' => '分类广告',
-        'cat' => '分类',
-        'tag' => '标签',
-        'keyword' => '关键字',
-        'stopword' => '屏蔽词',
-        'rating' => '评分',
-        'comment' => '评论',
-        'users' => '管理员',
-        'roles' => '角色'
-    ];
-    $routeHead = explode('.', Route::getCurrentRoute())[0];
-    $contentType = $contentTypeArr[$routeHead];
-
-    // 获取操作信息
-    $activityLogs = array_dot(Config::get('activityLogs'));
-    foreach ($activityLogs as $k => $v) {
-        if ($activity == $v) {
-            $activityStr = $k;
-            break;
-        }
-    }
-    $activityArr = explode('.', $activityStr);
-    $action = $activityArr[2];
-    $actionModel = $activityArr[0] . '-' . $activityArr[1];
 
     // 获取用户信息
-    $username = Sentry::getUser()->userName;
-    $realName = Sentry::getUser()->realName;
-    
+    $username = Sentry::getUser()->username;
+    $realname = Sentry::getUser()->realname;
+
     // 存入日志数据
-    if (is_array($contentId)) {
-        foreach ($contentId as $cid) {
+    if (is_array($logData['contentId'])) {
+        foreach ($logData['contentId'] as $cid) {
             Activity::log([
                 'contentId'   => $cid,
-                'contentType' => 'User',
-                'action'      => 'Create',
-                'description' => 'Created a User',
-                'details'     => 'Username: '.$user->username,
-                'updated'     => $id ? true : false,
+                'username'    => $username,
+                'realname'    => $realname,
+                'contentType' => $logData['contentType'],
+                'action'      => $logData['action'],
+                'description' => $logData['description'],
             ]);
         }
-    } elseif (is_int($contentId)) {
+    } else {
         Activity::log([
-            'contentId'   => $contentId,
-            'contentType' => 'User',
-            'action'      => 'Create',
-            'description' => 'Created a User',
-            'details'     => 'Username: '.$user->username,
-            'updated'     => $id ? true : false,
+            'contentId'   => $logData['contentId'],
+            'username'    => $username,
+            'realname'    => $realname,
+            'contentType' => $logData['contentType'],
+            'action'      => $logData['action'],
+            'description' => $logData['description'],
         ]);
     }
 
 });
+// {
+
+//     // 获取用户信息
+//     $username = Sentry::getUser()->username;
+//     $realname = Sentry::getUser()->realname;
+    
+//     // 存入日志数据
+//     if (is_array($contentId)) {
+//         foreach ($contentId as $cid) {
+//             Activity::log([
+//                 'contentId'   => $cid,
+//                 'username'    => $username,
+//                 'realname'    => $realname,
+//                 'contentType' => $contentType,
+//                 'action'      => $action,
+//                 'description' => $description,
+//             ]);
+//         }
+//     } else {
+//         Activity::log([
+//             'contentId'   => $contentId,
+//             'username'    => $username,
+//             'realname'    => $realname,
+//             'contentType' => $contentType,
+//             'action'      => $action,
+//             'description' => $description,
+//         ]);
+//     }
+
+// });
