@@ -121,7 +121,7 @@ class Statistics extends Command
                         $appDownloads = new AppDownloads;
                         foreach ($data as $k => $v) {
                             // 更新app_downloads表
-                            $appDownloads->dupInsert($v->app_id, $v->status);
+                            $appDownloads->dupInsert($v->app_id, $v->status, $this->_dayBegin);
                         }
                     });
         }
