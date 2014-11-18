@@ -24,6 +24,7 @@ class CreateAppDownloadsTable extends Migration {
             $table->integer('download')->default(0)->unsigned()->comment('下载数');
             $table->integer('install')->default(0)->unsigned()->comment('安装数');
             $table->integer('active')->default(0)->unsigned()->comment('激活数');
+            $table->decimal('download_percent', 5, 2)->default(0)->comment('下载占比(安装量/下载量)');
             $table->date('count_date')->comment('统计日期');
             $table->timestamps();
         });
