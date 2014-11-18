@@ -119,6 +119,7 @@
 <!--script src="/js/jquery-ui-1.8.23.custom.min.js" type="text/javascript"></script>!-->
 <script src="/js/admin/tendina.js" type="text/javascript"></script>
 <script src="/js/admin/jQuery.textSlider.js" type="text/javascript"></script>
+<script src="/js/admin/common.js" type="text/javascript"></script>
 
 
 <script type="text/javascript">
@@ -431,10 +432,10 @@ $(function(){
         delMsgBox(del);
     });
 
-    $(".jq-edit-input").live('keyup', function(){    
-            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0').slice(0,6)));  
+    $(".jq-edit-input").live('keyup', function(){  
+            $(this).val(validateNumber($(this).val());  
         }).bind("paste",function(){  //CTR+V事件处理    
-            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0').slice(0,6)));     
+            $(this).val(validateNumber($(this).val());     
         }).css("ime-mode", "disabled");
 });
 </script>              

@@ -202,3 +202,14 @@ function returnMsgBox(text) {
             draggable: false,
     });
 };
+
+function validateNumber(number)
+{
+    if (number == '') {
+        return 0;
+    }
+    if (!/^\d+$/.test(number)) {
+        return 0;
+    }
+    return parseInt(number);
+}
