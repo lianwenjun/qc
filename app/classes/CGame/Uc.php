@@ -69,7 +69,6 @@ class CGame_Uc extends CGame_Base
 
             $starttime = microtime(true);
             $respone   = $this->request();
-
             $endtime   = microtime(true);
 
             if(!empty($respone)) {
@@ -338,7 +337,7 @@ class CGame_Uc extends CGame_Base
             'author'            => '九游安卓',
             'summary'           => str_replace("\n", '<br>', $platform['description']),
             'images'            => serialize($images),
-            'changes'           => $package['upgradeDescription'],
+            'changes'           => str_replace("\n", '<br>', $package['upgradeDescription']),
             'download_link'     => $package['downUrl'],
             'os'                => 'Android',
             'os_version'        => $this->sdkAlias($package['extendInfo']['minSdkVersion']),
@@ -383,6 +382,7 @@ class CGame_Uc extends CGame_Base
             $cat_id = $this->cats($item['categoryId']);
             // 判断数据库中是否存在该apk对应的app记录 有就更新信息 无则创建一条记录
             $record = Apps::where('pack', $data['pack'])
+                          ->orderByRaw("field(status,'stock') desc")
                           ->first();
 
             $format = [
@@ -406,6 +406,10 @@ class CGame_Uc extends CGame_Base
     protected function store($format)
     {
         if (!empty($format['id'])) {
+
+            // 去除状态信息
+            unset($format['info']['status']);
+
             // 更新apk包信息
             Apps::where('id', $format['id'])
                 ->update($format['info']);
