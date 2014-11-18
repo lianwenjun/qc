@@ -61,6 +61,13 @@ $(function() {
         });
     });
 
+    //检测输入框是否是数字
+    $(".jq-edit-input").live('keyup', function(){  
+            $(this).val(validateNumber($(this).val()));  
+        }).bind("paste",function(){  //CTR+V事件处理    
+            $(this).val(validateNumber($(this).val()));     
+        }).css("ime-mode", "disabled");
+
 });
 
 /**
