@@ -184,6 +184,8 @@ class CGame_Uc extends CGame_Base
             $this->_error = false;
             echo sprintf("正在拉取第%d页\n", $i);
 
+            $this->_page = $i;
+
             $postData = $this->createPost();
             $info = $this->request();
 
