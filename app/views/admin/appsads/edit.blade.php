@@ -96,6 +96,7 @@ $(function(){
     //时间选择
     $(".jq-ui-timepicker").datetimepicker({
         showSecond: true,
+        timeFormat: 'HH:mm:ss',
         stepHour: 1,
         stepMinute: 10,
         stepSecond: 10
