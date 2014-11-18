@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAppDownloadsTable extends Migration {
+class AddDownloadPercentToAppDownloads extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,10 @@ class CreateAppDownloadsTable extends Migration {
 	 */
 	public function up()
 	{
-        //
+		Schema::table('app_downloads', function($table)
+		{
+			$table->decimal('download_percent', 5, 2)->default(0)->comment('下载占比(安装量/下载量)');
+		});
 	}
 
 	/**
