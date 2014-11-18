@@ -20,6 +20,9 @@ class CreateLogtablesTable extends Migration {
             $table->enum('type', [null, 'download', 'page'])->comment('类型');
             $table->timestamp('used_at')->default(null)->nullable()->comment('启用时间');
             $table->timestamps();
+
+            $table->index('used_at');
+            $table->index('updated_at');
         });
     }
 

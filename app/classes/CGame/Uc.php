@@ -186,7 +186,7 @@ class CGame_Uc extends CGame_Base
 
             $this->_page = $i;
 
-            $postData = $this->createPost();
+            $this->_postData = $this->createPost();
             $info = $this->request();
 
             if(!$this->_error) {
