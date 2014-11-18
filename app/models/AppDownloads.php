@@ -129,9 +129,8 @@ class AppDownloads extends \Base
      *
      * @return void
      */
-    public function dupInsert($appId, $status)
+    public function dupInsert($appId, $status, $countDate)
     {
-        $yesterday = date('Y-m-d', strtotime('yesterday'));
         // 查询游戏信息
         $appInfo = (new Apps)->info($appId);
 
@@ -148,7 +147,7 @@ class AppDownloads extends \Base
                 'app_id'     => $appId,
                 'title'      => $appInfo->title,
                 $status      => 1,
-                'count_date' => $yesterday,
+                'count_date' => date('Y-m-d', strtotime($countDate)),
             ]);
         }
     }
