@@ -138,7 +138,7 @@ class Admin_rankAdsController extends \Admin_AdsController {
             return Redirect::back()->with('msg', '修改失败');
         }
         //检测游戏是否存在
-        $app = Apps::whereStatus('stock')->find($id);
+        $app = Apps::whereStatus('stock')->find($ad->app_id);
         if (!$app) {
             return Redirect::route('rankads.edit', $id)
                 ->with('msg', '游戏不存在');
