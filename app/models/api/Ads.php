@@ -1,9 +1,12 @@
 <?php
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class Api_Ads extends \Eloquent {
+    use SoftDeletingTrait;
     protected $fillable = [];
+    protected $dates = ['deleted_at'];
+    protected $softDelete = true;
     protected $table = 'ads';
-
     //是否置顶
     /*
     * @param query sql

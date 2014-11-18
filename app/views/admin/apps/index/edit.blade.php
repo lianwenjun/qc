@@ -241,6 +241,23 @@ ul.ui-sortable li.placeholder:before {
 
 
 <script type="text/javascript">
+  (function($){
+
+      var _old = $.unique;
+
+      $.unique = function(arr){
+
+          // do the default behavior only if we got an array of elements
+          if (!!arr[0].nodeType){
+              return _old.apply(this,arguments);
+          } else {
+              // reduce the array to contain no dupes via grep/inArray
+              return $.grep(arr,function(v,k){
+                  return $.inArray(v,arr) === k;
+              });
+          }
+      };
+  })(jQuery);
 
     /**
      * 初始化分类
@@ -365,7 +382,6 @@ ul.ui-sortable li.placeholder:before {
 
             $('.jq-initCates').text('');
             $('.jq-initTags').text('');
-            $('.jq-cat').html('');
 
             // 分类提交
             var cats = [];
@@ -386,6 +402,12 @@ ul.ui-sortable li.placeholder:before {
                     }
                 });
             });
+
+            console.log(tags);
+
+            tags = $.unique( tags );
+
+            console.log(tags);
             $('.jq-initTags').html("<h2>" + tags.join("</h2>, <h2>") + "</h2>").next('input').val(tags.join(", "));
 
             // 表单包含到提交表单

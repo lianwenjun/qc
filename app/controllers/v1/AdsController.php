@@ -133,6 +133,8 @@ class V1_AdsController extends \V1_BaseController {
         $query = Api_Ads::whereType('banner')->whereLocation('banner_suggest')->IsStock();
         if ($top == 'yes') {
             $query->isTop();
+        } else {
+            $query->isTop('no');
         }
         $count = $query->count();
         if ($count == 0){

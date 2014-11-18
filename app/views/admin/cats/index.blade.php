@@ -411,11 +411,11 @@ $(function(){
                 if (res.status == 'ok') {
                     $(".jq-tagDisplay-"+tagId).hide();
                     $(".jq-tagClick-"+tagId).remove();
-                    delMsgBox('删除成功');
                     location.href = location.href;
                 }   
             });
         }
+        delMsgBox(del);
     });
     //点击删除分类
     $(".jq-delcat").live('click', function(){

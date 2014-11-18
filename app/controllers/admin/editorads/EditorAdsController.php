@@ -61,9 +61,9 @@ class Admin_EditorAdsController extends \Admin_AdsController {
                 ->with('input', Input::all());
         }
         //检查该游戏广告是否重复了
-        $ad = Ads::whereType($this->type)->whereLocation(Input::get('location'))
+        $ad = Ads::whereType($this->type)->whereIn('location', $this->location)
             ->where('app_id', Input::get('app_id'))
-            ->isTop(Input::get('is_top'))
+            ->isTop(Input::get('is_top', 'no'))
             ->count();
         if ($ad > 0){
             return Redirect::route('editorads.create')
@@ -96,7 +96,7 @@ class Admin_EditorAdsController extends \Admin_AdsController {
         //检测游戏是否存在
         $app = Apps::whereStatus('stock')->find($ad->app_id);
         if (!$app) {
-            return Redirect::route('editorads.index')->with('msg', '没发现游戏数据');
+            return Redirect::route('editorads.index')->with('msg', '游戏不存在');
         }
         $datas = ['ad' => $ad, 
             'location' => Config::get('status.ads.location'),

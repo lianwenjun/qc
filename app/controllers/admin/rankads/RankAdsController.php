@@ -110,7 +110,7 @@ class Admin_rankAdsController extends \Admin_AdsController {
             return Redirect::route('rankads.index')->with('msg', '广告不存在');
         }
         //检测游戏是否存在
-        $app = Apps::find($ad->app_id);
+        $app = Apps::whereStatus('stock')->find($ad->app_id);
         if (!$app) {
             return Redirect::route('rankads.index')->with('msg', '游戏不存在');
         }
@@ -138,7 +138,7 @@ class Admin_rankAdsController extends \Admin_AdsController {
             return Redirect::back()->with('msg', '修改失败');
         }
         //检测游戏是否存在
-        $app = Apps::whereStatus('stock')->find($id);
+        $app = Apps::whereStatus('stock')->find($ad->app_id);
         if (!$app) {
             return Redirect::route('rankads.edit', $id)
                 ->with('msg', '游戏不存在');
