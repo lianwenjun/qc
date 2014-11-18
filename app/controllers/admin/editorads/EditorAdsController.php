@@ -96,7 +96,7 @@ class Admin_EditorAdsController extends \Admin_AdsController {
         //检测游戏是否存在
         $app = Apps::whereStatus('stock')->find($ad->app_id);
         if (!$app) {
-            return Redirect::route('editorads.index')->with('msg', '没发现游戏数据');
+            return Redirect::route('editorads.index')->with('msg', '游戏不存在');
         }
         $datas = ['ad' => $ad, 
             'location' => Config::get('status.ads.location'),

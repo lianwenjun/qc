@@ -7,7 +7,11 @@
     <div class="Theme_title"><h1>广告位管理 <span>排行游戏位管理</span><b>添加游戏</b></h1></div>
                      
     <div class="Search_title">游戏信息</div>
-                     
+    @if(Session::has('msg'))
+    <div class="tips">
+        <div class="fail">{{ Session::get('msg') }}</div>
+    </div>
+    @endif                
     <div class="Search_biao">
         <form action="{{ Request::url() }}" method="post">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
