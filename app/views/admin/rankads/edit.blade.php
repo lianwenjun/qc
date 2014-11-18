@@ -68,8 +68,8 @@
             <tr>
                 <td  class="Search_lei"><span class="required">*</span>上线时间：</td>
                 <td>
-                    <h6>从 </h6> <h6><input type="text" name="stocked_at" class="Search_text jq-ui-timepicker" value="{{ $ad->stocked_at }}"></h6>
-                    <h6> 到 </h6> <h6><input type="text" name="unstocked_at" class="Search_text jq-ui-timepicker" value="{{ $ad->unstocked_at }}"></h6>
+                    <h6>从 </h6> <h6><input size="20" type="text" name="stocked_at" class="Search_text jq-ui-timepicker" value="{{ $ad->stocked_at }}"></h6>
+                    <h6> 到 </h6> <h6><input size="20" type="text" name="unstocked_at" class="Search_text jq-ui-timepicker" value="{{ $ad->unstocked_at }}"></h6>
                 </td>
             </tr>
 
@@ -87,15 +87,13 @@
 <script type="text/javascript" src="{{ asset('js/jquery-ui-1.8.23.custom.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-addon.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/admin/timepicker/jquery-ui-timepicker-zh-CN.js') }}"></script>
+<script src="{{ asset('js/admin/common.js') }}" type="text/javascript"></script>
+
 <script type="text/javascript">
 $(function(){
     $("tr:odd").addClass("Search_biao_two");
     $("tr:even").addClass("Search_biao_one");
-    $(".jq-edit-input").live('keyup', function(){    
-            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0')));    
-        }).bind("paste",function(){  //CTR+V事件处理    
-            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0')));     
-        }).css("ime-mode", "disabled");
+    
     $(".jq-ui-timepicker").datetimepicker({
         showSecond: true,
         timeFormat: 'HH:mm:ss',
