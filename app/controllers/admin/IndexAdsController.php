@@ -91,12 +91,12 @@ class Admin_indexAdsController extends \Admin_AdsController {
         $ad = Ads::whereType($this->type)->find($id);
         //检测广告是否存在
         if (!$ad) {
-            return Redirect::route('indexads.index');
+            return Redirect::route('indexads.index')->with('msg', '广告不存在');
         }
         //检测游戏是否存在
         $app = Apps::whereStatus('stock')->find($ad->app_id);
         if (!$app) {
-            return Redirect::route('indexads.index');
+            return Redirect::route('indexads.index')->with('msg', '游戏不存在');
         }
         $location = Config::get('status.ads.bannerLocation');
         $location = array_slice($location, 1);
