@@ -144,7 +144,7 @@ class AppDownloads extends \Base
         if (in_array($targetDate, $dates)) {
             $this->incrAt($appId, $targetDate, $status);
         } else {
-            $this->insert([
+            $this->create([
                 'app_id'     => $appId,
                 'title'      => $appInfo->title,
                 $status      => 1,
