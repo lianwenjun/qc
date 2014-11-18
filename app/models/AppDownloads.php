@@ -131,23 +131,24 @@ class AppDownloads extends \Base
      */
     public function dupInsert($appId, $status, $countDate)
     {
+        $targetDate = date('Y-m-d', strtotime($countDate));
         // 查询游戏信息
         $appInfo = (new Apps)->info($appId);
 
         $dates = $this->select('count_date')
                       ->where('app_id', $appId)
-                      ->where('count_date', $yesterday)
+                      ->where('count_date', $targetDate)
                       ->get()->toArray();
         $dates = array_column($dates, 'count_date');
 
-        if (in_array($yesterday, $dates)) {
-            $this->incrAt($appId, $yesterday, $status);
+        if (in_array($targetDate, $dates)) {
+            $this->incrAt($appId, $targetDate, $status);
         } else {
             $this->insert([
                 'app_id'     => $appId,
                 'title'      => $appInfo->title,
                 $status      => 1,
-                'count_date' => date('Y-m-d', strtotime($countDate)),
+                'count_date' => $targetDate,
             ]);
         }
     }
