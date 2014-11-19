@@ -69,7 +69,6 @@ class CGame_Uc extends CGame_Base
 
             $starttime = microtime(true);
             $respone   = $this->request();
-
             $endtime   = microtime(true);
 
             if(!empty($respone)) {
@@ -184,7 +183,9 @@ class CGame_Uc extends CGame_Base
             $this->_error = false;
             echo sprintf("正在拉取第%d页\n", $i);
 
-            $postData = $this->createPost();
+            $this->_page = $i;
+
+            $this->_postData = $this->createPost();
             $info = $this->request();
 
             if(!$this->_error) {
@@ -285,7 +286,7 @@ class CGame_Uc extends CGame_Base
 
         if(!$this->_isInited) $this->error('程序没有初始化!');
 
-        $this->page($this->_from, $this->_to);
+        $this->page();
     }
 
     /**
@@ -295,7 +296,7 @@ class CGame_Uc extends CGame_Base
      */
     public function append()
     {
-        if(file_exists($this->_config)) {
+        if (file_exists($this->_config)) {
             $this->_from = Config::get('ucCGame.from');
         } else {
             $this->_from = '2000-01-01 00:00:00';
@@ -336,13 +337,13 @@ class CGame_Uc extends CGame_Base
             'author'            => '九游安卓',
             'summary'           => str_replace("\n", '<br>', $platform['description']),
             'images'            => serialize($images),
-            'changes'           => $package['upgradeDescription'],
+            'changes'           => str_replace("\n", '<br>', $package['upgradeDescription']),
             'download_link'     => $package['downUrl'],
             'os'                => 'Android',
             'os_version'        => $this->sdkAlias($package['extendInfo']['minSdkVersion']),
             'is_verify'         => $package['secureLevel'] == 0 ? 'yes' : 'no',
             'has_ad'            => $package['ad'] == 0 ? 'no' : 'yes',
-            'md5'               => $package['extendInfo']['signMd5'],
+            'md5'               => $package['md5'],
             'status'            => 'publish',
             'source'            => 'uc',
         ];
@@ -381,6 +382,7 @@ class CGame_Uc extends CGame_Base
             $cat_id = $this->cats($item['categoryId']);
             // 判断数据库中是否存在该apk对应的app记录 有就更新信息 无则创建一条记录
             $record = Apps::where('pack', $data['pack'])
+                          ->orderByRaw("field(status,'stock') desc")
                           ->first();
 
             $format = [
@@ -404,12 +406,16 @@ class CGame_Uc extends CGame_Base
     protected function store($format)
     {
         if (!empty($format['id'])) {
+
+            // 去除状态信息
+            unset($format['info']['status']);
+
             // 更新apk包信息
             Apps::where('id', $format['id'])
                 ->update($format['info']);
             // 更新平均评分
             Ratings::where('app_id', $format['id'])
-                   ->update(['avg' => $format['avg_score'],]);
+                   ->update(['manual' => $format['avg_score']]);
             // 分类id不为0则更新分类id
             if ($format['cat_id'] != 0) {
                 AppCats::where('app_id', $format['id'])
@@ -428,7 +434,7 @@ class CGame_Uc extends CGame_Base
                 'total'  => 0,
                 'counts' => 0,
                 'avg'    => $format['avg_score'],
-                'manual' => 0,
+                'manual' => $format['avg_score'],
             ]);
             // 分类id不为0则创建游戏分类记录 插入分类id
             if ($format['cat_id'] != 0) {

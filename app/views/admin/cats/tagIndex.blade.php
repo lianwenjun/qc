@@ -153,10 +153,10 @@ $(function(){
         td.eq(4).find('#textfield').val(text4);
         $(this).parent().html(to_text8);
     });
-    $(".jq-edit-input").live('keyup', function(){    
-            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0').slice(0,6)));  
+    $(".jq-edit-input").live('keyup', function(){  
+            $(this).val(validateNumber($(this).val()));  
         }).bind("paste",function(){  //CTR+V事件处理    
-            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0').slice(0,6)));     
+            $(this).val(validateNumber($(this).val()));     
         }).css("ime-mode", "disabled");
     //提交
     $(".jq-saveTag").live('click', function() {

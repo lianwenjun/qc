@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddDownloadPercentToAppDownloads' => $baseDir . '/app/database/migrations/2014_11_18_151745_add_download_percent_to_app_downloads.php',
     'Admin_AdsController' => $baseDir . '/app/controllers/admin/AdsController.php',
     'Admin_Apps_AppsAdsController' => $baseDir . '/app/controllers/admin/apps/AppsAdsController.php',
     'Admin_Apps_IndexController' => $baseDir . '/app/controllers/admin/apps/IndexController.php',
@@ -75,7 +76,6 @@ return array(
     'CreateCatsTable' => $baseDir . '/app/database/migrations/2014_09_05_052518_create_cats_table.php',
     'CreateClientTable' => $baseDir . '/app/database/migrations/2014_10_15_161857_create_client_table.php',
     'CreateCommentsTable' => $baseDir . '/app/database/migrations/2014_09_05_074339_create_comments_table.php',
-    'CreateDownloadLogsTable' => $baseDir . '/app/database/migrations/2014_10_29_111303_create_download_logs_table.php',
     'CreateFeedbacksTable' => $baseDir . '/app/database/migrations/2014_10_15_154024_create_feedbacks_table.php',
     'CreateHistoriesTable' => $baseDir . '/app/database/migrations/2014_09_05_104429_create_histories_table.php',
     'CreateKeywordsTable' => $baseDir . '/app/database/migrations/2014_09_05_075535_create_keywords_table.php',
@@ -85,6 +85,7 @@ return array(
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
     'DeleteAppRecordsTable' => $baseDir . '/app/database/migrations/2014_11_11_212634_delete_app_records_table.php',
     'DeleteDownloadLogsTable' => $baseDir . '/app/database/migrations/2014_11_13_161622_delete_download_logs_table.php',
+    'DeleteRecordLogsTable' => $baseDir . '/app/database/migrations/2014_11_18_140727_delete_record_logs_table.php',
     'DesiredCapabilities' => $vendorDir . '/facebook/webdriver/lib/remote/DesiredCapabilities.php',
     'DownloadLogsTable' => $baseDir . '/app/commands/DownloadLogsTable.php',
     'DriverCommand' => $vendorDir . '/facebook/webdriver/lib/remote/DriverCommand.php',

@@ -16,7 +16,11 @@
     <div class="Theme_title"><h1>广告位管理 <span>首页图片位管理</span><b>编辑游戏</b></h1></div>
                      
     <div class="Search_title">游戏信息</div>
-                     
+    @if(Session::has('msg'))
+    <div class="tips">
+        <div class="fail">{{ Session::get('msg') }}</div>
+    </div>
+    @endif                 
     <div class="Search_biao">
         <form action="{{ Request::url() }}" method="post">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -90,8 +94,8 @@
             <tr>
                 <td class="Search_lei"><span class="required">*</span>上线时间：</td>
                 <td> 
-                    <h6>从 </h6> <h6><input type="text" name="stocked_at" class="Search_text jq-ui-timepicker" value="{{ $ad->stocked_at }}"></h6>
-                    <h6> 到 </h6> <h6><input type="text" name="unstocked_at" class="Search_text jq-ui-timepicker" value="{{ $ad->unstocked_at }}"></h6>
+                    <h6>从 </h6> <h6><input size="20" type="text" name="stocked_at" class="Search_text jq-ui-timepicker" value="{{ $ad->stocked_at }}"></h6>
+                    <h6> 到 </h6> <h6><input size="20" type="text" name="unstocked_at" class="Search_text jq-ui-timepicker" value="{{ $ad->unstocked_at }}"></h6>
                 </td>
             </tr>
 
@@ -112,6 +116,7 @@
 <script src="{{ asset('js/admin/plupload/plupload.full.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript" src="{{ asset('js/admin/jquery.autocomplete.js') }}"></script>
 <script src="{{ asset('js/admin/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/admin/common.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
     function uploadToHtml(img){
@@ -120,11 +125,6 @@
 $(function(){
     $("tr:odd").addClass("Search_biao_two");
     $("tr:even").addClass("Search_biao_one");
-    $(".jq-edit-input").live('keyup', function(){    
-            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0').slice(0,6)));  
-        }).bind("paste",function(){  //CTR+V事件处理    
-            $(this).val(parseInt($(this).val().replace(/[^0-9.]+/g,'0').slice(0,6)));     
-        }).css("ime-mode", "disabled");
     //时间插件
     $(".jq-ui-timepicker").datetimepicker({
         showSecond: true,

@@ -93,6 +93,7 @@ class DownloadLogsTable extends Command {
             $table->enum('status', ['request', 'download', 'install', 'active'])->default('request')->comment('日志类型');
             $table->softDeletes();
             $table->timestamps();
+            $table->index('created_at'); // 时间加索引
         });
     }
 

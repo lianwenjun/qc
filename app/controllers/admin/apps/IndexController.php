@@ -356,7 +356,9 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
 
         if(! $app = Apps::find($id)) {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
-        } elseif ($app->update(['status' => 'unstock', 'stocked_at' => date('Y-m-d H:i:s')])) {
+        } elseif ($app->update(['status' => 'unstock', 'unstocked_at' => date('Y-m-d H:i:s')])) {
+
+            // $app->update(['unstocked_at' => date('Y-m-d H:i:s')]);
             Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经下架"]);
 
             // 记录操作日志
