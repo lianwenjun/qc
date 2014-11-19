@@ -86,6 +86,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         // 上传
         Route::post('imageupload', ['as' => 'apps.imageupload', 'uses' => 'Admin_Apps_IndexController@imageUpload']);
         Route::post('appupload/{dontSave?}', ['as' => 'apps.appupload', 'uses' => 'Admin_Apps_IndexController@appUpload']);
+        Route::post('iconupload', ['as' => 'apps.iconupload', 'uses' => 'Admin_Apps_IndexController@iconUpload']);// 游戏icon上传
     });
 
      // 管理员
