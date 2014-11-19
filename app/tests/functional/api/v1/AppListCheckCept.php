@@ -9,5 +9,5 @@ $data = [
             ['pack' => '', 'versionCode' => ''],
     ]
 ];
-$I->sendAjaxPostRequest('/v1/api/client/apps/list', $data);
+$I->sendAjaxPostRequest('/api/client/apps/list', $data);
 $I->see('"msg":1');

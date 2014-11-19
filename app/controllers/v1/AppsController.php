@@ -76,7 +76,8 @@ class V1_AppsController extends \V1_BaseController {
             //缓存APC
             Cache::add('author.apps.' . $exclude, serialize($appIds), '10');
         }
-        
+        $apps = (new Api_Ratings)->getAppsRatings($apps);
+        $apps = (new Api_Comments)->getAppsComments($apps);
         return ['count' => $count, 'apps' => $apps];
         
     }
@@ -103,6 +104,8 @@ class V1_AppsController extends \V1_BaseController {
             ->skip($start)->take($pageSize)
             ->orderBy('id', 'desc')
             ->get();
+        $apps = (new Api_Ratings)->getAppsRatings($apps);
+        $apps = (new Api_Comments)->getAppsComments($apps);
         return ['count' => $count, 'apps' => $apps];
     }
     private function searchByTitle($keyword, $exclude, $pageSize, $pageIndex) {
@@ -117,6 +120,8 @@ class V1_AppsController extends \V1_BaseController {
             ->skip($start)->take($pageSize)
             ->orderBy('id', 'desc')
             ->get();
+        $apps = (new Api_Ratings)->getAppsRatings($apps);
+        $apps = (new Api_Comments)->getAppsComments($apps);
         return ['count' => $count, 'apps' => $apps];
     }
     /**
@@ -164,9 +169,9 @@ class V1_AppsController extends \V1_BaseController {
             $appId = isset($index->id) ? $index->id : 0;
             $title = isset($index->title) ? $index->title : '';
             if ($index->id != 0){
-                $app = Api_Apps::ofNew($versionCode)->find($appId);
+                $app = Api_Apps::whereStatus('stock')->ofNew($versionCode)->find($appId);
             } else {
-                $app = Api_Apps::ofNew($versionCode)->whereTitle($title)->first();
+                $app = Api_Apps::whereStatus('stock')->ofNew($versionCode)->whereTitle($title)->first();
             }
             $res = $this->appFields($this->infoFields, $app);
             if ($res) $apps[] = $res;
@@ -191,7 +196,7 @@ class V1_AppsController extends \V1_BaseController {
         $apps = [];
         foreach ($input as $index) {
             if (!isset($index['pack'])) continue;
-            $app = Api_Apps::wherePack($index['pack'])->first();
+            $app = Api_Apps::whereStatus('stock')->wherePack($index['pack'])->first();
             $res = $this->appFields($this->infoFields, $app);
             if ($res) $apps[] = $res;
         }
@@ -210,7 +215,10 @@ class V1_AppsController extends \V1_BaseController {
         if (!$app) {
             return $this->result(['data' => '[]', 'msg' => 0, 'msgbox' => '数据不存在']);
         }
-        $data = $this->appFields($this->infoFields, $app);
+        $apps = [$app];
+        $apps = (new Api_Ratings)->getAppsRatings($apps);
+        $apps = (new Api_Comments)->getAppsComments($apps);
+        $data = $this->appFields($this->infoFields, $app[0]);
         return $this->result(['data' => $data, 'msg' => 1, 'msgbox' => '数据获取成功']);
     }
 

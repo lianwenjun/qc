@@ -239,7 +239,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 //Route::post('/admin/appsads/imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_Apps_AppsAdsController@upload']);
 
 
-Route::group(['prefix' => 'v1/api'], function() //V1版本
+Route::group(['prefix' => 'api'], function() //V1版本
 {
     Route::get('game/extend/{type}/{pageSize}/{pageIndex}', ['uses' => 'V1_AdsController@banner']);
     Route::get('game/cull/{type}/{pageSize}/{pageIndex}', ['uses' => 'V1_AdsController@editor']);

@@ -103,6 +103,8 @@ class V1_AdsController extends \V1_BaseController {
             $data[] = $ad->app_id;
         }
         $apps = Api_Apps::whereStatus('stock')->whereIn('id', $appIds)->get();
+        $apps = (new Api_Ratings)->getAppsRatings($apps);
+        $apps = (new Api_Comments)->getAppsComments($apps);
         $appTmp = [];
         foreach ($apps as $app) {
             $appTmp[$app->id] = $this->appFields($this->appFiles, $app);   

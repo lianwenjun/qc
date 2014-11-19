@@ -18,6 +18,7 @@ class CreateAppcatsTable extends Migration {
             $table->integer('app_id')->unsigned()->comment('游戏ID');
             $table->integer('cat_id')->unsigned()->comment('分类ID');
             $table->timestamps();
+            $table->index('cat_id');
         });
     }
 

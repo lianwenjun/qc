@@ -8,7 +8,7 @@ class Api_Apps extends \Eloquent {
     protected $table = 'apps';
     protected $fillable = [];
     //新增字段
-    protected $appends = ['rating', 'comment', 'tagList', 'categoryId', 'gameCategory', 'catIds'];
+    protected $appends = ['tagList', 'categoryId', 'gameCategory', 'catIds'];
     //按名称搜索游戏名字
     public function scopeOfSelect($query, $select = []) {
         if (is_null($select)) { 
@@ -92,14 +92,14 @@ class Api_Apps extends \Eloquent {
     }
     
     //获得评论统计
-    public function getCommentAttribute() {
+    /*public function getCommentAttribute() {
         return Api_Comments::where('app_id', $this->id)->count();
-    }
+    }*/
     //获得评分
-    public function getRatingAttribute() {
+    /*public function getRatingAttribute() {
         $rating = Api_Ratings::where('app_id', $this->id)->first();
         return $rating ? intval($rating->manual) : 0;
-    }
+    }*/
     //获取标签列表[问题，单个和多个时候如何分]
     public function getTagListAttribute() {
         return (new Api_Cats)->getTagsByAppId($this->id);
