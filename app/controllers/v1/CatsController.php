@@ -30,13 +30,18 @@ class V1_CatsController extends \V1_BaseController {
             $catsTmp[$catImg->cat_id]['ImgUrl'] = $catImg->image;
         }
         //这步需要精简
+        $apps = Api_Apps::select('id')->whereStatus('stock')->get();
+        foreach ($apps as $app) {
+            $appIds[] = $app->id;
+        }
         $appsCount = DB::table('app_cats')
                      ->select(DB::raw('count(*) as app_count, cat_id'))
                      ->whereIn('cat_id', $catIds)
+                     ->whereIn('app_id', $appIds)
                      ->groupBy('cat_id')
                      ->get();
         foreach ($appsCount as $app) {
-                $catsTmp[$app->cat_id]['GameCount'] = $app->app_count;
+                $catsTmp[$app->cat_id]['GameCount'] = intval($app->app_count);
         }
         $datas = [];
         foreach ($catsTmp as $index => $catTmp) {
