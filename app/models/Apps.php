@@ -240,7 +240,7 @@ class Apps extends \Base {
 
         $logData['action_field'] = $action_field[$selfStatus];
         $logData['description'] = $action[$status] . ' 游戏ID为' . $id;
-        $this->dolog($logData);
+        Base::dolog($logData);
 
         return Apps::find($id)->update($data);
     }
@@ -316,7 +316,7 @@ class Apps extends \Base {
                 // 记录操作日志
                 $logData['action_field'] = '游戏管理-添加编辑游戏';
                 $logData['description'] = '上传了游戏 游戏ID为' . $app->id;
-                $this->dolog($logData);
+                Base::dolog($logData);
             }
         }
         
