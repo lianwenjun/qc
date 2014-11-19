@@ -312,6 +312,33 @@ class Apps extends \Base {
     }
 
     /**
+     * 上传游戏icon图片
+     *
+     * @return mix
+     */
+    public function iconUpload()
+    {
+        $uploader = (new CUpload)->instance('image', 'icons')->upload();
+
+        if (!$uploader['result']) {
+            return $uploader;
+        }
+
+        $appId = Input::get('appid');
+        $iconPath = $uploader['result']['path'];
+
+        $affectRows = Apps::find($appId)->update(['icon' => $iconPath,]);
+        if (empty($affectRows)) {
+            $uploader['error'] = [
+                'code'    => 500,
+                'message' => '不存在该游戏id的记录',
+            ];
+        }
+
+        return $uploader;
+    }
+
+    /**
      * 获取单个游戏信息
      *
      * @param $id int 游戏ID

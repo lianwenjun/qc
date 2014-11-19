@@ -67,6 +67,20 @@ ul.ui-sortable li.placeholder:before {
   font-family: fantasy;
   color: #F66;
 }
+.editIcon {
+  position: relative;
+  background: #C00;
+  color: #FFF;
+  z-index: 1000;
+  opacity: 0.7;
+  padding: 4px;
+  right: 35px;
+  bottom: 6px;
+}
+.editIcon:hover {
+  color: #FFF;
+  opacity: 1;
+}
 </style>
 <div class="Content_right_top Content_height">
    <div class="Theme_title">
@@ -109,8 +123,27 @@ ul.ui-sortable li.placeholder:before {
                <td>{{ $app->created_at }}</td>
             </tr>
             <tr class="Search_biao_one">
-               <td class="Search_lei">上传新版本：</td>
-               <td class="Search_apk"><span id="container"><a href="javascript:;" class="Search_Update" {{ Sentry::getUser()->hasAccess('apps.appupload') ? 'id="jq-uploadApp"':''}} >选择APK</a><span id="uploadInfo"></span></span><img class="upload-icon-src" src="{{ $app->icon }}" width="90" height="90"></td>
+                <td class="Search_lei">上传新版本：</td>
+                <td class="Search_apk">
+                    <!-- <span id="container">
+                        <a href="javascript:;" class="Search_Update" {{ Sentry::getUser()->hasAccess('apps.appupload') ? 'id="jq-uploadApp"':''}} >选择APK</a>
+                        <span id="uploadInfo"></span>
+                    </span>
+                    <img class="upload-icon-src" src="{{ $app->icon }}" width="90" height="90"> -->
+                    <div>
+                      <div style="display:inline;">
+                        <span id="container">
+                          <a href="javascript:;" class="Search_Update" {{ Sentry::getUser()->hasAccess('apps.appupload') ? 'id="jq-uploadApp"':''}} >选择APK</a>
+                          <span id="uploadInfo"></span>
+                        </span>
+                      </div>
+                      <div style="display:inline;">
+                        <img class="upload-icon-src" src="{{ $app->icon }}" width="90" height="90">
+                        <input name="icon" value="{{ $app->icon }}" type="hidden">
+                        <a class="editIcon" id="jq-editIcon" href="javascript:;">修改</a>
+                      </div>
+                    </div>
+                </td>
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">游戏关键字：</td>
@@ -697,6 +730,40 @@ ul.ui-sortable li.placeholder:before {
                 $(':input:eq(' + ($(':input').index(this) + 1) + ')').focus();
             }
         });
+
+        // 游戏icon修改上传
+        var iconUpload = new plupload.Uploader({
+            browse_button : 'jq-editIcon',
+            url : '{{ URL::route('apps.iconupload') }}?appid={{ $app->id }}',
+            runtimes : 'html5',
+            chunk_size : '1mb',
+            flash_swf_url : '../js/Moxie.swf',
+            filters : {
+              max_file_size : '2mb',
+              mime_types : [
+                  {title : 'icon图片', extensions : 'jpg,git,png'}
+              ]
+            },
+            init: {
+                FilesAdded: function(up, files) {
+                    iconUpload.start();
+                },
+                Error: function(up, err) {
+                    alert(err.message);
+                }
+            }
+        });
+        iconUpload.bind('FileUploaded', function(up, file, object) {
+            var response;
+            try {
+                response = eval(object.response);
+            } catch(err) {
+                response = eval('(' + object.response + ')');
+            }
+
+            $('.upload-icon-src').attr('src', response.result.path);
+        });
+        iconUpload.init();
 
     });
 

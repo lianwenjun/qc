@@ -311,6 +311,19 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
     }
 
     /**
+     * 上传游戏icon图片
+     * POST /admin/apps/iconupload
+     *
+     * @return Response
+     */
+    public function iconUpload()
+    {
+        $app = new Apps();
+
+        return $app->iconUpload();
+    }
+
+    /**
      * 审核通过（上架）
      * PUT /admin/apps/putStock
      *
