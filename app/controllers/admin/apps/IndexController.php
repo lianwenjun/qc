@@ -275,6 +275,12 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
         
         if($app->delete()) {
             Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经删除掉了"]);
+
+            // 记录操作日志
+            $logData['action_field'] = '游戏管理-添加编辑游戏';
+            $logData['description'] = '删除了游戏 游戏ID为' . $id;
+            Base::dolog($logData);
+
         } else {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}删除失败了"]);
         }
@@ -338,6 +344,12 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
             Session::flash('tips', ['success' => false, 'message' => "亲，找不到游戏"]);
         } elseif ($apps->update(['status' => 'stock'])) {
             Session::flash('tips', ['success' => true, 'message' => "亲，全部已经审核通过"]);
+
+            // 记录操作日志
+            $logData['action_field'] = '游戏管理-待审核列表';
+            $logData['description'] = '审核通过了游戏 游戏ID为' . implode(',', $ids);
+            Base::dolog($logData);
+
         } else {
             Session::flash('tips', ['success' => false, 'message' => "亲，操作失败了"]);
         }
@@ -361,6 +373,11 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
 
             // $app->update(['unstocked_at' => date('Y-m-d H:i:s')]);
             Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经下架"]);
+
+            // 记录操作日志
+            $logData['action_field'] = '游戏管理-上架游戏列表';
+            $logData['description'] = '下架了游戏 游戏ID为' . $id;
+            Base::dolog($logData);
 
             // 下架广告位
             if($ads = Ads::where('app_id', $id)) {
@@ -388,6 +405,12 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
             Session::flash('tips', ['success' => false, 'message' => "亲，找不到游戏"]);
         } elseif ($apps->update(['status' => 'notpass', 'reason' => $reason])) {
             Session::flash('tips', ['success' => true, 'message' => "亲，全部已经审核不通过"]);
+
+            // 记录操作日志
+            $logData['action_field'] = '游戏管理-待审核列表';
+            $logData['description'] = '审核不通过游戏 游戏ID为' . implode(',', $ids);
+            Base::dolog($logData);
+
         } else {
             Session::flash('tips', ['success' => false, 'message' => "亲，操作失败了"]);
         }

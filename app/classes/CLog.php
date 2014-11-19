@@ -1,7 +1,8 @@
 <?php
 
-class CFeedback
+class CLog
 {
+
     /**
      * 解析搜索条件
      *
@@ -15,17 +16,14 @@ class CFeedback
         if ($data) {
             // 关键字处理
             if (isset($data['keyword']) && !empty($data['keyword'])) {
-                switch ($data['type']) {
-                    case 'id':
-                        $query->where('id', $data['keyword']);
-                        break;
-                    case 'imei':
-                    case 'content':
-                        $query->where($data['type'], 'like', '%' . $data['keyword'] . '%');
-                        break;
-                }
+                $query->where($data['type'], $data['keyword']);
             }
             
+            // 操作描述处理
+            if (isset($data['description']) && !empty($data['description'])) {
+                $query->where('description', 'like', '%' . $data['description'] . '%');
+            }
+
             // 时间处理
             if (isset($data['created_at']) && !(empty($data['created_at'][0]) && empty($data['created_at'][1]))) {
                 if ($data['created_at'][0] == '') $data['created_at'][0] = 0;
@@ -41,5 +39,4 @@ class CFeedback
 
         return $query;
     }
-
-}
+} 

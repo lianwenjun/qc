@@ -3,21 +3,17 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateAppcatsTable extends Migration {
+class AddIndexCatIdToAppCatsTable extends Migration {
 
     /**
      * Run the migrations.
-     *
+     *  给游戏分类表的分类ID打索引
      * @return void
      */
     public function up()
     {
-        Schema::create('app_cats', function(Blueprint $table)
+        Schema::table('app_cats', function(Blueprint $table)
         {
-            $table->increments('id');
-            $table->integer('app_id')->unsigned()->comment('游戏ID');
-            $table->integer('cat_id')->unsigned()->comment('分类ID');
-            $table->timestamps();
             $table->index('cat_id');
         });
     }
@@ -30,6 +26,7 @@ class CreateAppcatsTable extends Migration {
      */
     public function down()
     {
+        
     }
 
 }

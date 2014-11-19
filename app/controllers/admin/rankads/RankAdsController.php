@@ -87,6 +87,12 @@ class Admin_rankAdsController extends \Admin_AdsController {
         //存储
         $ad = (new Ads)->ofCreate($this->type);
         if ($ad->save()) {
+
+            // 记录操作日志
+            $logData['action_field'] = '广告位管理-排行游戏位管理';
+            $logData['description'] = '新增了广告 广告ID为' . $ad->id;
+            Base::dolog($logData);
+
             return Redirect::route('rankads.index')->with('msg', '添加成功');
         }
         return Redirect::route('rankads.create')
@@ -145,6 +151,12 @@ class Admin_rankAdsController extends \Admin_AdsController {
         }
         $ad = (new Ads)->ofUpdate($ad);
         if ($ad->save()){
+
+            // 记录操作日志
+            $logData['action_field'] = '广告位管理-排行游戏位管理';
+            $logData['description'] = '编辑了广告 广告ID为' . $ad->id;
+            Base::dolog($logData);
+            
             return Redirect::route('rankads.index')->with('msg', '修改成功');
         } else {
             return Redirect::back()->with('msg', '没什么改变');

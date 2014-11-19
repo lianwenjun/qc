@@ -43,6 +43,12 @@ class Admin_KeywordsController extends \Admin_BaseController {
         $keyword->creator = $this->userId;
         $keyword->word = Input::get('word');
         $keyword->save();
+
+        // 记录操作日志
+        $logData['action_field'] = '系统管理-关键字管理';
+        $logData['description'] = '新增了关键字 关键字ID为' . $keyword->id;
+        Base::dolog($logData);
+
         return Response::json(['status'=>'ok', 'msg'=>'suss']);
     }
     
@@ -72,6 +78,12 @@ class Admin_KeywordsController extends \Admin_BaseController {
         $keyword->word = Input::get('word', $keyword->word);
         $keyword->is_slide = Input::get('is_slide', $keyword->is_slide);
         $keyword->save();
+
+        // 记录操作日志
+        $logData['action_field'] = '系统管理-关键字管理';
+        $logData['description'] = '编辑了关键字 关键字ID为' . $id;
+        Base::dolog($logData);
+
         $data['operator'] = User::find($this->userId)->username;
         $data['updated_at'] = date($keyword->updated_at);
         return Response::json(['status'=>'ok', 'msg'=>'suss', 'data'=>$data]);
@@ -94,6 +106,12 @@ class Admin_KeywordsController extends \Admin_BaseController {
         $keyword->save();
         //两个动作放一起很怪异
         $keyword->delete();
+
+        // 记录操作日志
+        $logData['action_field'] = '系统管理-关键字管理';
+        $logData['description'] = '删除了关键字 关键字ID为' . $id;
+        Base::dolog($logData);
+        
         return Redirect::action('keyword.index')->with('msg', '#'. $id .'删除成功');
     }
 }

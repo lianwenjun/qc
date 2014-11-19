@@ -158,7 +158,7 @@
                     ]
                 )
             )
-            <li id="three" class="mail"><a href="#three">管理中心</a>
+            <li id="three" class="mail"><a href="#three">权限管理</a>
                  <ul class="sub-menu">
                     @if(Sentry::getUser()->hasAccess('users.index'))
                        <li><a href="{{ URL::route('users.index') }}" target=BoardRight>管理员管理</a></li>
@@ -169,6 +169,14 @@
                  </ul>
             </li>
             @endif
+
+            <li id="three" class="mail"><a href="#three">日志管理</a>
+                 <ul class="sub-menu">
+                    @if(Sentry::getUser()->hasAccess('log.index'))
+                       <li><a href="{{ URL::route('log.index') }}" target=BoardRight>日志查询</a></li>
+                    @endif
+                 </ul>
+            </li>
 
       </ul>
 </div>
