@@ -4,10 +4,12 @@ class CLog
 {
 
     /**
-     * undocumented function
+     * 解析搜索条件
      *
-     * @return void
-     * @author 
+     * @param $query 游戏列表对象
+     * @param $data 搜索条件
+     *
+     * @return $query 游戏列表对象
      **/
     public function queryParse($query, $data)
     {
