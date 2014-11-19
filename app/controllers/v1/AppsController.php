@@ -163,7 +163,7 @@ class V1_AppsController extends \V1_BaseController {
     {
         $input = file_get_contents('php://input');
         $input = json_decode($input);
-        $apps = [];
+        $clientApps = [];
         foreach ($input as $index) {
             $versionCode = isset($index->versionCode) ? $index->versionCode : 0;
             $appId = isset($index->id) ? $index->id : 0;
@@ -173,10 +173,14 @@ class V1_AppsController extends \V1_BaseController {
             } else {
                 $app = Api_Apps::whereStatus('stock')->ofNew($versionCode)->whereTitle($title)->first();
             }
-            $res = $this->appFields($this->infoFields, $app);
-            if ($res) $apps[] = $res;
+            if (!$app) continue;
+            $apps = [$app];
+            $apps = (new Api_Ratings)->getAppsRatings($apps);
+            $apps = (new Api_Comments)->getAppsComments($apps);
+            $res = $this->appFields($this->infoFields, $apps[0]);
+            if ($res) $clientApps[] = $res;
         }
-        return $this->result(['data' => $apps, 'msg' => 1, 'msgbox' => '请求成功']); 
+        return $this->result(['data' => $clientApps, 'msg' => 1, 'msgbox' => '请求成功']); 
     }
 
     /*
@@ -193,14 +197,18 @@ class V1_AppsController extends \V1_BaseController {
         if (!is_array($input)) {
             return $this->result(['data' => '', 'msg' => 0, 'msgbox' => '请输入JSON数据']);
         }
-        $apps = [];
+        $clientApps = [];
         foreach ($input as $index) {
             if (!isset($index['pack'])) continue;
             $app = Api_Apps::whereStatus('stock')->wherePack($index['pack'])->first();
-            $res = $this->appFields($this->infoFields, $app);
-            if ($res) $apps[] = $res;
+            if (!$app) continue;
+            $apps = [$app];
+            $apps = (new Api_Ratings)->getAppsRatings($apps);
+            $apps = (new Api_Comments)->getAppsComments($apps);
+            $res = $this->appFields($this->infoFields, $apps[0]);
+            if ($res) $clientApps[] = $res;
         }
-        return $this->result(['data' => $apps, 'msg' => 1, 'msgbox' => '请求成功']);
+        return $this->result(['data' => $clientApps, 'msg' => 1, 'msgbox' => '请求成功']);
     }
     /**
      * 获得单个游戏的信息
@@ -218,7 +226,7 @@ class V1_AppsController extends \V1_BaseController {
         $apps = [$app];
         $apps = (new Api_Ratings)->getAppsRatings($apps);
         $apps = (new Api_Comments)->getAppsComments($apps);
-        $data = $this->appFields($this->infoFields, $app[0]);
+        $data = $this->appFields($this->infoFields, $apps[0]);
         return $this->result(['data' => $data, 'msg' => 1, 'msgbox' => '数据获取成功']);
     }
 

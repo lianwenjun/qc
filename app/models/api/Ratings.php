@@ -9,6 +9,7 @@ class Api_Ratings extends \Eloquent {
         foreach ($apps as $app) {
             $ids[] = $app->id;
         }
+        if (!$ids) return $apps;
         $ratings = $this->getRatingsByIds($ids);
         foreach ($apps as $app) {
             $app->rating = $ratings[$app->id];

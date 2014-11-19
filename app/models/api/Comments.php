@@ -10,7 +10,7 @@ class Api_Comments extends \Eloquent {
         foreach ($apps as $app) {
             $ids[] = $app->id;
         }
-        
+        if (!$ids) return $apps;
         $comments = $this->getCommentsByIds($ids);
         foreach ($apps as $app) {
             $app->comment = $comments[$app->id];
