@@ -223,6 +223,25 @@ class Apps extends \Base {
             $this->history($id);
         }
 
+        // 记录操作日志
+        $action = [
+            'stock' => '更新了游戏',
+            'pending' => '编辑并提交到待审核',
+            'draft' => '编辑并保存为草稿',
+        ];
+
+        $selfStatus = Apps::find($id)->status;
+        $action_field = [
+            'stock' => '游戏管理-上架游戏列表',
+            'publish' => '游戏管理-添加编辑游戏',
+            'notpass' => '游戏管理-审核不通过列表',
+            'unstock' => '游戏管理-下架游戏列表',
+        ];
+
+        $logData['action_field'] = $action_field[$selfStatus];
+        $logData['description'] = $action[$status] . ' 游戏ID为' . $id;
+        $this->dolog($logData);
+
         return Apps::find($id)->update($data);
     }
 
@@ -293,6 +312,11 @@ class Apps extends \Base {
 
                 // 获取MD5队列
                 Queue::push('AppQueue@md5', ['id' => $app->id, 'filename' => $app->download_link]);
+
+                // 记录操作日志
+                $logData['action_field'] = '游戏管理-添加编辑游戏';
+                $logData['description'] = '上传了游戏 游戏ID为' . $app->id;
+                $this->dolog($logData);
             }
         }
         

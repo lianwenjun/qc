@@ -105,6 +105,12 @@ class Admin_RolesController extends \Admin_BaseController {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}不存在"]);
         } elseif ($group->update($data)) {
             Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}修改成功"]);
+
+            // 记录操作日志
+            $logData['action_field'] = '权限管理-角色管理';
+            $logData['description'] = '编辑了角色 角色ID为' . $id;
+            Base::dolog($logData);
+
         } else {
             Session::flash('tips', ['success' => false, 'message' => "亲，ID：{$id}操作失败了"]);
             return Redirect::back();
@@ -127,6 +133,11 @@ class Admin_RolesController extends \Admin_BaseController {
         try {
             $group = Sentry::findGroupById($id);
             $group->delete();
+
+            // 记录操作日志
+            $logData['action_field'] = '权限管理-角色管理';
+            $logData['description'] = '删除了角色 角色ID为' . $id;
+            Base::dolog($logData);
 
             Session::flash('tips', ['success' => true, 'message' => "亲，ID：{$id}已经删除掉了"]);
         } catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e) {

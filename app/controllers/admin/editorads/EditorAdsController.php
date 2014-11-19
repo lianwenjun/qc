@@ -72,6 +72,12 @@ class Admin_EditorAdsController extends \Admin_AdsController {
         }
         $ad = (new Ads)->ofCreate($this->type, 'banner_suggest');
         if ($ad->save()) {
+
+            // 记录操作日志
+            $logData['action_field'] = '广告位管理-编辑精选管理';
+            $logData['description'] = '新增了广告 广告ID为' . $ad->id;
+            Base::dolog($logData);
+
             return Redirect::route('editorads.index')->with('msg', '添加成功');
         }
         return Redirect::route('editorads.create')
@@ -131,6 +137,12 @@ class Admin_EditorAdsController extends \Admin_AdsController {
         }
         $ad = (new Ads)->ofUpdate($ad);
         if ($ad->save()) {
+
+            // 记录操作日志
+            $logData['action_field'] = '广告位管理-编辑精选管理';
+            $logData['description'] = '编辑了广告 广告ID为' . $ad->id;
+            Base::dolog($logData);
+            
             return Redirect::route('editorads.index')->with('msg', '修改成功');
         } else {
             return Redirect::route('editorads.edit', $id)->with('msg', '修改失败');

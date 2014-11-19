@@ -44,6 +44,12 @@ class Admin_StopwordsController extends \Admin_BaseController {
             $res['status'] = 'error';
             return Response::json($res);
         }
+
+        // 记录操作日志
+        $logData['action_field'] = '系统管理-屏蔽词管理';
+        $logData['description'] = '新增了屏蔽词 屏蔽词ID为' . $stopwords->id;
+        Base::dolog($logData);
+
         return Response::json($res);
     }
 
@@ -86,6 +92,12 @@ class Admin_StopwordsController extends \Admin_BaseController {
             $res['status'] = 'error';
             return Response::json($res);
         }
+
+        // 记录操作日志
+        $logData['action_field'] = '系统管理-屏蔽词管理';
+        $logData['description'] = '编辑了屏蔽词 屏蔽词ID为' . $id;
+        Base::dolog($logData);
+
         return Response::json($res);
     }
 
@@ -107,6 +119,12 @@ class Admin_StopwordsController extends \Admin_BaseController {
         $stopword->save();
         //两个动作放一起很怪异
         $stopword->delete();
+
+        // 记录操作日志
+        $logData['action_field'] = '系统管理-屏蔽词管理';
+        $logData['description'] = '删除了屏蔽词 屏蔽词ID为' . $id;
+        Base::dolog($logData);
+        
         return Redirect::route('stopword.index')->with('msg', '#'. $id .'删除成功');
     }
 

@@ -126,6 +126,11 @@ class Admin_UsersController extends \Admin_BaseController {
                 $tips = ['success' => true, 'message' => "亲，" . Input::get('username') . "管理员修改成功"];
                 Session::flash('tips', $tips);
 
+                // 记录操作日志
+                $logData['action_field'] = '权限管理-管理员管理';
+                $logData['description'] = '编辑了管理员 管理员ID为' . $user->id;
+                Base::dolog($logData);
+
                 return Redirect::route('users.index');
             } else {
                 $tips = ['success' => false, 'message' => "亲，" . Input::get('username') . "修改失败"];
@@ -161,6 +166,11 @@ class Admin_UsersController extends \Admin_BaseController {
 
             $user = Sentry::findUserById($id);
             $user->delete();
+
+            // 记录操作日志
+            $logData['action_field'] = '权限管理-管理员管理';
+            $logData['description'] = '删除了管理员 管理员ID为' . $id;
+            Base::dolog($logData);
 
             $tips = ['success' => true, 'message' => "亲，ID:{$id}的管理员已删除"];
         } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {

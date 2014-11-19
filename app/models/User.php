@@ -111,6 +111,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
             $adminGroup = Sentry::findGroupById($data['group_id']);
             $user->addGroup($adminGroup);
             Session::flash('tips', ['success' => true, 'message' => "亲，管理员添加成功"]);
+
+            // 记录操作日志
+            $logData['action_field'] = '权限管理-管理员管理';
+            $logData['description'] = '新增了管理员 管理员ID为' . $user->id;
+            Base::dolog($logData);
+            
         } catch (Cartalyst\Sentry\Users\LoginRequiredException $e) {
             Session::flash('tips', ['success' => false, 'message' => "亲，用户名必填"]);
         } catch (Cartalyst\Sentry\Users\PasswordRequiredException $e) {

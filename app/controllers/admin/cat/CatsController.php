@@ -91,6 +91,12 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         $catAdsModel->cat_id = $catModel->id;
         $catAdsModel->title = $catModel->title;
         $catAdsModel->save();
+
+        // 记录操作日志
+        $logData['action_field'] = '系统管理-游戏分类管理';
+        $logData['description'] = '新增了分类 分类ID为' . $catAdsModel->id;
+        Base::dolog($logData);
+
         return Response::json(['status'=>'ok', 'msg'=>'suss']);
     }
     /**
@@ -114,6 +120,12 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         $catModel->title = Input::get('word');
         $catModel->parent_id = Input::get('parent_id');
         $catModel->save();
+
+        // 记录操作日志
+        $logData['action_field'] = '系统管理-游戏标签管理';
+        $logData['description'] = '新增了标签 标签ID为' . $catModel->id;
+        Base::dolog($logData);
+
         return Response::json(['status'=>'ok', 'msg'=>'suss']);
     }
 
@@ -183,6 +195,17 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         $cat->title = Input::get('word', $cat->title);
         $cat->sort = Input::get('sort', $cat->sort);
         $cat->save();
+
+        // 记录操作日志
+        if (Cats::find($id)->parent_id == 0) {
+            $contentType = '分类';
+        } else {
+            $contentType = '标签';
+        }
+        $logData['action_field'] = '系统管理-游戏' . $contentType . '管理';
+        $logData['description'] = '编辑了' . $contentType . ' ' . $contentType . 'ID为' . $cat->id;
+        Base::dolog($logData);
+
         return Response::json(['status'=>'ok', 'msg'=>'suss']);
     }
 
@@ -215,6 +238,12 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
             isset($catAds) ? $catAds->delete() : '';
         }
         $cat->delete();
+
+        // 记录操作日志
+        $logData['action_field'] = '系统管理-游戏分类管理';
+        $logData['description'] = '删除了分类 分类ID为' . $id;
+        Base::dolog($logData);
+
         return Response::json(['status' => 'ok', 'msg' => 'suss']);
     }
     
@@ -234,6 +263,12 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
             return Redirect::route('tag.index')->with('msg', 'error,tag #' . $id . ' is valid');  
         }
         $tag->delete();
+
+        // 记录操作日志
+        $logData['action_field'] = '系统管理-游戏标签管理';
+        $logData['description'] = '删除了标签 标签ID为' . $id;
+        Base::dolog($logData);
+
         return Redirect::route('tag.index')->with('msg', 'suss delete');
     }
 }

@@ -95,6 +95,12 @@ class Admin_Apps_AppsAdsController extends \Admin_AdsController {
         $ad = $ads->ofCreate($this->type);
         $ad->is_top = 'yes';
         if ($ad->save()) {
+
+            // 记录操作日志
+            $logData['action_field'] = '广告位管理-首页游戏位管理';
+            $logData['description'] = '新增了游戏 游戏ID为' . $ad->id;
+            Base::dolog($logData);
+
             return Redirect::route('appsads.index')->with('msg', '添加成功');
         } else {
             return Redirect::route('appsads.create')->with('msg', '添加失败')
@@ -160,6 +166,12 @@ class Admin_Apps_AppsAdsController extends \Admin_AdsController {
         $ad = (new Ads)->ofUpdate($ad);
         $ad->is_top = 'yes';
         if ($ad->save()) {
+
+            // 记录操作日志
+            $logData['action_field'] = '广告位管理-首页游戏位管理';
+            $logData['description'] = '编辑了游戏 游戏ID为' . $ad->id;
+            Base::dolog($logData);
+
             return Redirect::route('appsads.index')->with('msg', '修改成功');
         }
         return Redirect::route('appsads.index')->with('msg', '没什么改变');
