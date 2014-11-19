@@ -5,27 +5,30 @@ use Illuminate\Database\Migrations\Migration;
 
 class AddDownloadPercentToAppDownloads extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::table('app_downloads', function($table)
-		{
-			$table->decimal('download_percent', 5, 2)->default(0)->comment('下载占比(安装量/下载量)');
-		});
-	}
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        if (Schema::hasColumn('app_downloads', 'download_percent')) {
+            return;
+        }
+        Schema::table('app_downloads', function($table)
+        {
+            $table->decimal('download_percent', 5, 2)->default(0)->comment('下载占比(安装量/下载量)');
+        });
+    }
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		//
-	}
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        //
+    }
 
 }
