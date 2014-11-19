@@ -286,7 +286,7 @@ class CGame_Uc extends CGame_Base
 
         if(!$this->_isInited) $this->error('程序没有初始化!');
 
-        $this->page($this->_from, $this->_to);
+        $this->page();
     }
 
     /**
@@ -296,7 +296,7 @@ class CGame_Uc extends CGame_Base
      */
     public function append()
     {
-        if(file_exists($this->_config)) {
+        if (file_exists($this->_config)) {
             $this->_from = Config::get('ucCGame.from');
         } else {
             $this->_from = '2000-01-01 00:00:00';
@@ -343,7 +343,7 @@ class CGame_Uc extends CGame_Base
             'os_version'        => $this->sdkAlias($package['extendInfo']['minSdkVersion']),
             'is_verify'         => $package['secureLevel'] == 0 ? 'yes' : 'no',
             'has_ad'            => $package['ad'] == 0 ? 'no' : 'yes',
-            'md5'               => $package['extendInfo']['signMd5'],
+            'md5'               => $package['md5'],
             'status'            => 'publish',
             'source'            => 'uc',
         ];
