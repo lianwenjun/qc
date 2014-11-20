@@ -25,9 +25,9 @@ class CLog
             }
 
             // 时间处理
-            if (isset($data['created_at']) && !(empty($data['created_at'][0]) && empty($data['created_at'][1]))) {
+            if (isset($data['created_at']) && !empty(implode($data['created_at']))) {
                 if ($data['created_at'][0] == '') $data['created_at'][0] = 0;
-                
+
                 if ($data['created_at'][1] !== '') {
                     $data['created_at'][1] = date('Y-m-d', strtotime($data['created_at'][1]) + 24 * 3600);
                 } else {
