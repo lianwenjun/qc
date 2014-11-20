@@ -2,7 +2,7 @@
 $I = new FunctionalTester($scenario);
 $I->wantTo('游戏广告列表');
 //首页游戏
-$I->sendAjaxGetRequest('/v1/api/game/list/new/4/1');
+$I->sendAjaxGetRequest('/api/game/list/new/4/1');
 $I->see('"msg":1');
 $I->see('"pageCount":1');
 $I->see('"id":3');
@@ -21,38 +21,38 @@ $I->see('md5');
 $I->see('gameCategory');
 $I->see('packageName');
 
-$I->sendAjaxGetRequest('/v1/api/game/list/hot/4/1');
+$I->sendAjaxGetRequest('/api/game/list/hot/4/1');
 $I->see('"msg":1');
 $I->see('"pageCount":1');
 
-$I->sendAjaxGetRequest('/v1/api/game/list/hot/4/2');
+$I->sendAjaxGetRequest('/api/game/list/hot/4/2');
 $I->see('"msg":1');
 $I->see('"pageCount":1');
 
 
-$I->sendAjaxGetRequest('/v1/api/game/list/search/4/1');
+$I->sendAjaxGetRequest('/api/game/list/search/4/1');
 $I->see('"msg":1');
 $I->see('"pageCount":2');
 
 //排行游戏
-$I->sendAjaxGetRequest('/v1/api/game/list/new/10/1');
+$I->sendAjaxGetRequest('/api/game/list/new/10/1');
 $I->see('"msg":1');
 $I->see('"pageCount":1');
 $I->see('"id":3');
 
-$I->sendAjaxGetRequest('/v1/game/list/hot/10/1');
+$I->sendAjaxGetRequest('/game/list/hot/10/1');
 $I->see('"msg":1');
 $I->see('"pageCount":1');
 $I->see('"id":3');
 
-$I->sendAjaxGetRequest('/v1/api/game/list/surge/10/1');
+$I->sendAjaxGetRequest('/api/game/list/surge/10/1');
 $I->see('"msg":1');
 $I->see('"pageCount":1');
 $I->see('"id":3');
 
 //错误的
-$I->sendAjaxGetRequest('/v1/api/game/list/xx/4/1');
+$I->sendAjaxGetRequest('/api/game/list/xx/4/1');
 $I->see('"msg":1');
 
-$I->sendAjaxGetRequest('/v1/api/game/list/xx/10/1');
+$I->sendAjaxGetRequest('/api/game/list/xx/10/1');
 $I->see('"msg":1');

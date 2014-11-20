@@ -223,6 +223,25 @@ class Apps extends \Base {
             $this->history($id);
         }
 
+        // 记录操作日志
+        $action = [
+            'stock' => '更新了游戏',
+            'pending' => '编辑并提交到待审核',
+            'draft' => '编辑并保存为草稿',
+        ];
+
+        $selfStatus = Apps::find($id)->status;
+        $action_field = [
+            'stock' => '游戏管理-上架游戏列表',
+            'publish' => '游戏管理-添加编辑游戏',
+            'notpass' => '游戏管理-审核不通过列表',
+            'unstock' => '游戏管理-下架游戏列表',
+        ];
+
+        $logData['action_field'] = $action_field[$selfStatus];
+        $logData['description'] = $action[$status] . ' 游戏ID为' . $id;
+        Base::dolog($logData);
+
         return Apps::find($id)->update($data);
     }
 
@@ -294,6 +313,11 @@ class Apps extends \Base {
 
                 // 获取MD5队列
                 Queue::push('AppQueue@md5', ['id' => $app->id, 'filename' => $app->download_link]);
+
+                // 记录操作日志
+                $logData['action_field'] = '游戏管理-添加编辑游戏';
+                $logData['description'] = '上传了游戏 游戏ID为' . $app->id;
+                Base::dolog($logData);
             }
         }
         
@@ -308,6 +332,33 @@ class Apps extends \Base {
     public function imageUpload()
     {
         $uploader = (new CUpload)->instance('image', 'pictures')->upload();
+
+        return $uploader;
+    }
+
+    /**
+     * 上传游戏icon图片
+     *
+     * @return mix
+     */
+    public function iconUpload()
+    {
+        $uploader = (new CUpload)->instance('image', 'icons')->upload();
+
+        if (!$uploader['result']) {
+            return $uploader;
+        }
+
+        $appId = Input::get('appid');
+        $iconPath = $uploader['result']['path'];
+
+        $affectRows = Apps::find($appId)->update(['icon' => $iconPath,]);
+        if (empty($affectRows)) {
+            $uploader['error'] = [
+                'code'    => 500,
+                'message' => '不存在该游戏id的记录',
+            ];
+        }
 
         return $uploader;
     }

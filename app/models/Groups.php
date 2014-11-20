@@ -75,10 +75,15 @@ class Groups extends \Eloquent {
 
         $result = false;
         try {
-            Sentry::createGroup($data);
+            $group = Sentry::createGroup($data);
             Session::flash('tips', ['success' => true, 'message' => "亲，角色添加成功了"]);
-
             $result = true;
+
+            // 记录操作日志
+            $logData['action_field'] = '权限管理-角色管理';
+            $logData['description'] = '新增了角色 角色ID为' . $group->id;
+            Base::dolog($logData);
+
         } catch (Cartalyst\Sentry\Groups\NameRequiredException $e) {
             Session::flash('tips', ['success' => false, 'message' => "亲，角色名必填"]);
         } catch (Cartalyst\Sentry\Groups\GroupExistsException $e) {

@@ -57,6 +57,12 @@ class Admin_RatingsController extends \Admin_BaseController {
             $res['status'] = 'error';
             return Response::json($res);
         }
+
+        // 记录操作日志
+        $logData['action_field'] = '评论管理-游戏评分列表';
+        $logData['description'] = '编辑了评分 评分ID为' . $id;
+        Base::dolog($logData);
+
         return Response::json($res);
     }
 }

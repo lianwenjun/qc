@@ -40,6 +40,12 @@ class Admin_Cat_CatAdsController extends \Admin_BaseController {
         if (!$ads->save()) {
             return ['status' => 'error', 'msg' => 'id is valid'];
         }
+
+        // 记录操作日志
+        $logData['action_field'] = '广告位管理-分类页图片位推广';
+        $logData['description'] = '编辑了广告 广告ID为' . $ads->id;
+        Base::dolog($logData);
+
         return ['status' => 'ok', 'msg' => 'suss'];
     }
 

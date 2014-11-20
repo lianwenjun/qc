@@ -20,6 +20,25 @@ class Admin_AdsController extends \Admin_BaseController {
         }
         $ad->is_stock = 'no';
         if ($ad->save()){
+
+            // 记录操作日志
+            $status = [
+                'app' => [
+                    'yes' => '广告位管理-首页游戏位管理',
+                    'no' => '广告位管理-排行游戏位管理',
+                ],
+                'banner' => [
+                    'yes' => '广告位管理-首页图片位管理',
+                    'no' => '广告位管理-编辑精选管理',
+                ],
+            ];
+            $ads = Ads::find($id);
+            $type = $ads->type;
+            $is_top = $ads->is_top;
+            $logData['action_field'] = $status[$type][$is_top];
+            $logData['description'] = '下架了广告 广告ID为' . $id;
+            Base::dolog($logData);
+            
             return Redirect::route($this->indexRoute)->with('msg', '亲，#'.$id.'下架成功');
         }
         return Redirect::route($this->indexRoute)->with('msg', '亲，#'.$id.'下架失败了');
@@ -42,6 +61,25 @@ class Admin_AdsController extends \Admin_BaseController {
         }
         if ($ad->delete()){
             $msg = '#' . $id . '删除成功';
+
+            // 记录操作日志
+            $status = [
+                'app' => [
+                    'yes' => '广告位管理-首页游戏位管理',
+                    'no' => '广告位管理-排行游戏位管理',
+                ],
+                'banner' => [
+                    'yes' => '广告位管理-首页图片位管理',
+                    'no' => '广告位管理-编辑精选管理',
+                ],
+            ];
+            $ads = Ads::find($id);
+            $type = $ads->type;
+            $is_top = $ads->is_top;
+            $logData['action_field'] = $status[$type][$is_top];
+            $logData['description'] = '删除了广告 广告ID为' . $id;
+            Base::dolog($logData);
+            
         }
         return Redirect::route($this->indexRoute)->with('msg', $msg);
     }

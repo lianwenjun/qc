@@ -72,6 +72,12 @@ class Admin_indexAdsController extends \Admin_AdsController {
         }
         $ad = (new Ads)->ofCreate($this->type);
         if ($ad->save()) {
+
+            // 记录操作日志
+            $logData['action_field'] = '广告位管理-首页图片位管理';
+            $logData['description'] = '新增了广告 广告ID为' . $ad->id;
+            Base::dolog($logData);
+
             return Redirect::route('indexads.index')->with('msg', '添加成功');
         }
         return Redirect::route('indexads.create')
@@ -138,6 +144,12 @@ class Admin_indexAdsController extends \Admin_AdsController {
         }
         $ad = (new Ads)->ofUpdate($ad);
         if ($ad->save()){
+
+            // 记录操作日志
+            $logData['action_field'] = '广告位管理-首页图片位管理';
+            $logData['description'] = '新增了广告 广告ID为' . $ad->id;
+            Base::dolog($logData);
+            
             return Redirect::route('indexads.index')->with('msg', '修改成功');
         }
         return Redirect::route('indexads.index')->with('msg', '没什么改变');

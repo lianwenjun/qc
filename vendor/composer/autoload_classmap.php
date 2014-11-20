@@ -6,6 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddDownloadPercentToAppDownloads' => $baseDir . '/app/database/migrations/2014_11_18_151745_add_download_percent_to_app_downloads.php',
+    'AddIndexCatIdToAppCatsTable' => $baseDir . '/app/database/migrations/2014_11_19_120839_add_index_cat_id_to_app_cats_table.php',
+    'AddReleaseToClientTable' => $baseDir . '/app/database/migrations/2014_11_20_173118_add_release_to_client_table.php',
     'Admin_AdsController' => $baseDir . '/app/controllers/admin/AdsController.php',
     'Admin_Apps_AppsAdsController' => $baseDir . '/app/controllers/admin/apps/AppsAdsController.php',
     'Admin_Apps_ClientController' => $baseDir . '/app/controllers/admin/apps/ClientController.php',
@@ -18,6 +21,7 @@ return array(
     'Admin_FeedbackController' => $baseDir . '/app/controllers/admin/FeedbackController.php',
     'Admin_IndexController' => $baseDir . '/app/controllers/admin/IndexController.php',
     'Admin_KeywordsController' => $baseDir . '/app/controllers/admin/KeywordsController.php',
+    'Admin_LogController' => $baseDir . '/app/controllers/admin/LogController.php',
     'Admin_RatingsController' => $baseDir . '/app/controllers/admin/RatingsController.php',
     'Admin_RolesController' => $baseDir . '/app/controllers/admin/RolesController.php',
     'Admin_StatisticsController' => $baseDir . '/app/controllers/admin/StatisticsController.php',
@@ -352,6 +356,7 @@ return array(
     'CollectGame' => $baseDir . '/app/commands/CollectGame.php',
     'Comments' => $baseDir . '/app/models/Comments.php',
     'CreateAccountsTable' => $baseDir . '/app/database/migrations/2014_11_11_210513_create_accounts_table.php',
+    'CreateActionLogsTable' => $baseDir . '/app/database/migrations/2014_11_18_114411_create_action_logs_table.php',
     'CreateActivityLogTable' => $vendorDir . '/regulus/activity-log/src/migrations/2013_09_12_234559_create_activity_log_table.php',
     'CreateAdsTable' => $baseDir . '/app/database/migrations/2014_09_05_100053_create_ads_table.php',
     'CreateAppDownloadsTable' => $baseDir . '/app/database/migrations/2014_11_11_205007_create_app_downloads_table.php',
@@ -901,6 +906,7 @@ return array(
     'JildertMiedema\\LaravelPlupload\\Receiver' => $vendorDir . '/jildertmiedema/laravel-plupload/src/JildertMiedema/LaravelPlupload/Receiver.php',
     'Keywords' => $baseDir . '/app/models/Keywords.php',
     'LocalFileDetector' => $vendorDir . '/facebook/webdriver/lib/remote/LocalFileDetector.php',
+    'Logs' => $baseDir . '/app/models/Logs.php',
     'Market' => $baseDir . '/app/models/Client.php',
     'Math_BigInteger' => $vendorDir . '/phpseclib/phpseclib/phpseclib/Math/BigInteger.php',
     'Mews\\Captcha\\Captcha' => $vendorDir . '/mews/captcha/src/Mews/Captcha/Captcha.php',
@@ -2499,6 +2505,7 @@ return array(
     'UnknownServerException' => $vendorDir . '/facebook/webdriver/lib/WebDriverExceptions.php',
     'UnrecognizedExceptionException' => $vendorDir . '/facebook/webdriver/lib/WebDriverExceptions.php',
     'UnsupportedOperationException' => $vendorDir . '/facebook/webdriver/lib/WebDriverExceptions.php',
+    'UpdateHistoriesTable' => $baseDir . '/app/database/migrations/2014_11_19_201316_update_histories_table.php',
     'UselessFileDetector' => $vendorDir . '/facebook/webdriver/lib/remote/UselessFileDetector.php',
     'User' => $baseDir . '/app/models/User.php',
     'UserGroups' => $baseDir . '/app/models/UserGroups.php',

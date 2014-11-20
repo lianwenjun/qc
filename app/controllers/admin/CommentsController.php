@@ -52,6 +52,12 @@ class Admin_CommentsController extends \Admin_BaseController {
         if (!$comment->save()) {
             return Response::json(['status'=>'error', 'msg'=>'保存失败']);
         }
+
+        // 记录操作日志
+        $logData['action_field'] = '评论管理-游戏评论列表';
+        $logData['description'] = '编辑了评论 评论ID为' . $id;
+        Base::dolog($logData);
+
         return Response::json(['status'=>'ok', 'msg'=>'suss']);
     }
 
@@ -70,6 +76,12 @@ class Admin_CommentsController extends \Admin_BaseController {
             return Redirect::route('comment.index')->with('msg', '#'. $id .'不存在');  
         }
         $comment->delete();
+
+        // 记录操作日志
+        $logData['action_field'] = '评论管理-游戏评论列表';
+        $logData['description'] = '删除了评论 评论ID为' . $id;
+        Base::dolog($logData);
+        
         return Redirect::route('comment.index')->with('msg', '#'. $id .'删除成功');
     }
 

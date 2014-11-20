@@ -86,6 +86,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         // 上传
         Route::post('imageupload', ['as' => 'apps.imageupload', 'uses' => 'Admin_Apps_IndexController@imageUpload']);
         Route::post('appupload/{dontSave?}', ['as' => 'apps.appupload', 'uses' => 'Admin_Apps_IndexController@appUpload']);
+        Route::post('iconupload', ['as' => 'apps.iconupload', 'uses' => 'Admin_Apps_IndexController@iconUpload']);// 游戏icon上传
     });
 
      // 管理员
@@ -239,7 +240,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 //Route::post('/admin/appsads/imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_Apps_AppsAdsController@upload']);
 
 
-Route::group(['prefix' => 'v1/api'], function() //V1版本
+Route::group(['prefix' => 'api'], function() //V1版本
 {
     Route::get('game/extend/{type}/{pageSize}/{pageIndex}', ['uses' => 'V1_AdsController@banner']);
     Route::get('game/cull/{type}/{pageSize}/{pageIndex}', ['uses' => 'V1_AdsController@editor']);
