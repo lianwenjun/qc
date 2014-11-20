@@ -15,6 +15,7 @@ class CreateAppsTable extends Migration {
         Schema::create('apps', function(Blueprint $table)
         {
             $table->increments('id');
+            $table->integer('entity_id')->default(0)->unsigned()->comment('来源ID，用于对应第三方采集');
             $table->string('icon', 255)->comment('ICON');
             $table->string('title', 128)->comment('游戏名');
             $table->string('pack', 128)->comment('包名');
