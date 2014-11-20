@@ -263,6 +263,7 @@ class Apps extends \Base {
 
         if(!$uploader['result']) return $uploader;
 
+        // 全新APP
         if(empty($dontSave)) {
 
             $data = $uploader['result']['data'];
@@ -274,7 +275,7 @@ class Apps extends \Base {
             if($app) {
                 $status = Config::get('status.apps.status')[$app->status];
                 unlink($uploader['result']['fullPath']);
-                $uploader['error'] = [
+                $uploader['result']['error'] = [
                     'code' => 500, 
                     'message' => '已存在' . $status . '列表中'
                     ];

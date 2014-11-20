@@ -477,34 +477,35 @@ ul.ui-sortable li.placeholder:before {
             }
         });
 
-        apkUploader.bind('FileUploaded', function(up, file, object) {
-            var response;
-            try {
-                response = eval(object.response);
-            } catch(err) {
-                response = eval('(' + object.response + ')');
-            }
+        apkUploader.bind('FileUploaded', function(up, file, response) {
+            response = jQuery.parseJSON( response.response );
 
-            for(i in response.result.data) {
-                var $this = $('[class^="upload-' + i + '"]');
+            if(typeof(response.result.error) != 'undefined' && response.result.error.code == '500') {
+                alert(file.name + response.result.error.message);
+                file.status = plupload.FAILED;
+            } else {
+
+              for(i in response.result.data) {
+                  var $this = $('[class^="upload-' + i + '"]');
 
 
-                if(typeof($this.attr('class')) != 'undefined') {
-                    var className = $this.attr('class');
-                    var regexp = /upload-\w+-\w+/gi;
-                    var matches = className.match(regexp);
-                    var dom = matches[0].replace('upload-'+i+'-', '');
+                  if(typeof($this.attr('class')) != 'undefined') {
+                      var className = $this.attr('class');
+                      var regexp = /upload-\w+-\w+/gi;
+                      var matches = className.match(regexp);
+                      var dom = matches[0].replace('upload-'+i+'-', '');
 
-                    if(dom == 'html') {
-                        $this.html(response.result.data[i]);
-                        $this.append('<input type="hidden" name="'+ i +'" value="'+ response.result.data[i] +'">');
-                    } else if(dom == 'val'){
-                        $this.val(response.result.data[i]);
-                    } else {
-                        $this.attr(dom, response.result.data[i]);
-                        $this.after('<input type="hidden" name="'+ i +'" value="'+ response.result.data[i] +'">');
-                    }
-                }
+                      if(dom == 'html') {
+                          $this.html(response.result.data[i]);
+                          $this.append('<input type="hidden" name="'+ i +'" value="'+ response.result.data[i] +'">');
+                      } else if(dom == 'val'){
+                          $this.val(response.result.data[i]);
+                      } else {
+                          $this.attr(dom, response.result.data[i]);
+                          $this.after('<input type="hidden" name="'+ i +'" value="'+ response.result.data[i] +'">');
+                      }
+                  }
+              }
             }
 
             $('#jq-uploadApp').show();
