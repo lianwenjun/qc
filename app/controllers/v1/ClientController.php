@@ -20,11 +20,9 @@ class V1_ClientController extends \V1_BaseController {
             'version' => 'Version',
             'version_code' => 'VersionCode',
         ];
-        $client = Api_Client::ofHas($versionCode)->get();
-        if (!$client) {
-            return $this->result(['data' => null, 'msg' => 0, 'msgbox' => '已是最新版本']);
-        }
-        $new = Api_Client::ofNew($versionCode)->first();
+        $release = Input::get('release', '');
+        
+        $new = Api_Client::ofNew($versionCode)->whereRelease($release)->first();
         if (!$new) {
             return $this->result(['data' => null, 'msg' => 0, 'msgbox' => '已是最新版本']);
         }

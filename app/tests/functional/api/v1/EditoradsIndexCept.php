@@ -5,7 +5,7 @@ $I->wantTo('编辑精选广告列表');
 $I->sendAjaxGetRequest('/api/game/cull/cull/4/1');
 $I->see('"msg":1');
 $I->see('"pageCount":3');
-$I->see('"recordCount":10');
+$I->see('"recordCount":9');
 $I->see('"id":"3"');
 $I->see('modelList');
 $I->see('id');
@@ -24,8 +24,8 @@ $I->see('packageName');
 //所有的编辑精选
 $I->sendAjaxGetRequest('/api/game/cull/all/10/1');
 $I->see('"msg":1');
-$I->see('"pageCount":2');
-$I->see('"recordCount":13');
+$I->see('"pageCount":1');
+$I->see('"recordCount":3');
 $I->see('"id":"3"');
 $I->see('ImgUrl');
 

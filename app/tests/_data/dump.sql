@@ -540,8 +540,9 @@ CREATE TABLE `client` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `release` varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'APP版本标识',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `client` (`id`, `download_link`, `title`, `md5`, `size_int`, `changes`, `version`, `version_code`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
