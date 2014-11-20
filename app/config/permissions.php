@@ -19,6 +19,7 @@ return [
         'apps.draft.edit' => '编辑',
         'apps.appupload' => 'APK上传',
         'apps.imageupload' => '图片上传',
+        'apps.iconupload' => '游戏icon上传',
         ],
     '待审核列表' => [
         'apps.pending' => '列表',

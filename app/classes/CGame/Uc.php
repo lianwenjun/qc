@@ -378,6 +378,9 @@ class CGame_Uc extends CGame_Base
             }
 
             $data = $this->_parse($item['name'], $package, $platform);
+            if (empty($data['md5'])) {
+                continue;
+            }
             // 获取对应过来的分类id 为0则忽略插入或更新的操作
             $cat_id = $this->cats($item['categoryId']);
             // 判断数据库中是否存在该apk对应的app记录 有就更新信息 无则创建一条记录
@@ -406,10 +409,8 @@ class CGame_Uc extends CGame_Base
     protected function store($format)
     {
         if (!empty($format['id'])) {
-
             // 去除状态信息
             unset($format['info']['status']);
-
             // 更新apk包信息
             Apps::where('id', $format['id'])
                 ->update($format['info']);
@@ -426,6 +427,15 @@ class CGame_Uc extends CGame_Base
             $format['info']['download_manual'] = rand(70000, 100000);
             // 插入apk包信息 生成app_id
             $insert = Apps::create($format['info']);
+            // 创建keywords表记录 获取关键字id
+            $keyword = Keywords::create([
+                'word' => $format['info']['title'],
+            ]);
+            // 创建app_keywords表记录 其中keyword_id是上一步操作所产生
+            AppKeywords::create([
+                'app_id'     => $insert->id,
+                'keyword_id' => $keyword->id,
+            ]);
             // 创建评分记录 插入平均评分
             Ratings::create([
                 'app_id' => $insert->id,
