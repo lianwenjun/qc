@@ -187,7 +187,7 @@ ul.ui-sortable li.placeholder:before {
             </tr>
             <tr class="Search_biao_one">
                <td class="Search_lei">是否无广告：</td>
-               <td><label><input type="checkbox" name="has_ad" value="yes" @if($app->has_ad == 'yes')checked="checked"@endif class="Search_checkbox">勾选表示无广告</label></td>
+               <td><label><input type="checkbox" name="has_ad" value="yes" @if($app->has_ad == 'yes')checked="checked"@endif class="Search_checkbox">勾选表示有广告</label></td>
             </tr>
             <tr class="Search_biao_two">
                <td class="Search_lei">是否安全认证：</td>
