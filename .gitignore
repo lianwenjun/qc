@@ -15,6 +15,7 @@ public/pictures/*
 public/catads/*
 public/cateads/*
 public/ads/*
+public/client/*
 *.apk
 app/config/database.php
 .idea/
