@@ -40,6 +40,16 @@ return array(
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
         ),
+        'olds' => array(
+            'driver'    => 'mysql',
+            'host'      => 'localhost',
+            'database'  => 'olds',
+            'username'  => 'root',
+            'password'  => 'a',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+        ),
 
     ),
     'log' => true,
