@@ -288,7 +288,7 @@ class Apps extends \Base {
             $data = $uploader['result']['data'];
 
             $app = Apps::where('pack', $data['pack'])
-                       ->where('version_code', $data['version_code'])
+                       ->whereIn('status', ['stock', 'publish', 'draft', 'pending'])
                        ->first();
 
             if($app) {

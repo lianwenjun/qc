@@ -340,6 +340,27 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
     {
         $ids = Input::get('ids', [0]);
 
+        $apps = Apps::whereIn('id', $ids)->get();
+
+        $ex = [];
+        foreach($apps as $app) {
+
+            $exist = Apps::where('pack', $app->pack)
+                         ->where('id', '!=', $app->id)
+                         ->whereIn('status', ['stock', 'publish', 'draft', 'pending'])
+                         ->first();
+            if(!empty($exist->id)) {
+                $ex[] = $app->id;
+            }
+        }
+
+        if(count($ex) > 0) {
+            $strIds = implode(', ', $ex);
+            Session::flash('tips', ['success' => false, 'message' => "亲，游戏{$strIds}已经在上架、编辑或者待审列表中, 请处理后重试"]);
+
+            return Redirect::back();
+        }
+
         if(! $apps = Apps::whereIn('id', $ids)) {
             Session::flash('tips', ['success' => false, 'message' => "亲，找不到游戏"]);
         } elseif ($apps->update(['status' => 'stock'])) {
