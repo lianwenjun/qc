@@ -84,6 +84,28 @@ a, a:hover { text-decoration: none; }
 
 .simditor-wrapper { height: 250px; }
 
+.ui-corner-all { border-radius: 0; }
+
+.ui-dialog { padding: 0; }
+.ui-dialog .ui-dialog-buttonpane { margin-top: 0; padding: 0; border-top: 1px solid #ccc; }
+.ui-dialog .ui-widget-content { padding: 0; }
+
+.ui-widget-header { background: #193974; font-size: 18px; text-align: center; }
+
+.ui-widget-content { border: 0; }
+
+.jq-addModal p { margin: 15px; height: 25px; line-height: 25px; }
+.jq-addModal p label { width: 30%; float: left; text-align: right; margin-right: 15px; }
+.jq-addModal div { margin: 15px 20px 15px 15px; height: 25px; line-height: 25px; }
+.jq-addModal div label { width: 30%; float: left; text-align: right; margin-right: 15px; }
+.jq-addModal div ul { float: left; }
+.jq-addModal div ul li { height: 25px; line-height: 25px; margin-bottom: 10px; }
+.jq-addModal div ul li .label-name { border: 1px solid #ccc; display: inline-block; border-radius: 3px; padding: 0 30px 0 3px; }
+.jq-addModal div ul li .ui-dialog-titlebar-close { position: relative; top: 3px; left: -26px; }
+.jq-addModal div ul li .input { height: 25px; line-height: 25px; padding: 0 30px 0 3px; }
+
+.jq-deleteModal p { margin: 15px; height: 25px; line-height: 25px; }
+
 .float-right { float: right; }
 
 /* 主要按钮 */
@@ -192,6 +214,7 @@ a, a:hover { text-decoration: none; }
 .main-wrap { padding: 0 20px 20px 250px; min-width: 930px; }
 .main-wrap .content { background: #fff; border: 1px solid #ccc; padding: 15px; margin-top: 62px; }
 .main-wrap .search { padding: 15px; background: #f6f6f6; border: 1px solid #dedede; }
+.main-wrap .search i { position: relative; left: 150px; top: 3px; }
 .main-wrap .search .date input { width: 200px; }
 .main-wrap .title { font-size: 1.2em; color: #333; margin: 20px 0; }
 .main-wrap .edit-title { margin-top: 0; }
@@ -208,6 +231,8 @@ a, a:hover { text-decoration: none; }
 /* 文本居中斑马纹表格 */
 .table-center-zebra { text-align: center; }
 .table-center-zebra th { color: #fff; background: #193974; }
+.table-center-zebra .jq-edit1, .table-center-zebra .jq-edit2 { min-width: 120px; }
+.table-center-zebra .jq-edit1 .edit-input, .table-center-zebra .jq-edit2 .edit-input { width: 115px; height: 18px; }
 
 /* 编辑式斑马纹表格 */
 .table-edit-zebra .label { width: 15%; text-align: right; padding-right: 10px; }
