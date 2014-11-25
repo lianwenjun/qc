@@ -10,7 +10,8 @@
 | the console gets access to each of the command object instances.
 |
 */
-Artisan::add(new UcGame);
+// Artisan::add(new UcGame);
 Artisan::add(new CollectGame);
 Artisan::add(new DownloadLogsTable);
 Artisan::add(new Statistics);
+Artisan::add(new OldToNew);

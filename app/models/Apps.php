@@ -282,18 +282,19 @@ class Apps extends \Base {
 
         if(!$uploader['result']) return $uploader;
 
+        // 全新APP
         if(empty($dontSave)) {
 
             $data = $uploader['result']['data'];
 
             $app = Apps::where('pack', $data['pack'])
-                       ->where('version_code', $data['version_code'])
+                       ->whereIn('status', ['stock', 'publish', 'draft', 'pending'])
                        ->first();
 
             if($app) {
                 $status = Config::get('status.apps.status')[$app->status];
                 unlink($uploader['result']['fullPath']);
-                $uploader['error'] = [
+                $uploader['result']['error'] = [
                     'code' => 500, 
                     'message' => '已存在' . $status . '列表中'
                     ];

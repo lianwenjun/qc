@@ -7,7 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddDownloadPercentToAppDownloads' => $baseDir . '/app/database/migrations/2014_11_18_151745_add_download_percent_to_app_downloads.php',
-    'AddIndexCatIdToAppCatesTable' => $baseDir . '/app/database/migrations/2014_11_19_120839_add_index_cat_id_to_app_cates_table.php',
+    'AddIndexCatIdToAppCatsTable' => $baseDir . '/app/database/migrations/2014_11_19_120839_add_index_cat_id_to_app_cats_table.php',
+    'AddReleaseToClientTable' => $baseDir . '/app/database/migrations/2014_11_20_173118_add_release_to_client_table.php',
     'Admin_AdsController' => $baseDir . '/app/controllers/admin/AdsController.php',
     'Admin_Apps_AppsAdsController' => $baseDir . '/app/controllers/admin/apps/AppsAdsController.php',
     'Admin_Apps_ClientController' => $baseDir . '/app/controllers/admin/apps/ClientController.php',
@@ -2504,6 +2505,7 @@ return array(
     'UnknownServerException' => $vendorDir . '/facebook/webdriver/lib/WebDriverExceptions.php',
     'UnrecognizedExceptionException' => $vendorDir . '/facebook/webdriver/lib/WebDriverExceptions.php',
     'UnsupportedOperationException' => $vendorDir . '/facebook/webdriver/lib/WebDriverExceptions.php',
+    'UpdateHistoriesTable' => $baseDir . '/app/database/migrations/2014_11_19_201316_update_histories_table.php',
     'UselessFileDetector' => $vendorDir . '/facebook/webdriver/lib/remote/UselessFileDetector.php',
     'User' => $baseDir . '/app/models/User.php',
     'UserGroups' => $baseDir . '/app/models/UserGroups.php',
