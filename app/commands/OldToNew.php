@@ -381,41 +381,6 @@ class OldToNew extends Command
         echo "处理评分 done\n";
         */
 
-
-        // 处理导漏的游戏截图
-        echo "处理导漏的游戏截图 start\n";
-        $offset = 0;
-        do {
-            $sql = "select id from apps where id in (select Album_ApkId from {$db}.tbl_Apk_Album) and images = 'a:0:{}' limit {$offset}, {$limit}";
-
-            $result = DB::select($sql);
-
-            if (!empty($result)) {
-                foreach ($result as $value) {
-
-                    $sql = "select Album_ImgUrl from tbl_Apk_Album where Album_ApkId = {$value->id} order by Album_SortId asc";
-                    $album = DB::connection($db)->select($sql);
-
-                    $data = [];
-                    if(!empty($album)) {
-                        foreach($album as $v) {
-                            $data[] = $v->Album_ImgUrl;
-                        }
-                    }
-
-                    $app = Apps::find($value->id);
-                    $app->update(['images' => serialize($data)]);
-
-                }
-            }
-
-            echo $offset . "\n";
-
-            $offset += $limit;
-        } while (!empty($result));
-        unset($result);
-        echo "处理导漏的游戏截图 done\n";
-
         // 检查是否导完tags
         // select APP_Id from olds.tbl_APP where APP_Tag != '' and APP_Id not in (select app_id from app_cats);
 
