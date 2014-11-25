@@ -102,7 +102,8 @@ class V1_AppsController extends \V1_BaseController {
         $apps = Api_Apps::whereStatus('stock')
             ->whereIn('id', $appIds)
             ->skip($start)->take($pageSize)
-            ->orderBy('id', 'desc')
+            ->orderBy('sort', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get();
         $apps = (new Api_Ratings)->getAppsRatings($apps);
         $apps = (new Api_Comments)->getAppsComments($apps);
@@ -118,7 +119,8 @@ class V1_AppsController extends \V1_BaseController {
             ->ofTitle($keyword)
             ->whereNotIn('id', [$exclude])
             ->skip($start)->take($pageSize)
-            ->orderBy('id', 'desc')
+            ->orderBy('sort', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get();
         $apps = (new Api_Ratings)->getAppsRatings($apps);
         $apps = (new Api_Comments)->getAppsComments($apps);
