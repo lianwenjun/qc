@@ -102,7 +102,7 @@
     <!-- 右侧主体盒子 -->
     <div class="main-wrap">
         <div class="breadcrumb">
-            <p><b>权限管理</b><i>&gt;</i>管理员管理</p>
+            <p><b>权限管理</b><i>&gt;</i>角色管理</p>
         </div>
         <div class="content">
              <form action="" method="" name="form-search">  
@@ -110,6 +110,14 @@
                 <div class="search">
                     <p>
                         <label>查询：</label>
+                        <select class="select">
+                            <option value="">所属部门</option>
+                            <option value="">市场中心</option>
+                            <option value="">市场部</option>
+                            <option value="">商务部</option>
+                            <option value="">客服部</option>
+                            <option value="">营销服务部</option>
+                        </select>
                         <input type="text" class="input margin-right10" placeholder="请输入关键字">
                         <input type="button" class="button" value="查询">
                     </p>
@@ -118,129 +126,47 @@
             <!-- 表格 -->
             <p class="title">
                 管理员数量：共 <span class="red jq-red">2</span> 条记录
-                <input type="button" class="button jq-add-admin float-right" value="添加管理员">
+                <input type="button" class="button jq-add-admin float-right" value="添加角色">
             </p>
             <table cellpadding="0" cellspacing="0" class="table-center-zebra">
                 <thead>
                     <tr>
-                        <th>管理员ID</th>
-                        <th>用户名称</th>
-                        <th>所属部门</th>
+                        <th>角色ID</th>
                         <th>角色名称</th>
-                        <th>使用人</th>
+                        <th>所属部门</th>
                         <th>添加人</th>
+                        <th>最后编辑人</th>
                         <th>添加时间</th>
-                        <th>状态</th>
                         <th>操作</th>
                     </tr>
                 </thead>
                 <tbody class="jq-table">
                     <tr>
                         <td>1</td>
-                        <td>wangchangshun</td>
-                        <td>产品部</td>
-                        <td>产品专员</td>
-                        <td>爱老虎油</td>
+                        <td>超级管理员</td>
+                        <td>超级管理员</td>
+                        <td>吸毒欧阳顺</td>
                         <td>吸毒欧阳顺</td>
                         <td>2014-10-16 14:29:52</td>
-                        <td class="green">正常</td>
                         <td>
-                            <input type="button" class="button jq-edit-admin" value="编辑">
-                            <input type="button" class="button disabled" value="删除">
+                            <input type="button" class="button jq-role-edit" value="编辑">
+                            <input type="button" class="button red-button jq-delete" value="删除">
                         </td>
                     </tr>
                     <tr>
                         <td>2</td>
-                        <td>wangchangshun</td>
-                        <td>产品部</td>
-                        <td>产品专员</td>
-                        <td>爱老虎油</td>
+                        <td>超级管理员</td>
+                        <td>超级管理员</td>
+                        <td>吸毒欧阳顺</td>
                         <td>吸毒欧阳顺</td>
                         <td>2014-10-16 14:29:52</td>
-                        <td class="red">禁止</td>
                         <td>
-                            <input type="button" class="button jq-edit-admin" value="编辑">
+                            <input type="button" class="button jq-role-edit" value="编辑">
                             <input type="button" class="button red-button jq-delete" value="删除">
                         </td>
                     </tr>
                 </tbody>
                 <!-- 弹窗 -->
-                    <!-- “添加”弹窗 -->
-                    <div class="jq-addModal jq-add-admin-modal" title="添加管理员">
-                        <p>
-                            <label>管理角色：</label>
-                            <select class="select" name="searchsort">
-                                <option value="">管理员</option>
-                                <option value="">测试</option>
-                                <option value="">超级测试</option>
-                                <option value="">运营部</option>
-                            </select>
-                        </p>
-                        <p>
-                            <label>用户状态：</label>
-                            <input class="radio" type="radio" value="正常">正常
-                            <input class="radio" type="radio" value="禁止">禁止
-                        </p>
-                        <p>
-                            <label>用户名：</label>
-                            <input class="input input8" type="text">
-                        </p>
-                        <p>
-                            <label>登陆密码：</label>
-                            <input class="input input8" type="text">
-                        </p>
-                        <p>
-                            <label>确认密码：</label>
-                            <input class="input input8" type="text">
-                        </p>
-                        <p>
-                            <label>昵称：</label>
-                            <input class="input input8" type="text">
-                        </p>
-                        <p>
-                            <label>邮箱：</label>
-                            <input class="input input8" type="text">
-                        </p>
-                    </div>
-                    <!-- /“添加”弹窗 -->
-                    <!-- “编辑”弹窗 -->
-                    <div class="jq-addModal jq-edit-admin-modal" title="编辑管理员">
-                        <p>
-                            <label>管理角色：</label>
-                            <select class="select" name="searchsort">
-                                <option value="">管理员</option>
-                                <option value="">测试</option>
-                                <option value="">超级测试</option>
-                                <option value="">运营部</option>
-                            </select>
-                        </p>
-                        <p>
-                            <label>用户状态：</label>
-                            <input class="radio" type="radio" value="正常">正常
-                            <input class="radio" type="radio" value="禁止">禁止
-                        </p>
-                        <p>
-                            <label>用户名：</label>
-                            <input class="input input8" type="text">
-                        </p>
-                        <p>
-                            <label>登陆密码：</label>
-                            <input class="input input8" type="text">
-                        </p>
-                        <p>
-                            <label>确认密码：</label>
-                            <input class="input input8" type="text">
-                        </p>
-                        <p>
-                            <label>昵称：</label>
-                            <input class="input input8" type="text">
-                        </p>
-                        <p>
-                            <label>邮箱：</label>
-                            <input class="input input8" type="text">
-                        </p>
-                    </div>
-                    <!-- /“编辑”弹窗 -->
                     <!-- “删除”弹窗 -->
                     <div class="jq-deleteModal" title="信息">
                         <p>确定删除此记录？</p>
