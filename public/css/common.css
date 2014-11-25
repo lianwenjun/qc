@@ -1,0 +1,231 @@
+@charset "UTF-8";
+/* --------------- 重置 --------------- */
+/* HTML5 display-role reset for older browsers */　　 */
+article, aside-wrap, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+
+body { line-height: 1; }
+
+ol, ul { list-style: none; }
+
+blockquote, q { quotes: none; }
+
+blockquote:before, blockquote:after, q:before, q:after { content: ""; content: none; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+
+/* 重置css */
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td { padding: 0; margin: 0; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+
+fieldset, img { border: 0; }
+
+address, caption, cite, code, dfn, em, strong, th, var { font-weight: normal; font-style: normal; }
+
+ol, ul { list-style: none; }
+
+caption, th { text-align: left; }
+
+h1, h2, h3, h4, h5, h6 { font-weight: normal; font-size: 100%; }
+
+q:before, q:after { content: ""; }
+
+abbr, acronym { border: 0; }
+
+/* ------------ 自定义重置 ------------- */
+* { margin: 0; padding: 0; }
+
+body { font-family: "微软雅黑" ， "Arial"; font-size: 12px; color: #333; background-color: #f0f0f0; }
+
+table td { border: 0; }
+
+img { border-width: 0; max-width: 100%; }
+
+a, a:hover { text-decoration: none; }
+
+/* ------------- 通用组件导入 ---------- */
+.elimit-width8em, .elimit-width25em, .elimit-width28em { display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.pic-sort span, .button, .red-button, .green-button, .gray-button, .nestedul .menu p { cursor: pointer; padding: 0.4em 1em; border: 0; font-size: 1em; }
+
+.upload-button-wrap .upload-button { position: absolute; cursor: pointer; opacity: 0; }
+
+.upload-button-wrap { position: relative; }
+
+.input, .pill-input, .pagination input { padding-left: 5px; outline: none; padding: 0.4em; border: 0; font-size: 1em; }
+
+.table-center-zebra, .table-edit-zebra, .table-edit { width: 100%; }
+.table-center-zebra th, .table-edit-zebra th, .table-edit th { text-align: center; padding: 0.8em 0; }
+.table-center-zebra td, .table-edit-zebra td, .table-edit td { padding: 0.8em 0; }
+.table-center-zebra td *, .table-edit-zebra td *, .table-edit td * { vertical-align: middle; }
+
+.pagination .page { padding: 0.2em 0.5em; margin-right: 0.3em; cursor: pointer; }
+.pagination .space { margin-left: 0.5em; }
+.pagination input { padding: 0.2em 0 0.2em 5px; }
+
+.select { font-size: 1em; }
+
+/* ui插件样式自定义 */
+.ui-dialog .ui-dialog-content { padding: 1.5em 1em 1em 1em; }
+
+.date-table { position: absolute; }
+
+.date-range-selected .ui-state-active, .date-range-selected .ui-state-default { background: #1e4791; color: #fff; }
+
+.pic-sort { width: 100%; }
+.pic-sort li { width: 125px; display: inline-block; position: relative; }
+.pic-sort span { position: absolute; right: 0; bottom: 0; background: red; color: #fff; }
+.pic-sort span:hover { background: #ff3333; }
+
+.validate input.error { border: 1px solid red; }
+.validate em.error { color: red; margin-left: 10px; }
+
+.simditor { width: 75%; display: inline-block; }
+
+.simditor-wrapper { height: 250px; }
+
+.float-right { float: right; }
+
+/* 主要按钮 */
+.button { background: #1e4791; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; color: #fff; }
+.button:hover { background: #275cbb; }
+.button:hover { color: #dfdf0b; }
+.button.disabled, .button.disabled:hover { cursor: default; color: #ccc; background: #eee; border: 1px solid #ddd; text-shadow: 0 1px 1px #fff; }
+
+.red-button { background: #ad0505; }
+.red-button:hover { background: #df0606; }
+
+.green-button { background: #037f17; }
+.green-button:hover { background: #04b120; }
+
+.gray-button { background: #aaa; color: #000; }
+.gray-button:hover { background: #c3c3c3; }
+.gray-button:hover { color: #333; }
+
+/* 上传文件按钮 */
+.upload-button-wrap .upload-button { left: 0; top: 0; }
+
+/* 一行多个按钮并列 */
+.inline-button { text-align: center; padding: 20px 0; }
+.inline-button * { vertical-align: middle; }
+.inline-button .button { margin-right: 30px; }
+
+.choice-button .inline-button { text-align: left; }
+.choice-button .inline-button * { vertical-align: middle; }
+.choice-button .inline-button .button { margin-right: 15px; }
+.choice-button label { margin-right: 20px; }
+
+/* 表单验证样式 */
+/* 主要下拉框 */
+.select { height: 27px; line-height: 27px; }
+
+/* 主要输入框 */
+.input { width: 120px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; border: 1px solid #ccc; }
+
+.pill-input { height: 15px; line-height: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; border-radius: 15px; padding-left: 1em; }
+
+/* 超链接 */
+.link-blue { color: blue; cursor: pointer; }
+.link-blue:hover { color: red; }
+
+.link-gray { color: #333; cursor: pointer; }
+.link-gray:hover { color: red; }
+
+/* 图标图片大小控制 */
+.icon25 { width: 25px; height: 25px; }
+
+.icon110x90 { width: 110px; height: 90px; }
+
+.icon90x150 { width: 90px; height: 150px; }
+
+.icon200x80 { width: 200px; height: 80px; }
+
+/* 字符长度限制 */
+.elimit-width8em { max-width: 4em; }
+
+.elimit-width25em { max-width: 12.5em; }
+
+.elimit-width28em { max-width: 14em; }
+
+/* 颜色类定义 */
+.red { color: red; }
+
+.blue { color: blue; }
+
+.green { color: green; }
+
+.side-wrap .title { text-align: center; }
+
+.side-wrap, .copyright { text-align: right; }
+
+.nestedul .menu li, .breadcrumb b, .table-center-zebra th { font-size: 1.2em; }
+
+.padding-right15, .side-wrap h5, .nestedul .menu li { padding-right: 15px; }
+
+.margin-top10 { margin-top: 10px; }
+
+.margin-right10 { margin-right: 10px; }
+
+.margin-left10 { margin-left: 10px; }
+
+.margin-bottom10 { margin-bottom: 10px; }
+
+/* 左侧包裹层 */
+.side-wrap { width: 230px; height: 100%; position: fixed; left: 0; top: 0; color: #fff; background: -webkit-linear-gradient(bottom, #004680, #00447c); background: -moz-linear-gradient(bottom, #004680, #00447c); background: linear-gradient(bottom, #004680, #00447c); }
+.side-wrap .title { font-size: 2.2em; color: #fff; margin: 50px 0; }
+.side-wrap h5 { margin-bottom: 20px; }
+.side-wrap h5 a { text-decoration: none; color: #bddeff; cursor: pointer; }
+.side-wrap h5 a:hover { color: #fff; }
+
+/* 菜单 */
+.nestedul { width: 100%; margin-top: 50px; }
+.nestedul .menu { padding-left: 30px; margin-bottom: 25px; }
+.nestedul .menu p { background: #dfdf0b; -webkit-border-radius: 5px 0 0 5px; -moz-border-radius: 5px 0 0 5px; border-radius: 5px 0 0 5px; font-size: 1.4em; color: #333; padding: 0.5em 15px 0.5em 0; }
+.nestedul .menu p:hover { background: #f4f429; }
+.nestedul .menu p.current { color: #333; background: #f6f6f6; }
+.nestedul .menu ul { display: none; }
+.nestedul .menu li { margin-top: 15px; }
+.nestedul .menu li a { text-decoration: none; color: #fff; cursor: pointer; }
+.nestedul .menu li a:hover { color: #dfdf0b; }
+
+/* 右侧主体包裹层 */
+.main-wrap { padding: 0 20px 20px 250px; min-width: 930px; }
+.main-wrap .content { background: #fff; border: 1px solid #ccc; padding: 15px; margin-top: 62px; }
+.main-wrap .search { padding: 15px; background: #f6f6f6; border: 1px solid #dedede; }
+.main-wrap .search .date input { width: 200px; }
+.main-wrap .title { font-size: 1.2em; color: #333; margin: 20px 0; }
+.main-wrap .edit-title { margin-top: 0; }
+
+/* 当前位置 */
+.breadcrumb { position: fixed; left: 250px; top: 0; background: #f0f0f0; padding-top: 20px; width: 100%; z-index: 100; }
+.breadcrumb p { background: #e9e9e9; border: 1px solid #ccc; height: 40px; line-height: 40px; padding-left: 15px; font-size: 1.2em; color: #555; -webkit-box-shadow: 2px 2px 2px 0px #a9a9a9; -moz-box-shadow: 2px 2px 2px 0px #a9a9a9; box-shadow: 2px 2px 2px 0px #a9a9a9; }
+.breadcrumb i { font-style: normal; margin: 0 10px; }
+
+/* 斑马纹式表格 */
+.table-center-zebra, .table-edit-zebra { background-color: #e2e2e2; }
+.table-center-zebra tr:nth-of-type(even), .table-edit-zebra tr:nth-of-type(even) { background-color: #f3f4f6; }
+
+/* 文本居中斑马纹表格 */
+.table-center-zebra { text-align: center; }
+.table-center-zebra th { color: #fff; background: #193974; }
+
+/* 编辑式斑马纹表格 */
+.table-edit-zebra .label { width: 15%; text-align: right; padding-right: 10px; }
+.table-edit-zebra .input { width: 70%; }
+.table-edit-zebra b { float: left; margin-left: 40%; }
+.table-edit-zebra .input40 { width: 40px; }
+
+/* 编辑式带边框表格 */
+.table-edit .label { width: 35%; text-align: right; padding-right: 10px; }
+.table-edit .input { width: 45%; }
+
+/* 分页 */
+.pagination { margin: 30px 0 10px 0; }
+.pagination .page { background: #fff; border: 1px solid #ccc; }
+.pagination .page:hover, .pagination .page.current { color: #fff; background: #004890; border: 1px solid #004890; }
+.pagination .page.disabled, .pagination .page.disabled:hover { cursor: default; color: #e0e0e0; background: #fff; border: 1px solid #e5e5e5; }
+.pagination input { width: 30px; background: #fff; border: 1px solid #ccc; }
+
+/* 版权 */
+.copyright { margin: 25px 0; }
+.copyright a { margin-right: 10px; }
