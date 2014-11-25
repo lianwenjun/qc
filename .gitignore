@@ -20,4 +20,5 @@ app/config/database.php
 .idea/
 app/config/ucDelta.php
 public/info.php
+public/Uploads/*
 *~
