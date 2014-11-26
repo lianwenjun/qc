@@ -36,7 +36,7 @@ function btnEvent() {
         var newRow = "<tr>" + 
                                 "<td>"+(id++)+"</td>" + 
                                 "<td>"+text+"</td>" + 
-                                "<td></td><td></td><td class='jq-edit1 check-num'></td><td></td><td></td>" + 
+                                "<td></td><td></td><td class='edit-text check-num'></td><td></td><td></td>" + 
                                 "<td class='btns'>"+btns+"</td>" + 
                                 "</tr>";
         $(".jq-table").append(newRow);
@@ -55,8 +55,8 @@ function btnEvent() {
                            '<input type="button" class="button red-button jq-delete" value="删除">';
         var newRow = "<tr>" + 
                                 "<td>"+(id++)+"</td>" + 
-                                "<td class='jq-edit1'>"+text+"</td>" + 
-                                "<td class='jq-edit2'>***</td>" + 
+                                "<td class='edit-text'>"+text+"</td>" + 
+                                "<td class='edit-value'>***</td>" + 
                                 "<td></td><td></td><td></td><td></td>" + 
                                 "<td class='btns'>"+btns+"</td>" + 
                                 "</tr>";
@@ -78,16 +78,16 @@ function btnEvent() {
 
         //点击”编辑“按钮事件
         $(".jq-edit").click( function() {
-            currentEdit1 = $(this).parent().siblings(".jq-edit1").html(); 
-            currentEdit2=  $(this).parent().siblings(".jq-edit2").html();
-            $(this).parent().siblings(".jq-edit1").html('<input class="edit-input input1" maxlength="8em" type="text" value="' + currentEdit1 + '">');
-            $(this).parent().siblings(".jq-edit2").html('<input class="edit-input input2" maxlength="8em" type="text" value="' + currentEdit2 + '">');
+            currentEdit1 = $(this).parent().siblings(".edit-text").html(); 
+            currentEdit2=  $(this).parent().siblings(".edit-value").html();
+            $(this).parent().siblings(".edit-text").html('<input class="edit-input input1" maxlength="8em" type="text" value="' + currentEdit1 + '">');
+            $(this).parent().siblings(".edit-value").html('<input class="edit-input input2" maxlength="8em" type="text" value="' + currentEdit2 + '">');
             $(this).parent(".btns").html(changeBtns);
 
             //点击”确认“按钮事件
             $(".jq-confirm").click( function() {
-                $(this).parent().siblings(".jq-edit1").html($(this).parent().siblings(".jq-edit1").find(".input1").val());
-                $(this).parent().siblings(".jq-edit2").html($(this).parent().siblings(".jq-edit2").find(".input2").val());
+                $(this).parent().siblings(".edit-text").html($(this).parent().siblings(".edit-text").find(".input1").val());
+                $(this).parent().siblings(".edit-value").html($(this).parent().siblings(".edit-value").find(".input2").val());
                 $(this).parent(".btns").html(btns);
                 systemEdit();
                 deleteModal();
@@ -95,8 +95,8 @@ function btnEvent() {
 
             //点击”取消“按钮事件
             $(".jq-cancel").click( function() {
-                $(this).parent().siblings(".jq-edit1").text(currentEdit1);
-                $(this).parent().siblings(".jq-edit2").text(currentEdit2);
+                $(this).parent().siblings(".edit-text").text(currentEdit1);
+                $(this).parent().siblings(".edit-value").text(currentEdit2);
                 $(this).parent(".btns").html(btns);
                 systemEdit();
                 deleteModal();
@@ -114,13 +114,13 @@ function btnEvent() {
 
         //点击”编辑“按钮事件
         $(".jq-comment-edit").click( function() {
-            currentEdit1 = $(this).parent().siblings(".jq-edit1").html(); 
-            $(this).parent().siblings(".jq-edit1").html('<input class="edit-input input1" type="text" value="' + currentEdit1 + '">');
+            currentEdit1 = $(this).parent().siblings(".edit-text").html(); 
+            $(this).parent().siblings(".edit-text").html('<input class="edit-input input1" type="text" value="' + currentEdit1 + '">');
             $(this).parent(".btns").html(changeBtns);
 
             //点击”确认“按钮事件
             $(".jq-confirm").click( function() {
-                $(this).parent().siblings(".jq-edit1").html($(this).parent().siblings(".jq-edit1").find(".input1").val());
+                $(this).parent().siblings(".edit-text").html($(this).parent().siblings(".edit-text").find(".input1").val());
                 $(this).parent(".btns").html(btns);
                 commentEdit();
             });
@@ -226,7 +226,7 @@ function btnEvent() {
                                             "<td>"+(id++)+"</td>" + 
                                             "<td>"+input28+"</td>" + 
                                             "<td></td><td></td>" + 
-                                            "<td class='jq-edit1 check-num'></td>" + 
+                                            "<td class='edit-text check-num'></td>" + 
                                             "<td></td><td></td><td></td>" + 
                                             "<td class='btns'>"+btns+"</td>" + 
                                             "</tr>";

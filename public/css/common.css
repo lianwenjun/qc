@@ -94,17 +94,17 @@ a, a:hover { text-decoration: none; }
 
 .ui-widget-content { border: 0; }
 
-.jq-addModal p, .jq-deleteModal p { margin: 15px; height: 25px; line-height: 25px; }
-.jq-addModal p label, .jq-deleteModal p label { width: 30%; float: left; text-align: right; margin-right: 15px; }
+.addModal p, .deleteModal p { margin: 15px; height: 25px; line-height: 25px; }
+.addModal p label, .deleteModal p label { width: 30%; float: left; text-align: right; margin-right: 15px; }
 
-.jq-detailModal ul { height: 110px; }
-.jq-detailModal ul .float-left { width: 30%; margin: 10px; }
-.jq-detailModal ul .float-left li { height: 22px; line-height: 22px; }
-.jq-detailModal .message { min-height: 300px; border: 1px solid #ccc; }
-.jq-detailModal .reply-info { height: 100px; border: 1px solid #ccc; border-top: 0; border-bottom: 0; }
-.jq-detailModal .reply-info .reply { width: 8%; text-align: center; display: inline-block; height: 100px; line-height: 100px; }
-.jq-detailModal .reply-info .reply-content { width: 80%; height: 100%; border: 1px solid #ccc; border-top: 0; border-bottom: 0; }
-.jq-detailModal .reply-info .send { margin-left: 5px; }
+.detailModal ul { height: 110px; }
+.detailModal ul .float-left { width: 30%; margin: 10px; }
+.detailModal ul .float-left li { height: 22px; line-height: 22px; }
+.detailModal .message { min-height: 300px; border: 1px solid #ccc; }
+.detailModal .reply-info { height: 100px; border: 1px solid #ccc; border-top: 0; border-bottom: 0; }
+.detailModal .reply-info .reply { width: 8%; text-align: center; display: inline-block; height: 100px; line-height: 100px; }
+.detailModal .reply-info .reply-content { width: 80%; height: 100%; border: 1px solid #ccc; border-top: 0; border-bottom: 0; }
+.detailModal .reply-info .send { margin-left: 5px; }
 
 .float-left { float: left; }
 
@@ -238,8 +238,8 @@ a, a:hover { text-decoration: none; }
 /* 文本居中斑马纹表格 */
 .table-center-zebra { text-align: center; }
 .table-center-zebra th { color: #fff; background: #193974; }
-.table-center-zebra .jq-edit1, .table-center-zebra .jq-edit2 { min-width: 120px; }
-.table-center-zebra .jq-edit1 .edit-input, .table-center-zebra .jq-edit2 .edit-input { width: 115px; height: 18px; text-align: center; }
+.table-center-zebra .edit-text, .table-center-zebra .edit-value { min-width: 120px; }
+.table-center-zebra .edit-text .edit-input, .table-center-zebra .edit-value .edit-input { width: 115px; height: 18px; text-align: center; }
 
 /* 编辑式斑马纹表格 */
 .table-edit-zebra .label { width: 15%; text-align: right; padding-right: 10px; }
