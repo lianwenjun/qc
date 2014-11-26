@@ -13,8 +13,8 @@ return array(
     |
     */
     'debug' => false,
-    'imageHost' => 'http://207.226.142.149',//图片路径
-    'apkHost' => 'http://207.226.142.149',//APK路径
+    'imageHost' => 'http://www.ttigame.com',//图片路径
+    'apkHost' => 'http://www.ttigame.com',//APK路径
     /*
     |--------------------------------------------------------------------------
     | Application URL
