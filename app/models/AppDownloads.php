@@ -124,8 +124,8 @@ class AppDownloads extends \Base
      * 统计汇总脚本使用 插入记录时判断是否已经有记录 有则更新 无则创建
      *
      * @param $appId int 游戏id
-     * @param $title string 游戏名称
      * @param $status string 统计字段:request,download,install,active
+     * @param $countDate string 统计日期
      *
      * @return void
      */
