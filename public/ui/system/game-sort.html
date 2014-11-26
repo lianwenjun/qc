@@ -44,7 +44,6 @@
                 <p>系统管理</p>
                 <ul>
                     <li><a href="game-sort.html">游戏分类管理</a></li>
-                    <li><a href="sort-tag.html">分类标签管理</a></li>
                     <li><a href="tags.html">标签库管理</a></li>
                     <li><a href="supplier.html">供应商管理</a></li>
                     <li><a href="channel.html">渠道商管理</a></li>
@@ -108,7 +107,7 @@
             <!-- 表格 -->
             <p class="title">
                 游戏分类：共<b class="red jq-red">2</b>条记录
-                <input type="button" class="button jq-add-sort float-right" value="新增分类">
+                <a href="game-edit.html" class="button float-right">新增分类</a>
             </p>
             <table cellpadding="0" cellspacing="0" class="table-center-zebra">
                 <thead>
@@ -127,7 +126,7 @@
                         <td>欧阳锋</td>
                         <td>战阵，战阵战阵，战阵，战阵，战阵，战阵，战阵，战阵，战阵，战阵，战阵，战阵</td>
                         <td class="btns">
-                            <input type="button" class="button jq-edit-sort" value="编辑">
+                            <a href="game-edit.html" class="button">编辑</a>
                             <input type="button" class="button red-button jq-delete" value="删除">
                         </td>               
                     </tr>
@@ -137,71 +136,12 @@
                         <td>欧阳锋</td>
                         <td>战阵，战阵战阵，战阵，战阵，战阵，战阵，战阵，战阵，战阵，战阵，战阵，战阵</td>
                         <td class="btns">
-                            <input type="button" class="button jq-edit-sort" value="编辑">
+                            <a href="game-edit.html" class="button">编辑</a>
                             <input type="button" class="button red-button jq-delete" value="删除">
                         </td>               
                     </tr>
                 </tbody>
                 <!-- 弹窗 -->
-                    <!-- “添加”弹窗 -->
-                    <div class="jq-addModal jq-add-sort-modal" title="添加分类">
-                        <p>
-                            <label>分类名称：</label>
-                            <input class="input add-text" type="text" placeholder="输入文本……" maxlength="8">
-                        </p>
-                    </div>
-                    <!-- /“添加”弹窗 -->
-                    <!-- “编辑”弹窗 -->
-                    <div class="jq-addModal jq-edit-sort-modal" title="编辑分类">
-                        <p>
-                            <label>分类名称：</label>
-                            <input class="input" type="text" placeholder="×××游戏" maxlength="8">                            
-                        </p>
-                        <div>
-                            <label>标签展示：</label>
-                            <ul>
-                                <li>
-                                    <span class="label-name">超级英雄</span>
-                                    <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="Close">
-                                        <span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>
-                                        <span class="ui-button-text">Close</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <span class="label-name">超级英雄</span>
-                                    <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="Close">
-                                        <span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>
-                                        <span class="ui-button-text">Close</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <span class="label-name">超级英雄</span>
-                                    <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="Close">
-                                        <span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>
-                                        <span class="ui-button-text">Close</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <span class="label-name">超级英雄</span>
-                                    <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="Close">
-                                        <span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>
-                                        <span class="ui-button-text">Close</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <input class="input" type="text" placeholder="标签输入时自动匹配">
-                                    <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="Close">
-                                        <span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>
-                                        <span class="ui-button-text">Close</span>
-                                    </button>
-                                </li>
-                            </ul>
-                            <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">
-                                <span class="ui-button-text">+</span>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- /“编辑”弹窗 -->
                     <!-- “删除”弹窗 -->
                     <div class="jq-deleteModal" title="信息">
                         <p>确定删除此记录？</p>

@@ -44,7 +44,6 @@
                 <p>系统管理</p>
                 <ul>
                     <li><a href="game-sort.html">游戏分类管理</a></li>
-                    <li><a href="sort-tag.html">分类标签管理</a></li>
                     <li><a href="tags.html">标签库管理</a></li>
                     <li><a href="supplier.html">供应商管理</a></li>
                     <li><a href="channel.html">渠道商管理</a></li>
@@ -119,14 +118,6 @@
             <p class="title">
                 关键字数量：共 <span class="red jq-red">2</span> 条记录
                 <input type="button" class="button jq-add-keywords float-right" value="添加关键字">
-                <!-- “添加”弹窗 -->
-                <div class="jq-addModal jq-add-keywords-modal" title="添加关键字">
-                    <p class="dialog-content">
-                        <label>关键字名称：</label>
-                        <input class="input input28" type="text" placeholder="28个字符" maxlength="28">
-                    </p>
-                </div>
-                <!-- /“添加”弹窗 -->
             </p>
             <table cellpadding="0" cellspacing="0" class="table-center-zebra">
                 <thead>
@@ -172,11 +163,21 @@
                         </td>
                     </tr>
                 </tbody>
-                <!-- “删除”弹窗 -->
-                <div class="jq-deleteModal" title="信息">
-                    <p class="dialog-content">确定删除此记录？</p>
-                </div>
-                <!-- /”删除“弹窗 -->
+                <!-- 弹窗 -->
+                    <!-- “添加”弹窗 -->
+                    <div class="jq-addModal jq-add-keywords-modal" title="添加关键字">
+                        <p class="dialog-content">
+                            <label>关键字名称：</label>
+                            <input class="input input28" type="text" placeholder="28个字符" maxlength="28em">
+                        </p>
+                    </div>
+                    <!-- /“添加”弹窗 -->
+                    <!-- “删除”弹窗 -->
+                    <div class="jq-deleteModal" title="信息">
+                        <p class="dialog-content">确定删除此记录？</p>
+                    </div>
+                    <!-- /”删除“弹窗 -->
+                <!-- /弹窗 -->
             </table>
             <!-- /表格 -->
             <!-- 上下翻页 -->

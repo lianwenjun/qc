@@ -90,7 +90,7 @@ a, a:hover { text-decoration: none; }
 .ui-dialog .ui-dialog-buttonpane { margin-top: 0; padding: 0; border-top: 1px solid #ccc; }
 .ui-dialog .ui-widget-content { padding: 0; }
 
-.ui-widget-header { background: #193974; font-size: 18px; text-align: center; }
+.ui-widget-header { background: #193974; font-size: 16px; text-align: center; }
 
 .ui-widget-content { border: 0; }
 
@@ -103,8 +103,6 @@ a, a:hover { text-decoration: none; }
 .jq-addModal div ul li .label-name { border: 1px solid #ccc; display: inline-block; border-radius: 3px; padding: 0 30px 0 3px; }
 .jq-addModal div ul li .ui-dialog-titlebar-close { position: relative; top: 3px; left: -26px; }
 .jq-addModal div ul li .input { height: 25px; line-height: 25px; padding: 0 30px 0 3px; }
-
-.jq-deleteModal p { margin: 15px; height: 25px; line-height: 25px; }
 
 .float-right { float: right; }
 
@@ -217,6 +215,7 @@ a, a:hover { text-decoration: none; }
 .main-wrap .search i { position: relative; left: 150px; top: 3px; }
 .main-wrap .search .date input { width: 200px; }
 .main-wrap .title { font-size: 1.2em; color: #333; margin: 20px 0; }
+.main-wrap .title .button { font-size: 1em; }
 .main-wrap .edit-title { margin-top: 0; }
 
 /* 当前位置 */

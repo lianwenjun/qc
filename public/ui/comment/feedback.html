@@ -45,7 +45,6 @@
                 <p>系统管理</p>
                 <ul>
                     <li><a href="../system/game-sort.html">游戏分类管理</a></li>
-                    <li><a href="../system/sort-tag.html">分类标签管理</a></li>
                     <li><a href="../system/tags.html">标签库管理</a></li>
                     <li><a href="../system/supplier.html">供应商管理</a></li>
                     <li><a href="../system/channel.html">渠道商管理</a></li>
@@ -167,7 +166,7 @@
                         <td class="red">等待回复</td>
                         <td>吸毒欧阳顺 </td>
                         <td>
-                            <input type="button" class="button" value="详情">
+                            <input type="button" class="button jq-detial" value="详情">
                         </td>
                     </tr>
                     <tr>
@@ -183,7 +182,7 @@
                         <td class="green">已回复</td>
                         <td>吸毒欧阳顺 </td>
                         <td>
-                            <input type="button" class="button" value="详情">
+                            <input type="button" class="button jq-detial" value="详情">
                         </td>
                     </tr>
                     <tr>
@@ -199,10 +198,47 @@
                         <td>已结束</td>
                         <td>吸毒欧阳顺 </td>
                         <td>
-                            <input type="button" class="button" value="详情">
+                            <input type="button" class="button jq-detial" value="详情">
                         </td>
                     </tr>
                 </tbody>
+                <!-- 弹窗 -->
+                    <!-- ”详情“弹窗 -->
+                    <div class="jq-detailModal" title="反馈信息">
+                        <ul>
+                            <li class="float-left">
+                                <ul>
+                                    <li>反馈ID：20141111152356</li>
+                                    <li>用户ID：6742174744</li>
+                                    <li>昵称：一只红红的猫</li>
+                                    <li>版本号：1.0.1</li>
+                                </ul>
+                            </li>
+                            <li class="float-left">
+                                <ul>
+                                    <li>用户机型：SMG3509I</li>
+                                    <li>系统类型：Android</li>
+                                    <li>系统版本：4.3.3</li>
+                                    <li>imei：A0000045F37F88</li>
+                                </ul>
+                            </li>
+                            <li class="float-left">
+                                <ul>
+                                    <li>绑定邮箱：6742174747@sina.com</li>
+                                    <li>绑定手机：13662982513</li>
+                                    <li>消费金额：9,999,999RMB</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="message"></div>
+                        <div class="reply-info">
+                            <span class="reply">回复</span>
+                            <input class="reply-content" placeholder="输入文本...">
+                            <input class="button send" type="button" value="发送">
+                        </div>
+                    </div>
+                    <!-- /”详情“弹窗 -->
+                <!-- /弹窗 -->
             </table>
             <!-- /表格 -->
             <!-- 上下翻页 -->
@@ -227,5 +263,8 @@
         <!-- /版权信息 -->
     </div>
     <!-- /右侧主体盒子 -->
+    <script type="text/javascript">
+        btnEvent();
+    </script>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>系统管理——分类标签管理</title>
+    <title>系统管理——游戏分类管理</title>
     <link rel="stylesheet" href="../../css/admin/jquery-ui/jquery-ui.min.css">
     <link rel="stylesheet" href="../../css/common.css">
     <script type="text/javascript" src="../../js/jquery-1.9.1.min.js"></script>
@@ -44,7 +44,6 @@
                 <p>系统管理</p>
                 <ul>
                     <li><a href="game-sort.html">游戏分类管理</a></li>
-                    <li><a href="sort-tag.html">分类标签管理</a></li>
                     <li><a href="tags.html">标签库管理</a></li>
                     <li><a href="supplier.html">供应商管理</a></li>
                     <li><a href="channel.html">渠道商管理</a></li>
@@ -102,95 +101,52 @@
     <!-- 右侧主体盒子 -->
     <div class="main-wrap">
         <div class="breadcrumb">
-            <p><b>系统管理</b><i>&gt;</i>分类标签管理</p>
+            <p><b>系统管理</b><i>&gt;</i>游戏分类管理<i>&gt;</i>添加分类</p>
         </div>
-        <div class="content">
-             <form action="" method="" name="form-search">  
-                <!-- 查询-->
-                <div class="search">
-                    <p class="margin-bottom10">
-                        <label>查询：</label>
-                        <select class="select" name="searchsort">
-                            <option value="">所属游戏分类</option>
-                            <option value="">游戏包名</option>
-                            <option value="">游戏分类</option>
-                        </select>
-                        <input class="input add-text margin-right10" type="text" maxlength="8" placeholder="标签输入时自动匹配">
-                        <input type="button" class="button jq-add-sort-tag" value="查询">
-                    </p>
-                    <p>
-                        <label>添加：</label>
-                        <select class="select jq-game-category" name="addsort">
-                            <option value="">所属游戏分类 </option>
-                            <option value="格斗游戏">格斗游戏</option>
-                            <option value="动作游戏">动作游戏</option>
-                        </select>
-                        <input class="input add-text margin-right10" type="text" maxlength="8" placeholder="标签输入时自动匹配">
-                        <input type="button" class="button jq-add-sort-tag" value="添加">
-                    </p>
-                    <i class="red">（匹配标签库内容）</i>
-                </div>
-                <!-- /查询 -->
-            </form>
-            <!-- 表格 -->
-            <p class="title">分类标签数量：共<b class="red jq-red">2</b>条记录</p>
-            <table cellpadding="0" cellspacing="0" class="table-center-zebra">
-                <thead>
-                    <tr>
-                        <th>序号</th>
-                        <th>标签名称</th>
-                        <th>标签ID</th>
-                        <th>分类名称</th>
-                        <th>操作人</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody class="jq-table">
-                    <tr>
-                        <td>1</td>
-                        <td>战争</td>
-                        <td>1</td>
-                        <td>棋牌游戏</td>
-                        <td>爱老虎油</td>
-                        <td>
-                            <input type="button" class="button red-button jq-delete" value="删除">
-                        </td>               
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>战争</td>
-                        <td>2</td>
-                        <td>棋牌游戏</td>
-                        <td>爱老虎油</td>
-                        <td>
-                            <input type="button" class="button red-button jq-delete" value="删除">
-                        </td>               
-                    </tr>
-                </tbody>
-                <!-- “删除”弹窗 -->
-                <div class="jq-deleteModal" title="信息">
-                    <p class="dialog-content">确定删除此记录？</p>
-                </div>
-                <!-- /”删除“弹窗 -->
+        <!-- 添加分类信息 -->
+        <div class="content">     
+            <h3 class="title edit-title">添加分类：</h3>
+            <table class="table-edit-zebra">
+                <tr>
+                    <td class="label">分类名称：</td>
+                    <td><input class="input" type="text" name="sort" maxlength="12em" placeholder="******游戏"></td>
+                </tr>
+                <tr>
+                    <td class="label">标签展示：</td>
+                    <td>
+                        <ul class="tags float-left">
+                            <li>
+                                超级英雄
+                                <img class="icon15" src="../../images/delete.png">
+                            </li>
+                            <li>
+                                超级英雄
+                                <img class="icon15" src="../../images/delete.png">
+                            </li>
+                            <li>
+                                超级英雄
+                                <img class="icon15" src="../../images/delete.png">
+                            </li>
+                            <li>
+                                超级英雄
+                                <img class="icon15" src="../../images/delete.png">
+                            </li>
+                            <li>
+                                <input class="input" type="text" placeholder="标签输入时自动匹配">
+                                <img class="icon15" src="../../images/delete.png">
+                            </li>
+                        </ul>
+                        <input class="button" type="button" value="+">
+                    </td>
+                </tr>
             </table>
-            <!-- /表格 -->
-            <!-- 上下翻页 -->
-            <div class="pagination">
-                <span class="page disabled">首页</span> 
-                <span class="page disabled">上一页</span>
-                <span class="page current">1</span>
-                <span class="page">2</span>
-                <span class="page">3</span>
-                <span class="page">4</span>
-                <span class="page">5</span>……
-                <span class="page">下一页</span>
-                <span class="page">末页</span>
-                <span class="space">共<b class="page-total">99</b>页</span>
-                <span class="space">当前<input type="text" />页</span>
-                <span class="page space">GO</span>
-            </div>
-            <!-- /上下翻页 -->
+            <p class="inline-button">
+                <input type="submit" value="确定" class="button">
+                <input type="button" value="预览" class="button">
+                <a href="game-sort.html" class="button">返回列表</a>
+            </p>
         </div>
+        <!-- /添加分类信息 -->
         <!-- 版权信息 -->
         <p class="copyright"><a class="link-gray">使用前必读</a><span>粤ICP证030173号</span></p>
         <!-- /版权信息 -->
