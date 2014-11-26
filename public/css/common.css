@@ -70,10 +70,6 @@ a, a:hover { text-decoration: none; }
 /* ui插件样式自定义 */
 .ui-dialog .ui-dialog-content { padding: 1.5em 1em 1em 1em; }
 
-.date-table { position: absolute; }
-
-.date-range-selected .ui-state-active, .date-range-selected .ui-state-default { background: #1e4791; color: #fff; }
-
 .sort-pic span, .upload-pic span { position: absolute; right: 0; bottom: 0; background: #ff62c7; color: #fff; }
 .sort-pic span:hover, .upload-pic span:hover { background: #ff95d9; }
 
@@ -81,6 +77,31 @@ a, a:hover { text-decoration: none; }
 .sort-pic li { width: 125px; display: inline-block; position: relative; }
 
 .upload-pic { display: inline-block; width: 120px; position: relative; }
+
+.date-table { position: absolute; }
+
+.date-range-selected .ui-state-active, .date-range-selected .ui-state-default { background: #1e4791; color: #fff; }
+
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+
+.ui-timepicker-div dl { text-align: left; }
+
+.ui-timepicker-div dl dt { float: left; clear: left; padding: 0 0 0 5px; }
+
+.ui-timepicker-div dl dd { margin: 0 10px 10px 45%; }
+
+.ui-timepicker-div td { font-size: 90%; }
+
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+.ui-timepicker-rtl { direction: rtl; }
+
+.ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
+
+.ui-timepicker-rtl dl dt { float: right; clear: right; }
+
+.ui-timepicker-rtl dl dd { margin: 0 45% 10px 10px; }
 
 /* 预览弹窗 */
 .browse-phone { background: url("../images/admin/pone.png") no-repeat; display: none; position: fixed; top: 160px; left: 42%; margin: 0 auto; width: 312px; height: 582px; }
@@ -173,7 +194,7 @@ a, a:hover { text-decoration: none; }
 
 .side-wrap .title { text-align: center; }
 
-.side-wrap, .copyright { text-align: right; }
+.text-right, .side-wrap, .copyright { text-align: right; }
 
 .nestedul .menu li, .breadcrumb b, .table-center-zebra th { font-size: 1.2em; }
 
