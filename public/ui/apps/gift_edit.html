@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>游戏管理—上架游戏列表——礼包编辑</title>
+<link rel="stylesheet" href="../../css/common.css">
+<link rel="stylesheet" href="../../css/apps-gift.css">
+<script type="text/javascript" src="../../js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+</head>
+<body>
+    <!-- 左侧盒子 -->
+    <div class="side-wrap">
+        <h3 class="title">游戏商店系统</h3 >
+        <h5 class="subtitle">hi!<span class="margin-left10">力天部落</span></h5>
+        <h5><a href="../change-password.html" class="margin-right10">修改密码</a><a href="../signin.html">退出系统</a></h5>
+         <!-- 左侧菜单 -->
+        <ul class="jq-menu nestedul">
+            <li class="menu">
+                <p>游戏管理</p>
+                <ul>
+                    <li><a href="stock.html">上架游戏列表</a></li>
+                    <li><a href="draft.html">添加编辑游戏</a></li>
+                    <li><a href="pending.html">待审核列表</a></li>
+                    <li><a href="notpass.html">审核不通过列表</a></li>
+                    <li><a href="unstock.html">下架游戏列表</a></li>
+                </ul>
+            </li>
+            <li class="menu">
+                <p>广告位管理</p>
+                <ul>
+                    <li><a href="../ads/frontendpics.html">首页图片位管理</a></li>
+                    <li><a href="../ads/frontendgame.html">首页游戏位管理</a></li>
+                    <li><a href="../ads/draft.html">专题编辑管理</a></li>
+                    <li><a href="../ads/stock.html">上架专题管理</a></li>
+                    <li><a href="../ads/rank.html">排行游戏位管理</a></li>
+                    <li><a href="../ads/sort.html">分类页图片管理</a></li>
+                    <li><a href="../ads/gift.html">礼包广告位管理</a></li>
+                </ul>
+            </li>
+            <li class="menu">
+                <p>系统管理</p>
+                <ul>
+                    <li><a href="../stystem/game-sort.html">游戏分类管理</a></li>
+                    <li><a href="../stystem/sort-tag.html">分类标签管理</a></li>
+                    <li><a href="../stystem/tags.html">标签库管理</a></li>
+                    <li><a href="../stystem/supplier.html">供应商管理</a></li>
+                    <li><a href="../stystem/channel.html">渠道商管理</a></li>
+                    <li><a href="../stystem/keyword.html">关键字管理</a></li>
+                    <li><a href="../stystem/shield-word.html">屏蔽词管理</a></li>
+                </ul>
+            </li>
+            <li class="menu">
+                <p>评论管理</p>
+                <ul>
+                    <li><a href="../comment/score.html">游戏评分列表</a></li>
+                    <li><a href="../comment/comment.html">游戏评论列表</a></li>
+                    <li><a href="../comment/feedback.html">应用反馈</a></li>
+                </ul>
+            </li> 
+            <li class="menu">
+                <p>数据中心</p>
+                <ul>
+                    <li><a href="../statistics/active.html">平台活跃统计</a></li>
+                    <li><a href="../statistics/download.html">游戏下载统计</a></li>
+                    <li><a href="../statistics/version.html">版本分布统计</a></li>
+                    <li><a href="../statistics/activation.html">平台激活统计</a></li>
+                    <li><a href="../statistics/path.html">页面路径统计</a></li>
+                    <li><a href="../statistics/event.html">按钮事件统计</a></li>
+                    <li><a href="../statistics/visit.html">页面访问统计</a></li>
+                    <li><a href="../statistics/search.html">用户搜索统计</a></li>
+                </ul>
+            </li>
+            <li class="menu">
+                <p>用户中心</p>
+                <ul>
+                    <li><a href="../user/signup.html">注册用户数据</a></li>
+                    <li><a href="../user/active.html">活跃用户数据</a></li>
+                    <li><a href="../user/query.html">用户查询</a></li>
+                </ul>
+            </li>
+            <li class="menu">
+                <p>权限管理</p>
+                <ul>
+                    <li><a href="../auth/user.html">管理员管理</a></li>
+                    <li><a href="../auth/role.html">角色管理</a></li>
+                    <li><a href="../auth/auth.html">权限管理</a></li>
+                </ul>
+            </li>
+            <li class="menu">
+                <p>日志管理</p>
+                <ul>
+                    <li><a href="../logs/log.html">日志查询</a></li>
+                </ul>
+            </li>
+        </ul>
+        <!-- /左侧菜单 --> 
+    </div>
+    <!-- /左侧盒子 -->
+    <!-- 右侧主体盒子 -->
+    <div class="main-wrap">
+        <p class="placeholder"></p>
+        <div class="breadcrumb">
+            <p><b>游戏管理</b><i>&gt;</i><a class="link-darkgray" href="stock.html">上架游戏列表</a><i>&gt;</i>礼包编辑</p>
+        </div>
+        <!-- 信息内容 --> 
+        <form name="form" action="" method="get" class="validate">
+            <div class="content">
+                <table class="table-edit">
+                    <tr>
+                        <td class="label">礼包名称：</td>
+                        <td><input class="input" type="text" name="gift_name" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label">礼包内容：</td>
+                        <td><input class="input" type="text" name="gift_text" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label">兑换方式：</td>
+                        <td><input class="input" type="text" name="exchange" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label">领取资格：</td>
+                        <td>
+                            <select class="select" name="getway">
+                                <option value="">领取资格</option>
+                                <option value="">会员</option>
+                                <option value="">积分兑换</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">开始时间：</td>
+                        <td><input class="input" type="text" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label">结束时间：</td>
+                        <td><input class="input" type="text" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label">礼包序号：</td>
+                        <td><textarea class="textarea"></textarea></td>
+                    </tr>
+                </table>
+                <p class="inline-button">
+                    <input type="submit" value="提交" class="button" />
+                    <a href="stock.html" class="button">返回列表</a>
+                </p>
+            </div>
+        </form>
+        <!-- /信息内容 -->
+        <p class="copyright"><a class="link-gray">使用前必读</a><span>粤ICP证030173号</span></p> 
+    </div> 
+    <!-- /右侧主体盒子 -->
+</body>
+</html>
