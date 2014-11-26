@@ -326,9 +326,14 @@ ul.ui-sortable li.placeholder:before {
      * @return void
      */
     function initTags() {
-        var tagsText = $('.jq-initTags').text();
+        //var tagsText = $('.jq-initTags').text();
+        //var tags = tagsText.split(", ");
+        
+        var tags = [];
+        $('.jq-initTags>h2').each(function(){
+            tags.push($(this).text());
+        });
 
-        var tags = tagsText.split(", ");
         $('input[type="checkbox"]').each(function() {
             for(i in tags) {
                 // console.log($(this).parent().text() + ' ---> ' + tags[i].trim());
@@ -441,7 +446,7 @@ ul.ui-sortable li.placeholder:before {
             tags = $.unique( tags );
 
             console.log(tags);
-            $('.jq-initTags').html("<h2>" + tags.join("</h2>, <h2>") + "</h2>").next('input').val(tags.join(", "));
+            $('.jq-initTags').html("<h2>" + tags.join("</h2><h2>") + "</h2>").next('input').val(tags.join(", "));
 
             // 表单包含到提交表单
             $('.jq-cat').html($('.jq-catForm').clone());
