@@ -44,9 +44,9 @@ img { border-width: 0; max-width: 100%; }
 a, a:hover { text-decoration: none; }
 
 /* ------------- 通用组件导入 ---------- */
-.elimit-width8em, .elimit-width25em, .elimit-width28em { display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.elimit-width8em, .elimit-width12em, .elimit-width25em, .elimit-width28em { display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-.sort-pic span, .upload-pic span, .button, .red-button, .green-button, .gray-button, .nestedul .menu p { cursor: pointer; padding: 0.4em 1em; border: 0; font-size: 1em; }
+.pic-sort span, .button, .red-button, .green-button, .gray-button, .nestedul .menu p { cursor: pointer; padding: 0.4em 1em; border: 0; font-size: 1em; }
 
 .upload-button-wrap .upload-button { position: absolute; cursor: pointer; opacity: 0; }
 
@@ -65,8 +65,6 @@ a, a:hover { text-decoration: none; }
 
 .select { font-size: 1em; }
 
-.textarea { outline: none; padding: 10px 5px; }
-
 /* ui插件样式自定义 */
 .ui-dialog .ui-dialog-content { padding: 1.5em 1em 1em 1em; }
 
@@ -74,18 +72,10 @@ a, a:hover { text-decoration: none; }
 
 .date-range-selected .ui-state-active, .date-range-selected .ui-state-default { background: #1e4791; color: #fff; }
 
-.sort-pic span, .upload-pic span { position: absolute; right: 0; bottom: 0; background: #ff62c7; color: #fff; }
-.sort-pic span:hover, .upload-pic span:hover { background: #ff95d9; }
-
-.sort-pic { width: 100%; }
-.sort-pic li { width: 125px; display: inline-block; position: relative; }
-
-.upload-pic { display: inline-block; width: 120px; position: relative; }
-
-/* 预览弹窗 */
-.browse-phone { background: url("../images/admin/pone.png") no-repeat; display: none; position: fixed; top: 160px; left: 42%; margin: 0 auto; width: 312px; height: 582px; }
-
-.browse-title { background: url("../images/admin/Phone.jpg") no-repeat; }
+.pic-sort { width: 100%; }
+.pic-sort li { width: 125px; display: inline-block; position: relative; }
+.pic-sort span { position: absolute; right: 0; bottom: 0; background: red; color: #fff; }
+.pic-sort span:hover { background: #ff3333; }
 
 .validate input.error { border: 1px solid red; }
 .validate em.error { color: red; margin-left: 10px; }
@@ -93,6 +83,30 @@ a, a:hover { text-decoration: none; }
 .simditor { width: 75%; display: inline-block; }
 
 .simditor-wrapper { height: 250px; }
+
+.ui-corner-all { border-radius: 0; }
+
+.ui-dialog { padding: 0; }
+.ui-dialog .ui-dialog-buttonpane { margin-top: 0; padding: 0; border-top: 1px solid #ccc; }
+.ui-dialog .ui-widget-content { padding: 0; }
+
+.ui-widget-header { background: #193974; font-size: 16px; text-align: center; }
+
+.ui-widget-content { border: 0; }
+
+.jq-addModal p, .jq-deleteModal p { margin: 15px; height: 25px; line-height: 25px; }
+.jq-addModal p label, .jq-deleteModal p label { width: 30%; float: left; text-align: right; margin-right: 15px; }
+
+.jq-detailModal ul { height: 110px; }
+.jq-detailModal ul .float-left { width: 30%; margin: 10px; }
+.jq-detailModal ul .float-left li { height: 22px; line-height: 22px; }
+.jq-detailModal .message { min-height: 300px; border: 1px solid #ccc; }
+.jq-detailModal .reply-info { height: 100px; border: 1px solid #ccc; border-top: 0; border-bottom: 0; }
+.jq-detailModal .reply-info .reply { width: 8%; text-align: center; display: inline-block; height: 100px; line-height: 100px; }
+.jq-detailModal .reply-info .reply-content { width: 80%; height: 100%; border: 1px solid #ccc; border-top: 0; border-bottom: 0; }
+.jq-detailModal .reply-info .send { margin-left: 5px; }
+
+.float-left { float: left; }
 
 .float-right { float: right; }
 
@@ -130,11 +144,9 @@ a, a:hover { text-decoration: none; }
 .select { height: 27px; line-height: 27px; }
 
 /* 主要输入框 */
-.input { width: 230px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; border: 1px solid #ccc; }
+.input { width: 120px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; border: 1px solid #ccc; }
 
-.pill-input { height: 15px; line-height: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; border-radius: 15px; padding-left: 1em; width: 120px; }
-
-.textarea { width: 74%; height: 70px; border: 1px solid #ccc; }
+.pill-input { height: 15px; line-height: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; border-radius: 15px; padding-left: 1em; }
 
 /* 超链接 */
 .link-blue { color: blue; cursor: pointer; }
@@ -143,10 +155,9 @@ a, a:hover { text-decoration: none; }
 .link-gray { color: #333; cursor: pointer; }
 .link-gray:hover { color: red; }
 
-.link-darkgray { color: #555; cursor: pointer; }
-.link-darkgray:hover { color: #333; }
-
 /* 图标图片大小控制 */
+.icon15 { width: 15px; height: 15px; }
+
 .icon25 { width: 25px; height: 25px; }
 
 .icon110x90 { width: 110px; height: 90px; }
@@ -158,6 +169,8 @@ a, a:hover { text-decoration: none; }
 /* 字符长度限制 */
 .elimit-width8em { max-width: 4em; }
 
+.elimit-width12em { max-width: 6em; }
+
 .elimit-width25em { max-width: 12.5em; }
 
 .elimit-width28em { max-width: 14em; }
@@ -168,8 +181,6 @@ a, a:hover { text-decoration: none; }
 .blue { color: blue; }
 
 .green { color: green; }
-
-.relative { position: relative; }
 
 .side-wrap .title { text-align: center; }
 
@@ -209,7 +220,10 @@ a, a:hover { text-decoration: none; }
 .main-wrap { padding: 0 20px 20px 250px; min-width: 930px; }
 .main-wrap .content { background: #fff; border: 1px solid #ccc; padding: 15px; margin-top: 62px; }
 .main-wrap .search { padding: 15px; background: #f6f6f6; border: 1px solid #dedede; }
+.main-wrap .search i { position: relative; left: 150px; top: 3px; }
+.main-wrap .search .date input { width: 200px; }
 .main-wrap .title { font-size: 1.2em; color: #333; margin: 20px 0; }
+.main-wrap .title .button { font-size: 1em; }
 .main-wrap .edit-title { margin-top: 0; }
 
 /* 当前位置 */
@@ -224,10 +238,12 @@ a, a:hover { text-decoration: none; }
 /* 文本居中斑马纹表格 */
 .table-center-zebra { text-align: center; }
 .table-center-zebra th { color: #fff; background: #193974; }
+.table-center-zebra .jq-edit1, .table-center-zebra .jq-edit2 { min-width: 120px; }
+.table-center-zebra .jq-edit1 .edit-input, .table-center-zebra .jq-edit2 .edit-input { width: 115px; height: 18px; text-align: center; }
 
 /* 编辑式斑马纹表格 */
 .table-edit-zebra .label { width: 15%; text-align: right; padding-right: 10px; }
-.table-edit-zebra .input { width: 74%; }
+.table-edit-zebra .input { width: 70%; }
 .table-edit-zebra b { float: left; margin-left: 40%; }
 .table-edit-zebra .input40 { width: 40px; }
 
@@ -245,3 +261,7 @@ a, a:hover { text-decoration: none; }
 /* 版权 */
 .copyright { margin: 25px 0; }
 .copyright a { margin-right: 10px; }
+
+/* 游戏分类管理---分类添加 */
+.tags { min-width: 150px; }
+.tags li { height: 30px; line-height: 30px; }

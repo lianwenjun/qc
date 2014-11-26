@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset = "UTF-8">
+    <title>系统管理—供应商管理</title>
+    <link rel="stylesheet" href="../../css/admin/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <script type="text/javascript" src="../../js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../../js/admin/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../js/common.js"></script>
+    <script type="text/javascript" src="../../js/btn-event.js"></script>
+</head>
+<body>
+    <!-- 左侧盒子 -->
+    <div class="side-wrap">
+        <h3 class="title">游戏商店系统</h3 >
+        <h5 class="subtitle">hi!<span class="margin-left10">力天部落</span></h5>
+        <h5><a href="#" class="margin-right10">修改密码</a><a href="#"> 退出系统 </a></h5>
+        <!-- 左侧菜单 -->
+        <ul class="jq-menu nestedul">
+            <li class="menu">
+                <p>游戏管理</p>
+                <ul>
+                    <li><a href="../apps/stock.html">上架游戏列表</a></li>
+                    <li><a href="../apps/draft.html">添加编辑游戏</a></li>
+                    <li><a href="../apps/pending.html">待审核列表</a></li>
+                    <li><a href="../apps/notpass.html">审核不通过列表</a></li>
+                    <li><a href="../apps/unstock.html">下架游戏列表</a></li>
+                </ul>
+            </li>
+            <li class="menu">
+                <p>广告位管理</p>
+                <ul>
+                    <li><a href="../ads/frontendpics.html">首页图片位管理</a></li>
+                    <li><a href="../ads/frontendgame.html">首页游戏位管理</a></li>
+                    <li><a href="../ads/draft.html">专题编辑管理</a></li>
+                    <li><a href="../ads/stock.html">上架专题管理</a></li>
+                    <li><a href="../ads/rank.html">排行游戏位管理</a></li>
+                    <li><a href="../ads/sort.html">分类页图片管理</a></li>
+                    <li><a href="../ads/gift.html">礼包广告位管理</a></li>
+                </ul>
+            </li>
+            <li class="menu">
+                <p>系统管理</p>
+                <ul>
+                    <li><a href="game-sort.html">游戏分类管理</a></li>
+                    <li><a href="tags.html">标签库管理</a></li>
+                    <li><a href="supplier.html">供应商管理</a></li>
+                    <li><a href="channel.html">渠道商管理</a></li>
+                    <li><a href="keyword.html">关键字管理</a></li>
+                    <li><a href="shield-word.html">屏蔽词管理</a></li>
+                </ul>
+            </li>
+            <li class="menu">
+                <p>评论管理</p>
+                <ul>
+                    <li><a href="../comment/score.html">游戏评分列表</a></li>
+                    <li><a href="../comment/comment.html">游戏评论列表</a></li>
+                    <li><a href="../comment/feedback.html">应用反馈</a></li>
+                </ul>
+            </li> 
+            <li class="menu">
+                <p>数据中心</p>
+                <ul>
+                    <li><a href="../statistics/active.html">平台活跃统计</a></li>
+                    <li><a href="../statistics/download.html">游戏下载统计</a></li>
+                    <li><a href="../statistics/version.html">版本分布统计</a></li>
+                    <li><a href="../statistics/activation.html">平台激活统计</a></li>
+                    <li><a href="../statistics/path.html">页面路径统计</a></li>
+                    <li><a href="../statistics/event.html">按钮事件统计</a></li>
+                    <li><a href="../statistics/visit.html">页面访问统计</a></li>
+                    <li><a href="../statistics/search.html">用户搜索统计</a></li>
+                </ul>
+            </li>
+            <li class="menu">
+                <p>用户中心</p>
+                <ul>
+                    <li><a href="../user/signup.html">注册用户数据</a></li>
+                    <li><a href="../user/active.html">活跃用户数据</a></li>
+                    <li><a href="../user/query.html">用户查询</a></li>
+                </ul>
+            </li>
+            <li class="menu">
+                <p>权限管理</p>
+                <ul>
+                    <li><a href="../auth/user.html">管理员管理</a></li>
+                    <li><a href="../auth/role.html">角色管理</a></li>
+                </ul>
+            </li>
+            <li class="menu">
+                <p>日志管理</p>
+                <ul>
+                    <li><a href="../logs/log.html">日志查询</a></li>
+                </ul>
+            </li>
+        </ul>
+        <!-- /左侧菜单 -->
+    </div>
+    <!-- /左侧盒子 -->
+    <!-- 右侧主体盒子 -->
+    <div class="main-wrap">
+        <div class="breadcrumb">
+            <p><b>系统管理</b><i>&gt;</i>供应商管理</p>
+        </div>
+        <div class="content">
+             <form action="" method="" name="form-search">  
+                <!-- 查询-->
+                <div class="search">
+                    <p>
+                        <label>查询：</label>
+                        <input type="text" class="input margin-right10" placeholder="请输入关键字">
+                        <input type="button" class="button" value="查询">
+                    </p>
+                </div>
+            </form>
+            <!-- 表格 -->
+            <p class="title">
+                供应商数量：共 <span class="red jq-red">2</span> 条记录
+                <input type="button" class="button jq-add-supplier float-right" value="添加供应商">
+            </p>
+            <table cellpadding="0" cellspacing="0" class="table-center-zebra">
+                <thead>
+                    <tr>
+                        <th>供应商ID</th>
+                        <th>供应商名称</th>
+                        <th>简写</th>
+                        <th>添加时间</th>
+                        <th>操作人</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody class="jq-table">
+                    <tr>
+                        <td>1</td>
+                        <td class="jq-edit1">战争</td>
+                        <td class="jq-edit2">500,000</td>
+                        <td>2014-10-16 14:29:52</td>
+                        <td>爱老虎油</td>
+                        <td class="btns">
+                            <input type="button" class="button jq-edit" value="编辑">
+                            <input type="button" class="button red-button jq-delete" value="删除">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td class="jq-edit1">战争</td>
+                        <td class="jq-edit2">500,000</td>
+                        <td>2014-10-16 14:29:52</td>
+                        <td>爱老虎油</td>
+                        <td class="btns">
+                            <input type="button" class="button jq-edit" value="编辑">
+                            <input type="button" class="button red-button jq-delete" value="删除">
+                        </td>
+                    </tr>
+                </tbody>
+                <!-- 弹窗 -->
+                    <!-- “添加”弹窗 -->
+                    <div class="jq-addModal jq-add-supplier-modal" title="添加供应商">
+                        <p>
+                            <label>供应商名称：</label>
+                            <input class="input input28" type="text" placeholder="28个字符" maxlength="28em">
+                        </p>
+                        <p>
+                            <label>供应商名称简写：</label>
+                            <input class="input input8" type="text" placeholder="8个字符" maxlength="8em">
+                        </p>
+                    </div>
+                    <!-- /“添加”弹窗 -->
+                    <!-- “删除”弹窗 -->
+                    <div class="jq-deleteModal" title="信息">
+                        <p>确定删除此记录？</p>
+                    </div>
+                    <!-- /”删除“弹窗 -->
+                <!-- /弹窗 -->
+            </table>
+            <!-- /表格 -->
+            <!-- 上下翻页 -->
+            <div class="pagination">
+                <span class="page disabled">首页</span> 
+                <span class="page disabled">上一页</span>
+                <span class="page current">1</span>
+                <span class="page">2</span>
+                <span class="page">3</span>
+                <span class="page">4</span>
+                <span class="page">5</span>……
+                <span class="page">下一页</span>
+                <span class="page">末页</span>
+                <span class="space">共<b class="page-total">99</b>页</span>
+                <span class="space">当前<input type="text" />页</span>
+                <span class="page space">GO</span>
+            </div>
+            <!-- /上下翻页 -->
+        </div>
+        <!-- 版权信息 -->
+        <p class="copyright"><a class="link-gray">使用前必读</a><span>粤ICP证030173号</span></p>
+        <!-- /版权信息 -->
+    </div>
+    <!-- /右侧主体盒子 -->
+    <script type="text/javascript">
+        btnEvent();
+    </script>
+</body>
+</html>
