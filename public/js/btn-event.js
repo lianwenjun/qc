@@ -293,6 +293,7 @@ function btnEvent() {
     }
 
 
+
     //只允许输入数字和小数点
     checkNum();
     function checkNum() {
