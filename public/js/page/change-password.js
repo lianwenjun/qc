@@ -11,7 +11,8 @@ $(function(){
                 required: true
             },
             "check-password": {
-                required: true
+                required: true,
+                equalTo: "#new-password"
             }
         },
         messages: {

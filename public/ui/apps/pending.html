@@ -121,10 +121,10 @@
                             <option value="">格斗游戏</option>
                             <option value="">动作游戏</option>
                         </select>
-                        <input class="input" type="text" placeholder="请输入关键字" name="keyword" />
+                        <input class="input" type="text" name="keyword" />
                     </span> 
                     <a class="button">查询</a>
-                    <span class="jq-date date float-right">
+                    <span class="jq-date float-right">
                         <input class="input" type="text" name="date[]" placeholder="2014.10.10——2014.11.11" />
                         <div class="date-table"></div>
                     </span>   
@@ -136,7 +136,6 @@
             <table cellpadding="0" cellspacing="0" class="table-center-zebra">
                 <thead>
                     <tr>
-                        <th></th>
                         <th>游戏ID</th>
                         <th>图标</th>
                         <th>游戏名称</th>
@@ -155,7 +154,6 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="checkbox" name="pending[]" /></td>
                         <td>12345</td>
                         <td><img src="../../images/admin/icon1.png" alt="图标1" class="icon25" /></td>
                         <td><span class="link-blue">game name</span></td>
@@ -175,7 +173,6 @@
                         </td>               
                     </tr>
                     <tr>
-                        <td><input type="checkbox" name="pending[]" /></td>
                         <td>12345</td>
                         <td><img src="../../images/admin/icon1.png" alt="图标1" class="icon25" /></td>
                         <td><span class="link-blue">game name</span></td>
@@ -197,13 +194,6 @@
                 </tbody>
             </table>
             <!-- /表格 -->
-            <div class="choice-button">
-                <p class="inline-button">
-                    <label><input type="checkbox" class="jq-choiceAll" />全选</label>
-                    <span class="button gray-button">已选择全部通过</span>
-                    <span class="button gray-button">已选择全部不通过</span>
-                </p>
-            </div>
             <!-- 上下翻页 -->
             <div class="pagination">
                 <span class="page disabled">首页</span> 

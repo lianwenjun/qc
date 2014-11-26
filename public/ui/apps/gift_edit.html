@@ -2,12 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>游戏管理——下架游戏列表</title>
-<link rel="stylesheet" href="../../css/admin/jquery-ui/jquery-ui.min.css">
+<title>游戏管理—上架游戏列表——礼包编辑</title>
 <link rel="stylesheet" href="../../css/common.css">
+<link rel="stylesheet" href="../../css/apps-gift.css">
 <script type="text/javascript" src="../../js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="../../js/admin/jquery-ui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../js/admin/jquery-ui/datepicker.js"></script>
 <script type="text/javascript" src="../../js/common.js"></script>
 </head>
 <body>
@@ -101,105 +99,58 @@
     <!-- /左侧盒子 -->
     <!-- 右侧主体盒子 -->
     <div class="main-wrap">
+        <p class="placeholder"></p>
         <div class="breadcrumb">
-            <p><b>游戏管理</b><i>&gt;</i>下架游戏列表</p>
-        </div>  
-        <div class="content"> 
-            <form action="" method="" name="form-search">  
-                <!-- 查询-->
-                <div class="search">
-                    <span class="padding-right15">
-                        查询：
-                        <select class="select" name="gamename">
-                            <option value="">游戏名称</option>
-                            <option value="">游戏包名</option>
-                            <option value="">游戏分类</option>
-                        </select>
-                        <select class="select" name="gametype">
-                            <option value="">游戏分类 </option>
-                            <option value="">格斗游戏</option>
-                            <option value="">动作游戏</option>
-                        </select>
-                        <input class="input" type="text" name="keyword" />
-                    </span> 
-                    <a class="button">查询</a>
-                    <span class="jq-date float-right">
-                        <input class="input" type="text" name="date[]" placeholder="2014.10.10——2014.11.11" />
-                        <div class="date-table"></div>
-                    </span>   
-                </div>
-                <!-- /查询 -->
-            </form>
-            <!-- 表格 -->
-            <p class="title">审核不通过游戏：共<b class="red">1213</b>条记录</p>
-            <table cellpadding="0" cellspacing="0" class="table-center-zebra">
-                <thead>
-                    <tr>
-                        <th>游戏ID</th>
-                        <th>图标</th>
-                        <th>游戏名称</th>
-                        <th>包名</th>
-                        <th>游戏分类</th>
-                        <th>大小</th>
-                        <th>版本号</th>
-                        <th>下载量</th>
-                        <th>上架时间</th>
-                        <th>下架时间</th>
-                        <th>操作人</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>12345</td>
-                        <td><img src="../../images/admin/icon1.png" alt="图标1" class="icon25" /></td>
-                        <td><span class="link-blue">game name</span></td>
-                        <td><span class="elimit-width25em">1234567890adcvbnmawertgyu0000000</span></td>
-                        <td>策略游戏</td>
-                        <td>180.5M</td>
-                        <td>4.4.3</td>
-                        <td>9,999,999,999</td>
-                        <td>2014-09-03 19:09</td>
-                        <td>2014-09-03 19:09</td>
-                        <td>欧阳风</td>
-                        <td><a href="edit.html" class="button">编辑</a></td>               
-                    </tr>
-                    <tr>
-                        <td>12345</td>
-                        <td><img src="../../images/admin/icon1.png" alt="图标1" class="icon25" /></td>
-                        <td><span class="link-blue">game name</span></td>
-                        <td><span class="elimit-width25em">1234567890adcvbnmawertgyu0000000</span></td>
-                        <td>策略游戏</td>
-                        <td>180.5M</td>
-                        <td>4.4.3</td>
-                        <td>9,999,999,999</td>
-                        <td>2014-09-03 19:09</td>
-                        <td>2014-09-03 19:09</td>
-                        <td>欧阳风</td>
-                        <td><a href="edit.html" class="button">编辑</a></td>               
-                    </tr>
-                </tbody>
-            </table>
-            <!-- /表格 -->
-            <!-- 上下翻页 -->
-            <div class="pagination">
-                <span class="page disabled">首页</span> 
-                <span class="page disabled">上一页</span>
-                <span class="page current">1</span>
-                <span class="page">2</span>
-                <span class="page">3</span>
-                <span class="page">4</span>
-                <span class="page">5</span>……
-                <span class="page">下一页</span>
-                <span class="page">末页</span>
-                <span class="space">共<b class="page-total">99</b>页</span>
-                <span class="space">当前<input type="text" />页</span>
-                <span class="page space">GO</span>
-            </div>
-            <!-- /上下翻页 -->
+            <p><b>游戏管理</b><i>&gt;</i><a class="link-darkgray" href="stock.html">上架游戏列表</a><i>&gt;</i>礼包编辑</p>
         </div>
-        <p class="copyright"><a class="link-gray">使用前必读</a><span>粤ICP证030173号</span></p>
-    </div>
+        <!-- 信息内容 --> 
+        <form name="form" action="" method="get" class="validate">
+            <div class="content">
+                <table class="table-edit">
+                    <tr>
+                        <td class="label">礼包名称：</td>
+                        <td><input class="input" type="text" name="gift_name" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label">礼包内容：</td>
+                        <td><input class="input" type="text" name="gift_text" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label">兑换方式：</td>
+                        <td><input class="input" type="text" name="exchange" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label">领取资格：</td>
+                        <td>
+                            <select class="select" name="getway">
+                                <option value="">领取资格</option>
+                                <option value="">会员</option>
+                                <option value="">积分兑换</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">开始时间：</td>
+                        <td><input class="input" type="text" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label">结束时间：</td>
+                        <td><input class="input" type="text" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label">礼包序号：</td>
+                        <td><textarea class="textarea"></textarea></td>
+                    </tr>
+                </table>
+                <p class="inline-button">
+                    <input type="submit" value="提交" class="button" />
+                    <a href="stock.html" class="button">返回列表</a>
+                </p>
+            </div>
+        </form>
+        <!-- /信息内容 -->
+        <p class="copyright"><a class="link-gray">使用前必读</a><span>粤ICP证030173号</span></p> 
+    </div> 
     <!-- /右侧主体盒子 -->
 </body>
 </html>

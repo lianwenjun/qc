@@ -9,7 +9,7 @@
 .validate em.error { color: red; margin-left: 10px; }
 
 /* 登录页面样式 */
-.signin-wrap { width: 100%; background: url("../images/admin/signin_bg.jpg") no-repeat scroll center top #0071d6; }
+.signin-wrap { width: 100%; background: url("../images/admin/login_bg.jpg") no-repeat scroll center top #0071d6; }
 
 .signin-content { margin-left: -193px; width: 386px; margin-top: 200px; }
 .signin-content p { margin: 25px 0; text-align: center; }

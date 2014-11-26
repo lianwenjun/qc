@@ -8,7 +8,9 @@
 <script type="text/javascript" src="../../js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="../../js/admin/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="../../js/admin/jquery-ui/datepicker.js"></script>
+<script type="text/javascript" src="../../js/jquery.tmpl.min.js"></script>
 <script type="text/javascript" src="../../js/common.js"></script>
+<script type="text/javascript" src="../../js/page/stock.js"></script>
 </head>
 <body>
     <!-- 左侧盒子 -->
@@ -110,23 +112,27 @@
                 <div class="search">
                     <span class="padding-right15">
                         查询：
-                        <select class="select" name="gamename">
-                            <option value="">游戏名称</option>
-                            <option value="">游戏包名</option>
-                            <option value="">游戏分类</option>
-                        </select>
                         <select class="select" name="gametype">
                             <option value="">游戏分类 </option>
                             <option value="">格斗游戏</option>
                             <option value="">动作游戏</option>
+                            <option value="">策略卡牌</option>
+                            <option value="">体育竞技</option>
                         </select>
-                        <input class="input" type="text" placeholder="请输入关键字" name="keyword" />
+                        <select class="select" name="gamename">
+                            <option value="">游戏名称</option>
+                            <option value="">游戏包名</option>
+                            <option value="">游戏标签</option>
+                            <option value="">版本号</option>
+                            <option value="">游戏ID</option>
+                        </select>
+                        <input class="input" type="text" name="keyword" />
                     </span>
                     <span class="padding-right15">安装包：
                         <input class="input pill-input" type="text" placeholder="0K" name="space[]" />—<input class="input pill-input" type="text" placeholder="10M" name="space[]" />
                     </span>  
                     <a class="button">查询</a>
-                    <span class="jq-date date float-right">
+                    <span class="jq-date float-right">
                         <input class="input" type="text" name="date[]" placeholder="2014.10.10——2014.11.11" />
                         <div class="date-table"></div>
                     </span>   
@@ -164,12 +170,12 @@
                         <td>策略游戏</td>
                         <td>180.5M</td>
                         <td>4.4.3</td>
-                        <td class="link-blue">点击预览</td>
+                        <td class="link-blue jq-preview">点击预览</td>
                         <td>9,999,999,999</td>
                         <td>2014-09-03 19:09</td>
                         <td>
                             <a href="gift.html" class="button">礼包</a>
-                            <span class="button">下架</span>
+                            <span class="button jq-unstock">下架</span>
                             <a href="edit.html" class="button">更新</a>
                             <a href="history.html" class="button">历史版本</a>
                         </td>               
@@ -184,12 +190,12 @@
                         <td>策略游戏</td>
                         <td>180.5M</td>
                         <td>4.4.3</td>
-                        <td class="link-blue">点击预览</td>
+                        <td class="link-blue jq-preview">点击预览</td>
                         <td>9,999,999,999</td>
                         <td>2014-09-03 19:09</td>
                         <td>
                             <a href="gift.html" class="button">礼包</a>
-                            <span class="button">下架</span>
+                            <span class="button jq-unstock">下架</span>
                             <a href="update.html" class="button">更新</a>
                             <a href="history.html" class="button">历史版本</a>
                         </td>               
@@ -197,6 +203,18 @@
                 </tbody>
             </table>
             <!-- /表格 -->
+            <!-- 下架和预览弹出框 -->
+            <div class="jq-unstockModal" title="信息"><p>确定要下架吗？</p></div>
+            <div class="browse-phone jq-previewModal">
+                <p class="browse-title"></p>
+                <div class="browse-content">
+                    <ul>
+                        <li></li>
+                    </ul>
+                </div>
+                <p class="browse-button">退出预览</p>
+            </div>
+            <!-- /下架和预览弹出框 -->
             <!-- 上下翻页 -->
             <div class="pagination">
                 <span class="page disabled">首页</span> 

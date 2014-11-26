@@ -111,7 +111,7 @@
     <div class="main-wrap">
         <p class="placeholder"></p>
         <div class="breadcrumb">
-            <p><b>游戏管理</b><i>&gt;</i>上架游戏列表<i>&gt;</i>编辑</p>
+            <p><b>游戏管理</b><i>&gt;</i><a class="link-darkgray" href="stock.html">上架游戏列表</a><i>&gt;</i>编辑</p>
         </div>
         <!-- 信息内容 --> 
         <form name="form" action="" method="get" class="validate jq-form">
@@ -147,7 +147,11 @@
                         <td class="upload-button-wrap">
                             <a href="#" class="button">选择APK文件</a>
                             <input type="file" class="upload-button" style="top:48px;" />
-                            <img src="../../images/admin/new-version.jpg" alt="新版本图片" />
+                            <span class="upload-pic">
+                                <img src="../../images/admin/new-version.jpg" alt="新版本图片" class="relative" />
+                                <span>上传图片</span>
+                                <input type="file" class="upload-button" style="left: 35px; top: 80px" />
+                            </span>
                         </td>
                     </tr>
                     <tr>
@@ -212,7 +216,7 @@
                     </tr>
                     <tr>
                         <td class="label">小编点评：</td>
-                        <td><textarea class="jq-richtext" name="comment" style="display: none;"></textarea></td>
+                        <td><textarea name="comment" class="textarea"></textarea></td>
                     </tr>
                     <tr>
                         <td class="label"><b class="red">*</b>游戏截图：</td>
@@ -225,7 +229,7 @@
                     <tr>
                         <td class="label">截图预览：</td>
                         <td> 
-                            <ul class="jq-sortable pic-sort">
+                            <ul class="jq-sortable sort-pic">
                                 <li><img src="../../images/admin/preview1.jpg" alt="预览图1" /><span class="jq-delete">删除</span></li>
                                 <li><img src="../../images/admin/preview2.jpg" alt="预览图2" /><span class="jq-delete">删除</span></li>
                                 <li><img src="../../images/admin/preview3.jpg" alt="预览图3" /><span class="jq-delete">删除</span></li>
