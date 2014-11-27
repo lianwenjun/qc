@@ -15,3 +15,4 @@ Artisan::add(new CollectGame);
 Artisan::add(new DownloadLogsTable);
 Artisan::add(new Statistics);
 Artisan::add(new OldToNew);
+Artisan::add(new FixAppTags);
