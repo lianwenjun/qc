@@ -32,6 +32,7 @@ class CUpload_App extends CUpload_ABase implements CUpload_Interface
         $this->savePath = str_replace(public_path(), '', $savePath);
 
         $data = $this->_apkParse($savePath);
+
         $icon = $this->_apkIcon($savePath, $data['icon']);
 
         $size = filesize($savePath);
@@ -66,8 +67,8 @@ class CUpload_App extends CUpload_ABase implements CUpload_Interface
         $dir   = public_path() . Config::get('upload.'.$type);
 
         $dir    .=  sprintf('/%s/%s', $hashs[0], $hashs[1]);
-        $info    = pathinfo($filename);
-        $newName = sprintf('%s.%s', $hash, $info['extension']);
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+        $newName = sprintf('%s.%s', $hash, $extension);
 
         return [$dir, $newName];
     }
@@ -151,12 +152,19 @@ class CUpload_App extends CUpload_ABase implements CUpload_Interface
     private function _outputParse($output)
     {
 
-        $data = [];
+        $data = [
+            'pack'         => '',
+            'version_code' => 0,
+            'version'      => 0,
+            'title'        => '',
+            'icon'         => '',
+        ];
         foreach ($output as $line) {
 
             // package: name='com.fontlose.tcpudp' versionCode='6' versionName='1.50'
             $regex = '/^package: name=\'(.+)\' versionCode=\'(\d+)\' versionName=\'(.+)\'$/';
             preg_match($regex, $line, $matches);
+
             if(! empty($matches)) {
                 $data['pack']         = $matches[1];
                 $data['version_code'] = $matches[2];

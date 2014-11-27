@@ -15,10 +15,12 @@ public/pictures/*
 public/catads/*
 public/cateads/*
 public/ads/*
+public/client/*
 *.apk
 app/config/database.php
 .idea/
 app/config/ucDelta.php
+app/config/ucCGame.php
 public/info.php
 public/Uploads/*
 *~

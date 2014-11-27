@@ -170,15 +170,15 @@ ul.ui-sortable li.placeholder:before {
                <td class="Search_lei"><span class="required">*</span>游戏标签：</td>
                <td>
                   <span style="float:left; line-height:26px; padding-right: 0; background: none; margin-top:0; border: 0px" class="jq-initTags Browse_centent_about">
-                        <?php $split = ''; $tagsText = ''; ?>
+                        <?php $h2s = ''; $tag_titles = []; ?>
                         @foreach($app->tags as $tag)
-                            <?php $tagsText .=  $split.$tag->title; ?>
                             <?php $catsInput .= "<input name='cats[]' value='".$tag->id."'>"; ?>
-                            <?php $split = '</h2>, <h2>'; ?>
+                            <?php $h2s .= '<h2 data-id="'.$tag->id.'">'.$tag->title.'</h2>'; ?>
+                            <?php $tag_titles[] = $tag->title; ?>
                         @endforeach
-                        {{ '<h2>' . $tagsText  . '</h2>' }}
+                        {{ $h2s }}
                   </span>
-                  <input name="checkTag" type="hidden" value="{{ $tagsText }}"/><!-- 验证用 -->
+                  <input name="checkTag" type="hidden" value="{{ implode(', ', $tag_titles); }}"/><!-- 验证用 -->
                </td>
             </tr>
             <tr class="Search_biao_one">
@@ -326,9 +326,14 @@ ul.ui-sortable li.placeholder:before {
      * @return void
      */
     function initTags() {
-        var tagsText = $('.jq-initTags').text();
+        //var tagsText = $('.jq-initTags').text();
+        //var tags = tagsText.split(", ");
+        
+        var tags = [];
+        $('.jq-initTags>h2').each(function(){
+            tags.push($(this).text());
+        });
 
-        var tags = tagsText.split(", ");
         $('input[type="checkbox"]').each(function() {
             for(i in tags) {
                 // console.log($(this).parent().text() + ' ---> ' + tags[i].trim());
@@ -441,7 +446,7 @@ ul.ui-sortable li.placeholder:before {
             tags = $.unique( tags );
 
             console.log(tags);
-            $('.jq-initTags').html("<h2>" + tags.join("</h2>, <h2>") + "</h2>").next('input').val(tags.join(", "));
+            $('.jq-initTags').html("<h2>" + tags.join("</h2><h2>") + "</h2>").next('input').val(tags.join(", "));
 
             // 表单包含到提交表单
             $('.jq-cat').html($('.jq-catForm').clone());
@@ -453,8 +458,11 @@ ul.ui-sortable li.placeholder:before {
         $('.jq-initTags h2').live('click', function() {
             var input = $(this).parent().next('input');
             var val = input.val();
-            var newVal = val.replace($(this).text() + ', ', '').replace($(this).text(), '');
+            var newVal = val.replace($(this).text() + ', ', '').replace($(this).text(), '').replace(/<[^>]+>/g, '');
             input.val(newVal);
+
+            // 删除将要提交的表单中的相应的分类id
+            $('.jq-cat>input[value="'+$(this).data('id')+'"]').remove();
 
             var $this = $(this);
             $(this).fadeOut(500, function() {
@@ -665,7 +673,6 @@ ul.ui-sortable li.placeholder:before {
 
         // 提交表单
         $('.jq-submit').click(function() {
-
             tinymce.triggerSave();
 
             // 验证
