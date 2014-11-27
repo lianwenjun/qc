@@ -11,7 +11,7 @@ class FixAppTags extends Command
      *
      * @var string
      */
-    protected $name = 'fix-apptags';
+    protected $name = 'fixapptags';
 
     /**
      * 命令注释
