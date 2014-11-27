@@ -431,11 +431,15 @@ ul.ui-sortable li.placeholder:before {
             });
 
             var html = '';
+            var checkTag = [];
             for (var i in tags) {
                 html += '<h2 data-id="'+tags[i][0]+'">'+tags[i][1]+'</h2>';
+                checkTag.push(tags[i][1]);
             }
             // 重新生成标签区域的html
             $('.jq-initTags').html(html);
+            // 重新写入标签的验证字段
+            $('input[name="checkTag"]').val(checkTag.join(', '));
 
             // 表单包含到提交表单
             $('.jq-cat').html($('.jq-catForm').clone());
