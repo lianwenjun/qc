@@ -355,7 +355,7 @@ ul.ui-sortable li.placeholder:before {
                               @endforeach
                               "</ul>" +
                            "</div>" +
-                           "<div class='add_update_Label' style='height: 230px'>" +
+                           "<div class='add_update_Label' style='height: 512px'>" +
                               "<div class='add_update_title'>标签内容</div>" +
                               @foreach($tags as $k => $cat)
                               "<div class='tags-list' id='cat_{{$k}}'>"+
@@ -378,13 +378,13 @@ ul.ui-sortable li.placeholder:before {
         $(".jq-cats").click(function(){
             $.jBox(catSelect, {
                 title: "<div class=ask_title>游戏分类</div>",
-                width: 650,
-                height:450,
+                width: 1200,
+                height:800,
                 border: 5,
                 showType: 'slide',
                 opacity: 0.3,
                 showIcon:false,
-                top: '20%',
+                top: '10%',
                 loaded:function(h){
                     $("body").css("overflow-y","hidden");
                     jbox = h;
