@@ -43,7 +43,7 @@ class OldToNew extends Command
      */
     public function fire()
     {
-        $limit = 1000;
+        $limit = 200;
 
         $db = 'olds';  // 旧版数据所在库
 
@@ -54,33 +54,37 @@ class OldToNew extends Command
          */
 
         // tbl_Apk表
-        DB::connection($db)->statement(DB::raw("update tbl_Apk set Apk_System = REPLACE(Apk_System, 'Android ', '');"));
-        DB::connection($db)->statement(DB::raw("update tbl_Apk set Apk_System = REPLACE(Apk_System, '以上', '')"));
+        // DB::connection($db)->statement(DB::raw("update tbl_Apk set Apk_System = REPLACE(Apk_System, 'Android ', '');"));
+        // DB::connection($db)->statement(DB::raw("update tbl_Apk set Apk_System = REPLACE(Apk_System, '以上', '')"));
+        // DB::connection($db)->statement(DB::raw("update tbl_Apk set Apk_System = REPLACE(Apk_System, '安卓', '');"));
 
-        // tbl_APP表
-        DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Category = replace(APP_Category, '</id><id>', '|')"));
-        DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Category = replace(APP_Category, '</id>', '')"));
-        DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Category = replace(APP_Category, '<id>', '')"));
+        // // tbl_APP表
+        // DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Category = replace(APP_Category, '</id><id>', '|')"));
+        // DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Category = replace(APP_Category, '</id>', '')"));
+        // DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Category = replace(APP_Category, '<id>', '')"));
 
-        DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Tag = replace(APP_Tag, '</id><id>', '|')"));
-        DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Tag = replace(APP_Tag, '</id>', '')"));
-        DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Tag = replace(APP_Tag, '<id>', '')"));
+        // DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Tag = replace(APP_Tag, '</id><id>', '|')"));
+        // DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Tag = replace(APP_Tag, '</id>', '')"));
+        // DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Tag = replace(APP_Tag, '<id>', '')"));
 
-        DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Word = replace(APP_Word, '</id><id>', '|')"));
-        DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Word = replace(APP_Word, '</id>', '')"));
-        DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Word = replace(APP_Word, '<id>', '')"));
-        echo "预处理 done\n";
+        // DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Word = replace(APP_Word, '</id><id>', '|')"));
+        // DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Word = replace(APP_Word, '</id>', '')"));
+        // DB::connection($db)->statement(DB::raw("update tbl_APP set APP_Word = replace(APP_Word, '<id>', '')"));
+
+        // // 纠正错误数据
+        // DB::connection($db)->statement(DB::raw("update tbl_Apk set Apk_From = 3 where Apk_Icon != '' and Apk_From != 3"));
+        // echo "预处理 done\n";
 
         // 清空表
-        DB::statement('truncate table apps');
-        DB::statement('truncate table cats');
-        DB::statement('truncate table keywords');
+        // DB::statement('truncate table apps');
+        // DB::statement('truncate table cats');
+        // DB::statement('truncate table keywords');
         DB::statement('truncate table app_cats');
-        DB::statement('truncate table app_keywords');
-        DB::statement('truncate table ratings');
-
+        // DB::statement('truncate table app_keywords');
+        // DB::statement('truncate table ratings');
         echo "清空表 done\n";
         
+        /*
         // 待审核游戏导入基本信息
         DB::statement("insert into apps (`id`, `icon`, `pack`, `size_int`, `version`, `version_code`, `author`, `changes`, `reason`, `md5`, `os_version`, `download_link`, `stocked_at`, `unstocked_at`, `created_at`, `updated_at`, `has_ad`,`is_verify`,`source`, `entity_id`,`status`) select `Apk_APPId`, `Apk_Icon`, `Apk_PageName`, `Apk_Size`/1024 as size, `Apk_Version`, `Apk_UpdateVersion`, `Apk_Author`, `Apk_UpdateContent`, `Apk_Remark`, `Apk_MD5`, `Apk_System`, `Apk_DownUrl`, `Apk_UpTime`, `Apk_DownTime`, `Apk_AddTime`, `Apk_UpdateTime`, IF(`Apk_IsHaveAd` = 1, 'yes', 'no'), IF(`Apk_IsSafe` = 1, 'yes', 'no'), IF(`Apk_From` = 3, 'uc', 'lt'), `Apk_ProtoID`, 'pending' from {$db}.tbl_Apk where Apk_IsPush = 0 and Apk_IsEdit = 1 and Apk_IsAudit = 0");
         echo "待审核游戏导入基本信息 done\n";
@@ -137,8 +141,10 @@ class OldToNew extends Command
         } while (!empty($result));
         unset($result);
         echo "处理显示大小 done\n";
+        */
 
         // 处理游戏截图
+        echo "处理游戏截图 start\n";
         $offset = 0;
         do {
             $sql = "select id from apps limit {$offset}, {$limit}";
@@ -148,21 +154,31 @@ class OldToNew extends Command
             if (!empty($result)) {
                 foreach ($result as $value) {
 
-                    $sql = "select Album_ImgUrl from tbl_Apk_Album where Album_ApkId = {$value->id} order by Album_SortId asc";
-                    $album = DB::connection($db)->select($sql);
+                    // 获取最新一个app_id
+                    $sql = "select Apk_Id from tbl_Apk where Apk_APPId = {$value->id} order by Apk_APPId desc limit 1";
+                    $last = DB::connection($db)->select($sql);
 
-                    $data = [];
-                    if(!empty($album)) {
-                        foreach($album as $v) {
-                            $data[] = $v->Album_ImgUrl;
+                    // print_r($last[0]->Apk_Id);die;
+
+                    if(isset($last[0])) {
+                        $sql = "select Album_ImgUrl from tbl_Apk_Album where Album_ApkId = {$last[0]->Apk_Id} order by Album_SortId asc";
+                        $album = DB::connection($db)->select($sql);
+
+                        $data = [];
+                        if(!empty($album)) {
+                            foreach($album as $v) {
+                                $data[] = $v->Album_ImgUrl;
+                            }
                         }
-                    }
 
-                    $app = Apps::find($value->id);
-                    $app->update(['images' => serialize($data)]);
+                        $app = Apps::find($value->id);
+                        $app->update(['images' => serialize($data)]);
+                    }
 
                 }
             }
+
+            echo $offset . "\n";
 
             $offset += $limit;
         } while (!empty($result));
@@ -172,6 +188,8 @@ class OldToNew extends Command
         // 处理游戏截图大小写问题
         DB::statement("update apps set images = replace(images, '/uploads', '/Uploads')");
         echo "处理游戏截图大小写问题 done\n";
+
+        /*
 
         // 处理本地上传
         $offset = 0;
@@ -199,7 +217,7 @@ class OldToNew extends Command
         unset($result);
         echo "处理处理本地上传数据 done\n";
 
-        // 处理分类
+        // 处理Category表数据
         $categorys = DB::connection($db)->select('select * from tbl_Category');
         if (!empty($categorys)) {
             foreach ($categorys as $key => $value) {
@@ -215,26 +233,35 @@ class OldToNew extends Command
         }
         unset($categorys);
         echo "处理Category表数据 done\n";
+        */
         
 
         // 游戏分类id处理
+        echo "游戏分类id处理 start\n";
         $offset = 0;
         do {
             $result = DB::connection($db)->select("select APP_Id, APP_Category from tbl_APP limit {$offset}, {$limit}");
 
             if (!empty($result)) {
                 foreach ($result as $value) {
-                    $c = explode('|', trim($value->APP_Category, '|'));
+                    $c = explode('|', trim($value->APP_Category));
                     foreach ($c as $v) {
                         if(empty($v)) continue;
-                        DB::table('app_cats')->insert(array(
-                            'app_id'        => $value->APP_Id,
-                            'cat_id'        => $v,
-                            'created_at'    => date('Y-m-d H:i:s'),
-                        ));
+
+                        // 是否存在
+                        $ex = DB::select("select id from app_cats where app_id = {$value->APP_Id} and cat_id = {$v}");
+                        if(empty($ex)) {
+                            DB::table('app_cats')->insert(array(
+                                'app_id'        => $value->APP_Id,
+                                'cat_id'        => $v,
+                                'created_at'    => date('Y-m-d H:i:s'),
+                            ));
+                        }
                     }
                 }
             }
+
+            echo $offset . "\n";
 
             $offset += $limit;
         } while (!empty($result));
@@ -242,28 +269,38 @@ class OldToNew extends Command
         echo "游戏分类id处理 done\n";
 
         // 游戏标签id处理
+        echo "游戏标签id处理 start\n";
         $offset = 0;
         do {
             $result = DB::connection($db)->select("select APP_Id, APP_Tag from tbl_APP limit {$offset}, {$limit}");
 
             if (!empty($result)) {
                 foreach ($result as $value) {
-                    $c = explode('|', trim($value->APP_Tag, '|'));
+                    $c = explode('|', trim($value->APP_Tag));
                     foreach ($c as $v) {
                         if(empty($v)) continue;
-                        DB::table('app_cats')->insert(array(
-                            'app_id'        => $value->APP_Id,
-                            'cat_id'        => $v,
-                            'created_at'    => date('Y-m-d H:i:s'),
-                        ));
+
+                        // 是否存在
+                        $ex = DB::select("select id from app_cats where app_id = {$value->APP_Id} and cat_id = {$v}");
+                        if(empty($ex)) {
+                            DB::table('app_cats')->insert(array(
+                                'app_id'        => $value->APP_Id,
+                                'cat_id'        => $v,
+                                'created_at'    => date('Y-m-d H:i:s'),
+                            ));
+                        }
                     }
                 }
             }
+
+            echo $offset . "\n";
 
             $offset += $limit;
         } while (!empty($result));
         unset($result);
         echo "游戏标签id处理 done\n";
+
+        /*
 
         // 处理KeyWord表数据
         $offset = 0;
@@ -295,14 +332,19 @@ class OldToNew extends Command
 
             if (!empty($result)) {
                 foreach ($result as $value) {
-                    $c = explode('|', trim($value->APP_Word, '|'));
+                    $c = explode('|', trim($value->APP_Word));
                     foreach ($c as $v) {
                         if(empty($v)) continue;
-                        DB::table('app_keywords')->insert(array(
-                            'app_id'     => $value->APP_Id,
-                            'keyword_id' => $v,
-                            'created_at' => date('Y-m-d H:i:s'),
-                        ));
+
+                        // 是否存在
+                        $ex = DB::select("select id from app_keywords where app_id = {$value->APP_Id} and keyword_id = {$v}");
+                        if(empty($ex)) {
+                            DB::table('app_keywords')->insert(array(
+                                'app_id'     => $value->APP_Id,
+                                'keyword_id' => $v,
+                                'created_at' => date('Y-m-d H:i:s'),
+                            ));
+                        }
                     }
                 }
             }
@@ -311,6 +353,7 @@ class OldToNew extends Command
         } while (!empty($result));
         unset($result);
         echo "关键字ID处理 done\n";
+
 
         // 处理评分
         $offset = 0;
@@ -336,8 +379,15 @@ class OldToNew extends Command
         } while (!empty($result));
         unset($result);
         echo "处理评分 done\n";
+        */
 
-        // update apps set images = 'a:0:{}' where images = ''; ??? 
+        // 检查是否导完tags
+        // select APP_Id from olds.tbl_APP where APP_Tag != '' and APP_Id not in (select app_id from app_cats);
+
+        // 检查是否导完关键字
+        // select APP_Id from olds.tbl_APP where APP_Word != '' and APP_Id not in (select app_id from app_keywords);
+
+        // 检查是否导完截图
 
         $this->info("=================== end  ====================");
 
