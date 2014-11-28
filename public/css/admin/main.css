@@ -118,7 +118,7 @@ html,body{ font-size:12px; color:#333; line-height:18px; font-family:"微软雅�
 .add_update{width:92%; margin-top:28px; overflow:hidden}
 .add_update_title{ line-height:26px; font-size:16px; color:#193974; font-weight:bold; padding-bottom:6px; }
 .add_update_lei{overflow:hidden; width:100%; margin-top:2px;}
-.add_update_lei li{width:25%; float:left; font-size:12px; line-height:20px; height:30px; color:#333; font-weight:normal;}
+.add_update_lei li{width:12.5%; float:left; font-size:12px; line-height:20px; height:30px; color:#333; font-weight:normal;}
 .add_update_lei li input{float:left; margin-right:5px; margin-top:4px;}
 .add_update_Label{padding:15px; background:#FFF; border:#ccc solid 1px; height:130px; margin-top:10px;  scrollbar-3dlight-color:#DDD; scrollbar-arrow-color:#333; scrollbar-base-color:#cfcfcf; scrollbar-darkshadow-color:#fff; scrollbar-face-color:#cfcfcf; scrollbar-highlight-color:#fff; scrollbar-shadow-color:#595959; overflow-y:auto; overflow-x:hidden}
 .add_update_title_lei{height:20px; line-height:20px; overflow:hidden; font-size:12px; color:#333; font-weight:bold; }
