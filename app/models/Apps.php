@@ -225,17 +225,18 @@ class Apps extends \Base {
 
         // 记录操作日志
         $action = [
-            'stock' => '更新了游戏',
+            'stock'   => '更新了游戏',
             'pending' => '编辑并提交到待审核',
-            'draft' => '编辑并保存为草稿',
+            'draft'   => '编辑并保存为草稿',
         ];
 
         $selfStatus = Apps::find($id)->status;
         $action_field = [
-            'stock' => '游戏管理-上架游戏列表',
+            'stock'   => '游戏管理-上架游戏列表',
             'publish' => '游戏管理-添加编辑游戏',
             'notpass' => '游戏管理-审核不通过列表',
             'unstock' => '游戏管理-下架游戏列表',
+            'draft'   => '游戏管理-编辑草稿游戏',
         ];
 
         $logData['action_field'] = $action_field[$selfStatus];
