@@ -363,7 +363,12 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
 
         if(! $apps = Apps::whereIn('id', $ids)) {
             Session::flash('tips', ['success' => false, 'message' => "亲，找不到游戏"]);
-        } elseif ($apps->update(['status' => 'stock'])) {
+        } elseif (
+            $apps->update([
+                'status'     => 'stock',
+                'stocked_at' => date('Y-m-d H:i:s'),
+            ])
+        ) {
             Session::flash('tips', ['success' => true, 'message' => "亲，全部已经审核通过"]);
 
             // 记录操作日志
