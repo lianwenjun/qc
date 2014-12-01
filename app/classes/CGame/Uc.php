@@ -423,10 +423,11 @@ class CGame_Uc extends CGame_Base
             Ratings::where('app_id', $format['id'])
                    ->update(['manual' => $format['avg_score']]);
             // 分类id不为0则更新分类id
-            if ($format['cat_id'] != 0) {
+            // 不能统计更新 会导致所有分类变成一个值
+            /*if ($format['cat_id'] != 0) {
                 AppCats::where('app_id', $format['id'])
                        ->update(['cat_id' => $format['cat_id'],]);
-            }
+            }*/
 
         // 全新游戏
         } else {
