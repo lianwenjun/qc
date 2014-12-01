@@ -235,6 +235,15 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('index', ['as' => 'log.index', 'uses' => 'Admin_LogController@index']);
     });
 
+    //游戏中心APP
+    Route::group(['prefix' => 'client'], function()  // 日志管理
+    {
+        Route::get('index', ['as' => 'client.index', 'uses' => 'Admin_LogController@index']);
+        Route::get('create', ['as' => 'client.create', 'uses' => 'Admin_LogController@index']);
+        Route::post('create', ['as' => 'client.create', 'uses' => 'Admin_LogController@index']);
+        Route::get('edit', ['as' => 'client.edit', 'uses' => 'Admin_LogController@index']);
+        Route::post('edit', ['as' => 'client.edit', 'uses' => 'Admin_LogController@index']);
+    });
 });
 //图片
 //Route::post('/admin/appsads/imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_Apps_AppsAdsController@upload']);
