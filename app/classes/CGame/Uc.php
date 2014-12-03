@@ -387,7 +387,7 @@ class CGame_Uc extends CGame_Base
             // 获取对应过来的分类id 为0则忽略插入或更新的操作
             $cat_id = $this->cats($item['categoryId']);
             // 判断数据库中是否存在该apk对应的app记录 有就更新信息 无则创建一条记录
-            $record = Apps::where('pack', $data['pack'])
+            $record = Apps::where('download_link', $data['download_link']) // 已download_link确定一个app
                           ->where('source', 'uc')  // 只更新九游 新增的时候后面会判断是否本地（上架，添加编辑，待审）已有 待重构
                           ->orderByRaw("field(status,'stock') desc")
                           ->first();
@@ -398,6 +398,7 @@ class CGame_Uc extends CGame_Base
                 'cat_id'    => $cat_id,
                 'avg_score' => $platform['score'],
             ];
+
             // 入库操作
             $this->store($format);
         }
@@ -422,11 +423,13 @@ class CGame_Uc extends CGame_Base
             // 更新平均评分
             Ratings::where('app_id', $format['id'])
                    ->update(['manual' => $format['avg_score']]);
+
             // 分类id不为0则更新分类id
-            if ($format['cat_id'] != 0) {
-                AppCats::where('app_id', $format['id'])
-                       ->update(['cat_id' => $format['cat_id'],]);
-            }
+            // if ($format['cat_id'] != 0) {
+            //     AppCats::where('app_id', $format['id'])
+            //            ->update(['cat_id' => $format['cat_id'],]);
+            // }
+
 
         // 全新游戏
         } else {
@@ -437,39 +440,38 @@ class CGame_Uc extends CGame_Base
                           ->whereIn('status', ['stock', 'publish', 'draft', 'pending'])
                           ->first();
 
-            if(!empty($record->id)) {
-                break;
-            }
+            if(empty($record->id)) {
 
-            // 随机给新添加的apk初始化下载量显示数
-            $format['info']['download_manual'] = rand(70000, 100000);
-            // 插入apk包信息 生成app_id
-            $insert = Apps::create($format['info']);
-            // 创建keywords表记录 获取关键字id
-            $keyword = Keywords::create([
-                'word' => $format['info']['title'],
-            ]);
-            // 创建app_keywords表记录 其中keyword_id是上一步操作所产生
-            AppKeywords::create([
-                'app_id'     => $insert->id,
-                'keyword_id' => $keyword->id,
-            ]);
-            // 创建评分记录 插入平均评分
-            Ratings::create([
-                'app_id' => $insert->id,
-                'title'  => $format['info']['title'],
-                'pack'   => $format['info']['pack'],
-                'total'  => 0,
-                'counts' => 0,
-                'avg'    => $format['avg_score'],
-                'manual' => $format['avg_score'],
-            ]);
-            // 分类id不为0则创建游戏分类记录 插入分类id
-            if ($format['cat_id'] != 0) {
-                AppCats::create([
-                    'app_id' => $insert->id,
-                    'cat_id' => $format['cat_id'],
+                // 随机给新添加的apk初始化下载量显示数
+                $format['info']['download_manual'] = rand(70000, 100000);
+                // 插入apk包信息 生成app_id
+                $insert = Apps::create($format['info']);
+                // 创建keywords表记录 获取关键字id
+                $keyword = Keywords::create([
+                    'word' => $format['info']['title'],
                 ]);
+                // 创建app_keywords表记录 其中keyword_id是上一步操作所产生
+                AppKeywords::create([
+                    'app_id'     => $insert->id,
+                    'keyword_id' => $keyword->id,
+                ]);
+                // 创建评分记录 插入平均评分
+                Ratings::create([
+                    'app_id' => $insert->id,
+                    'title'  => $format['info']['title'],
+                    'pack'   => $format['info']['pack'],
+                    'total'  => 0,
+                    'counts' => 0,
+                    'avg'    => $format['avg_score'],
+                    'manual' => $format['avg_score'],
+                ]);
+                // 分类id不为0则创建游戏分类记录 插入分类id
+                if ($format['cat_id'] != 0) {
+                    AppCats::create([
+                        'app_id' => $insert->id,
+                        'cat_id' => $format['cat_id'],
+                    ]);
+                }
             }
         }
     }
