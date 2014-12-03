@@ -118,6 +118,9 @@
                     @if(Sentry::getUser()->hasAccess('keyword.index'))
                        <li><a href="{{ URL::route('keyword.index') }}" target=BoardRight>关键字管理</a></li>
                     @endif
+                    @if(Sentry::getUser()->hasAccess('client.index'))
+                       <li><a href="{{ URL::route('client.index') }}" target=BoardRight>版本管理</a></li>
+                    @endif
                  </ul>
             </li>
             <li id="three" class="mail"><a href="#three">评论管理</a>

@@ -126,4 +126,10 @@ return [
     '数据中心' => [
         'statistics.appdownloads' => '游戏下载统计',
     ],
+    '版本管理' => [
+        'client.index' => '列表',
+        'client.create' => '新增',
+        'client.edit' => '修改',
+        'client.apkupload' => '上传',
+    ],
 ];
