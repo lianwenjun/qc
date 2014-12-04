@@ -229,7 +229,7 @@ class V1_AdsController extends \V1_BaseController {
         if (intval($pageSize) < 1) {
             return $this->result(['data' => '[]', 'msg' => 0, 'msgbox' => '每页条数大于0']); 
         };
-        $types = ['4' => 'yes', '10' => 'no'];
+        $types = ['4' => 'yes',  '8'=>'yes', '10' => 'no'];
         if (!isset($types[$pageSize])) {
             return $this->result(['data' => '[]', 'msg' => 0, 'msgbox' => '分类不存在']);
         }
