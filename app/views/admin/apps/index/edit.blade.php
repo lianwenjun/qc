@@ -763,6 +763,7 @@ ul.ui-sortable li.placeholder:before {
             }
 
             $('.upload-icon-src').attr('src', response.result.path);
+            $('input[name="icon"]').val(response.result.path);
         });
         iconUpload.init();
 
