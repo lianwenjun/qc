@@ -95,7 +95,7 @@ class V1_AppsController extends \V1_BaseController {
             $exIds = Cache::get('author.apps.' . $exclude, '');
             $exIds = $exIds ? unserialize($exIds) : [];
         }
-        $appIds = array_except($appIds, [$exclude] + $exIds);
+        $appIds = array_diff($appIds, [$exclude] + $exIds);
         if (!$appIds) {
             return ['count' => 0, 'apps' => []];
         }
