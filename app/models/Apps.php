@@ -320,6 +320,8 @@ class Apps extends \Base {
                 $logData['description'] = '上传了游戏 游戏ID为' . $app->id;
                 Base::dolog($logData);
             }
+        } else {
+            $uploader['result']['data']['md5'] = md5_file($uploader['result']['fullPath']);
         }
         
         return $uploader;

@@ -132,9 +132,10 @@ ul.ui-sortable li.placeholder:before {
                           <span id="uploadInfo"></span>
                         </span>
                       </div>
+                      <div class="upload-md5-html" style="display:none;"></div>
+                      <div class="upload-download_link-html" style="display:none;"></div>
                       <div style="display:inline;">
                         <img class="upload-icon-src" src="{{ $app->icon }}" width="90" height="90">
-                        <input name="icon" value="{{ $app->icon }}" type="hidden">
                         <a class="editIcon" id="jq-editIcon" href="javascript:;">修改</a>
                       </div>
                     </div>
@@ -495,6 +496,11 @@ ul.ui-sortable li.placeholder:before {
                         document.getElementById('uploadInfo').innerHTML = '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
                     });
 
+                    $('[class^="upload-"]').each(function(){
+                        $(this).find('input').remove();
+                        $(this).next('input').remove();
+                    });
+
                     document.getElementById('jq-uploadApp').style.display = 'none';
                     document.getElementById('uploadInfo').style.display = 'block';
                     apkUploader.start();
@@ -763,7 +769,9 @@ ul.ui-sortable li.placeholder:before {
             }
 
             $('.upload-icon-src').attr('src', response.result.path);
-            $('input[name="icon"]').val(response.result.path);
+            if ($('input[name="icon"]').length > 0) {
+                $('input[name="icon"]').val(response.result.path);
+            }
         });
         iconUpload.init();
 
