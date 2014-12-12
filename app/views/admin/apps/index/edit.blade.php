@@ -134,6 +134,7 @@ ul.ui-sortable li.placeholder:before {
                       </div>
                       <div class="upload-md5-html" style="display:none;"></div>
                       <div class="upload-download_link-html" style="display:none;"></div>
+                      <div class="upload-size_int-html" style="display:none;"></div>
                       <div style="display:inline;">
                         <img class="upload-icon-src" src="{{ $app->icon }}" width="90" height="90">
                         <a class="editIcon" id="jq-editIcon" href="javascript:;">修改</a>
