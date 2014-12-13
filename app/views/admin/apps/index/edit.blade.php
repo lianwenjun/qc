@@ -476,7 +476,7 @@ ul.ui-sortable li.placeholder:before {
             runtimes : 'html5',
             browse_button : 'jq-uploadApp',
             container: document.getElementById('container'),
-            url : '{{ URL::route('apps.appupload') }}/dontSave',
+            url : '{{ URL::route('apps.appupload') }}/{{ $app->id }}',
             chunk_size: '1mb',
             flash_swf_url : '../js/Moxie.swf',
 
