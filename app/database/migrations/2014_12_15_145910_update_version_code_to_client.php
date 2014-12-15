@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 class UpdateVersionCodeToClient extends Migration {
 
     /**
-     * Run the migrations.
+     * 修改类型为Int
      *
      * @return void
      */
