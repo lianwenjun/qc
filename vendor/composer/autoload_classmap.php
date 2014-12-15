@@ -2508,6 +2508,7 @@ return array(
     'UnrecognizedExceptionException' => $vendorDir . '/facebook/webdriver/lib/WebDriverExceptions.php',
     'UnsupportedOperationException' => $vendorDir . '/facebook/webdriver/lib/WebDriverExceptions.php',
     'UpdateHistoriesTable' => $baseDir . '/app/database/migrations/2014_11_19_201316_update_histories_table.php',
+    'UpdateVersionCodeToClient' => $baseDir . '/app/database/migrations/2014_12_15_145910_update_version_code_to_client.php.php',
     'UselessFileDetector' => $vendorDir . '/facebook/webdriver/lib/remote/UselessFileDetector.php',
     'User' => $baseDir . '/app/models/User.php',
     'UserGroups' => $baseDir . '/app/models/UserGroups.php',

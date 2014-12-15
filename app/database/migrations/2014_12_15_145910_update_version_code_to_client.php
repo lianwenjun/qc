@@ -3,18 +3,20 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddIndexCatIdToAppCatsTable extends Migration {
+class UpdateVersionCodeToClient extends Migration {
 
     /**
      * Run the migrations.
-     *  给游戏分类表的分类ID打索引
+     *
      * @return void
      */
     public function up()
     {
-        Schema::table('app_cats', function(Blueprint $table)
+        Schema::table('client', function(Blueprint $table)
         {
-            $table->index('cat_id');
+            if (Schema::hasColumn('client', 'version_code')) {
+                DB::statement("ALTER TABLE `client` CHANGE `version_code` `version_code` INT(11)  NOT NULL");
+            }
         });
     }
 
@@ -26,7 +28,6 @@ class AddIndexCatIdToAppCatsTable extends Migration {
      */
     public function down()
     {
-        
     }
 
 }
