@@ -214,7 +214,7 @@ return array(
         |
         */
 
-        'suspension_time' => 15,
+        'suspension_time' => 5,
 
     ),
 

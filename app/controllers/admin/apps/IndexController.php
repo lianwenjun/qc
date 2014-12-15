@@ -292,15 +292,15 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
      * 上传游戏APK
      * POST /admin/apps/appupload
      *
-     * @param $dontSave string 是否入库（空是入库）
+     * @param $id int 游戏ID
      *
      * @return Response
      */
-    public function appUpload($dontSave = '')
+    public function appUpload($id = 0)
     {
         $app = new Apps();
 
-        return $app->appUpload($dontSave);
+        return $app->appUpload($id);
     }
     
     /**

@@ -132,10 +132,17 @@ class CUpload_App extends CUpload_ABase implements CUpload_Interface
 
         $filesystem = new Filesystem();
         $filesystem->mkdir($dir);
-        
-        // 解压图标 unzip -p myapk.zip path/to/zipped/icon.png >path/to/icon.png
-        $command = sprintf("unzip -p %s %s>%s", $targetPath, $iconPath, $savePath);
+
+        // 先解压一次HD的ICON
+        $hdIconPath = preg_replace('/res\/[\w-]+\//', 'res/drawable-hdpi/', $iconPath);;
+        $command = sprintf("unzip -p %s %s>%s", $targetPath, $hdIconPath, $savePath);
         $this->_execute($command);
+
+        if(!filesize($savePath)) {
+            // 解压图标 unzip -p myapk.zip path/to/zipped/icon.png >path/to/icon.png
+            $command = sprintf("unzip -p %s %s>%s", $targetPath, $iconPath, $savePath);
+            $this->_execute($command);
+        }
 
         rename($targetPath, $apkPath);
 
