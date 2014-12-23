@@ -63,7 +63,6 @@ class Admin_AdsController extends \Admin_BaseController {
         $is_top = $ad->is_top;
         if ($ad->delete()){
             $msg = '#' . $id . '删除成功';
-
             // 记录操作日志
             $status = [
                 'app' => [
@@ -74,7 +73,7 @@ class Admin_AdsController extends \Admin_BaseController {
                     'yes' => '广告位管理-首页图片位管理',
                     'no' => '广告位管理-编辑精选管理',
                 ],
-            ];
+            ];            
             $logData['action_field'] = $status[$type][$is_top];
             $logData['description'] = '删除了广告 广告ID为' . $id;
             Base::dolog($logData);

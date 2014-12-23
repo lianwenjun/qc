@@ -387,7 +387,7 @@ class CGame_Uc extends CGame_Base
             // 获取对应过来的分类id 为0则忽略插入或更新的操作
             $cat_id = $this->cats($item['categoryId']);
             // 判断数据库中是否存在该apk对应的app记录 有就更新信息 无则创建一条记录
-            $record = Apps::where('download_link', $data['download_link']) // 已download_link确定一个app
+            $record = Apps::where('entity_id', $data['entity_id']) // 以entity_id确定一个app
                           ->where('source', 'uc')  // 只更新九游 新增的时候后面会判断是否本地（上架，添加编辑，待审）已有 待重构
                           ->orderByRaw("field(status,'stock') desc")
                           ->first();
@@ -413,14 +413,18 @@ class CGame_Uc extends CGame_Base
      */
     protected function store($format)
     {
-        // 更新
+        // 更新游戏
         if (!empty($format['id'])) {
+
             // 去除状态信息
             unset($format['info']['status']);
+
             // 更新apk包信息
             Apps::where('id', $format['id'])
+                ->where('version_code', '<', $format['version_code']) // 有新版本才更新APK数据
                 ->update($format['info']);
-            // 更新平均评分
+
+            // 更新评分
             Ratings::where('app_id', $format['id'])
                    ->update(['manual' => $format['avg_score']]);
 
@@ -429,6 +433,7 @@ class CGame_Uc extends CGame_Base
             //     AppCats::where('app_id', $format['id'])
             //            ->update(['cat_id' => $format['cat_id'],]);
             // }
+
 
         // 全新游戏
         } else {

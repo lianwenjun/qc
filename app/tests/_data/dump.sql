@@ -542,13 +542,16 @@ CREATE TABLE `client` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `release` varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'APP版本标识',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `client` (`id`, `download_link`, `title`, `md5`, `size_int`, `changes`, `version`, `version_code`, `deleted_at`, `created_at`, `updated_at`)
+INSERT INTO `client` (`id`, `download_link`, `title`, `md5`, `size_int`, `changes`, `version`, `version_code`, `deleted_at`, `created_at`, `updated_at`, `release`)
 VALUES
-  (1, 'http://thisisatest.apk', '游戏市场我来也', '1111111111111', 120004, '编辑点评：《梦回沙城》火热来袭\n经典战、法、道三职业，其核心玩法是很多玩家非常熟悉的自由PK，练级打宝，行会战与万人沙城战，在这里，玩家将再次开启久违的热血之路，重温兄弟情谊，怀旧激情年代，剑指沙城，为荣誉为兄弟战到底！', '0.0.1', '1001', NULL, '2014-10-27 00:00:00', '2014-10-27 00:00:00'),
-  (3, 'http://thisisatest.apk', '游戏市场我来也', '1111111111111', 120004, '编辑点评：《梦回沙城》火热来袭\n经典战、法、道三职业，其核心玩法是很多玩家非常熟悉的自由PK，练级打宝，行会战与万人沙城战，在这里，玩家将再次开启久违的热血之路，重温兄弟情谊，怀旧激情年代，剑指沙城，为荣誉为兄弟战到底！', '0.0.2', '1002', NULL, '2014-10-27 00:00:00', '2014-10-27 00:00:00'),
-  (5, 'http://thisisatest.apk', '游戏市场我来也', '1111111111111', 120004, '编辑点评：《梦回沙城》火热来袭\n经典战、法、道三职业，其核心玩法是很多玩家非常熟悉的自由PK，练级打宝，行会战与万人沙城战，在这里，玩家将再次开启久违的热血之路，重温兄弟情谊，怀旧激情年代，剑指沙城，为荣誉为兄弟战到底！', '1.0.1', '2001', NULL, '2014-10-27 00:00:00', '2014-10-27 00:00:00');
+  (1, '/client/GameCenter_v1.10_online.apk', '天天游戏中心', '7a8fdc71de130d7dfb02ae73171011a2', 2669, '', '1.10', '3', NULL, '2014-11-21 14:27:20', '2014-11-21 14:27:21', '1'),
+  (2, '/client/GameCenter_v1.11_underline.apk', '游戏中心', '03fe0d6516993590f8433ec6fcea0447', 2669, '1. 提高页面浏览速度\n2. 提高下载速度\n3. 增加下载通知', '1.11', '4', NULL, '2014-11-25 20:36:36', '2014-11-25 20:36:36', ''),
+  (3, '/client/GameCenter.apk', '游戏中心', 'c1cf3260ac95bd74b718f127210b4468', 2667, '1. 提高页面浏览速度\n2. 提高下载速度\n3. 增加下载通知', '1.10', '3', NULL, '2014-11-07 11:32:40', '2014-11-07 11:32:41', ''),
+  (4, '/client/GameCenter.apk', '天天游戏中心', 'fe36b531f9f293fe6d259f6a0a374d57', 2669, '1. 提高页面浏览速度\n2. 提高下载速度\n3. 增加下载通知', '1.11', '4', NULL, '2014-11-26 16:52:14', '2014-11-26 16:52:14', '1'),
+  (5, '', '天天游戏中心', 'f6d96f1182b5711bbb649b4a7c6002a5', 2669, '', '1.11', '4', NULL, '2014-11-26 17:49:57', '2014-11-26 17:49:57', '1');
+
 /*
 手机用户表
 */

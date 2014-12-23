@@ -125,11 +125,6 @@ ul.ui-sortable li.placeholder:before {
             <tr class="Search_biao_one">
                 <td class="Search_lei">上传新版本：</td>
                 <td class="Search_apk">
-                    <!-- <span id="container">
-                        <a href="javascript:;" class="Search_Update" {{ Sentry::getUser()->hasAccess('apps.appupload') ? 'id="jq-uploadApp"':''}} >选择APK</a>
-                        <span id="uploadInfo"></span>
-                    </span>
-                    <img class="upload-icon-src" src="{{ $app->icon }}" width="90" height="90"> -->
                     <div>
                       <div style="display:inline;">
                         <span id="container">
@@ -137,9 +132,11 @@ ul.ui-sortable li.placeholder:before {
                           <span id="uploadInfo"></span>
                         </span>
                       </div>
+                      <div class="upload-md5-html" style="display:none;"></div>
+                      <div class="upload-download_link-html" style="display:none;"></div>
+                      <div class="upload-size_int-html" style="display:none;"></div>
                       <div style="display:inline;">
                         <img class="upload-icon-src" src="{{ $app->icon }}" width="90" height="90">
-                        <input name="icon" value="{{ $app->icon }}" type="hidden">
                         <a class="editIcon" id="jq-editIcon" href="javascript:;">修改</a>
                       </div>
                     </div>
@@ -170,15 +167,15 @@ ul.ui-sortable li.placeholder:before {
                <td class="Search_lei"><span class="required">*</span>游戏标签：</td>
                <td>
                   <span style="float:left; line-height:26px; padding-right: 0; background: none; margin-top:0; border: 0px" class="jq-initTags Browse_centent_about">
-                        <?php $h2s = ''; $tag_titles = []; ?>
+                        <?php $tagBoxs = ''; $tagTitles = []; ?>
                         @foreach($app->tags as $tag)
                             <?php $catsInput .= "<input name='cats[]' value='".$tag->id."'>"; ?>
-                            <?php $h2s .= '<h2 data-id="'.$tag->id.'">'.$tag->title.'</h2>'; ?>
-                            <?php $tag_titles[] = $tag->title; ?>
+                            <?php $tagBoxs .= '<h2 data-id="'.$tag->id.'">'.$tag->title.'</h2>'; ?>
+                            <?php $tagTitles[] = $tag->title; ?>
                         @endforeach
-                        {{ $h2s }}
+                        {{ $tagBoxs }}
                   </span>
-                  <input name="checkTag" type="hidden" value="{{ implode(', ', $tag_titles); }}"/><!-- 验证用 -->
+                  <input name="checkTag" type="hidden" value="{{ implode(', ', $tagTitles); }}"/><!-- 验证用 -->
                </td>
             </tr>
             <tr class="Search_biao_one">
@@ -326,18 +323,16 @@ ul.ui-sortable li.placeholder:before {
      * @return void
      */
     function initTags() {
-        //var tagsText = $('.jq-initTags').text();
-        //var tags = tagsText.split(", ");
-        
+        // 先把已出现在标签区域的 找出id及文字
         var tags = [];
         $('.jq-initTags>h2').each(function(){
-            tags.push($(this).text());
+            var arr = [$(this).data('id'), $(this).text(),];
+            tags.push(arr);
         });
-
+        // 以id来匹配判断是否有选中
         $('input[type="checkbox"]').each(function() {
-            for(i in tags) {
-                // console.log($(this).parent().text() + ' ---> ' + tags[i].trim());
-                if($(this).parent().text() == tags[i].trim()) {
+            for (i in tags) {
+                if ($(this).data('id') == tags[i][0]) {
                     $(this).attr('checked', 'checked');
                 }
             }
@@ -362,14 +357,14 @@ ul.ui-sortable li.placeholder:before {
                               @endforeach
                               "</ul>" +
                            "</div>" +
-                           "<div class='add_update_Label' style='height: 230px'>" +
+                           "<div class='add_update_Label' style='height:350px'>" +
                               "<div class='add_update_title'>标签内容</div>" +
                               @foreach($tags as $k => $cat)
                               "<div class='tags-list' id='cat_{{$k}}'>"+
                                   "<div class='add_update_title_lei'>{{ $cat['title'] }}</div><div class='add_update_lei'><ul>"+
                                      @if(isset($cat['tags']))
                                         @foreach($cat['tags'] as $tag)
-                                        "<li><lable><input type='checkbox' name='cats[]' value='{{ $tag['id'] }}'/>{{ $tag['title'] }}</lable></li>" +
+                                        "<li><lable><input type='checkbox' name='cats[]' data-id='{{ $tag['id'] }}' value='{{ $tag['id'] }}'/>{{ $tag['title'] }}</lable></li>" +
                                         @endforeach
                                      @endif
                                   "</ul></div>" +
@@ -385,18 +380,18 @@ ul.ui-sortable li.placeholder:before {
         $(".jq-cats").click(function(){
             $.jBox(catSelect, {
                 title: "<div class=ask_title>游戏分类</div>",
-                width: 650,
-                height:450,
+                width: 1000,
+                height:600,
                 border: 5,
                 showType: 'slide',
                 opacity: 0.3,
                 showIcon:false,
-                top: '20%',
+                top: '10%',
                 loaded:function(h){
                     $("body").css("overflow-y","hidden");
                     jbox = h;
                     initCates(h);
-                    initTags();
+                    initTags();// 每次都要初始化一次弹框的内容...
                 },
                 closed:function(){
                     $("body").css("overflow-y","auto");
@@ -417,10 +412,6 @@ ul.ui-sortable li.placeholder:before {
 
         // 确定分类
         $(".jq-catSubmit").live('click', function() {
-
-            $('.jq-initCates').text('');
-            $('.jq-initTags').text('');
-
             // 分类提交
             var cats = [];
             jbox.find('.jq-catClick').each(function() {
@@ -428,25 +419,29 @@ ul.ui-sortable li.placeholder:before {
                     cats.push($(this).parent().text());
                 }
             });
-
             $('.jq-initCates').html(cats.join(",  ")).next('input').val(cats.join(", "));
 
             // 标签提交
             var tags = [];
+            // 已选中的标签 找出对应的id及文字
             jbox.find('[id^="cat_"]').each(function() {
                 $(this).find('input[type="checkbox"]').each(function(){
-                    if($(this).attr('checked') == 'checked') {
-                        tags.push($(this).parent().text());
+                    if ($(this).attr('checked') == 'checked') {
+                        tags.push([$(this).data('id'), $(this).parent().text()]);
                     }
                 });
             });
 
-            console.log(tags);
-
-            tags = $.unique( tags );
-
-            console.log(tags);
-            $('.jq-initTags').html("<h2>" + tags.join("</h2><h2>") + "</h2>").next('input').val(tags.join(", "));
+            var html = '';
+            var checkTag = [];
+            for (var i in tags) {
+                html += '<h2 data-id="'+tags[i][0]+'">'+tags[i][1]+'</h2>';
+                checkTag.push(tags[i][1]);
+            }
+            // 重新生成标签区域的html
+            $('.jq-initTags').html(html);
+            // 重新写入标签的验证字段
+            $('input[name="checkTag"]').val(checkTag.join(', '));
 
             // 表单包含到提交表单
             $('.jq-cat').html($('.jq-catForm').clone());
@@ -481,7 +476,7 @@ ul.ui-sortable li.placeholder:before {
             runtimes : 'html5',
             browse_button : 'jq-uploadApp',
             container: document.getElementById('container'),
-            url : '{{ URL::route('apps.appupload') }}/dontSave',
+            url : '{{ URL::route('apps.appupload') }}/{{ $app->id }}',
             chunk_size: '1mb',
             flash_swf_url : '../js/Moxie.swf',
 
@@ -500,6 +495,11 @@ ul.ui-sortable li.placeholder:before {
                 FilesAdded: function(up, files) {
                     plupload.each(files, function(file) {
                         document.getElementById('uploadInfo').innerHTML = '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
+                    });
+
+                    $('[class^="upload-"]').each(function(){
+                        $(this).find('input').remove();
+                        $(this).next('input').remove();
                     });
 
                     document.getElementById('jq-uploadApp').style.display = 'none';
@@ -770,6 +770,9 @@ ul.ui-sortable li.placeholder:before {
             }
 
             $('.upload-icon-src').attr('src', response.result.path);
+            if ($('input[name="icon"]').length > 0) {
+                $('input[name="icon"]').val(response.result.path);
+            }
         });
         iconUpload.init();
 

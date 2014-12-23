@@ -31,6 +31,7 @@ class V1_CatsController extends \V1_BaseController {
         }
         //这步需要精简
         $apps = Api_Apps::select('id')->whereStatus('stock')->get();
+        $appIds = [0];
         foreach ($apps as $app) {
             $appIds[] = $app->id;
         }

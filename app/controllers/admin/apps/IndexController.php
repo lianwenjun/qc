@@ -292,15 +292,15 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
      * 上传游戏APK
      * POST /admin/apps/appupload
      *
-     * @param $dontSave string 是否入库（空是入库）
+     * @param $id int 游戏ID
      *
      * @return Response
      */
-    public function appUpload($dontSave = '')
+    public function appUpload($id = 0)
     {
         $app = new Apps();
 
-        return $app->appUpload($dontSave);
+        return $app->appUpload($id);
     }
     
     /**
@@ -363,7 +363,12 @@ class Admin_Apps_IndexController extends \Admin_BaseController {
 
         if(! $apps = Apps::whereIn('id', $ids)) {
             Session::flash('tips', ['success' => false, 'message' => "亲，找不到游戏"]);
-        } elseif ($apps->update(['status' => 'stock'])) {
+        } elseif (
+            $apps->update([
+                'status'     => 'stock',
+                'stocked_at' => date('Y-m-d H:i:s'),
+            ])
+        ) {
             Session::flash('tips', ['success' => true, 'message' => "亲，全部已经审核通过"]);
 
             // 记录操作日志

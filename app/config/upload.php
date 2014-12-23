@@ -6,4 +6,5 @@ return [
     'pictures' => '/pictures',  // APK截图上传目录
     'catads' => '/catads',    //分类广告图片
     'ads' => '/ads',    //分类广告图片
+    'client' => '/client/tmp',    //上传的临时文件
 ];

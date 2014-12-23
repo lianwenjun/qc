@@ -6,6 +6,7 @@ class V1_AppDownloadController extends \V1_BaseController {
         $fields = [
             'app_id' => 'appid',
             'ip' => 'ip',
+            'channel' => 'channel',
         ];
         foreach ($fields as $key => $value) {
             $data[$key] = Input::get($value, '');
