@@ -28,9 +28,13 @@ class FixUcInfo extends Command
     private $_platformField = '';     // 九游platform表的字段
     private $_packageField  = '';     // 九游platform表的字段
     private $_postData      = '';     // 执行请求的数据
+    private $_error         = false;
+    private $_responseError = false;
 
-    private $_entityId = '';          // 游戏在uc平台的id
-    private $_entityId2GameInfo = []; // uc平台id对应游戏数据
+    private $_entityId      = ''; // 游戏在uc平台的id
+    private $_eid2GameInfo  = []; // uc平台id对应游戏数据
+    private $_retry         = [];
+    private $_result        = '';
 
     /**
      * Create a new command instance
@@ -66,7 +70,7 @@ class FixUcInfo extends Command
     protected function getArguments()
     {
         return [
-            ['game_id', InputArgument::REQUIRED, '在我方游戏中心中的游戏id'],
+            // ['game_id', InputArgument::REQUIRED, '在我方游戏中心中的游戏id'],
         ];
     }
 
@@ -82,26 +86,41 @@ class FixUcInfo extends Command
      */
     public function fire()
     {
-        $gameIds = $this->argument('game_id');
-
-        $idArr = explode(',', $gameIds);
-        foreach ($idArr as $key => $id) {
-            $gameInfo = Apps::where('id', $id)->first();
-
-            if (!$gameInfo) {
-                $this->error("找不到id为{$id}的游戏记录");
-                die();
+        // 每100个游戏请求一次uc接口抓取数据
+        Apps::chunk(40, function($games)
+        {
+            $this->_eid2GameInfo = [];
+            foreach ($games as $key => $value) {
+                $this->_eid2GameInfo[$value['entity_id']] = $value;
             }
 
-            $this->_entityId2GameInfo[$gameInfo['entity_id']] = $gameInfo;
+            $this->_entityId = implode(',', array_keys($this->_eid2GameInfo));
+
+            $this->_createPost();
+            $this->_request();
+            
+            if ($this->_error ||
+                !is_array($this->_result) ||
+                !isset($this->_result['data']['list'])) {
+                $this->_retry();
+            }
+
+            $this->_dealResult();
+        });
+    }
+
+    private function _retry()
+    {
+        $this->info("Request retrying at entityIds:{$this->_entityId}");
+        $this->_request();
+
+        if ($this->_error ||
+            !is_array($this->_result) ||
+            !isset($this->_result['data']['list'])) {
+            $this->_retry();
         }
 
-        $this->_entityId = implode(',', array_keys($this->_entityId2GameInfo));
-
-        $this->_createPost();
-        $result = $this->_request();
-
-        $this->_dealResult($result);
+        return true;
     }
 
     /**
@@ -109,16 +128,12 @@ class FixUcInfo extends Command
      *
      * @return void
      */
-    private function _dealResult($result)
+    private function _dealResult()
     {
-        if (!isset($result['data']['list'])) {
-            $this->error('no data list response!');
-            die();
-        }
-
-        foreach ($result['data']['list'] as $key => $value) {
+        foreach ($this->_result['data']['list'] as $key => $value) {
             if (!isset($value['deleted']) || $value['deleted'] != 0) {
                 $this->error('this game is already deleted in UC');
+                continue;
             }
 
             $package  = $this->_package($value);
@@ -133,8 +148,8 @@ class FixUcInfo extends Command
                 continue;
             }
 
-            $gameId = $this->_entityId2GameInfo[$value['id']]['id'];
-            $old_md5 = $this->_entityId2GameInfo[$value['id']]['md5'];
+            $gameId = $this->_eid2GameInfo[$value['id']]['id'];
+            $old_md5 = $this->_eid2GameInfo[$value['id']]['md5'];
             $update = [
                 'md5' => $data['md5'],
             ];
@@ -241,7 +256,8 @@ class FixUcInfo extends Command
 
         curl_close($ch);
 
-        return $this->parse($json);
+        $this->_result = $this->parse($json);
+        // return $this->parse($json);
     }
 
     /**
