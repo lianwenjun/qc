@@ -18,7 +18,7 @@ class FixUcInfo extends Command
      *
      * @var string
      */
-    protected $description = '修复UC平台游戏的MD5不匹配问题';
+    protected $description = '修复UC平台游戏的信息不一致问题:md5..';
 
     const SERVER = 'http://interface.9game.cn/datasync/getdata';   // 九游请求地址
     const CALLER = '9game_wap_xdagame';                            // 九游请求用户名
@@ -29,12 +29,10 @@ class FixUcInfo extends Command
     private $_packageField  = '';     // 九游platform表的字段
     private $_postData      = '';     // 执行请求的数据
     private $_error         = false;
-    private $_responseError = false;
 
-    private $_entityId      = ''; // 游戏在uc平台的id
-    private $_eid2GameInfo  = []; // uc平台id对应游戏数据
-    private $_retry         = [];
-    private $_result        = '';
+    private $_entityId      = '';     // 游戏在uc平台的id
+    private $_eid2GameInfo  = [];     // uc平台id对应游戏数据
+    private $_result        = '';     // 请求结果
 
     /**
      * Create a new command instance
