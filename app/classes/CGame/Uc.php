@@ -421,7 +421,7 @@ class CGame_Uc extends CGame_Base
 
             // 更新apk包信息
             Apps::where('id', $format['id'])
-                ->where('version_code', '<', $format['version_code']) // 有新版本才更新APK数据
+                ->where('version_code', '<', $format['info']['version_code']) // 有新版本才更新APK数据
                 ->update($format['info']);
 
             // 更新评分
