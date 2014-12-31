@@ -72,7 +72,7 @@ class Admin_StatisticsController extends Admin_BaseController
         $tmpData = CUtil::object2Array($tmpData);
 
         foreach ($tmpData as $key => $value) {
-            str_replace('\\,', '|', $value->cats);
+            str_replace('\\,', '|', $value['cats']);
         }
 
         Excel::create('下载统计', function($excel) use($tmpData)
