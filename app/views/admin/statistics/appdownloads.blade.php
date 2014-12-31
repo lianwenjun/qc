@@ -50,6 +50,15 @@
                     </span>
                     <input type="submit" value="搜索" class="Search_en" />
                 </li>
+                <li>
+                    <span>
+                        <b>选择日期范围:</b>
+                        <input name="export_at[]" type="text" class="Search_wenben" value=""/>
+                        <b>-</b>
+                        <input name="export_at[]" type="text" class="Search_wenben" value=""/>
+                    </span>
+                    <input id="export-csv" type="button" value="导出csv" class="Search_en" />
+                </li>
             </ul>
         </div> 
     </form>
@@ -89,6 +98,7 @@
     $(function(){
         // 日期控件初始化
         $('input[name="count_at[]"]').datepicker({dateFormat: 'yy-mm-dd'});
+        $('input[name="export_at[]"]').datepicker({dateFormat: 'yy-mm-dd'});
 
         // 分页初始化
         pageInit({{ $list['current_page'] }}, {{ $list['last_page'] }}, {{ $list['total'] }});
@@ -139,6 +149,22 @@
             }
             $('td[data-field="'+field+'"]').text(text);
         }
+
+        // 导出csv文件
+        $('#export-csv').click(function(){
+            var startDate = $('input[name="export_at[]"]:eq(0)').val();
+            var endDate   = $('input[name="export_at[]"]:eq(1)').val();
+
+            if (startDate == '' || endDate == '') {
+                return alert('导出数据时，日期范围必须填写完整!');
+            }
+
+            var url = "{{ URL::route('statistics.exportdownloads') }}";
+            url += "?export_at[]=" + startDate;
+            url += "&export_at[]=" + endDate;
+
+            window.location = url;
+        });
     });
 </script>
 @stop

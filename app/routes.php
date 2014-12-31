@@ -229,6 +229,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
     Route::group(['prefix' => 'statistics'], function()
     {
         Route::get('statistics/appdownloads', ['as' => 'statistics.appdownloads', 'uses' => 'Admin_StatisticsController@appDownloads']);
+        Route::get('export/downloads', ['as' => 'statistics.exportdownloads', 'uses' => 'Admin_StatisticsController@exportDownloads']);
     });
 
     Route::group(['prefix' => 'log', 'before' => 'hasPermissions'], function()  // 日志管理

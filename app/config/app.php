@@ -128,6 +128,7 @@ return array(
         'DaveJamesMiller\Breadcrumbs\ServiceProvider',
         'BankDev\Logviewer\LogviewerServiceProvider',
         'JildertMiedema\LaravelPlupload\LaravelPluploadServiceProvider',
+        'Maatwebsite\Excel\ExcelServiceProvider',
 
     ),
 
@@ -200,6 +201,7 @@ return array(
         'Captcha'         => 'Mews\Captcha\Facades\Captcha',
         'Breadcrumbs'     => 'DaveJamesMiller\Breadcrumbs\Facade',
         'Plupload'        => 'JildertMiedema\LaravelPlupload\Facades\Plupload',
+        'Excel'           => 'Maatwebsite\Excel\Facades\Excel',
 
     ),
 

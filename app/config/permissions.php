@@ -128,6 +128,7 @@ return [
     ],
     '数据中心' => [
         'statistics.appdownloads' => '游戏下载统计',
+        'statistics.exportdownloads' => '导出下载统计数据',
     ],
     '版本管理' => [
         'client.index' => '列表',
