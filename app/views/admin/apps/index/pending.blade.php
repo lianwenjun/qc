@@ -100,6 +100,7 @@
                     <span>
                         <input name="title" type="text" class="Search_wenben" size="20" placeholder="请输入关键词" value="{{ Input::get('title') }}"/>
                     </span>
+                    <span><input type="text" class="Search_wenben" name="pack" placeholder="请输入包名" value="{{ Input::get('pack') }}"></span>
                     <span>　<b>日期：</b><input name="updated_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('updated_at')[0]) ? Input::get('updated_at')[0] : '' }}"/><b>-</b><input name="updated_at[]" type="text" class="Search_wenben" value="{{ isset(Input::get('updated_at')[1]) ? Input::get('updated_at')[1] : '' }}"/></span>
                     <input type="submit" value="搜索" class="Search_en" />
                 </li>
