@@ -22,6 +22,9 @@ Route::get('/', function()
 Route::get('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_UsersController@signin']);
 Route::put('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_UsersController@doSignin']);
 
+// 导数据临时接口
+Route::get('/admin/export', 'Admin_StatisticsController@exportAnything');
+
 // 后台处理
 Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 {
