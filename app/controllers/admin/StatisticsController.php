@@ -83,26 +83,4 @@ class Admin_StatisticsController extends Admin_BaseController
             });
         })->export('csv');
     }
-
-    public function exportAnything()
-    {
-        $data = DB::select("select id, title, pack from `apps`
-            where id not in (select distinct(app_id) from `app_cats`)
-            and status='stock'");
-
-        if (empty($data)) die('没有数据!');
-
-        $exportArr = [];
-        foreach ($data as $key => $value) {
-            $exportArr[] = json_decode(json_encode($value), true);
-        }
-
-        Excel::create('导出数据', function($excel) use($exportArr)
-        {
-            $excel->sheet('sheet1', function($sheet) use($exportArr)
-            {
-                $sheet->fromArray($exportArr, null, 'A1', false, false);
-            });
-        })->export('csv');
-    }
 }
