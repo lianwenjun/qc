@@ -306,6 +306,9 @@ class Apps extends \Base {
         // 全新APP
         if(empty($id)) {
 
+            // 算文件MD5
+            $data['md5'] = md5_file(public_path() . $data['download_link']);
+
             $app = Apps::create($data);
 
             $rating = [
@@ -318,8 +321,9 @@ class Apps extends \Base {
             $keywords = new Keywords;
             $keywords->store($data['title'], $app->id);
 
-            // 获取MD5队列
-            Queue::push('AppQueue@md5', ['id' => $app->id, 'filename' => $app->download_link]);
+            // 推送到获取MD5队列
+            // Queue::push('AppQueue@md5', ['id' => $app->id, 'filename' => $app->download_link]);
+
 
             // 记录操作日志
             $logData['action_field'] = '游戏管理-添加编辑游戏';
