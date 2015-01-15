@@ -18,7 +18,7 @@ class FixUcInfo extends Command
      *
      * @var string
      */
-    protected $description = '修复UC平台游戏的信息不一致问题:md5..';
+    protected $description = '修复UC平台游戏的MD5不一致问题:2种更新方式，all:全量，one + game_id:单个游戏';
 
     const SERVER = 'http://interface.9game.cn/datasync/getdata';   // 九游请求地址
     const CALLER = '9game_wap_xdagame';                            // 九游请求用户名
@@ -68,7 +68,8 @@ class FixUcInfo extends Command
     protected function getArguments()
     {
         return [
-            // ['game_id', InputArgument::REQUIRED, '在我方游戏中心中的游戏id'],
+            ['type', InputArgument::REQUIRED, '全量执行还是单个游戏执行'],
+            ['game_id', InputArgument::OPTIONAL, '在我方游戏中心中的游戏id'],
         ];
     }
 
@@ -84,8 +85,14 @@ class FixUcInfo extends Command
      */
     public function fire()
     {
-        // 每100个游戏请求一次uc接口抓取数据
-        Apps::chunk(40, function($games)
+        $funcName = $this->argument('type');
+        $this->{'_' . $funcName}();
+    }
+
+    private function _all()
+    {
+        // 每40个游戏请求一次uc接口抓取数据
+        Apps::where('source', 'uc')->chunk(40, function($games)
         {
             $this->_eid2GameInfo = [];
             foreach ($games as $key => $value) {
@@ -105,6 +112,38 @@ class FixUcInfo extends Command
 
             $this->_dealResult();
         });
+    }
+
+    private function _one()
+    {
+        $ids = $this->argument('game_id');
+        if (empty($ids)) {
+            $this->error("game_id is require for this method~!");
+            die();
+        }
+
+        $ids = explode(',', $ids);
+        $this->_eid2GameInfo = [];
+        foreach ($ids as $key => $value) {
+            $game = Apps::where('id', $value)->select('*')->first();
+            if (!$game) {
+                $this->error("game_id:{$value} is not exists");
+                continue;
+            }
+            $this->_eid2GameInfo[$game->entity_id] = $game;
+        }
+
+        if (empty($this->_eid2GameInfo)) {
+            $this->error("no game match to update...");
+            die();
+        }
+
+        $this->_entityId = implode(',', array_keys($this->_eid2GameInfo));
+
+        $this->_createPost();
+        $this->_request();
+
+        $this->_dealResult();
     }
 
     private function _retry()
