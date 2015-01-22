@@ -62,7 +62,7 @@
             <tr>
                <td class="Search_lei">选择渠道：</td>
                <td>
-                    {{ Form::select('release', Config::get('status.release'), Input::get('release')); }}
+                    {{ Form::select('release', $channels, Input::get('release')); }}
                </td>
             </tr>
             <tr>

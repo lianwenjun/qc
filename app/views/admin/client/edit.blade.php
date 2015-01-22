@@ -70,7 +70,7 @@
             <tr>
                <td class="Search_lei">选择渠道：</td>
                <td>
-                    {{ Form::select('release', Config::get('status.release'), $app->release); }}
+                    {{ Form::select('release', $channels, $app->release); }}
                </td>
             </tr>
             <tr class="Search_biao_two">

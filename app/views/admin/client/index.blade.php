@@ -10,9 +10,26 @@
     <div class="Theme_title">
         <h1>系统管理 <span>游戏中心APP版本管理</span></h1>
         @if(Sentry::getUser()->hasAccess('client.create'))
-        <a href="{{ URL::route('client.create') }}" target="BoardRight">添加新版本</a>
+            <a href="{{ URL::route('client.create') }}" target="BoardRight">添加新版本</a>
         @endif
     </div>
+    <div class="Theme_Search">
+        <ul>
+            <li>
+               <span><b>渠道名</b>
+               <input name="name" type="text" class="Search_wenben" size="10" value="" placeholder="渠道名" />
+               </span>
+               <span><b>渠道代号</b>
+               <input name="code" type="text" class="Search_wenben" size="10" value="" placeholder="渠道代号" />
+               </span>
+               @if(Sentry::getUser()->hasAccess('channels.store'))
+                    <input type="submit" value="添加" class="Search_en jq-submitWord" />
+               @endif
+            </li>
+        </ul>
+        
+    </div>
+        
     
     <div class="Search_cunt">共 <strong>{{ $apps->getTotal() }}</strong> 条记录 </div>
     <!-- 提示 -->
@@ -72,6 +89,32 @@ $(function(){
     });
     //分页
     pageInit({{ $apps->getCurrentPage() }}, {{ $apps->getLastPage() }}, {{ $apps->getTotal() }});
+
+    //提交添加
+    $(".jq-submitWord").click(function() {
+        var name = $("input[name=name]").val();
+        var code = $("input[name=code]").val();
+        if (name == "" || code == "") {
+            return;
+        }
+        // 添加
+        var url = '{{ route("channels.store") }}';
+        var data = {name:name, code:code};
+        // 发送数据
+        $.post(url, data, function(res) {
+            //错误判断
+            if (res.status != 'ok') {
+                returnMsgBox('添加失败');
+                return;
+            }
+            returnMsgBox('添加渠道成功');
+            //成功返回刷新页面
+            setTimeout("window.location.reload()", 5000);
+            //window.location.href = window.location.pathname;
+        }).fail(function() {
+            returnMsgBox('亲，服务器出错啦');
+        });
+    });
 });
 </script>
 @stop

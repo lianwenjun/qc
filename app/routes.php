@@ -247,6 +247,11 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::post('edit/{id}', ['as' => 'client.edit', 'uses' => 'Admin_Apps_ClientController@update']);
         Route::post('apkupload', ['as' => 'client.apkupload', 'uses' => 'Admin_Apps_ClientController@apkupload']);
     });
+
+    Route::group(['prefix' => 'channels'], function()
+    {
+        Route::post('create', ['as' => 'channels.store', 'uses' => 'Admin_ChannelsController@store']);
+    });
 });
 //图片
 //Route::post('/admin/appsads/imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_Apps_AppsAdsController@upload']);
