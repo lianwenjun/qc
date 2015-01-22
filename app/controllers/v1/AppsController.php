@@ -74,7 +74,7 @@ class V1_AppsController extends \V1_BaseController {
                 return $x['id'];
             }, $apps->toArray());
             //缓存APC
-            Cache::add('author.apps.' . $exclude, serialize($appIds), '10');
+            Cache::add('author.apps.' . $exclude, serialize($appIds), '100');
         }
         $apps = (new Api_Ratings)->getAppsRatings($apps);
         $apps = (new Api_Comments)->getAppsComments($apps);
@@ -91,18 +91,22 @@ class V1_AppsController extends \V1_BaseController {
         $start = (intval($pageIndex) - 1) * intval($pageSize);
         //当$exclude 不为0的时候，检查该游戏的作者的数据
         $exIds = []; 
-        if ($exclude != '0') {       
+        if ($exclude != '0') { 
             $exIds = Cache::get('author.apps.' . $exclude, '');
-            $exIds = is_null($exIds) ? unserialize($exIds) : [];
+            $exIds = $exIds ? unserialize($exIds) : [];
         }
-        $appIds = array_except($appIds, [$exclude] + $exIds);
+        $appIds = array_diff($appIds, [$exclude] + $exIds);
+        if (!$appIds) {
+            return ['count' => 0, 'apps' => []];
+        }
         $count = Api_Apps::whereStatus('stock')
             ->whereIn('id', $appIds)
             ->count();
         $apps = Api_Apps::whereStatus('stock')
             ->whereIn('id', $appIds)
             ->skip($start)->take($pageSize)
-            ->orderBy('id', 'desc')
+            ->orderBy('sort', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get();
         $apps = (new Api_Ratings)->getAppsRatings($apps);
         $apps = (new Api_Comments)->getAppsComments($apps);
@@ -118,7 +122,8 @@ class V1_AppsController extends \V1_BaseController {
             ->ofTitle($keyword)
             ->whereNotIn('id', [$exclude])
             ->skip($start)->take($pageSize)
-            ->orderBy('id', 'desc')
+            ->orderBy('sort', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get();
         $apps = (new Api_Ratings)->getAppsRatings($apps);
         $apps = (new Api_Comments)->getAppsComments($apps);

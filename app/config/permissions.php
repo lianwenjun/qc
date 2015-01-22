@@ -11,7 +11,8 @@ return [
         'apps.putUnstock' => '下架',
         'apps.stock.edit' => '编辑',
         'apps.history' => '历史',
-        'apps.preview' => '预览'
+        'apps.preview' => '预览',
+        'apps.iconupload' => '游戏icon上传',
         ],
     '添加编辑游戏' => [
         'apps.draft' => '列表',
@@ -30,10 +31,12 @@ return [
     '审核不通过列表' => [
         'apps.notpass' => '列表',
         'apps.notpass.edit' => '编辑',
+        'apps.iconupload' => '游戏icon上传',
     ],
     '下架游戏列表' => [
         'apps.unstock' => '列表',
         'apps.unstock.edit' => '编辑',
+        'apps.iconupload' => '游戏icon上传',
     ],
     '首页游戏位管理' => [
         'appsads.index' => '列表',
@@ -125,5 +128,12 @@ return [
     ],
     '数据中心' => [
         'statistics.appdownloads' => '游戏下载统计',
+        'statistics.exportdownloads' => '导出下载统计数据',
+    ],
+    '版本管理' => [
+        'client.index' => '列表',
+        'client.create' => '新增',
+        'client.edit' => '修改',
+        'client.apkupload' => '上传',
     ],
 ];

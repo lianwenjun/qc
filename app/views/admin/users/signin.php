@@ -46,5 +46,6 @@
             </div>
             <input name="_method" type="hidden" value="PUT"/>
         </form>
+        <div style="text-align: center; margin-top: 40px;"><a style="color: #ADD4F6" href="http://www.miitbeian.gov.cn/" rel="nofollow">粤ICP备10215129号-3</a></div>
     </body>
 </html>

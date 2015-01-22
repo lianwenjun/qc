@@ -15,7 +15,8 @@
         "jildertmiedema/laravel-plupload": "dev-master",
         "codeception/codeception": "*",
         "bankdev/logviewer": "dev-master",
-        "regulus/activity-log": "0.3.0"
+        "regulus/activity-log": "0.3.0",
+        "maatwebsite/excel": "1.*"
     },
     "autoload": {
         "classmap": [

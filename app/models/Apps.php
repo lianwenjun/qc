@@ -225,17 +225,18 @@ class Apps extends \Base {
 
         // 记录操作日志
         $action = [
-            'stock' => '更新了游戏',
+            'stock'   => '更新了游戏',
             'pending' => '编辑并提交到待审核',
-            'draft' => '编辑并保存为草稿',
+            'draft'   => '编辑并保存为草稿',
         ];
 
         $selfStatus = Apps::find($id)->status;
         $action_field = [
-            'stock' => '游戏管理-上架游戏列表',
+            'stock'   => '游戏管理-上架游戏列表',
             'publish' => '游戏管理-添加编辑游戏',
             'notpass' => '游戏管理-审核不通过列表',
             'unstock' => '游戏管理-下架游戏列表',
+            'draft'   => '游戏管理-编辑草稿游戏',
         ];
 
         $logData['action_field'] = $action_field[$selfStatus];
@@ -272,53 +273,65 @@ class Apps extends \Base {
     /**
      * 上传APK
      *
-     * @param $dontSave string 是否要入库（空是入库）
+     * @param $id int 游戏ID  带ID是更新
      *
      * @return string 上传结果
      */
-    public function appUpload($dontSave)
+    public function appUpload($id)
     {
         $uploader = (new CUpload)->instance('app', 'apks')->upload();
 
         if(!$uploader['result']) return $uploader;
 
+        $data = $uploader['result']['data'];
+
+        $app = Apps::where('pack', $data['pack'])
+                   ->where('id', '!=', $id)
+                   ->whereIn('status', ['stock', 'publish', 'draft', 'pending'])
+                   ->first();
+
+        if($app) {
+            $status = Config::get('status.apps.status')[$app->status];
+
+            unlink($uploader['result']['fullPath']);
+
+            $uploader['result']['error'] = [
+                'code' => 500, 
+                'message' => '已存在' . $status . '列表中'
+                ];
+
+            return $uploader;
+        }
+
         // 全新APP
-        if(empty($dontSave)) {
+        if(empty($id)) {
 
-            $data = $uploader['result']['data'];
+            // 算文件MD5
+            $data['md5'] = md5_file(public_path() . $data['download_link']);
 
-            $app = Apps::where('pack', $data['pack'])
-                       ->whereIn('status', ['stock', 'publish', 'draft', 'pending'])
-                       ->first();
+            $app = Apps::create($data);
 
-            if($app) {
-                $status = Config::get('status.apps.status')[$app->status];
-                unlink($uploader['result']['fullPath']);
-                $uploader['result']['error'] = [
-                    'code' => 500, 
-                    'message' => '已存在' . $status . '列表中'
-                    ];
-            } else {
-                $app = Apps::create($data);
+            $rating = [
+                    'app_id' => $app->id, 
+                    'title'  => $data['title'], 
+                    'pack'   => $data['pack']
+                ];
+            Ratings::create($rating);
 
-                $rating = [
-                        'app_id' => $app->id, 
-                        'title'  => $data['title'], 
-                        'pack'   => $data['pack']
-                    ];
-                Ratings::create($rating);
+            $keywords = new Keywords;
+            $keywords->store($data['title'], $app->id);
 
-                $keywords = new Keywords;
-                $keywords->store($data['title'], $app->id);
+            // 推送到获取MD5队列
+            // Queue::push('AppQueue@md5', ['id' => $app->id, 'filename' => $app->download_link]);
 
-                // 获取MD5队列
-                Queue::push('AppQueue@md5', ['id' => $app->id, 'filename' => $app->download_link]);
 
-                // 记录操作日志
-                $logData['action_field'] = '游戏管理-添加编辑游戏';
-                $logData['description'] = '上传了游戏 游戏ID为' . $app->id;
-                Base::dolog($logData);
-            }
+            // 记录操作日志
+            $logData['action_field'] = '游戏管理-添加编辑游戏';
+            $logData['description'] = '上传了游戏 游戏ID为' . $app->id;
+            Base::dolog($logData);
+
+        } else {
+            $uploader['result']['data']['md5'] = md5_file($uploader['result']['fullPath']);
         }
         
         return $uploader;

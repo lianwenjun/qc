@@ -85,7 +85,8 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 
         // 上传
         Route::post('imageupload', ['as' => 'apps.imageupload', 'uses' => 'Admin_Apps_IndexController@imageUpload']);
-        Route::post('appupload/{dontSave?}', ['as' => 'apps.appupload', 'uses' => 'Admin_Apps_IndexController@appUpload']);
+        Route::post('appupload/{id?}', ['as' => 'apps.appupload', 'uses' => 'Admin_Apps_IndexController@appUpload'])
+             ->where('id', '[0-9]+');
         Route::post('iconupload', ['as' => 'apps.iconupload', 'uses' => 'Admin_Apps_IndexController@iconUpload']);// 游戏icon上传
     });
 
@@ -228,6 +229,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
     Route::group(['prefix' => 'statistics'], function()
     {
         Route::get('statistics/appdownloads', ['as' => 'statistics.appdownloads', 'uses' => 'Admin_StatisticsController@appDownloads']);
+        Route::get('export/downloads', ['as' => 'statistics.exportdownloads', 'uses' => 'Admin_StatisticsController@exportDownloads']);
     });
 
     Route::group(['prefix' => 'log', 'before' => 'hasPermissions'], function()  // 日志管理
@@ -235,6 +237,16 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('index', ['as' => 'log.index', 'uses' => 'Admin_LogController@index']);
     });
 
+    //游戏中心APP
+    Route::group(['prefix' => 'client'], function()  // 日志管理
+    {
+        Route::get('index', ['as' => 'client.index', 'uses' => 'Admin_Apps_ClientController@index']);
+        Route::get('create', ['as' => 'client.create', 'uses' => 'Admin_Apps_ClientController@create']);
+        Route::post('create', ['as' => 'client.create', 'uses' => 'Admin_Apps_ClientController@store']);
+        Route::get('edit/{id}', ['as' => 'client.edit', 'uses' => 'Admin_Apps_ClientController@edit']);
+        Route::post('edit/{id}', ['as' => 'client.edit', 'uses' => 'Admin_Apps_ClientController@update']);
+        Route::post('apkupload', ['as' => 'client.apkupload', 'uses' => 'Admin_Apps_ClientController@apkupload']);
+    });
 });
 //图片
 //Route::post('/admin/appsads/imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_Apps_AppsAdsController@upload']);

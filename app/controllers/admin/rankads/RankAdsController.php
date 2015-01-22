@@ -19,6 +19,7 @@ class Admin_rankAdsController extends \Admin_AdsController {
                 ->where('is_top', 'no')
                 ->whereIn('location', $this->location)
                 ->whereType($this->type)
+                ->orderBy('sort', 'desc')
                 ->orderBy('id', 'desc')
                 ->paginate($this->pagesize);
         //下面的需要改下

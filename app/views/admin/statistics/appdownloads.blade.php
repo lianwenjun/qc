@@ -50,6 +50,15 @@
                     </span>
                     <input type="submit" value="搜索" class="Search_en" />
                 </li>
+                <li>
+                    <span>
+                        <b>选择日期范围:</b>
+                        <input name="export_at[]" type="text" class="Search_wenben" value=""/>
+                        <b>-</b>
+                        <input name="export_at[]" type="text" class="Search_wenben" value=""/>
+                    </span>
+                    <input id="export-csv" type="button" value="导出csv" class="Search_en" />
+                </li>
             </ul>
         </div> 
     </form>
@@ -60,10 +69,10 @@
                 <td>游戏id</td>
                 <td>游戏名称</td>
                 <td>游戏分类</td>
-                <td style="cursor:pointer" class="jq-sort" data-field='request' data-order='' data-title="请求量">请求量↑↓</td>
-                <td style="cursor:pointer" class="jq-sort" data-field='download' data-order='' data-title="下载量">下载量↑↓</td>
-                <td style="cursor:pointer" class="jq-sort" data-field='install' data-order='' data-title="安装量">安装量↑↓</td>
-                <td style="cursor:pointer" class="jq-sort" data-field='download_percent' data-order='' data-title="下载占比">下载占比↑↓</td>
+                <td style="cursor:pointer" class="jq-sort" data-field='request' data-order='desc' data-title="请求量">请求量↑↓</td>
+                <td style="cursor:pointer" class="jq-sort" data-field='download' data-order='desc' data-title="下载量">下载量↑↓</td>
+                <td style="cursor:pointer" class="jq-sort" data-field='install' data-order='desc' data-title="安装量">安装量↑↓</td>
+                <td style="cursor:pointer" class="jq-sort" data-field='download_percent' data-order='desc' data-title="下载占比">下载占比↑↓</td>
             </tr>
             @foreach ($list['data'] as $key => $row)
             <tr class="Search_biao_{{ $key%2 == 0 ? 'one' : 'two'}}">
@@ -89,36 +98,72 @@
     $(function(){
         // 日期控件初始化
         $('input[name="count_at[]"]').datepicker({dateFormat: 'yy-mm-dd'});
+        $('input[name="export_at[]"]').datepicker({dateFormat: 'yy-mm-dd'});
 
         // 分页初始化
         pageInit({{ $list['current_page'] }}, {{ $list['last_page'] }}, {{ $list['total'] }});
 
         // 排序
         $('.jq-sort').click(function() {
-            // initSort();
-            var order = '';
-            if($(this).attr('data-order') == '') {
-              order = 'desc';
-            } else {
-              order = $(this).attr('data-order');
-            }
+            var order = $(this).data('order');
 
             var field = $(this).attr('data-field');
             var sp = '&';
 
             if (/\?orderby/.test($(location).attr('href')) || !/\?/.test($(location).attr('href'))) {
-              var sp = '?';
+                var sp = '?';
             }
 
             var url = $.jurlp($(location).attr('href'));
             var orderStr = url.query().orderby;
             var newurl = $(location).attr('href');
 
-            if(typeof(orderStr) != 'undefined') {
-               newurl = $(location).attr('href').replace(sp+'orderby='+orderStr, '');
+            if (typeof(orderStr) != 'undefined') {
+                newurl = $(location).attr('href').replace(sp+'orderby='+orderStr, '');
+
+                var split = orderStr.split('.');
+                var target = split[0];
+                order = split[1];
+                if (field == target) {
+                    order = order == 'desc' ? 'asc' : 'desc';
+                }
             }
 
             location.href = newurl + sp + 'orderby=' + field + '.' + order;
+        });
+
+        // 排序箭头状态判断
+        var orderBy = $.jurlp($(location).attr('href')).query().orderby;
+        if (typeof(orderBy) != 'undefined') {
+            var split = orderBy.split('.');
+            var field = split[0];
+            var order = split[1];
+
+            var text = $('td[data-field="'+field+'"]').text();
+            if (order == 'desc') {
+                // 倒序
+                text = text.replace('↑', '');
+            } else {
+                // 正序
+                text = text.replace('↓', '');
+            }
+            $('td[data-field="'+field+'"]').text(text);
+        }
+
+        // 导出csv文件
+        $('#export-csv').click(function(){
+            var startDate = $('input[name="export_at[]"]:eq(0)').val();
+            var endDate   = $('input[name="export_at[]"]:eq(1)').val();
+
+            if (startDate == '' || endDate == '') {
+                return alert('导出数据时，日期范围必须填写完整!');
+            }
+
+            var url = "{{ URL::route('statistics.exportdownloads') }}";
+            url += "?export_at[]=" + startDate;
+            url += "&export_at[]=" + endDate;
+
+            window.location = url;
         });
     });
 </script>
