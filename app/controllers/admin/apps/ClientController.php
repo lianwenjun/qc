@@ -23,7 +23,13 @@ class Admin_Apps_ClientController extends \Admin_BaseController {
     public function create()
     {
         $datas = [];
-        $this->layout->content = View::make('admin.client.create', $datas);
+        $channels = (new Channels)->selects();
+
+        $view = View::make('admin.client.create');
+        $view->withDatas($datas);
+        $view->withChannels($channels);
+
+        return $view;
     }
 
     /**
@@ -40,11 +46,13 @@ class Admin_Apps_ClientController extends \Admin_BaseController {
         //检测重复
         $count = Client::where('version_code', Input::get('version_code', 0))
                 ->where('title', Input::get('title', ''))
+                ->where('release', Input::get('release', 0))
                 ->count();
         if ($count > 0) {
             return Redirect::route('client.create')->with('msg', 'APK重复了');
         }        
         $app = (new CClient)->create();
+        
         return Redirect::route('client.index')->with('msg', '添加 #' . $app->id . '成功');
     }
 
@@ -61,7 +69,14 @@ class Admin_Apps_ClientController extends \Admin_BaseController {
         if (!$app) {
             return Redirect::route('client.index')->with('msg', '未找到#' . $id . '数据');
         }
-        $this->layout->content = View::make('admin.client.edit', ['app' => $app]);
+
+        $channels = (new Channels)->selects();
+
+        $view = View::make('admin.client.edit');
+        $view->withApp($app);
+        $view->withChannels($channels);
+
+        return $view;
     }
 
     /**

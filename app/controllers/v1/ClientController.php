@@ -26,7 +26,7 @@ class V1_ClientController extends \V1_BaseController {
         if (!$new) {
             return $this->result(['data' => null, 'msg' => 0, 'msgbox' => '已是最新版本']);
         }
-        //到处都有这结构，如何破
+        // 到处都有这结构，如何破
         $data = [];
         $new = $new->toArray();
         foreach ($fields as $key => $value) {
@@ -35,6 +35,7 @@ class V1_ClientController extends \V1_BaseController {
         foreach ($new as $key => $value) {
             if (isset($fields[$key])) $data[$fields[$key]] = $value;
         }
+        
         return $this->result(['data' => $data, 'msg' => 1, 'msgbox' => '有新的版本可用']);
     }
 }

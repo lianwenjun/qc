@@ -135,5 +135,6 @@ return [
         'client.create' => '新增',
         'client.edit' => '修改',
         'client.apkupload' => '上传',
+        'channels.store' => '添加渠道号',
     ],
 ];

@@ -2,7 +2,7 @@
 Thumbs.db
 *.swp
 *.swo
-app/storage/*
+#app/storage/*
 app/tests/_output/*
 .gitignore
 .git/*
@@ -17,7 +17,7 @@ public/cateads/*
 public/ads/*
 public/client/*
 *.apk
-app/config/database.php
+#app/config/database.php
 .idea/
 app/config/ucDelta.php
 app/config/ucCGame.php
