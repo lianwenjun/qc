@@ -40,6 +40,7 @@ class Admin_Apps_ClientController extends \Admin_BaseController {
         //检测重复
         $count = Client::where('version_code', Input::get('version_code', 0))
                 ->where('title', Input::get('title', ''))
+                ->where('release', Input::get('release', 0))
                 ->count();
         if ($count > 0) {
             return Redirect::route('client.create')->with('msg', 'APK重复了');

@@ -33,6 +33,7 @@
                 <td width="3%">版本</td>
                 <td width="6%">版本代号</td>
                 <td width="8%">上传时间</td>
+                <td width="8%">渠道名</td>
                 <td width="6%">操作</td>
             </tr>
             @forelse($apps as $k => $app)
@@ -45,6 +46,7 @@
                 <td>{{ $app->version }}</td>
                 <td>{{ $app->version_code }}</td>
                 <td>{{ date('Y-m-d H:i', strtotime($app['updated_at'])) }}</td>
+                <td>{{ Config::get('status.release')[$app->release] }}</td>
                 <td>
                     @if(Sentry::getUser()->hasAccess('client.edit'))
                         <a href="{{ URL::route('client.edit', $app->id) }}" class="Search_show">编辑</a>

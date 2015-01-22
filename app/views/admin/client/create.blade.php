@@ -60,6 +60,12 @@
                 </td>
             </tr>
             <tr>
+               <td class="Search_lei">选择渠道：</td>
+               <td>
+                    {{ Form::select('release', Config::get('status.release'), Input::get('release')); }}
+               </td>
+            </tr>
+            <tr>
                <td class="Search_lei">新版特性：</td>
                <td><textarea name="changes" id="changes" class="Search_textarea"></textarea>
                </td>
