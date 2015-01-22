@@ -12,7 +12,13 @@ class Admin_Apps_ClientController extends \Admin_BaseController {
     {
         $apps = Client::OrderBy('id', 'desc')
                 ->paginate($this->pagesize);
-        $this->layout->content = View::make('admin.client.index', ['apps' => $apps]);
+        $channels = (new Channels)->selects();
+
+        $view = View::make('admin.client.index');
+        $view->withApps($apps);
+        $view->withChannels($channels);
+
+        return $view;
     }
 
     /**

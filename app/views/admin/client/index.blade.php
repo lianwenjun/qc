@@ -63,7 +63,7 @@
                 <td>{{ $app->version }}</td>
                 <td>{{ $app->version_code }}</td>
                 <td>{{ date('Y-m-d H:i', strtotime($app['updated_at'])) }}</td>
-                <td>{{ Config::get('status.release')[$app->release] }}</td>
+                <td>{{ $channels[$app->release] }}</td>
                 <td>
                     @if(Sentry::getUser()->hasAccess('client.edit'))
                         <a href="{{ URL::route('client.edit', $app->id) }}" class="Search_show">编辑</a>
