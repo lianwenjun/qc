@@ -57,8 +57,6 @@ class Activity extends Eloquent {
 			$activity->user_id = $data['userId'];
 
 		$activity->content_id   = isset($data['contentId'])   ? $data['contentId']   : 0;
-		$activity->username     = isset($data['username'])    ? $data['username']    : "";
-		$activity->realname     = isset($data['realname'])    ? $data['realname']    : "";
 		$activity->content_type = isset($data['contentType']) ? $data['contentType'] : "";
 		$activity->action       = isset($data['action'])      ? $data['action']      : "";
 		$activity->description  = isset($data['description']) ? $data['description'] : "";
