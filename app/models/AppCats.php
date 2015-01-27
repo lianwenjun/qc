@@ -60,7 +60,7 @@ class AppCats extends \Eloquent {
     public function getCountByTagIds($tagIds) {
         //获得所有的上架游戏的ID
         $apps = Apps::select('id')->whereStatus('stock')->get();
-        $appIds = [];
+        $appIds = [0];
         foreach ($apps as $app) {
             $appIds[] = $app->id;
         }

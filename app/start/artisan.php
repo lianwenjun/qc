@@ -19,3 +19,4 @@ Artisan::add(new FixAppTags);
 Artisan::add(new FixAppMd5);
 Artisan::add(new FixUcInfo);
 Artisan::add(new ExportAnything);
+Artisan::add(new NewCats);

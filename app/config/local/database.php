@@ -17,7 +17,9 @@ return array(
     | choice installed on your machine before you begin development.
     |
     */
-
+    'fetch' => PDO::FETCH_CLASS,
+    'default' => 'mysql',
+    'migrations' => 'migrations',
     'connections' => array(
 
         'mysql' => array(
@@ -53,5 +55,5 @@ return array(
 
     ),
     'log' => true,
-
+    
 );

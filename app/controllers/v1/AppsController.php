@@ -81,24 +81,33 @@ class V1_AppsController extends \V1_BaseController {
         return ['count' => $count, 'apps' => $apps];
         
     }
+
+    // 需要修改为新版标签接口  
     private function searchByCat($catId, $exclude, $pageSize, $pageIndex) {
-        //需要预先一次取出
-        $apps = Api_AppCats::where('cat_id', $catId)->get();
+
+        // 需要预先一次取出
+        $apps = Api_AppCats::where('cat_id', $catId)->get(); //Api_AppCats改：Api_GameCatTags
         $appIds = [];
+
         foreach ($apps as $app) {
-            $appIds[] = $app->app_id;
+            $appIds[] = $app->app_id;// app_id改：game_id
         }
+
         $start = (intval($pageIndex) - 1) * intval($pageSize);
-        //当$exclude 不为0的时候，检查该游戏的作者的数据
+        // 当$exclude 不为0的时候，检查该游戏的作者的数据
         $exIds = []; 
+
         if ($exclude != '0') { 
             $exIds = Cache::get('author.apps.' . $exclude, '');
             $exIds = $exIds ? unserialize($exIds) : [];
         }
+
         $appIds = array_diff($appIds, [$exclude] + $exIds);
-        if (!$appIds) {
+
+        if (! $appIds) {
             return ['count' => 0, 'apps' => []];
         }
+
         $count = Api_Apps::whereStatus('stock')
             ->whereIn('id', $appIds)
             ->count();
@@ -110,8 +119,10 @@ class V1_AppsController extends \V1_BaseController {
             ->get();
         $apps = (new Api_Ratings)->getAppsRatings($apps);
         $apps = (new Api_Comments)->getAppsComments($apps);
+        
         return ['count' => $count, 'apps' => $apps];
     }
+
     private function searchByTitle($keyword, $exclude, $pageSize, $pageIndex) {
         $start = (intval($pageIndex) - 1) * intval($pageSize);
         $count = Api_Apps::whereStatus('stock')

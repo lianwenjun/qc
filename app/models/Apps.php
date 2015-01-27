@@ -15,7 +15,7 @@ class Apps extends \Base {
     public $rules = [
         'draft'   => [],
         'pending' => [
-            'cats'           => 'required',
+            'cats'            => 'required',
             'os_version'      => 'required',
             'version_code'    => 'required',
             'sort'            => 'required',

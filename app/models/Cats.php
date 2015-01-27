@@ -4,164 +4,276 @@ use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class Cats extends \Eloquent {
 
-    //这部分假删除部分能做成个头部不呢
     use SoftDeletingTrait;
-    protected $dates = ['deleted_at'];
+
     protected $softDelete = true;
-    
+    protected $dates = ['deleted_at'];
     protected $table = 'cats';
     protected $fillable = [];
-    //过滤分类
-    public $catsRules = [
-                'word' => 'required|unique:cats,title,NULL,id,parent_id,0,deleted_at,NULL',
-                ];
-    //过滤标签
-    public function tagsCreateRules($parent_id) {
-        return [
-                'word' => 'required|unique:cats,title,NULL,NULL,parent_id,'.$parent_id,
-                'parent_id' => 'required|integer',
-                ];
-    }
-    //过滤标签添加
 
-    public function tagsUpdateRules($id, $parent_id) {
-        return [
-                'word' => 'required|unique:cats,title,'.$id .',id,deleted_at,NULL,parent_id,'.$parent_id,
-                'sort' => 'integer',
-                ];
-    }
     /**
-     * 获取单个游戏的分类
+     * 验证
      *
-     * @param $id int 游戏 ID
+     * @param $data array 验证规则, $id int 可忽略的id
      *
-     * @return array [[id=>1, title=>xxx]]
-     */
-    public function appCats($id)
+     * @return obj
+     **/
+    public function isValid($data, $id = null)
     {
+        $title = isset($id) ? 'sometimes|required|unique:cats,title,'. $id
+                            : 'sometimes|required|unique:cats,title';
 
-        $data = [];
-        $ids = AppCats::select('cat_id')
-                       ->where('app_id', $id)
-                       ->get()->toArray();
+        // 分类数据验证规则
+        $rules = [
+            'title' => $title,
+            'position' => 'in:hotcats,gamecats',
+            'sort' => 'sometimes|numeric',
+            'image' => 'sometimes|required|image'
+        ];
+        // 错误信息
+        $messages = [
+            'title.required' => '标题是必须的',
+            'title.unique' => '分类已存在',
+            'position.in' => '分类位置只能是热门分类、游戏分类',
+            'sort.numeric' => '排序必须为数字'
+        ];
 
-        if($ids) {
-            $data = Cats::select(['id', 'title'])
-                         ->where('parent_id', 0)
-                         ->whereIn('id', $ids)
-                         ->get()->toArray();
-        }
-
-        return $data;
+        return Validator::make($data, $rules, $messages);
     }
 
     /**
-     * 获取单个游戏的标签
+     * 分类列表数据lists
      *
-     * @param $id int 游戏 ID
+     *@param $pageSize int 分页
      *
-     * @return array [[id=>1, title=>xxx]]
+     * @return obj
      */
-    public function appTags($id)
+    public function lists($pagesize) 
     {
+        $conditions = ['id', 'position', 'title', 'sort', 'tags'];
 
-        $data = [];
-        $ids = AppCats::select('cat_id')
-                       ->where('app_id', $id)
-                       ->get()->toArray();
-
-        if($ids) {
-            $data = Cats::select(['id', 'title'])
-                         ->where('parent_id', '!=', 0)
-                         ->whereIn('id', $ids)
-                         ->get()->toArray();
-        }
-
-        return $data;
+        return Cats::select($conditions)->orderBy('id', 'desc')->paginate($pagesize);
     }
 
     /**
-     * 获取所有分类
+     * 获取所有分类allCats
      *
      * @return obj
      */
     public function allCats()
     {
-        return Cats::select(['id', 'title', 'search_total', 'sort', 'created_at'])
-                    ->where('parent_id', 0)
-                    ->orderBy('sort', 'desc')
-                    ->get();
+        $conditions = ['id', 'title'];
+
+        return Cats::select($conditions)->orderBy('id', 'desc')->get();
     }
 
     /**
-     * 获取所有标签
+     * 获取分类广告allCatAds
+     *
+     *@param $pageSize int 分页
      *
      * @return obj
      */
-    public function allTags()
+    public function allCatAds($pageSize)
     {
-        return Cats::select(['id', 'parent_id', 'title'])
-                    ->where('parent_id', '!=', 0)
-                    ->orderBy('sort', 'desc')
-                    ->get();
+        $conditions = ['id', 'title', 'image', 'operator_id', 'operator'];
+
+        return Cats::select($conditions)->orderBy('id', 'desc')->paginate($pageSize);
     }
 
     /**
-     * 往APP数据里面添加分类数据
+     * 分类游戏标签Tags
      *
-     * @param $apps array APP查询到的数据
+     *@param $id int 分类id
      *
      * @return array
      */
-    public function addCatsInfo($apps)
+    public function tags($id)
     {
-        foreach($apps['data'] as $key => $app) {
-            $cats = $this->appCats($app['id']);
+        $cats = Cats::find($id);
 
-            $catNames = [];
-            foreach($cats as $cat) {
-                $catNames[] = $cat['title'];
-            }
-
-            $apps['data'][$key] += [ 'cat_name' => implode(', ', $catNames)];
-        }
-
-        return $apps;
+        return explode(',', $cats->tags);
     }
-
+    
     /**
-     * 获取带分类结构的标签
+     * 热门分类位置数据hotCats
      *
-     * @return array
-     */
-    public function allTagsWithCat() {
-
-        $data=[];
-        foreach($this->allCats() as $cat) {
-            $data[$cat->id]['title'] = $cat->title;
-            foreach($this->allTags() as $tag) {
-                if($tag->parent_id == $cat->id) {
-                    $tagData = ['id' => $tag->id, 'title' => $tag->title];
-                    $data[$cat->id]['tags'][] = $tagData;
-                }
-            }
-        }
-
-        return $data;
-    }
-
-    /**
-     * 获取分类所有标签
-     *
-     * @param $id int 分类ID 
+     *@param $size int default = 4 默认显示4个
      *
      * @return obj
      */
-    public function catTags($id)
+    public function hotCats($size = 4)
     {
-        return Cats::select(['id', 'title'])
-                    ->where('parent_id', $id)
-                    ->orderBy('sort', 'desc')
-                    ->get();
+        return Cats::where('position', 'hotcats')->orderBy('sort', 'asc')                               
+                                                 ->take($size)
+                                                 ->get();
     }
+
+    /**
+     * 游戏分类位置数据gameCats
+     *
+     *@param $size int default = 6 默认显示6个
+     *
+     * @return obj
+     */
+    public function gameCats($size = 6)
+    {
+        return Cats::where('position', 'gamecats')->orderBy('sort', 'asc')                               
+                                                  ->take($size)
+                                                  ->get();
+    }
+
+    // //过滤分类
+    // public $catsRules = [
+    //             'word' => 'required|unique:cats,title,NULL,id,parent_id,0,deleted_at,NULL',
+    //             ];
+    // //过滤标签
+    // public function tagsCreateRules($parent_id) {
+    //     return [
+    //             'word' => 'required|unique:cats,title,NULL,NULL,parent_id,'.$parent_id,
+    //             'parent_id' => 'required|integer',
+    //             ];
+    // }
+    // //过滤标签添加
+
+    // public function tagsUpdateRules($id, $parent_id) {
+    //     return [
+    //             'word' => 'required|unique:cats,title,'.$id .',id,deleted_at,NULL,parent_id,'.$parent_id,
+    //             'sort' => 'integer',
+    //             ];
+    // }
+    // /**
+    //  * 获取单个游戏的分类
+    //  *
+    //  * @param $id int 游戏 ID
+    //  *
+    //  * @return array [[id=>1, title=>xxx]]
+    //  */
+    // public function appCats($id)
+    // {
+
+    //     $data = [];
+    //     $ids = AppCats::select('cat_id')
+    //                    ->where('app_id', $id)
+    //                    ->get()->toArray();
+
+    //     if($ids) {
+    //         $data = Cats::select(['id', 'title'])
+    //                      ->where('parent_id', 0)
+    //                      ->whereIn('id', $ids)
+    //                      ->get()->toArray();
+    //     }
+
+    //     return $data;
+    // }
+
+    // /**
+    //  * 获取单个游戏的标签
+    //  *
+    //  * @param $id int 游戏 ID
+    //  *
+    //  * @return array [[id=>1, title=>xxx]]
+    //  */
+    // public function appTags($id)
+    // {
+
+    //     $data = [];
+    //     $ids = AppCats::select('cat_id')
+    //                    ->where('app_id', $id)
+    //                    ->get()->toArray();
+
+    //     if($ids) {
+    //         $data = Cats::select(['id', 'title'])
+    //                      ->where('parent_id', '!=', 0)
+    //                      ->whereIn('id', $ids)
+    //                      ->get()->toArray();
+    //     }
+
+    //     return $data;
+    // }
+
+    // /**
+    //  * 获取所有分类
+    //  *
+    //  * @return obj
+    //  */
+    // public function allCats()
+    // {
+    //     return Cats::select(['id', 'title', 'search_total', 'sort', 'created_at'])
+    //                 ->where('parent_id', 0)
+    //                 ->orderBy('sort', 'desc')
+    //                 ->get();
+    // }
+
+    // /**
+    //  * 获取所有标签
+    //  *
+    //  * @return obj
+    //  */
+    // public function allTags()
+    // {
+    //     return Cats::select(['id', 'parent_id', 'title'])
+    //                 ->where('parent_id', '!=', 0)
+    //                 ->orderBy('sort', 'desc')
+    //                 ->get();
+    // }
+
+    // /**
+    //  * 往APP数据里面添加分类数据
+    //  *
+    //  * @param $apps array APP查询到的数据
+    //  *
+    //  * @return array
+    //  */
+    // public function addCatsInfo($apps)
+    // {
+    //     foreach($apps['data'] as $key => $app) {
+    //         $cats = $this->appCats($app['id']);
+
+    //         $catNames = [];
+    //         foreach($cats as $cat) {
+    //             $catNames[] = $cat['title'];
+    //         }
+
+    //         $apps['data'][$key] += [ 'cat_name' => implode(', ', $catNames)];
+    //     }
+
+    //     return $apps;
+    // }
+
+    // /**
+    //  * 获取带分类结构的标签
+    //  *
+    //  * @return array
+    //  */
+    // public function allTagsWithCat() {
+
+    //     $data=[];
+    //     foreach($this->allCats() as $cat) {
+    //         $data[$cat->id]['title'] = $cat->title;
+    //         foreach($this->allTags() as $tag) {
+    //             if($tag->parent_id == $cat->id) {
+    //                 $tagData = ['id' => $tag->id, 'title' => $tag->title];
+    //                 $data[$cat->id]['tags'][] = $tagData;
+    //             }
+    //         }
+    //     }
+
+    //     return $data;
+    // }
+
+    // /**
+    //  * 获取分类所有标签
+    //  *
+    //  * @param $id int 分类ID 
+    //  *
+    //  * @return obj
+    //  */
+    // public function catTags($id)
+    // {
+    //     return Cats::select(['id', 'title'])
+    //                 ->where('parent_id', $id)
+    //                 ->orderBy('sort', 'desc')
+    //                 ->get();
+    // }
 }
