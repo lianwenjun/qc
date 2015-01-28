@@ -29,7 +29,10 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
 
         }
 
-        return View::make('admin.cats.index')->with('cats', $cats);
+        $position = Config::get('catsposition');
+
+        return View::make('evolve.system.cats')->with('cats', $cats)
+                                               ->with('position', $position);
     }
 
     /**
@@ -44,11 +47,21 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         $validator = Cats::isNewValid($data);
 
         if ($validator->fails()) {
-             return Redirect::to('admin/system/cats')->withErrors($validator);
+             return Redirect::to('admin/cat/index')->withErrors($validator);
         } else {
-            Cats::create($data);
+            $catModel = new Cats;
+            //保存数据
+            $catModel->title = Input::get('title');
+            $catModel->sort = Input::get('sort');
+            $catModel->position = Input::get('position');
+            $catModel->save();
+            //保存到分类库中
+            $catAdsModel = new CatAds;
+            $catAdsModel->cat_id = $catModel->id;
+            $catAdsModel->title = $catModel->title;
+            $catAdsModel->save();
 
-            return Redirect::to('admin/system/cats')->withSuccess('添加成功!');
+            return Redirect::to('admin/cat/index')->withSuccess('添加成功!');
         }
 
     }
@@ -71,12 +84,10 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
             // 根据标签ids获取相应的tags
             foreach ($gameCatTags as $gameCatTag) {
                 $tagIds[] = $gameCatTag->tag_id;
-                $tags = Tags::relevantTags($tagIds);
+                $cat->tags = Tags::relevantTags($tagIds);
             }
 
-            $datas = ['cat' => $cat, 'tags' => $tags];
-
-            return View::make('admin.cats.edit')->with('datas', $cat);
+            return View::make('evolve.system.edit')->with('cat', $cat);
                                                 
         } else {
             return Response::make('404 页面找不到', 404);
@@ -97,7 +108,7 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         $validator = Cats::isNewValid($data);
 
         if ($validator->fails()) {
-            return Redirect::to('admin/cats/' .$id. '/edit')->withErrors($validator);
+            return Redirect::back()->withErrors($validator);
         } 
 
         $cats = Cats::find($id);
@@ -120,13 +131,13 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
      *
      * @return Response
      */
-    public function destory($id) 
+    public function destroy($id) 
     {
-        if(Cat::where('id', $id)->delete()) {
+        if(Cat::destroy($id)) {
             // 分类删除后，分类标签也将删除相应的分类
-            GameCatTags::where('cat_id', $id)->delete();
+            GameCatTags::destroy($id);
 
-            return Redirect::to('admin/system/cats')->withSuccess('# ' .$id. ' 删除成功!'); 
+            return Redirect::to('admin/cats/index')->withSuccess('# ' .$id. ' 删除成功!'); 
         }
 
         return Response::make('404 页面找不到', 404);

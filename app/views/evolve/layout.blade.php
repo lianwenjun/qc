@@ -26,6 +26,13 @@
                         'apps.pending',
                         'apps.notpass',
                         'apps.unstock',
+                        'cat.index',
+                        'tag.index',
+                        'cattag.index',
+                        'stopword.index',
+                        'keyword.index',
+                        'client.index',
+
                     ]
                 )
             )
@@ -68,9 +75,11 @@
             <li class="nested-li">
                 <h3>系统管理</h3>
                 <ul>
-                    <li><a href="../system/game-sort.html">游戏分类管理</a></li>
-                    <li><a href="../system/sort-tag.html">分类标签管理</a></li>
-                    <li><a href="../system/tags.html">标签库管理</a></li>
+                    @if(Sentry::getUser()->hasAccess('cat.index'))
+                    <li><a href="{{ URL::route('cat.index') }}">游戏分类管理</a></li>
+                    @endif       
+                    <li><a href="{{ URL::route('tag.index') }}">分类标签管理</a></li>
+                    <li><a href="../system/tags.html">标签库管理</a></li>   
                     <li><a href="../system/supplier.html">供应商管理</a></li>
                     <li><a href="../system/channel.html">渠道商管理</a></li>
                     <li><a href="../system/keyword.html">关键字管理</a></li>

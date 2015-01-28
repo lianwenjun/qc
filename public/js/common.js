@@ -13,7 +13,6 @@ $(function(){
         $(this).animate({paddingRight: '-=10px'}, 200);
     });
 
-
     //左侧菜单列表点击事件
     $('.jq-menu li').click(function(){
         $('.jq-menu li').css('color','#fff');

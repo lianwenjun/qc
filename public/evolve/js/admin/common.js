@@ -1,4 +1,3 @@
-
 $(function(){
  
     // 左侧菜单标题点击事件
@@ -38,16 +37,32 @@ $(function(){
     $(".jq-sort[data-sort='asc']").children('i').removeClass('icon-menu2');
 
 
+
+    // 上传图片
+    function uploadPic(selector, className){
+        selector.hover(function() {
+            $(className).css("display", "block");
+        }, function() {
+            $(className).css("display", "none");
+        });
+    }
+    
+    // 广告位管理-编辑页面-上传图片
+    uploadPic($('.jq-addPic'), '.add-pic');
+
+    // 游戏管理-编辑页面-上传图标
+    uploadPic($('.jq-addIcon'), '.add-icon');
+
+
+
     // 信息类弹窗通用函数
-    function alertDialog(selector, msg, width, height) {
-        var w = width || 300;
-        var h = height || 150;
+    function alertDialog(selector, msg, fn) {
         var alertdiv = $("<div title='信息'></div>").appendTo($("BODY"));
         var content = alertdiv.html(msg);
         alertdiv.dialog({
             autoOpen: true,
-            height: h,
-            width: w,
+            height: 150,
+            width: 300,
             modal: true,
             close: function (evt, ui) {
                 alertdiv.dialog("destroy");
@@ -55,8 +70,12 @@ $(function(){
             },
             buttons:
             {
-                "确定": function() {   
-                    window.location.href = selector.data('url');             
+                "确定": function() { 
+                    if (fn == ''){
+                        window.location.href = selector.data('url');  
+                    } else {
+                        fn;
+                    }         
                     alertdiv.dialog("close");
                 },
                 "取消": function() {
@@ -68,22 +87,22 @@ $(function(){
 
     // 下载弹窗
     $('.jq-download').click(function() {         
-        alertDialog($(this), "确定要下载此应用？");             
+        alertDialog($(this), "确定要下载此应用？", '');             
     });
 
     // 下架弹窗
     $('.jq-unstock').click(function() {         
-        alertDialog($(this), "确定要下架吗？");               
+        alertDialog($(this), "确定要下架吗？", '');               
     });
 
     // 删除弹窗
     $('.jq-delete').click(function() {         
-        alertDialog($(this), "确定要删除吗？");               
+        alertDialog($(this), "确定要删除吗？", '');               
     });
 
     // 通过弹窗
     $('.jq-pass').click(function() {         
-        alertDialog($(this), "确定要通过吗？");               
+        alertDialog($(this), "确定要通过吗？", '');               
     });
    
 
@@ -153,7 +172,92 @@ $(function(){
         $(this).parent('ul').prev('span').text(val);
     });
 
-    
+
+    // 自动匹配
+    $.fn.select2Remote = function(options) {  
+        var opts = $.extend({},$.fn.select2Remote.defaults, options);  
+        this.select2({ 
+            allowClear: true,
+            minimumInputLength:opts.minLength, 
+            ajax: {  
+                url: opts.url,  
+                dataType: 'json',  
+                quietMillis: opts.delay ,  
+                data: function (term, page) {
+                    return {q: term};
+                },  
+                results: function (data, page) { 
+                    if (data.success == "true"){
+                        return { results: data.data.suggestions };
+                    } else {
+                        alert('加载失败！');
+                    }   
+                },
+                cache: true  
+            }, 
+            formatResult: function(medata){
+                return medata.value;
+            },  
+            formatSelection:function(medata){
+                $('.jq-searchTagId').val(medata.key);
+                return medata.value;
+            },
+            escapeMarkup: function (m) { 
+                return m; 
+            }  
+        });  
+    }  
+           
+    $.fn.select2Remote.defaults = {  
+        minLength: 1,  
+        url: '',   
+        delay: 250
+    }  
+
+    $('.jq-searchTag').select2Remote({  
+        url: '/evolve-ui/js/pages/autoComplete.json'
+    });
+
+    $('.jq-searchGameName').select2Remote({  
+        url: '/evolve-ui/js/pages/autoComplete.json'
+    });
+
+    // 游戏关键字（select2）
+    $('.jq-keyword').select2({
+        tags: ["我叫MT online"],
+        minimumInputLength: 1,
+        maximumInputLength: 10,
+        tokenSeparators: [",", " "],
+        ajax: {  
+            url: '/evolve-ui/js/pages/autoComplete.json',  
+            dataType: 'json',  
+            quietMillis: 250,  
+            data: function (term, page) {
+                return {q: term};
+            },  
+            results: function (data, page) { 
+                if (data.success == "true"){
+                    return { results: data.data.suggestions };
+                } else {
+                    alert('加载失败！');
+                }   
+            },
+            cache: true  
+        }, 
+        formatResult: function(medata){
+            return medata.value;
+        },  
+        formatSelection:function(medata){
+            $('.jq-searchTagId').val(medata.key);
+            return medata.value;
+        },
+        escapeMarkup: function (m) { 
+            return m; 
+        }
+    });
+
+
+
     // 格式化日期
     Date.prototype.Format = function (fmt) {
         var o = {
