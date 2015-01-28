@@ -20,7 +20,7 @@ class Tp_ApiController extends \Tp_BaseController
      */
     public function getGameInfo()
     {
-        $this->_query = Apps::select('id', 'title', 'pack', 'stocked_at');
+        $this->_query = Apps::select('id', 'title', 'pack as package', 'stocked_at');
 
         $this->_dealConditions();
         $this->_execSql();
