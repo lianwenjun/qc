@@ -1,86 +1,86 @@
 <?php
 
-class Admin_Cat_GameCatTagsController extends \Admin_BaseController {
+class Admin_System_GameCatTagsController extends \Admin_BaseController {
+    
+    /**
+     * 游戏分类标签首页
+     * GET /gamescattags
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        // 分类下拉列表数据
+        $allCats = Cats::allCats();
+        $cats = ['' => '所属游戏分类'];
 
-	/**
-	 * Display a listing of the resource.
-	 * GET /gamecattags
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		//
-	}
+        foreach ($allCats as $cat) {
+            $cats[$cat->id] = $cat->title;
+        }
 
-	/**
-	 * Show the form for creating a new resource.
-	 * GET /gamecattags/create
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
+        // 标签列表数据
+        $allTags = Tags::allTags();
+        $tags = [];
 
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /gamecattags
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+        foreach ($allTags as $tag) {
+            $tags[$tag->id] = $tag->title;
+        }
 
-	/**
-	 * Display the specified resource.
-	 * GET /gamecattags/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+        // 分类标签列表数据
+        $catTags = GameCatTags::lists($this->pageSize);
+        $view = view::make('evolve.cat.gamecattags');
+        
+        return $view->with('cats', $cats)
+                    ->with('tags', $tags)
+                    ->with('catTags', $catTags);
+    }
 
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /gamecattags/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+    /**
+     * 游戏分类标签添加
+     * POST /gamescattags
+     *
+     * @return Response
+     */
+    public function store()
+    {
+        $data = Input::all();
+        $validator = GameCatTags::isNewValid($data);
 
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /gamecattags/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
+        if ($validator->fails()) {
+            return Redirect::to('admin/gamecattags')->withErrors($validator);
+        } else {
+            $gamecattags = new GameCatTags();
+            
+            // 判断标签是否在标签库中存在，若不存在则在标签库中创建一条并返回tag_id;
+            if (! Input::has('tagid')) {
+                $tag = Tags::create($data);
+                $gamecattags->tag_id = $tag->id;
+            }
 
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /gamecattags/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
+            $gamecattags->tag_id = Input::get('tagid');
+            $gamecattags->cat_id = Input::get('catid');
+            $gamecattags->save();
+
+            return Redirect::to('admin/gamecattags')->withSuccess('添加成功!');
+        }
+    }
+
+    /**
+     * 游戏分类标签删除
+     * DELETE /gamescattags/{id}
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        $data = GameCatTags::find($id);
+        if ($data) {
+            $data->delete();
+            return Redirect::to('admin/gamecattags')->withSuccess('# ' . $id . ' 删除成功!');
+        } else {
+            return Response::make('404 页面找不到', 404);
+        }
+    }
 
 }
