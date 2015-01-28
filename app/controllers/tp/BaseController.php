@@ -8,7 +8,7 @@ class Tp_BaseController extends Controller
     public function retJson($info = [])
     {
         $ret['success'] = isset($info['success']) ? $info['success'] : false;
-        $ret['msg']     = isset($info['msg']) ? $info['msg'] : '';
+        $ret['message']     = isset($info['msg']) ? $info['msg'] : '';
         $ret['data']    = isset($info['data']) ? $info['data'] : [];
 
         die(json_encode($ret, JSON_UNESCAPED_UNICODE));
