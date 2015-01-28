@@ -2,10 +2,10 @@
 
 class Tp_ApiController extends Tp_BaseController
 {
-    private $_key      = 'tp-api';  // 验证串
-    private $_pageSize = 50;        // 每页最大记录条数
-    private $_query    = null;      // query对象
-    private $_result   = [];        // query执行结果
+    private $_key      = 'ea1ebc71';    // 验证串
+    private $_pageSize = 50;            // 每页最大记录条数
+    private $_query    = null;          // query对象
+    private $_result   = [];            // query执行结果
 
     /**
      * 预处理
@@ -55,7 +55,7 @@ class Tp_ApiController extends Tp_BaseController
                     }
                     break;
 
-                case 'timestamp':
+                case 'stocked_at':
                     if (is_array($value) && count($value) == 2) {
                         array_walk($value, function(&$value)
                         {
