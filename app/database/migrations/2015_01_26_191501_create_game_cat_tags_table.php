@@ -24,7 +24,7 @@ class CreateGameCatTagsTable extends Migration {
             $table->timestamps();
 
 
-            //打索引
+            // 打索引
             $table->index('game_id');
             $table->index('cat_id');
             $table->index('tag_id');

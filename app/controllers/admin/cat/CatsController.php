@@ -13,12 +13,44 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         $cats = Cats::lists($this->pagesize);
 
         foreach($cats as $cat) {
-            $tagIds[] = GameCatTags::select('tag_id')->where('cat_id', $cat->id)->get();
-            $tags = Tags::TagInfos($tagIds);
-            $cat->tags = $tags;
+            // 根据分类id获取标签ids
+            $gameCatTags = GameCatTags::rewordTagIds($cat->id);
+            // 根据标签ids获取相应的tags
+            foreach ($gameCatTags as $gameCatTag) {
+                $tagIds[] = $gameCatTag->tag_id;
+                $tags = Tags::relevantTags($tagIds);
+                $tagTitle = [];
+                // 将标签数组分解
+                foreach ($tags as $tag) {
+                    $tagTitle[] = $tag->title;
+                    $cat->tags = implode(',', $tagTitle);
+                }
+            }
+
         }
 
         return View::make('admin.cats.index')->with('cats', $cats);
+    }
+
+    /**
+     * 分类添加接口
+     * POST /cats/store
+     *
+     * @return Response 
+     */
+    public function store() 
+    {
+        $data = Input::all();
+        $validator = Cats::isNewValid($data);
+
+        if ($validator->fails()) {
+             return Redirect::to('admin/system/cats')->withErrors($validator);
+        } else {
+            Cats::create($data);
+
+            return Redirect::to('admin/system/cats')->withSuccess('添加成功!');
+        }
+
     }
 
     /**
@@ -34,13 +66,18 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         $cat = Cats::find($id);
 
         if ($cat) {
-            // 获取标签ids array
-            $tagIds[] = GameCatTags::select('tag_id')->where('cat_id', $id)->get();
-            // 根据id获取相应的tags
-            $tags = Tags::relevantTags($tagIds);
+            // 根据分类id获取标签ids
+            $gameCatTags = GameCatTags::rewordTagIds($id);
+            // 根据标签ids获取相应的tags
+            foreach ($gameCatTags as $gameCatTag) {
+                $tagIds[] = $gameCatTag->tag_id;
+                $tags = Tags::relevantTags($tagIds);
+            }
 
-            return View::make('admin.cats.edit')->with('cat', $cat)
-                                                ->with('tags', $tags);
+            $datas = ['cat' => $cat, 'tags' => $tags];
+
+            return View::make('admin.cats.edit')->with('datas', $cat);
+                                                
         } else {
             return Response::make('404 页面找不到', 404);
         }
@@ -48,7 +85,7 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
 
     /**
      * 分类更新接口
-     * PUT /update
+     * PUT cats/{id}/update
      *
      * @param $id int 分类id
      *
@@ -68,24 +105,49 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         if ($cats) {
             $cats->title = Input::get('title');
             $cats->save();
-            $GameCatTags = new GameCatTags;
-            // 将相关cat_id的分类标签先删除再入库
-            $GameCatTags->where('cat_id', $id)->delete();
-
-            $tagIds = Input::get('tagIds');
-
-
-            foreach ($tagIds as $tagId) {
-                $GameCatTags->cat_id = $id;
-                $GameCatTags->tag_id = $tagId;
-                $GameCatTags->save();
-            }
 
             return Redirect::to('admin/cats')->withSuccess('# ' .$id. ' 更新成功!');
         } else {
             return Response::make('404 页面找不到', 404);
         }
     }
+
+    /**
+     * 分类删除接口
+     * DELETE /cat/{id}
+     *
+     * @param $id int 分类id
+     *
+     * @return Response
+     */
+    public function destory($id) 
+    {
+        if(Cat::where('id', $id)->delete()) {
+            // 分类删除后，分类标签也将删除相应的分类
+            GameCatTags::where('cat_id', $id)->delete();
+
+            return Redirect::to('admin/system/cats')->withSuccess('# ' .$id. ' 删除成功!'); 
+        }
+
+        return Response::make('404 页面找不到', 404);
+    }
+
+    /**
+     * 分类预览接口
+     * DELETE /cats/preview
+     *
+     * @return json 
+     */
+    public function preview() 
+    {
+        // 获取热门分类和游戏分类时数据
+        $hotCats = Cats::hotCats();
+        $gameCats = Cats::gameCats();
+        $data = ['hotcats' => $hotCats, 'gamecats' => $gameCats];
+
+        // return $this->result(['msg' => '数据返回成功', 'data'  => $data]);
+    }
+
     // /**
     //  * 分类列表
     //  * GET /admin/cats

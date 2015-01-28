@@ -18,7 +18,7 @@ class Cats extends \Eloquent {
      *
      * @return obj
      **/
-    public function isValid($data, $id = null)
+    public function isNewValid($data, $id = null)
     {
         $title = isset($id) ? 'sometimes|required|unique:cats,title,'. $id
                             : 'sometimes|required|unique:cats,title';
@@ -50,7 +50,7 @@ class Cats extends \Eloquent {
      */
     public function lists($pagesize) 
     {
-        $conditions = ['id', 'position', 'title', 'sort', 'tags'];
+        $conditions = ['id', 'position', 'title', 'sort'];
 
         return Cats::select($conditions)->orderBy('id', 'desc')->paginate($pagesize);
     }
@@ -80,20 +80,6 @@ class Cats extends \Eloquent {
 
         return Cats::select($conditions)->orderBy('id', 'desc')->paginate($pageSize);
     }
-
-    /**
-     * 分类游戏标签Tags
-     *
-     *@param $id int 分类id
-     *
-     * @return array
-     */
-    public function tags($id)
-    {
-        $cats = Cats::find($id);
-
-        return explode(',', $cats->tags);
-    }
     
     /**
      * 热门分类位置数据hotCats
@@ -112,14 +98,11 @@ class Cats extends \Eloquent {
     /**
      * 游戏分类位置数据gameCats
      *
-     *@param $size int default = 6 默认显示6个
-     *
      * @return obj
      */
-    public function gameCats($size = 6)
+    public function gameCats()
     {
-        return Cats::where('position', 'gamecats')->orderBy('sort', 'asc')                               
-                                                  ->take($size)
+        return Cats::where('position', 'gamecats')->orderBy('sort', 'asc')
                                                   ->get();
     }
 

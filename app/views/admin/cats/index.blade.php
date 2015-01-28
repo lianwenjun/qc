@@ -13,8 +13,11 @@
         <a href="javascript:;" class="button red-button jq-delete" data-url="">删除</a>
     </td>
 </tr>
+<br>    
 @empty
 <tr class="no-data">
     <td colspan="6">亲！还没有数据哦！</td>
 <tr>
 @endforelse
+
+
