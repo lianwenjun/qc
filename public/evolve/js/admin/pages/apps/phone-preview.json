@@ -1,0 +1,63 @@
+{
+    "success" : "true",
+    "msg" : "失败",
+    "data":
+    {
+        "id": "12",
+        "name": "爸爸去哪儿",
+        "icon": "/evolve-ui/images/pages/icon1.jpg",
+        "score": "1.5",
+        "comment_counts": "100",
+        "package": "111",
+        "cat": "休闲游戏",
+        "version": "1.9.0",
+        "size": "25.8M",
+        "updated_at": "2014/03/07",
+        "editor_comment":"二次封测已经结束,11月6日正式不删档,预约玩家即可参与'蜗牛游戏手机'抽奖活动。",
+        "content": "111",
+        "download": "1000",
+        "imgs": [
+            "/evolve-ui/images/pages/phone-pic.png",
+            "/evolve-ui/images/pages/phone-pic.png",
+            "/evolve-ui/images/pages/phone-pic.png",
+            "/evolve-ui/images/pages/phone-pic.png",
+            "/evolve-ui/images/pages/phone-pic.png"
+        ],
+        "gifts": [
+            {"id": "11",
+            "name": "【天龙八部】新手礼包"},
+            {"id": "15",
+            "name": "【天龙八部】新手礼包"},
+            {"id": "16",
+            "name": "【天龙八部】新手礼包"}
+        ],
+        "same_author_games": [
+            {"id": "13",
+            "icon": "/evolve-ui/images/pages/icon1.jpg",
+            "name": "水果忍者"},
+            {"id": "15",
+            "icon": "/evolve-ui/images/pages/icon1.jpg",
+            "name": "水果忍者"},
+            {"id": "16",
+            "icon": "/evolve-ui/images/pages/icon1.jpg",
+            "name": "水果忍者"},
+            {"id": "17",
+            "icon": "/evolve-ui/images/pages/icon1.jpg",
+            "name": "水果忍者"}
+        ],
+        "same_cat_games": [
+            {"id": "14",
+            "icon": "/evolve-ui/images/pages/icon2.jpg",
+            "name": "会说话的汤姆猫"},
+            {"id": "18",
+            "icon": "/evolve-ui/images/pages/icon2.jpg",
+            "name": "会说话的汤姆猫"},
+            {"id": "19",
+            "icon": "/evolve-ui/images/pages/icon2.jpg",
+            "name": "会说话的汤姆猫"},
+            {"id": "20",
+            "icon": "/evolve-ui/images/pages/icon2.jpg",
+            "name": "会说话的汤姆猫"}
+        ]
+    }
+}

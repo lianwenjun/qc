@@ -1,0 +1,14 @@
+.user-info { min-height: 110px; }
+.user-info .fl { width: 30%; margin-right: 10px; }
+.user-info .fl li { height: 22px; line-height: 22px; }
+
+.message { height: 300px; overflow: auto; border: 1px solid #ccc; padding: 15px 5px; }
+.message li { margin-bottom: 15px; line-height: 24px; }
+.message li .message-time { padding: 10px; }
+.message li .custom-message { padding: 5px; max-width: 70%; border-radius: 3px; background: #ACDAFF; box-shadow: 2px 2px 2px #839FC5; }
+.message li .own-message { padding: 5px; margin-left: 30%; max-width: 70%; border-radius: 3px; background: #FFACD8; box-shadow: 2px 2px 2px #C583A6; }
+
+.reply-info { height: 100px; border: 1px solid #ccc; border-top: 0; }
+.reply-info .reply { width: 8%; text-align: center; display: inline-block; height: 100px; line-height: 100px; }
+.reply-info .reply-content { width: 80%; height: 100%; border: 1px solid #ccc; border-top: 0; border-bottom: 0; }
+.reply-info .send { margin-left: 5px; }

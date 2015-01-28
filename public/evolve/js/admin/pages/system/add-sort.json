@@ -1,0 +1,18 @@
+{
+    "success": true,
+    "msg": "失败",
+    "data": {
+        "query": "Unit",
+        "suggestions": [
+            {"key": "1", "value": "战争"},
+            {"key": "2", "value": "棋牌"},
+            {"key": "3", "value": "休闲"},
+            {"key": "4", "value": "竞技"},
+            {"key": "5", "value": "卡通"},
+            {"key": "6", "value": "卡牌"},
+            {"key": "7", "value": "超级英雄"},
+            {"key": "8", "value": "智力"},
+            {"key": "9", "value": "格斗"}
+        ]
+    }
+}

@@ -382,6 +382,7 @@ return array(
     'CreateLogtablesTable' => $baseDir . '/app/database/migrations/2014_11_13_005114_create_logtables_table.php',
     'CreateRatingsTable' => $baseDir . '/app/database/migrations/2014_09_05_072757_create_ratings_table.php',
     'CreateStopwordsTable' => $baseDir . '/app/database/migrations/2014_09_05_095018_create_stopwords_table.php',
+    'CreateTopicsTable' => $baseDir . '/app/database/migrations/2015_01_27_213600_create_topics_table.php',
     'Crypt_AES' => $vendorDir . '/phpseclib/phpseclib/phpseclib/Crypt/AES.php',
     'Crypt_Base' => $vendorDir . '/phpseclib/phpseclib/phpseclib/Crypt/Base.php',
     'Crypt_Blowfish' => $vendorDir . '/phpseclib/phpseclib/phpseclib/Crypt/Blowfish.php',
