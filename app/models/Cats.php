@@ -144,7 +144,6 @@ class Cats extends \Eloquent {
 
         if($ids) {
             $data = Cats::select(['id', 'title'])
-                         ->where('parent_id', 0)
                          ->whereIn('id', $ids)
                          ->get()->toArray();
         }
@@ -168,8 +167,7 @@ class Cats extends \Eloquent {
                        ->get()->toArray();
 
         if($ids) {
-            $data = Cats::select(['id', 'title'])
-                         ->where('parent_id', '!=', 0)
+            $data = Tags::select(['id', 'title'])
                          ->whereIn('id', $ids)
                          ->get()->toArray();
         }
@@ -232,33 +230,36 @@ class Cats extends \Eloquent {
      * @return array
      */
     public function allTagsWithCat() {
-
         $data=[];
+        
         foreach($this->allCats() as $cat) {
             $data[$cat->id]['title'] = $cat->title;
-            foreach(Tags::allTags() as $tag) {
-                if($tag->parent_id == $cat->id) {
-                    $tagData = ['id' => $tag->id, 'title' => $tag->title];
-                    $data[$cat->id]['tags'][] = $tagData;
-                }
+            // 获取相应标签
+            foreach(GameCatTags::rewordTagids($cat->id) as $tag) {
+                $tagData = [
+                    'id' => $tag->tag_id, 
+                    'title' => Tags::oftags($tag->tag_id)->title
+                ];
+                $data[$cat->id]['tags'][] = $tagData;         
             }
+            
         }
 
         return $data;
     }
 
-    /**
-     * 获取分类所有标签
-     *
-     * @param $id int 分类ID 
-     *
-     * @return obj
-     */
-    public function catTags($id)
-    {
-        return Cats::select(['id', 'title'])
-                    ->where('parent_id', $id)
-                    ->orderBy('sort', 'desc')
-                    ->get();
-    }
+    // /**
+    //  * 获取分类所有标签
+    //  *
+    //  * @param $id int 分类ID 
+    //  *
+    //  * @return obj
+    //  */
+    // public function catTags($id)
+    // {
+    //     return Cats::select(['id', 'title'])
+    //                 ->where('parent_id', $id)
+    //                 ->orderBy('sort', 'desc')
+    //                 ->get();
+    // }
 }
