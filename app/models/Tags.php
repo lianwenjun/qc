@@ -101,5 +101,17 @@ class Tags extends \Eloquent {
                    ->get();
     }
 
+    /**
+    * 获取单个标签
+    *
+    * @param $id int
+    *
+    * @return obj
+    */
+    public function oftags($id)
+    {
+        return Tags::find($id);
+    }
+
     
  }
