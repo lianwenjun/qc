@@ -16,8 +16,6 @@ class CreateActivityLogTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('user_id');
-			$table->string('username');
-			$table->string('realname');
 			$table->integer('content_id');
 			$table->string('content_type', 72);
 			$table->string('action', 32);

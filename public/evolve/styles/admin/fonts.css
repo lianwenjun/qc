@@ -1,0 +1,97 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('fonts/icomoon.eot?-qmgme6');
+	src:url('fonts/icomoon.eot?#iefix-qmgme6') format('embedded-opentype'),
+		url('fonts/icomoon.woff?-qmgme6') format('woff'),
+		url('fonts/icomoon.ttf?-qmgme6') format('truetype'),
+		url('fonts/icomoon.svg?-qmgme6#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-flame:before {
+	content: "\f0d2";
+}
+
+.icon-list:before {
+	content: "\f061";
+}
+
+.icon-tools:before {
+	content: "\f031";
+}
+
+.icon-download:before {
+	content: "\e9c7";
+}
+
+.icon-plus:before {
+	content: "\ea0a";
+}
+
+.icon-arrow-left2:before {
+	content: "\ea40";
+}
+
+.icon-dribbble3:before {
+	content: "\eaa8";
+}
+
+.icon-thumb-up:before {
+	content: "\e60a";
+}
+
+.icon-gamepad:before {
+	content: "\e60d";
+}
+
+.icon-bookmark:before {
+	content: "\e603";
+}
+
+.icon-search:before {
+	content: "\f002";
+}
+
+.icon-tags:before {
+	content: "\f02c";
+}
+
+.icon-star:before {
+	content: "\e607";
+}
+
+.icon-star2:before {
+	content: "\e608";
+}
+
+.icon-arrow-down:before {
+	content: "\e605";
+}
+
+.icon-arrow-up:before {
+	content: "\e601";
+}
+
+.icon-arrow-right:before {
+	content: "\e602";
+}
+
+.icon-menu2:before {
+	content: "\e600";
+}
+

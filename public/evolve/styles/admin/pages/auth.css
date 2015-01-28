@@ -1,0 +1,11 @@
+.checkbox-zebra-table { width: 100%; }
+.checkbox-zebra-table th { text-align: center; padding: 0.8em 0; vertical-align: middle; }
+.checkbox-zebra-table td { padding: 0.8em 0; vertical-align: middle; }
+
+.checkbox-zebra-table { background-color: #e2e2e2; }
+.checkbox-zebra-table .label { width: 20%; text-align: right; padding-right: 10px; }
+.checkbox-zebra-table .label-content { width: 60%; }
+.checkbox-zebra-table tr:nth-of-type(even) { background-color: #f3f4f6; }
+.checkbox-zebra-table th { color: #fff; background: #193974; font-size: 1.2em; }
+.checkbox-zebra-table .page { text-align: center; }
+.checkbox-zebra-table td span { display: inline-block; min-width: 100px; margin-right: 10px; }

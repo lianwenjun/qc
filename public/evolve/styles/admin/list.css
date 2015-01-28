@@ -1,0 +1,4 @@
+.edit-table .select { width: 120px; }
+.edit-table .date input { width: 150px; }
+.edit-table .list { padding: 5px;border: solid 2px #ccc; }
+.edit-table .list li { float: left;width: 120px;padding: 5px; }

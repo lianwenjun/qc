@@ -129,7 +129,7 @@ return array(
         'BankDev\Logviewer\LogviewerServiceProvider',
         'JildertMiedema\LaravelPlupload\LaravelPluploadServiceProvider',
         'Maatwebsite\Excel\ExcelServiceProvider',
-
+        'Intervention\Image\ImageServiceProvider',
     ),
 
     /*
@@ -202,7 +202,7 @@ return array(
         'Breadcrumbs'     => 'DaveJamesMiller\Breadcrumbs\Facade',
         'Plupload'        => 'JildertMiedema\LaravelPlupload\Facades\Plupload',
         'Excel'           => 'Maatwebsite\Excel\Facades\Excel',
-
+        'Image'           => 'Intervention\Image\Facades\Image',
     ),
 
 );

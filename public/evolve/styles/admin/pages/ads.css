@@ -1,0 +1,31 @@
+.text { width: 74%; line-height: 20px; }
+
+.gift-name { background: #fff; border: 1px solid #ccc; width: 74%; height: 60px; overflow: auto; padding: 5px 10px; margin-bottom: 10px; }
+.gift-name li { float: left; min-width: 150px; line-height: 22px; }
+
+.gift li { margin: 5px 0; }
+.gift li .gift-content { background: #fff; border: 1px solid #ccc; min-width: 65%; padding: 5px 0; margin-left: 20px; }
+.gift li .gift-content li { line-height: 22px; }
+
+.add-pic { height: 100px; line-height: 100px; width: 240px; text-align: center; display: none; position: absolute; left: 0; top: 0; font-size: 1.2em; background: rgba(255, 255, 255, 0.8); }
+
+.add-img { height: 120px; line-height: 120px; width: 230px; text-align: center; display: none; position: absolute; left: 0; top: 0; font-size: 1.2em; background: rgba(255, 255, 255, 0.8); }
+
+.draft-position span { margin: 0 5px; }
+
+.game-content { min-width: 220px; margin-right: 50px; }
+.game-content li { height: 30px; line-height: 30px; }
+.game-content li img { float: left; margin-right: 10px; }
+.game-content .input-delete { width: 20px; height: 25px; display: inline-block; text-align: center; margin-left: -23px; cursor: pointer; }
+
+.launch-title .input { width: 300px; margin-left: 10px; }
+
+.launch-dialog { margin-top: 30px; }
+.launch-dialog li { margin-bottom: 20px; }
+.launch-dialog li * { vertical-align: middle; }
+.launch-dialog li .upload-button { top: 14px; }
+.launch-dialog li .button { margin-left: 10px; }
+
+.sort-dialog * { vertical-align: middle; }
+.sort-dialog .upload-button { top: 33px; }
+.sort-dialog .button { margin-left: 10px; }

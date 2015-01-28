@@ -1,7 +1,6 @@
 <?php
 
 class Admin_IndexController extends \Admin_BaseController {
-
     /**
      * 后台首页
      * GET /admin
@@ -11,6 +10,7 @@ class Admin_IndexController extends \Admin_BaseController {
     public function index()
     {
         return View::make('admin.index');
+        //return $this->layout->content = View::make('evolve.welcome');
     }
 
     /**

@@ -1,0 +1,30 @@
+@charset "UTF-8";
+.signin-content .button { cursor: pointer; padding: 0.4em 1em; border: 0; font-size: 1em; }
+
+.signin-content .input { padding-left: 5px; outline: none; padding: 0.4em; font-size: 1em; }
+
+.signin-content { position: absolute; left: 50%; }
+
+.validate input.error { border: 1px solid red; }
+.validate em.error { color: red; margin-left: 10px; }
+
+/*---------------------------------- 登录页面样式 ------------------------------- */
+.signin-wrap { width: 100%; background: url("../../images/signin_bg.jpg") no-repeat scroll center top #0071d6; }
+
+.signin-content { margin-left: -193px; width: 386px; margin-top: 200px; color: #fff; text-align: center; }
+.signin-content p { margin: 25px 0 25px 30px; text-align: left; }
+.signin-content label { font-size: 14px; }
+.signin-content .input { -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; width: 210px; margin-left: 15px; }
+.signin-content h1 { font-size: 24px; margin-bottom: 50px; }
+.signin-content .button { background: #f59100; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; width: 100px; font-size: 14px; margin-top: 20px; }
+.signin-content .button:hover { background: #dc8200; }
+.signin-content .button:hover { color: #fff; }
+
+/* 登录验证 */
+.validate em.error, .validate em { position: relative; left: 50px; top: 10px; display: block; text-align: left; color: #fff; }
+
+/*---------------------------------- 欢迎页面样式 ------------------------------- */
+.welcome { height: 300px; padding-top: 15%; text-align: center; }
+.welcome .user { margin: 70px 0; font-size: 28px; }
+.welcome .user span { padding-left: 15px; }
+.welcome .title { font-size: 40px; }

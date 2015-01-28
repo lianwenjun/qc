@@ -1,0 +1,12 @@
+.gift-list .gift ul, .gift-list .number, .gift-list label, .gift-list .num-progress, .gift-list .button-block { display: inline-block; }
+
+.gift-list { margin-top: 20px; }
+.gift-list * { vertical-align: middle; }
+.gift-list .gift { margin-bottom: 15px; border: 1px solid #ccc; line-height: 30px; }
+.gift-list .gift ul { width: 80%; border-left: 1px solid #ccc; border-right: 1px solid #ccc; }
+.gift-list .number { width: 8%; font-size: 2em; text-align: center; }
+.gift-list label { text-align: right; width: 120px; padding-right: 5px; }
+.gift-list .num-progress { width: 250px; height: 15px; border: 1px solid #ccc; margin-right: 10px; }
+.gift-list .num-progress i { display: block; height: 15px; background-color: #00cc9b; }
+.gift-list .button-block { width: 10%; text-align: center; }
+.gift-list .button-block p { font-size: 1.2em; margin-bottom: 10px; }

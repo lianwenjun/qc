@@ -18,6 +18,24 @@ Route::get('/', function()
 {
     return Redirect::route('admin.index');
 });
+// usage inside a laravel route
+Route::get('/test/image', function()
+{
+    Image::configure(array('driver' => 'imagick'));
+    $img = Image::make(public_path() . '/test1.png');
+    // print_r($img);
+    // $img->resize(222, 371);
+    //$img->fit(720, 1200);
+    //$img->heighten(371);
+    //$img->widen(222);
+    //$img->trim();
+    $img->crop(480, 800, 0, 0);
+    $w = $img->width();
+    $h = $img->height();
+    //$img = Image::canvas(32, 32, '#ffffff');
+    //echo $w, $h;
+    return $img->response('jpg');
+});
 
 Route::get('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_UsersController@signin']);
 Route::put('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_UsersController@doSignin']);
