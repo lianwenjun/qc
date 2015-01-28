@@ -178,7 +178,6 @@ class Cats extends \Eloquent {
 
         return $data;
     }
-    
     /**
      * 往APP数据里面添加分类数据
      *
