@@ -1185,66 +1185,6 @@
         ]
     },
     {
-        "name": "guzzlehttp/guzzle",
-        "version": "5.1.0",
-        "version_normalized": "5.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/guzzle/guzzle.git",
-            "reference": "f1085bb4e023766a66b7b051914ec73bdf7202b5"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f1085bb4e023766a66b7b051914ec73bdf7202b5",
-            "reference": "f1085bb4e023766a66b7b051914ec73bdf7202b5",
-            "shasum": ""
-        },
-        "require": {
-            "guzzlehttp/ringphp": "~1.0",
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "ext-curl": "*",
-            "phpunit/phpunit": "~4.0",
-            "psr/log": "~1.0"
-        },
-        "time": "2014-12-19 20:27:15",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "5.0-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "GuzzleHttp\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Michael Dowling",
-                "email": "mtdowling@gmail.com",
-                "homepage": "https://github.com/mtdowling"
-            }
-        ],
-        "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
-        "homepage": "http://guzzlephp.org/",
-        "keywords": [
-            "client",
-            "curl",
-            "framework",
-            "http",
-            "http client",
-            "rest",
-            "web service"
-        ]
-    },
-    {
         "name": "sebastian/environment",
         "version": "1.2.1",
         "version_normalized": "1.2.1.0",
@@ -2058,56 +1998,6 @@
             "laravel",
             "large files",
             "pluload"
-        ]
-    },
-    {
-        "name": "davejamesmiller/laravel-breadcrumbs",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/davejamesmiller/laravel-breadcrumbs.git",
-            "reference": "4b9db9dabd5c2c14027d7219f3d9f8f8d75ca0e4"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/davejamesmiller/laravel-breadcrumbs/zipball/4b9db9dabd5c2c14027d7219f3d9f8f8d75ca0e4",
-            "reference": "4b9db9dabd5c2c14027d7219f3d9f8f8d75ca0e4",
-            "shasum": ""
-        },
-        "require": {
-            "illuminate/support": "4.*|5.*",
-            "illuminate/view": "4.*|5.*",
-            "php": ">=5.3.0"
-        },
-        "require-dev": {
-            "mockery/mockery": "~0.9.0",
-            "phpunit/phpunit": "4.0.*",
-            "satooshi/php-coveralls": "~0.6.0"
-        },
-        "time": "2014-11-25 22:44:55",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "DaveJamesMiller\\Breadcrumbs": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT License"
-        ],
-        "authors": [
-            {
-                "name": "Dave James Miller",
-                "email": "dave@davejamesmiller.com",
-                "homepage": "http://davejamesmiller.com/"
-            }
-        ],
-        "description": "A simple Laravel-style way to create breadcrumbs in Laravel 4+.",
-        "homepage": "https://github.com/davejamesmiller/laravel-breadcrumbs",
-        "keywords": [
-            "laravel"
         ]
     },
     {
@@ -3300,79 +3190,6 @@
         ]
     },
     {
-        "name": "phpunit/phpunit",
-        "version": "4.4.4",
-        "version_normalized": "4.4.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/phpunit.git",
-            "reference": "2047ae17f6e8cfd10fbde0b4535c97eb22d99cbe"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2047ae17f6e8cfd10fbde0b4535c97eb22d99cbe",
-            "reference": "2047ae17f6e8cfd10fbde0b4535c97eb22d99cbe",
-            "shasum": ""
-        },
-        "require": {
-            "ext-dom": "*",
-            "ext-json": "*",
-            "ext-pcre": "*",
-            "ext-reflection": "*",
-            "ext-spl": "*",
-            "php": ">=5.3.3",
-            "phpunit/php-code-coverage": "~2.0",
-            "phpunit/php-file-iterator": "~1.3.2",
-            "phpunit/php-text-template": "~1.2",
-            "phpunit/php-timer": "~1.0.2",
-            "phpunit/phpunit-mock-objects": "~2.3",
-            "sebastian/comparator": "~1.0",
-            "sebastian/diff": "~1.1",
-            "sebastian/environment": "~1.1",
-            "sebastian/exporter": "~1.0",
-            "sebastian/global-state": "~1.0",
-            "sebastian/version": "~1.0",
-            "symfony/yaml": "~2.0"
-        },
-        "suggest": {
-            "phpunit/php-invoker": "~1.1"
-        },
-        "time": "2015-01-24 14:23:56",
-        "bin": [
-            "phpunit"
-        ],
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "4.4.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sebastian@phpunit.de",
-                "role": "lead"
-            }
-        ],
-        "description": "The PHP Unit Testing framework.",
-        "homepage": "https://phpunit.de/",
-        "keywords": [
-            "phpunit",
-            "testing",
-            "xunit"
-        ]
-    },
-    {
         "name": "symfony/filesystem",
         "version": "v2.6.3",
         "version_normalized": "2.6.3.0",
@@ -3518,6 +3335,291 @@
             "laravel",
             "mecaptcha",
             "security"
+        ]
+    },
+    {
+        "name": "phpunit/phpunit",
+        "version": "4.4.1",
+        "version_normalized": "4.4.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/phpunit.git",
+            "reference": "6a5e49a86ce5e33b8d0657abe145057fc513543a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6a5e49a86ce5e33b8d0657abe145057fc513543a",
+            "reference": "6a5e49a86ce5e33b8d0657abe145057fc513543a",
+            "shasum": ""
+        },
+        "require": {
+            "ext-dom": "*",
+            "ext-json": "*",
+            "ext-pcre": "*",
+            "ext-reflection": "*",
+            "ext-spl": "*",
+            "php": ">=5.3.3",
+            "phpunit/php-code-coverage": "~2.0",
+            "phpunit/php-file-iterator": "~1.3.2",
+            "phpunit/php-text-template": "~1.2",
+            "phpunit/php-timer": "~1.0.2",
+            "phpunit/phpunit-mock-objects": "~2.3",
+            "sebastian/comparator": "~1.0",
+            "sebastian/diff": "~1.1",
+            "sebastian/environment": "~1.1",
+            "sebastian/exporter": "~1.0",
+            "sebastian/global-state": "~1.0",
+            "sebastian/version": "~1.0",
+            "symfony/yaml": "~2.0"
+        },
+        "suggest": {
+            "phpunit/php-invoker": "~1.1"
+        },
+        "time": "2014-12-28 07:57:05",
+        "bin": [
+            "phpunit"
+        ],
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "4.4.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sebastian@phpunit.de",
+                "role": "lead"
+            }
+        ],
+        "description": "The PHP Unit Testing framework.",
+        "homepage": "https://phpunit.de/",
+        "keywords": [
+            "phpunit",
+            "testing",
+            "xunit"
+        ]
+    },
+    {
+        "name": "guzzlehttp/guzzle",
+        "version": "5.2.0",
+        "version_normalized": "5.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/guzzle/guzzle.git",
+            "reference": "475b29ccd411f2fa8a408e64576418728c032cfa"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/475b29ccd411f2fa8a408e64576418728c032cfa",
+            "reference": "475b29ccd411f2fa8a408e64576418728c032cfa",
+            "shasum": ""
+        },
+        "require": {
+            "guzzlehttp/ringphp": "~1.0",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "ext-curl": "*",
+            "phpunit/phpunit": "~4.0",
+            "psr/log": "~1.0"
+        },
+        "time": "2015-01-28 01:03:29",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "5.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "GuzzleHttp\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Michael Dowling",
+                "email": "mtdowling@gmail.com",
+                "homepage": "https://github.com/mtdowling"
+            }
+        ],
+        "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
+        "homepage": "http://guzzlephp.org/",
+        "keywords": [
+            "client",
+            "curl",
+            "framework",
+            "http",
+            "http client",
+            "rest",
+            "web service"
+        ]
+    },
+    {
+        "name": "lokielse/laravel-pinyin",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/lokielse/laravel-pinyin.git",
+            "reference": "4987778e6c4b631f21e498ade9ab8dc357352cb7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/lokielse/laravel-pinyin/zipball/4987778e6c4b631f21e498ade9ab8dc357352cb7",
+            "reference": "4987778e6c4b631f21e498ade9ab8dc357352cb7",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/support": "~4.0",
+            "php": ">=5.3.0"
+        },
+        "time": "2014-07-22 22:15:51",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Lokielse\\LaravelPinyin": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "lokielse",
+                "email": "lokielse@gmail.com"
+            }
+        ],
+        "description": "Chinese Pinyin Bundle For Laravel",
+        "keywords": [
+            "Chinese",
+            "Pinyin",
+            "laravel"
+        ]
+    },
+    {
+        "name": "intervention/image",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Intervention/image.git",
+            "reference": "6554d8165e048972b470a7d56ab5f4d6fd6c6367"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Intervention/image/zipball/6554d8165e048972b470a7d56ab5f4d6fd6c6367",
+            "reference": "6554d8165e048972b470a7d56ab5f4d6fd6c6367",
+            "shasum": ""
+        },
+        "require": {
+            "ext-fileinfo": "*",
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "~0.9.2",
+            "phpunit/phpunit": "3.*"
+        },
+        "suggest": {
+            "ext-gd": "to use GD library based image processing.",
+            "ext-imagick": "to use Imagick based image processing.",
+            "intervention/imagecache": "Caching extension for the Intervention Image library"
+        },
+        "time": "2015-01-20 17:10:23",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Intervention\\Image\\": "src/Intervention/Image"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Oliver Vogel",
+                "email": "oliver@olivervogel.net",
+                "homepage": "http://olivervogel.net/"
+            }
+        ],
+        "description": "Image handling and manipulation library with support for Laravel integration",
+        "homepage": "http://image.intervention.io/",
+        "keywords": [
+            "gd",
+            "image",
+            "imagick",
+            "laravel",
+            "thumbnail",
+            "watermark"
+        ]
+    },
+    {
+        "name": "davejamesmiller/laravel-breadcrumbs",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/davejamesmiller/laravel-breadcrumbs.git",
+            "reference": "e8c9df70b4f545141166dcaa78803c125c7b85d0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/davejamesmiller/laravel-breadcrumbs/zipball/e8c9df70b4f545141166dcaa78803c125c7b85d0",
+            "reference": "e8c9df70b4f545141166dcaa78803c125c7b85d0",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/support": "4.*|5.*",
+            "illuminate/view": "4.*|5.*",
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "~0.9.0",
+            "phpunit/phpunit": "4.0.*",
+            "satooshi/php-coveralls": "~0.6.0"
+        },
+        "time": "2015-01-27 21:15:47",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "DaveJamesMiller\\Breadcrumbs": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT License"
+        ],
+        "authors": [
+            {
+                "name": "Dave James Miller",
+                "email": "dave@davejamesmiller.com",
+                "homepage": "http://davejamesmiller.com/"
+            }
+        ],
+        "description": "A simple Laravel-style way to create breadcrumbs in Laravel 4+.",
+        "homepage": "https://github.com/davejamesmiller/laravel-breadcrumbs",
+        "keywords": [
+            "laravel"
         ]
     }
 ]
