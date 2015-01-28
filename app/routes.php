@@ -34,7 +34,8 @@ Route::get('/test/image', function()
     $h = $img->height();
     //$img = Image::canvas(32, 32, '#ffffff');
     //echo $w, $h;
-    return $img->response('jpg');
+    return pathinfo('/apks/6/9/692d253307c3d55be0340bfc2e9f1511.apk');
+    //return $img->response('jpg');
 });
 
 Route::get('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_UsersController@signin']);
