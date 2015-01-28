@@ -2,24 +2,19 @@
 
 class Tp_ApiController extends \Tp_BaseController
 {
-    private $_pageSize = 20;    // 每页最大记录条数
-    private $_query    = null;  // query对象
-    private $_result   = [];    // query执行结果
-
-    /**
-     * 预处理
-     */
-    public function __construct()
-    {
-        $this->_checkSign();
-    }
+    private $_key      = 'tp-api';  // 验证串
+    private $_pageSize = 50;        // 每页最大记录条数
+    private $_query    = null;      // query对象
+    private $_result   = [];        // query执行结果
 
     /**
      * 获取游戏信息
      */
     public function getGameInfo()
     {
-        $this->_query = Apps::select('title', 'pack', 'stocked_at');
+        $this->_checkSign();
+
+        $this->_query = Apps::select('id', 'title', 'pack', 'stocked_at');
 
         $this->_dealConditions();
         $this->_execSql();
@@ -32,11 +27,11 @@ class Tp_ApiController extends \Tp_BaseController
      */
     private function _checkSign()
     {
-        $postKey = Input::get('key');
-        $signKey = md5(Request::url() . 'tp-api');
+        $postSign = Input::get('sign');
+        $sign = md5(Request::url() . $this->_key);
 
-        if (strlen($postKey) == 0 || $postKey != $signKey) {
-            $this->retJson(['msg' => 'signkey验证错误']);
+        if (strlen($postSign) == 0 || $postSign != $sign) {
+            $this->retJson(['msg' => 'sign验证错误']);
         }
     }
 
@@ -45,24 +40,22 @@ class Tp_ApiController extends \Tp_BaseController
      */
     private function _dealConditions()
     {
-        $hasFilter = false;
-
         foreach (Input::all() as $key => $value) {
             switch ($key) {
                 case 'title':
                 case 'package':
                     if (! empty($value)) {
                         $this->_query->where($key, 'like', '%' . $value . '%');
-                        $hasFilter = true;
                     }
                     break;
 
-                case 'time':
-                    if (is_array($value) &&
-                        ! empty($value[0]) &&
-                        ! empty($value[1])) {
+                case 'timestamp':
+                    if (is_array($value) && count($value) == 2) {
+                        array_walk($value, function(&$value)
+                        {
+                            $value = date('Y-m-d H:i:s', $value);
+                        });
                         $this->_query->whereBetween('stocked_at', $value);
-                        $hasFilter = true;
                     }
                     break;
                 
@@ -70,8 +63,6 @@ class Tp_ApiController extends \Tp_BaseController
                     break;
             }
         }
-
-        ! $hasFilter && $this->retJson(['msg' => '搜索条件不能为空']);
     }
 
     /**
@@ -79,9 +70,7 @@ class Tp_ApiController extends \Tp_BaseController
      */
     private function _execSql()
     {
-        $result = $this->_query->orderBy('id', 'desc')
-                               ->paginate($this->_pageSize)
-                               ->toArray();
+        $result = $this->_query->paginate($this->_pageSize)->toArray();
 
         return $this->_result = $result;
     }
