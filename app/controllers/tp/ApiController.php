@@ -1,6 +1,6 @@
 <?php
 
-class Tp_ApiController extends \Tp_BaseController
+class Tp_ApiController extends Tp_BaseController
 {
     private $_key      = 'tp-api';  // 验证串
     private $_pageSize = 50;        // 每页最大记录条数
