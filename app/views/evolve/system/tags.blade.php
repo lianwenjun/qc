@@ -1,11 +1,12 @@
 @extends('admin.layout')
 @section('custom')
-<link rel="stylesheet" href="{{ asset('/styles/admin/common.css') }}">
-<link rel="stylesheet" href="{{ asset('/styles/admin/plugins/jquery-ui/jquery-ui.min.css') }}">
-<link rel="stylesheet" href="{{ asset('/styles/admin/plugin.css') }}">
-<script type="text/javascript" src="{{ asset('js/admin/jquery-1.9.1.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/admin/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/admin/common.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('/evolve/styles/admin/common.css') }}">
+<link rel="stylesheet" href="{{ asset('/evolve/styles/admin/plugins/jquery-ui/jquery-ui.min.css') }}">
+<link rel="stylesheet" href="{{ asset('/evolve/styles/admin/plugin.css') }}">
+<script type="text/javascript" src="{{ asset('/evolve/js/admin/jquery-1.9.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/evolve/js/admin/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/evolve/js/admin/common.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/evolve/js/admin/pages/editable.js }}"></script>
 @stop
 @section('content')
 
