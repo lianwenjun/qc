@@ -107,26 +107,6 @@ class Cats extends \Eloquent {
                                                   ->get();
     }
 
-    // //过滤分类
-    // public $catsRules = [
-    //             'word' => 'required|unique:cats,title,NULL,id,parent_id,0,deleted_at,NULL',
-    //             ];
-    // //过滤标签
-    // public function tagsCreateRules($parent_id) {
-    //     return [
-    //             'word' => 'required|unique:cats,title,NULL,NULL,parent_id,'.$parent_id,
-    //             'parent_id' => 'required|integer',
-    //             ];
-    // }
-    // //过滤标签添加
-
-    // public function tagsUpdateRules($id, $parent_id) {
-    //     return [
-    //             'word' => 'required|unique:cats,title,'.$id .',id,deleted_at,NULL,parent_id,'.$parent_id,
-    //             'sort' => 'integer',
-    //             ];
-    // }
-
     /**
      * 获取单个游戏的分类
      *
@@ -175,6 +155,75 @@ class Cats extends \Eloquent {
         return $data;
     }
 
+    /**
+     * 获取带分类结构的标签
+     *
+     * @return array
+     */
+    public function allTagsWithCat() {
+        $data=[];
+
+        foreach($this->allCats() as $cat) {
+            $data[$cat->id]['title'] = $cat->title;
+            // 获取相应标签
+            foreach(GameCatTags::rewordTagids($cat->id) as $tag) {
+                $tagData = [
+                    'id' => $tag->tag_id, 
+                    'title' => Tags::oftags($tag->tag_id)->title
+                ];
+                $data[$cat->id]['tags'][] = $tagData;         
+            }
+            
+        }
+
+        return $data;
+    }
+    
+    /**
+     * 往APP数据里面添加分类数据
+     *
+     * @param $apps array APP查询到的数据
+     *
+     * @return array
+     */
+    public function addCatsInfo($apps)
+    {
+        foreach($apps['data'] as $key => $app) {
+            $cats = $this->appCats($app['id']);
+
+            $catNames = [];
+            foreach($cats as $cat) {
+                $catNames[] = $cat['title'];
+            }
+
+            $apps['data'][$key] += [ 'cat_name' => implode(', ', $catNames)];
+        }
+
+        return $apps;
+    }
+
+    
+    // //过滤分类
+    // public $catsRules = [
+    //             'word' => 'required|unique:cats,title,NULL,id,parent_id,0,deleted_at,NULL',
+    //             ];
+    // //过滤标签
+    // public function tagsCreateRules($parent_id) {
+    //     return [
+    //             'word' => 'required|unique:cats,title,NULL,NULL,parent_id,'.$parent_id,
+    //             'parent_id' => 'required|integer',
+    //             ];
+    // }
+    // //过滤标签添加
+
+    // public function tagsUpdateRules($id, $parent_id) {
+    //     return [
+    //             'word' => 'required|unique:cats,title,'.$id .',id,deleted_at,NULL,parent_id,'.$parent_id,
+    //             'sort' => 'integer',
+    //             ];
+    // }
+
+    
     // /**
     //  * 获取所有分类
     //  *
@@ -201,52 +250,7 @@ class Cats extends \Eloquent {
     //                 ->get();
     // }
 
-    /**
-     * 往APP数据里面添加分类数据
-     *
-     * @param $apps array APP查询到的数据
-     *
-     * @return array
-     */
-    public function addCatsInfo($apps)
-    {
-        foreach($apps['data'] as $key => $app) {
-            $cats = $this->appCats($app['id']);
-
-            $catNames = [];
-            foreach($cats as $cat) {
-                $catNames[] = $cat['title'];
-            }
-
-            $apps['data'][$key] += [ 'cat_name' => implode(', ', $catNames)];
-        }
-
-        return $apps;
-    }
-
-    /**
-     * 获取带分类结构的标签
-     *
-     * @return array
-     */
-    public function allTagsWithCat() {
-        $data=[];
-        
-        foreach($this->allCats() as $cat) {
-            $data[$cat->id]['title'] = $cat->title;
-            // 获取相应标签
-            foreach(GameCatTags::rewordTagids($cat->id) as $tag) {
-                $tagData = [
-                    'id' => $tag->tag_id, 
-                    'title' => Tags::oftags($tag->tag_id)->title
-                ];
-                $data[$cat->id]['tags'][] = $tagData;         
-            }
-            
-        }
-
-        return $data;
-    }
+    
 
     // /**
     //  * 获取分类所有标签
