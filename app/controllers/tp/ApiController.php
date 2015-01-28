@@ -8,12 +8,18 @@ class Tp_ApiController extends \Tp_BaseController
     private $_result   = [];        // query执行结果
 
     /**
+     * 预处理
+     */
+    public function __construct()
+    {
+        $this->_checkSign();
+    }
+
+    /**
      * 获取游戏信息
      */
     public function getGameInfo()
     {
-        $this->_checkSign();
-
         $this->_query = Apps::select('id', 'title', 'pack', 'stocked_at');
 
         $this->_dealConditions();
