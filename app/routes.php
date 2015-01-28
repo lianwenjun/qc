@@ -283,3 +283,9 @@ Route::group(['prefix' => 'api'], function() //V1版本
     
     //Route::get('/', ['uses' => 'V1_BaseController@result']);
 });
+
+// 第三方数据接口
+Route::group(['prefix' => 'tp'], function()
+{
+    Route::get('game', ['uses' => 'Tp_ApiController@getGameInfo']);
+});

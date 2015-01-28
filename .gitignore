@@ -4,7 +4,7 @@ Thumbs.db
 *.swo
 #app/storage/*
 app/tests/_output/*
-.gitignore
+#.gitignore
 .git/*
 .idea/*
 *.sublime-project
@@ -17,10 +17,11 @@ public/cateads/*
 public/ads/*
 public/client/*
 *.apk
-#app/config/database.php
+app/config/database.php
 .idea/
 app/config/ucDelta.php
 app/config/ucCGame.php
+app/config/local/*
 public/info.php
 public/Uploads/*
 *~
