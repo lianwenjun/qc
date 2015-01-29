@@ -12,7 +12,7 @@
     <div class="side-wrap">
         <h1 class="title">游戏商店系统</h1 >
         @if( Sentry::check() )
-        <h2 class="subtitle">hi!<span>{{ Sentry::getUser()->username }}</span></h2>
+        <h2 class="subtitle">hi! <span>{{ Sentry::getUser()->username }}</span></h2>
         
         <p class="operate"><a href="change-pwd.html">修改密码</a><a href="../signin.html">退出系统</a></p>
         @endif
@@ -26,13 +26,9 @@
                         'apps.pending',
                         'apps.notpass',
                         'apps.unstock',
-                        'cat.index',
-                        'tag.index',
-                        'cattag.index',
-                        'stopword.index',
-                        'keyword.index',
-                        'client.index',
-
+                        'cats.index',
+                        'tags.index',
+                        'gamecattags.index'
                     ]
                 )
             )
@@ -75,11 +71,15 @@
             <li class="nested-li">
                 <h3>系统管理</h3>
                 <ul>
-                    @if(Sentry::getUser()->hasAccess('cat.index'))
-                    <li><a href="{{ URL::route('cat.index') }}">游戏分类管理</a></li>
-                    @endif       
-                    <li><a href="{{ URL::route('tag.index') }}">分类标签管理</a></li>
-                    <li><a href="../system/tags.html">标签库管理</a></li>   
+                    @if(Sentry::getUser()->hasAccess('cats.index'))
+                    <li><a href="{{ URL::route('cats.index') }}">游戏分类管理</a></li>
+                    @endif   
+                    @if(Sentry::getUser()->hasAccess('gamecattags.index'))    
+                    <li><a href="{{ URL::route('gamecattags.index') }}">分类标签管理</a></li>
+                    @endif  
+                    @if(Sentry::getUser()->hasAccess('tags.index'))     
+                    <li><a href="{{ URL::route('tags.index') }}">标签库管理</a></li>   
+                    @endif  
                     <li><a href="../system/supplier.html">供应商管理</a></li>
                     <li><a href="../system/channel.html">渠道商管理</a></li>
                     <li><a href="../system/keyword.html">关键字管理</a></li>

@@ -11,24 +11,6 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
     public function index() 
     {
         $cats = Cats::lists($this->pagesize);
-
-        foreach($cats as $cat) {
-            // 根据分类id获取标签ids
-            $gameCatTags = GameCatTags::rewordTagIds($cat->id);
-            // 根据标签ids获取相应的tags
-            foreach ($gameCatTags as $gameCatTag) {
-                $tagIds[] = $gameCatTag->tag_id;
-                $tags = Tags::relevantTags($tagIds);
-                $tagTitle = [];
-                // 将标签数组分解
-                foreach ($tags as $tag) {
-                    $tagTitle[] = $tag->title;
-                    $cat->tags = implode(',', $tagTitle);
-                }
-            }
-
-        }
-
         $position = Config::get('catsposition');
 
         return View::make('evolve.system.cats')->with('cats', $cats)
@@ -47,10 +29,10 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
         $validator = Cats::isNewValid($data);
 
         if ($validator->fails()) {
-             return Redirect::to('admin/cat/index')->withErrors($validator);
+             return Redirect::to('admin/cats')->withErrors($validator);
         } else {
-            $catModel = new Cats;
             //保存数据
+            $catModel = new Cats;
             $catModel->title = Input::get('title');
             $catModel->sort = Input::get('sort');
             $catModel->position = Input::get('position');
@@ -61,7 +43,7 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
             $catAdsModel->title = $catModel->title;
             $catAdsModel->save();
 
-            return Redirect::to('admin/cat/index')->withSuccess('添加成功!');
+            return Redirect::to('admin/cats')->withSuccess('添加成功!');
         }
 
     }
@@ -134,10 +116,12 @@ class Admin_Cat_CatsController extends \Admin_BaseController {
     public function destroy($id) 
     {
         if(Cat::destroy($id)) {
-            // 分类删除后，分类标签也将删除相应的分类
-            GameCatTags::destroy($id);
+            // 删除分类标签也将删除相应的分类
+            GameCatTags::where('cat_id', $id)->delete();
+            // 分类广告也将删除相应分类
+            CadAds::where('cat_id', $id)->delete();
 
-            return Redirect::to('admin/cats/index')->withSuccess('# ' .$id. ' 删除成功!'); 
+            return Redirect::to('admin/cats')->withSuccess('# ' .$id. ' 删除成功!'); 
         }
 
         return Response::make('404 页面找不到', 404);

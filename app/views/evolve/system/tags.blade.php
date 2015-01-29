@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('evolve.layout')
 @section('custom')
 <link rel="stylesheet" href="{{ asset('/evolve/styles/admin/common.css') }}">
 <link rel="stylesheet" href="{{ asset('/evolve/styles/admin/plugins/jquery-ui/jquery-ui.min.css') }}">
@@ -6,7 +6,6 @@
 <script type="text/javascript" src="{{ asset('/evolve/js/admin/jquery-1.9.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/evolve/js/admin/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/evolve/js/admin/common.js') }}"></script>
-<script type="text/javascript" src="{{ asset('/evolve/js/admin/pages/editable.js }}"></script>
 @stop
 @section('content')
 
@@ -15,15 +14,15 @@
         
             <!-- 查询-->
             <div class="search">
-            {{ Form::open(['url' => '/admin/system/tags', 'method' => 'get']) }}
+            {{ Form::open(['url' => URL::route('tags.index'), 'method' => 'get', 'class' => 'validate jq-search' ]) }}
                 <div>
                     <p>查询：
-                        <input class="input" type="text" placeholder="请输入关键字" />
+                        <input class="input" type="text" placeholder="请输入关键字" name="title" value=""/>
                     </p>
-                    <input type="button" class="button" value="查询" />
+                    <input type="submit" class="button" value="查询" />
                 </div>
             {{ Form::close() }}
-            {{ Form::open(['url' => '/admin/system/tags', 'method' => 'post']) }}
+            {{ Form::open(['url' => URL::route('tags.index'), 'method' => 'post']) }}
                 <p>添加：
                     <input class="input" type="text" placeholder="请输入关键字" name="title" />
                 </p>
@@ -58,9 +57,13 @@
                     <td><span class="elimit6em cursor" title="{{ $tag->title }}">{{ $tag->title }}</span></td>
                     <td>{{ $tag->search_count }}</td>
                     <td>0</td>
-                    <td class="jq-text">1</td>
-                    <td><span class="elimit7em cursor" title="2014-10-16 16:29:53">{{ $tag->updated_at }}</span></td>
+                    <td class="jq-text">{{ $tag->sort }}</td>
+                    <td><span class="elimit7em cursor" title="{{ $tag->updated_at }}">{{ $tag->updated_at }}</span></td>
+                    @if($tag->operator_id == 0)
+                    <td>管理员</td>
+                    @else
                     <td>{{ $tag->operator }}</td>
+                    @endif
                     <td>
                         <a href="javascript:;" class="button jq-edit">编辑</a>
                         <a href="javascript:;" class="button red-button jq-delete" data-url="">删除</a>
@@ -68,7 +71,7 @@
                 </tr>
                 @empty
                 <tr class="no-data">
-                    <td colspan="8">亲！还没有数据哦！</td>
+                    <td colspan="8">亲！没有数据哦！</td>
                 <tr>
             @endforelse
             </tbody>

@@ -1,6 +1,6 @@
 <?php
 
-class Admin_System_GameCatTagsController extends \Admin_BaseController {
+class Admin_Cat_GameCatTagsController extends \Admin_BaseController {
     
     /**
      * 游戏分类标签首页
@@ -27,8 +27,8 @@ class Admin_System_GameCatTagsController extends \Admin_BaseController {
         }
 
         // 分类标签列表数据
-        $catTags = GameCatTags::lists($this->pageSize);
-        $view = view::make('evolve.cat.gamecattags');
+        $catTags = GameCatTags::lists($this->pagesize);
+        $view = view::make('evolve.system.gamecattags');
         
         return $view->with('cats', $cats)
                     ->with('tags', $tags)
@@ -49,17 +49,23 @@ class Admin_System_GameCatTagsController extends \Admin_BaseController {
         if ($validator->fails()) {
             return Redirect::to('admin/gamecattags')->withErrors($validator);
         } else {
-            $gamecattags = new GameCatTags();
-            
             // 判断标签是否在标签库中存在，若不存在则在标签库中创建一条并返回tag_id;
+            $gamecattags = new GameCatTags;
+
             if (! Input::has('tagid')) {
-                $tag = Tags::create($data);
-                $gamecattags->tag_id = $tag->id;
+                $tags = new Tags;
+                $tags->title = Input::get('title');
+                $tags->save();
+                $gamecattags->tag_id = $tags->id;
+                $gamecattags->cat_id = Input::get('catid');
+                $gamecattags->save();
+            } else {
+                $gamecattags->tag_id = Input::get('tagid');
+                $gamecattags->cat_id = Input::get('catid');
+                $gamecattags->save();
             }
 
-            $gamecattags->tag_id = Input::get('tagid');
-            $gamecattags->cat_id = Input::get('catid');
-            $gamecattags->save();
+            
 
             return Redirect::to('admin/gamecattags')->withSuccess('添加成功!');
         }

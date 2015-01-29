@@ -10,14 +10,15 @@ class Admin_Cat_TagsController extends \Admin_BaseController {
      */
     public function index()
     {
-        $tags = Tags::lists($this->pageSize);
+        $title = Input::get('title');
+        $tags = Tags::lists($this->pagesize, $title);
 
         return view::make('evolve.system.tags')->with('tags', $tags);
     }
 
     /**
      * 标签添加
-     * POST /tags
+     * POST /tag
      *
      * @return Response
      */
@@ -27,11 +28,11 @@ class Admin_Cat_TagsController extends \Admin_BaseController {
         $validator = Tags::isNewValid($data);
 
         if ($validator->fails()) {
-            return Redirect::to('admin/tag/index')->withErrors($validator);
+            return Redirect::to('admin/tags')->withErrors($validator);
         } else {
             Tags::create($data);
 
-            return Redirect::to('admin/tag/index')->withSuccess('添加成功!');
+            return Redirect::to('admin/tags')->withSuccess('添加成功!');
         }
     }
 

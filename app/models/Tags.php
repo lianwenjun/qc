@@ -42,18 +42,20 @@ class Tags extends \Eloquent {
      *
      * @return obj
      */
-    public function lists($pageSize) 
+    public function lists($pageSize, $title = null) 
     {
         $conditions = [
             'id', 
             'search_count', 
-            'title', 'sort', 
+            'title', 
+            'sort', 
             'updated_at', 
             'operator_id', 
             'operator'
         ];
 
         return Tags::select($conditions)
+                   ->titleLike($title)
                    ->orderBy('id', 'desc')
                    ->paginate($pageSize);
     }
@@ -73,6 +75,20 @@ class Tags extends \Eloquent {
     }
     
     /**
+    * 获取相应标签
+    *
+    * @param $ids array
+    *
+    * @return obj
+    */
+    public function relevantTags($ids)
+    {
+        return Tags::select('id', 'title')
+                   ->isTags($ids)
+                   ->get();
+    }
+
+    /**
     * 标签ids查询
     *
     * @param $ids array
@@ -88,20 +104,6 @@ class Tags extends \Eloquent {
     }
 
     /**
-    * 获取相应标签
-    *
-    * @param $ids array
-    *
-    * @return obj
-    */
-    public function relevantTags($ids)
-    {
-    	return Tags::select('id', 'title')
-                   ->isTags($ids)
-                   ->get();
-    }
-
-    /**
     * 获取单个标签
     *
     * @param $id int
@@ -112,6 +114,22 @@ class Tags extends \Eloquent {
     {
         return Tags::find($id);
     }
+
+    /**
+    * 标签关键字搜索
+    *
+    * @param $query obj ,$title string
+    *
+    * @return obj
+    */
+    public function scopeTitleLike($query, $title)
+    {
+        if (! $title) return $query;    
+        $sql = '%' . $title . '%';
+    
+        return $query->where('title', 'like', $sql);
+    }
+
 
     
  }

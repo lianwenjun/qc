@@ -55,7 +55,7 @@
         </table>
         <p class="inline-button">
             <input type="submit" value="  确  定  " class="button" />
-            <a href="{{ URL::route('cat.index') }}" class="button">返回列表</a>
+            <a href="{{ URL::route('cats.index') }}" class="button">返回列表</a>
         </p>
         <!-- /表格 -->
     </div>

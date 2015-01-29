@@ -135,23 +135,30 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
              ->where('id', '[0-9]+');
     });
 
-    Route::group(['prefix' => 'cat', 'before' => 'hasPermissions'], function() //游戏分类
+    Route::group(['prefix' => 'cats', 'before' => 'hasPermissions'], function() //游戏分类
     {
-        Route::get('index', ['as' => 'cat.index', 'uses' => 'Admin_Cat_CatsController@index']);
-        Route::get('create', ['as' => 'cat.create', 'uses' => 'Admin_Cat_CatsController@create']);
-        Route::post('index', ['as' => 'cat.create', 'uses' => 'Admin_Cat_CatsController@store']);
-        Route::put('{id}', ['as' => 'cat.edit', 'uses' => 'Admin_Cat_CatsController@update']);
-        Route::get('{id}/edit', ['as' => 'cat.edit', 'uses' => 'Admin_Cat_CatsController@edit']);
-        Route::delete('{id}', ['as' => 'cat.delete', 'uses' => 'Admin_Cat_CatsController@destroy']);
+        Route::get('/', ['as' => 'cats.index', 'uses' => 'Admin_Cat_CatsController@index']);
+        Route::get('create', ['as' => 'cats.create', 'uses' => 'Admin_Cat_CatsController@create']);
+        Route::post('/', ['as' => 'cats.create', 'uses' => 'Admin_Cat_CatsController@store']);
+        Route::put('{id}', ['as' => 'cats.edit', 'uses' => 'Admin_Cat_CatsController@update']);
+        Route::get('{id}/edit', ['as' => 'cats.edit', 'uses' => 'Admin_Cat_CatsController@edit']);
+        Route::delete('{id}', ['as' => 'cats.delete', 'uses' => 'Admin_Cat_CatsController@destroy']);
         // Route::get('{id}', ['as' => 'cat.show', 'uses' => 'Admin_Cat_CatsController@show']);
     });
 
-    Route::group(['prefix' => 'tag', 'before' => 'hasPermissions'], function() //游戏标签
+    Route::group(['prefix' => 'tags', 'before' => 'hasPermissions'], function() //游戏标签
     {
-        Route::get('index', ['as' => 'tag.index', 'uses' => 'Admin_Cat_TagsController@index']);// 标签库首页
-        Route::post('index', ['as' => 'tag.create', 'uses' => 'Admin_Cat_TagsController@store']);// 标签库添加
-        Route::put('{id}', ['as' => 'tag.update', 'uses' => 'Admin_Cat_TagsController@update']);// 标签库排序编辑更新
-        Route::delete('{id}', ['as' => 'tag.delete', 'uses' => 'Admin_Cat_TagsController@destroy']);// 游戏分类删除
+        Route::get('/', ['as' => 'tags.index', 'uses' => 'Admin_Cat_TagsController@index']);// 标签库首页
+        Route::post('/', ['as' => 'tags.create', 'uses' => 'Admin_Cat_TagsController@store']);// 标签库添加
+        Route::put('{id}', ['as' => 'tags.update', 'uses' => 'Admin_Cat_TagsController@update']);// 标签库排序编辑更新
+        Route::delete('{id}', ['as' => 'tags.delete', 'uses' => 'Admin_Cat_TagsController@destroy']);// 游戏分类删除
+    });
+
+    Route::group(['prefix' => 'gamecattags', 'before' => 'hasPermissions'], function() //游戏分类标签
+    {
+        Route::get('/', ['as' => 'gamecattags.index', 'uses' => 'Admin_Cat_GameCatTagsController@index']);// 游戏分类标签首页
+        Route::post('/', ['as' => 'gamecattags.create', 'uses' => 'Admin_Cat_GameCatTagsController@store']);// 游戏分类标签添加
+        Route::delete('{id}', ['as' => 'gamecattags.delete', 'uses' => 'Admin_Cat_GameCatTagsController@destroy']);// 游戏分类删除
     });
 
     Route::group(['prefix' => 'rating', 'before' => 'hasPermissions'], function() //游戏评分

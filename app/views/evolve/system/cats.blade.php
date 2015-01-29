@@ -24,7 +24,7 @@
             <p class="record-title">
                 游戏分类：共<b class="red">{{ $cats->getTotal() }}</b>条记录
                 <a href="javascript:;" class="button fr jq-preview">预览</a>
-                @if(Sentry::getUser()->hasAccess('cat.create'))
+                @if(Sentry::getUser()->hasAccess('cats.create'))
                 <a href="javascript:;" class="button fr mr10 jq-addCate">新增分类</a>
                 @endif
             </p>
@@ -35,7 +35,6 @@
                         <th>分类位置</th>
                         <th>分类名称</th>
                         <th>排序</th>
-                        <th>分类标签展示</th>
                         <th>操作人</th>
                         <th>操作</th>
                     </tr>
@@ -47,22 +46,17 @@
                         <td>{{ $position[$cat->position] }}</td>
                         <td><span class="elimit6em cursor" title="{{ $cat->title }}">{{ $cat->title }}</span></td>
                         <td>{{ $cat->sort }}</td>
-                        @if(!$cat->tags)
-                        <td><span class="elimit12em cursor" title="/">/</span></td>
-                        @else
-                        <td><span class="elimit12em cursor" title="{{ $cat->tags }}">{{ $cat->tags }}</span></td>
-                        @endif
                         @if($cat->operator_id == 0)
                         <td>管理员</td>
                         @else
                         <td>{{ $cat->operator }}</td>
                         @endif
                         <td>
-                            @if(Sentry::getUser()->hasAccess('cat.edit'))
-                            <a href="{{ URL::route('cat.edit', $cat->id) }}" class="button">编辑</a>
+                            @if(Sentry::getUser()->hasAccess('cats.edit'))
+                            <a href="{{ URL::route('cats.edit', $cat->id) }}" class="button">编辑</a>
                             @endif
-                            @if(Sentry::getUser()->hasAccess('cat.delete'))
-                            <a href="javascript:;" class="button red-button jq-delete" data-url="{{ URL::route('cat.delete', $cat->id) }}">删除</a>
+                            @if(Sentry::getUser()->hasAccess('cats.delete'))
+                            <a href="javascript:;" class="button red-button jq-delete" data-url="{{ URL::route('cats.delete', $cat->id) }}">删除</a>
                             @endif
                         </td>
                     </tr>
@@ -101,7 +95,7 @@
 
          <!-- 新增分类弹窗 -->
     <div class="jq-addCateModal none" title="新增分类">
-    	{{ Form::open(['url' => '/admin/cat/index', 'method' => 'post', 'class' => 'jq-addCateForm validate validate-em' ]) }}
+    	{{ Form::open(['url' => '/admin/cats', 'method' => 'post', 'class' => 'jq-addCateForm validate validate-em' ]) }}
         
             <table class="edit-table">
                 <tr>
