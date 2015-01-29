@@ -132,9 +132,7 @@ class AppDownloads extends \Base
     public function dupInsert($appId, $status, $countDate)
     {
         $targetDate = date('Y-m-d', strtotime($countDate));
-        // 查询游戏信息
-        $appInfo = (new Apps)->info($appId);
-
+        
         $dates = $this->select('count_date')
                       ->where('app_id', $appId)
                       ->where('count_date', $targetDate)
@@ -145,6 +143,9 @@ class AppDownloads extends \Base
             $this->incrAt($appId, $targetDate, $status);
         } else {
             $this->create([
+                // 查询游戏信息
+                $appInfo = (new Apps)->info($appId);
+
                 'app_id'     => $appId,
                 'title'      => $appInfo->title,
                 $status      => 1,

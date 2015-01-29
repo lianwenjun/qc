@@ -115,8 +115,9 @@ class Statistics extends Command
             $this->info("正在处理{$name}表的数据...");
 
             $db_logs->table($name)
+                    ->select('app_id', 'status')
                     ->whereBetween('created_at', [$this->_dayBegin, $this->_dayEnd])
-                    ->chunk(1000, function($data)
+                    ->chunk(50, function($data)
                     {
                         $appDownloads = new AppDownloads;
                         foreach ($data as $k => $v) {
