@@ -49,9 +49,13 @@ class Tp_ApiController extends Tp_BaseController
         foreach (Input::all() as $key => $value) {
             switch ($key) {
                 case 'title':
+                    if (! empty($value)) {
+                        $this->_query->where('title', 'like', '%' . $value . '%');
+                    }
+                    break;
                 case 'package':
                     if (! empty($value)) {
-                        $this->_query->where($key, 'like', '%' . $value . '%');
+                        $this->_query->where('pack', 'like', '%' . $value . '%');
                     }
                     break;
 
