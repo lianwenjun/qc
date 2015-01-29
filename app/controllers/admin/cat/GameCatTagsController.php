@@ -43,7 +43,12 @@ class Admin_Cat_GameCatTagsController extends \Admin_BaseController {
      */
     public function store()
     {
-        $data = Input::all();
+        $data = [
+            'title' => Input::get('title'),
+            'catid' => Input::get('catid'),
+            'tagid' => Input::get('tagid')
+        ];
+        
         $validator = GameCatTags::isNewValid($data);
 
         if ($validator->fails()) {
@@ -65,8 +70,6 @@ class Admin_Cat_GameCatTagsController extends \Admin_BaseController {
                 $gamecattags->save();
             }
 
-            
-
             return Redirect::to('admin/gamecattags')->withSuccess('添加成功!');
         }
     }
@@ -80,9 +83,7 @@ class Admin_Cat_GameCatTagsController extends \Admin_BaseController {
      */
     public function destroy($id)
     {
-        $data = GameCatTags::find($id);
-        if ($data) {
-            $data->delete();
+        if (GameCatTags::where('id', $id)->delete()) {
             return Redirect::to('admin/gamecattags')->withSuccess('# ' . $id . ' 删除成功!');
         } else {
             return Response::make('404 页面找不到', 404);

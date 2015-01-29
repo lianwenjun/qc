@@ -161,6 +161,15 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::delete('{id}', ['as' => 'gamecattags.delete', 'uses' => 'Admin_Cat_GameCatTagsController@destroy']);// 游戏分类删除
     });
 
+    Route::group(['prefix' => 'topics', 'before' => 'hasPermissions'], function() // 专题广告
+    {
+        Route::get('{type}', ['as' => 'topics.index', 'uses' => 'Admin_TopicsController@index']);// 专题首页
+        Route::get('dptopics/create', ['as' => 'topics.create', 'uses' => 'Admin_TopicsController@create']);// 查看详情
+        Route::get('dptopics/{id}', ['as' => 'topics.show', 'uses' => 'Admin_TopicsController@show']);// 查看详情
+        Route::get('{type}/{id}', ['as' => 'topics.edit', 'uses' => 'Admin_TopicsController@edit']);// 查看详情
+    });
+
+
     Route::group(['prefix' => 'rating', 'before' => 'hasPermissions'], function() //游戏评分
     {
         Route::get('index', ['as' => 'rating.index', 'uses' => 'Admin_RatingsController@index']);

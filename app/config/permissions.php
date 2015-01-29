@@ -142,4 +142,15 @@ return [
         'client.apkupload' => '上传',
         'channels.store' => '添加渠道号',
     ],
+    // 新增专题广告
+    '专题广告' => [
+        'topics.index' => '列表',
+        'topics.create' => '新增',
+        'topics.edit' => '编辑',
+        'topics.show' => '查看',
+        'topics.delete' => '删除',
+        'topics.unstock' => '下架',
+        'topics.revocate' => '撤销'
+    ]
+
 ];

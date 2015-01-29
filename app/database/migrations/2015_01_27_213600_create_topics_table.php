@@ -18,7 +18,7 @@ class CreateTopicsTable extends Migration {
             $table->text('game_id')->comment('游戏IDS');
             $table->string('title', 256)->comment('专题名');
             $table->string('image', 256)->comment('图片地址');
-            $table->text('summary', 256)->comment('专题名');
+            $table->text('summary', 256)->comment('点评');
             $table->string('location', 256)->comment('专题位置');
             //pending => 等待上线 draft => 草稿  stock => 上线状态  unstock => 下线
             $table->enum('status', ['pending', 'draft', 'stock', 'unstock'])->comment('状态');
