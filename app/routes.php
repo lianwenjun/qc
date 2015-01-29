@@ -34,7 +34,8 @@ Route::get('/test/image', function()
     $h = $img->height();
     //$img = Image::canvas(32, 32, '#ffffff');
     //echo $w, $h;
-    return $img->response('jpg');
+    return pathinfo('/apks/6/9/692d253307c3d55be0340bfc2e9f1511.apk');
+    //return $img->response('jpg');
 });
 
 Route::get('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_UsersController@signin']);
@@ -51,7 +52,8 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 
     Route::get('/users/changePwd', ['as' => 'users.changePwd','uses' => 'Admin_UsersController@changePwd']);
     Route::put('/users/changePwd', ['as' => 'users.changePwd','uses' => 'Admin_UsersController@doChangePwd']);
-
+    
+    Route::get('/game/stocks', ['as' => 'game.stock', 'uses' => 'Evolve_Game_StockController@index']);
      // 游戏APP列表
     Route::group(['prefix' => 'apps', 'before' => 'hasPermissions'], function()
     {

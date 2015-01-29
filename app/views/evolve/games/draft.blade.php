@@ -1,0 +1,1 @@
+/var/www/qc/app/views/evolve/games/draft.blade.php
