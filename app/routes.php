@@ -52,7 +52,8 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 
     Route::get('/users/changePwd', ['as' => 'users.changePwd','uses' => 'Admin_UsersController@changePwd']);
     Route::put('/users/changePwd', ['as' => 'users.changePwd','uses' => 'Admin_UsersController@doChangePwd']);
-
+    
+    Route::get('/game/stocks', ['as' => 'game.stock', 'uses' => 'Evolve_Game_StockController@index']);
      // 游戏APP列表
     Route::group(['prefix' => 'apps', 'before' => 'hasPermissions'], function()
     {

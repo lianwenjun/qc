@@ -2,7 +2,8 @@
 
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
-class GameVersions extends \Eloquent {
+class GameVersions extends \Eloquent
+{
 
     use SoftDeletingTrait;
     

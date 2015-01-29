@@ -34,7 +34,7 @@ class CThumbnail
      * 
      * @return void
      */
-    public function __construct($path, $sizes)
+    public function __construct($path)
     {
         $this->path = $path;
         
@@ -62,7 +62,7 @@ class CThumbnail
      * 
      * @return Obj image
      */
-    public function Thumbnailcrop($size)
+    public function thumbnail($size)
     {
         $k1 = $size[0] / $size[1]; // 目标的宽高比例
         $k2 = $this->width / $this->height; // 原图片的宽高比例

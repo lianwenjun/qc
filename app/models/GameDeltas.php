@@ -18,13 +18,14 @@ class GameDeltas extends \Eloquent {
         $data = [];
 
         foreach ($versions as $version) {
-            $oldPath = public_path() . $version->download_link;
+            
             $fromVersionCode = $version->versionCode;
 
-            $deltaPath = $cDeltaApk->setDeltaPath($fromVersionCode, $versionCode, $link);
+            $deltaPath = $cDeltaApk->setDeltaPath($fromVersionCode, $version->versionCode, $game->download_link);
             
-            $fullLink = public_path() . $link;
+            $fullLink = public_path() . $game->download_link;
             $fullDeltaPath = public_path() . $deltaPath;
+            $oldPath = public_path() . $version->download_link;
 
             $result = $cDeltaApk->delta($oldPath, $fullLink, $fullDeltaPath);
             if ($result) {
@@ -41,7 +42,7 @@ class GameDeltas extends \Eloquent {
         }
 
 
-        deleteDelta($game->id);
+        $this->deleteDelta($game->id);
         foreach ($data as $delta) {
             $this->create($delta);
         }
