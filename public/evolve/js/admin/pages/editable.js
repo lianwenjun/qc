@@ -1,7 +1,7 @@
 
 //
 // 点击编辑按钮，文本为可编辑的输入框形式
-// 广告位管理-精选必玩管理， 系统管理-供应商管理， 系统管理-关键字管理， 系统管理-渠道商管理， 系统管理-标签库管理， 系统管理-屏蔽词管理
+// 广告位管理-精选必玩管理， 系统管理-供应商管理， 系统管理-关键字管理， 系统管理-渠道商管理， 系统管理-标签库管理， 系统管理-屏蔽词管理, 评论管理-游戏评论列表， 评论管理-游戏评分列表
 //
 
 $(function() {
@@ -32,7 +32,7 @@ $(function() {
         $('.jq-tableForm input').each(function() {
             var value = $(this).val();
             var refValue = tr.find("." + $(this).data('ref')).val();
-            refValue = refValue.replace(/^\s+|\s+$/g,"");
+            refValue = $.trim(refValue);
             if (refValue == '') {
                 hasEmpty = true;
             }
@@ -56,19 +56,6 @@ $(function() {
         $(this).closest('tr').find('.jq-editable').children().toggleClass('none');
         $(this).parent().children().toggleClass('none');
         isOpen = false;
-    });
-
-
-    // 限制键盘只能输入数字
-    $('.jq-isNum').keypress(function(event) {
-        var keyCode = event.which;
-        if ((keyCode >= 48 && keyCode <= 57) || (keyCode ==8)) {
-            return true;
-        } else {
-            return false;
-        }
-    }).focus(function() {
-        this.style.imeMode = 'disabled';
     });
 
 });

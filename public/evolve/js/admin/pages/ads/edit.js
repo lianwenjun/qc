@@ -1,14 +1,5 @@
 
 $(function() {
-    
-    // 上传图片
-    $(".jq-addPic").mouseenter(function() {
-        $(".add-pic").css("display", "block");
-    });
-    $(".jq-addPic").mouseleave(function() {
-        $(".add-pic").css("display", "none");
-    });
-
 
     // 表单验证
     $(".jq-form").validate({
