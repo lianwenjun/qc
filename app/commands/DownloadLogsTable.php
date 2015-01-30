@@ -91,6 +91,7 @@ class DownloadLogsTable extends Command {
             $table->integer('account_id')->unsigned()->comment('手机用户ID');
             $table->string('ip', 64)->comment('移动端IP');
             $table->string('channel', 64)->comment('渠道号');
+            $table->string('client_version', 50)->comment('天天游戏中心客户端版本号');
             $table->enum('status', ['request', 'download', 'install', 'active'])->default('request')->comment('日志类型');
             $table->softDeletes();
             $table->timestamps();
