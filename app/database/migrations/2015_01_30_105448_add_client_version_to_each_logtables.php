@@ -18,11 +18,11 @@ class AddClientVersionToEachLogtables extends Migration {
             $tableName = $value->{'Tables_in_logs'};
 
             if ($tableName == 'logtabls' ||
-                Schema::hasColumn($tableName, 'client_version')) {
+                Schema::connection('logs')->hasColumn($tableName, 'client_version')) {
                 continue;
             }
 
-            Schema::table($tableName, function($table)
+            Schema::connection('logs')->table($tableName, function($table)
             {
                 $table->string('client_version', 50)->comment('客户端版本号');
             });
