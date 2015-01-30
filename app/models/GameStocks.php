@@ -7,7 +7,7 @@ class GameStocks extends \EBase
     use SoftDeletingTrait;
 
     protected $dates = ['deleted_at'];
-    protected $softDelete = true;
+    protected $softDelete = false;
     
     protected $table = 'game_stocks';
     protected $fillable = ['id', 'game_id'];

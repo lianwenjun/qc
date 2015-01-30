@@ -24,5 +24,5 @@ app/config/ucCGame.php
 public/info.php
 public/Uploads/*
 vendor/*
-vendor
+vendor/
 *~

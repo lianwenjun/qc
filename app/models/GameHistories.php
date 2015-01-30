@@ -10,6 +10,7 @@ class GameHistories extends \EBase
     protected $dates = ['deleted_at'];
     protected $softDelete = true;
     
-    protected $table = 'game_processes';
+    protected $table = 'game_histories';
     protected $fillable = ['id', 'game_id'];
+    
 }
