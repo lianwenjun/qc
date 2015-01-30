@@ -142,10 +142,10 @@ class AppDownloads extends \Base
         if (in_array($targetDate, $dates)) {
             $this->incrAt($appId, $targetDate, $status);
         } else {
+            // 查询游戏信息
+            $appInfo = (new Apps)->info($appId);
+            
             $this->create([
-                // 查询游戏信息
-                $appInfo = (new Apps)->info($appId);
-
                 'app_id'     => $appId,
                 'title'      => $appInfo->title,
                 $status      => 1,
