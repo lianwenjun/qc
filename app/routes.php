@@ -161,15 +161,6 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::delete('{id}', ['as' => 'gamecattags.delete', 'uses' => 'Admin_Cat_GameCatTagsController@destroy']);// 游戏分类删除
     });
 
-    Route::group(['prefix' => 'topics', 'before' => 'hasPermissions'], function() // 专题广告
-    {
-        Route::get('{type}', ['as' => 'topics.index', 'uses' => 'Admin_TopicsController@index']);// 专题首页
-        Route::get('dptopics/create', ['as' => 'topics.create', 'uses' => 'Admin_TopicsController@create']);// 查看详情
-        Route::get('dptopics/{id}', ['as' => 'topics.show', 'uses' => 'Admin_TopicsController@show']);// 查看详情
-        Route::get('{type}/{id}', ['as' => 'topics.edit', 'uses' => 'Admin_TopicsController@edit']);// 查看详情
-    });
-
-
     Route::group(['prefix' => 'rating', 'before' => 'hasPermissions'], function() //游戏评分
     {
         Route::get('index', ['as' => 'rating.index', 'uses' => 'Admin_RatingsController@index']);
@@ -232,6 +223,21 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('{id}/unstock', ['as' => 'indexads.unstock', 'uses' => 'Admin_indexAdsController@unstock']);
         Route::post('imageupload', ['as' => 'indexads.upload', 'uses' => 'Admin_indexAdsController@upload']);
     });
+
+    Route::group(['prefix' => 'topics', 'before' => 'hasPermissions'], function() // 专题广告推广
+    {
+        Route::get('{type}/index', ['as' => 'topics.index', 'uses' => 'Admin_TopicsController@index']);// 专题首页
+        
+        Route::get('create', ['as' => 'topics.create', 'uses' => 'Admin_TopicsController@create']);// 专题添加页
+        Route::post('create', ['as' => 'topics.create', 'uses' => 'Admin_TopicsController@store']);// 专题添加接口
+        Route::get('dptopics/{id}', ['as' => 'topics.show', 'uses' => 'Admin_TopicsController@show']);// 查看详情
+        Route::get('{id}/edit', ['as' => 'topics.edit', 'uses' => 'Admin_TopicsController@edit']);// 专题编辑页
+        Route::put('{id}/edit', ['as' => 'topics.edit', 'uses' => 'Admin_TopicsController@update']);// 专题编辑页
+        Route::put('{id}/unstock', ['as' => 'topics.unstock', 'uses' => 'Admin_TopicsController@unstock']);// 专题下架
+        Route::put('{id}/revocate', ['as' => 'topics.revocate', 'uses' => 'Admin_TopicsController@revocate']);// 专题撤销
+        Route::delete('{id}', ['as' => 'topics.delete', 'uses' => 'Admin_TopicsController@destroy']);// 专题删除
+    });
+
     Route::group(['prefix' => 'editorads', 'before' => 'hasPermissions'], function() //编辑推荐
     {
         Route::get('index', ['as'=>'editorads.index', 'uses' => 'Admin_EditorAdsController@index']);

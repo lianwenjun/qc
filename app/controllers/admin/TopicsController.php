@@ -17,14 +17,14 @@ class Admin_TopicsController extends \Admin_BaseController {
 		$datas = Topics::lists($this->pagesize, $type, $ofStatus, $title);
 		$statusLang = Config::get('status.ads.topicsStatus');
 		if ($type == 'dptopics')
-			return view::make('evolve.ads.dptopics')
-					   ->withDatas($datas)
-					   ->with('statusLang', $statusLang);
+			return view::make('evolve.topics.dptopics')
+			   ->withDatas($datas)
+			   ->with('statusLang', $statusLang);
 
 		if ($type == 'sutopics')
-			return view::make('evolve.ads.sutopics')
-		               ->withDatas($datas)
-				       ->with('statusLang', $statusLang);
+			return view::make('evolve.topics.sutopics')
+               ->withDatas($datas)
+		       ->with('statusLang', $statusLang);
 	}
 
 	/**
@@ -35,7 +35,97 @@ class Admin_TopicsController extends \Admin_BaseController {
 	 */
 	public function create()
 	{
-		return view::make('evolve.ads.create');
+		return view::make('evolve.topics.create');
+	}
+
+	/**
+	 * 专题新增入库.
+	 * POST /admin/topics
+	 *
+	 * @return Response
+	 */
+	public function store()
+	{
+		$data = Input::only(
+			'title', 
+			'game_id',
+			'summary', 
+			'image', 
+			'location',
+			'stocked_at',
+			'unstocked_at',
+			'status'
+		);
+
+		// 判断是否不存在status提交
+		if (! Input::has('status')) {
+			$validator = Topics::isNewValid($data);
+
+			if ($validator->fails()) {
+				return Redirect::back()->withErrors($validator);
+        	}
+        	
+        	// 当前时间戳
+        	$time = time();
+        	$stockTime = strtotime(Input::get('stocked_at'));
+        	$unstockTime = strtotime(Input::get('unstocked_at'));
+
+        	if ($stockTime < $time && $time < $unstockTime) {
+        		$data['status'] = 'stock';
+        	} else if ($stockTime > $time) {
+        		$data['status'] = 'pending';
+        	} else if ($unstockTime < $time) {
+        		$data['status'] = 'unstock';
+        	}
+
+        	if (Topics::create($data)) {
+        		return Redirect::to(URL::route('topics.index', 'dptopics'))
+			   	   ->withSuccess('添加成功！');
+        	}
+
+        	return Response::make('404 页面找不到', 404);
+		} 
+
+	}
+
+	/**
+	 * 专题编辑
+	 * GET /admin/topics/{type}/{id}/edit
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function edit($id)
+	{
+		$inStatus = ['draft', 'pending', 'stock'];
+		$topic = Topics::InStatus($inStatus)->find($id);
+
+		if ($topic) {
+			// 获取游戏信息
+			$ids[] = explode(',', $topic->game_id);
+			$apps = [];
+
+			foreach ($ids as $id) {
+				$apps = Apps::find($id);
+			}
+
+			return view::make('evolve.topics.edit')->withTopic($topic)
+												   ->withApps($apps);
+		}
+
+		return Response::make('404 页面找不到', 404);
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 * PUT /admin/topics/{id}
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function update($id)
+	{
+		
 	}
 
 	/**
@@ -50,11 +140,13 @@ class Admin_TopicsController extends \Admin_BaseController {
 	{
 		$inStatus = ['draft', 'pending'];
 
-		$topic = Topics::where('id', $id)->InStatus($inStatus)
-										 ->update('status', 'draft');
+		$topic = Topics::where('id', $id)
+			->InStatus($inStatus)
+			->update('status', 'draft');
+
 		if ($topic) {
-			return Register::to('admin/topics/dptopics')
-						   ->withSuccess('#'. $id .' 以撤销为编辑状态！');
+			return Redirect::to(URL::route('topics.index', 'dptopics'))
+			   ->withSuccess('#'. $id .' 以撤销为编辑状态！');
 		}
 
 		return Response::make('404 页面找不到', 404);
@@ -71,13 +163,13 @@ class Admin_TopicsController extends \Admin_BaseController {
     public function destroy($type, $id) 
     {
     	$inStatus = ['draft', 'pending', 'unstock'];
-    	$topic = Topics::where('id', $id)->InStatus($inStatus)
-    									 ->delete();
+    	$topic = Topics::where('id', $id)
+    		->InStatus($inStatus)
+			->delete();
 
-        if($topic) {
-
+        if ($topic) {
             return Redirect::to('admin/topics/'. $type)
-        				   ->withSuccess('# '. $id .' 删除成功!'); 
+				->withSuccess('# '. $id .' 删除成功!'); 
         }
 
         return Response::make('404 页面找不到', 404);
@@ -96,7 +188,7 @@ class Admin_TopicsController extends \Admin_BaseController {
     	$inStatus = ['draft', 'pending'];
     	$topic = Topics::InStatus($inStatus)->find($id);
 
-		if($topic) {
+		if ($topic) {
 			// 获取游戏信息
 			$ids[] = explode(',', $topic->game_id);
 			$apps = [];
@@ -105,9 +197,30 @@ class Admin_TopicsController extends \Admin_BaseController {
 				$apps = Apps::find($id);
 			}
 
-			return view::make('evolve.ads.topicinfo')->withTopic($topic)
-													 ->withApps($apps);
+			return view::make('evolve.topics.topicinfo')->withTopic($topic)
+													    ->withApps($apps);
 
+        }
+
+        return Response::make('404 页面找不到', 404);
+    }
+
+    /**
+	 * 下架
+	 * PUT /admin/topics/{id}/unstock
+	 *
+     * @param $id int 分类id
+     *
+	 * @return Response
+	 */
+    public function unstock($id) 
+    {
+    	$inStatus = ['stock'];
+    	$topic = Topics::InStatus($inStatus)->find($id);
+
+		if ($topic) {
+			return Redirect::to(URL::route('topics.index', 'sutopics'))
+				->withSuccess('# '. $id .' 下架成功!'); 
         }
 
         return Response::make('404 页面找不到', 404);
@@ -115,40 +228,9 @@ class Admin_TopicsController extends \Admin_BaseController {
 
 	
 
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /admin/topics
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+	
 
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /admin/topics/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /admin/topics/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
+	
 
 
 }

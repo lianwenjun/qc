@@ -27,19 +27,19 @@
         <div class="content"> 
             <!-- 表单 -->
             <form name="form" action="" method="get" class="validate jq-form">
-                <p class="record-title">应用信息：</p>
+                <p class="record-title">专题信息：</p>
                 <table cellpadding="0" cellspacing="0" class="edit-zebra-table">
                     <tbody>
                         <tr>
                             <td class="label">专题名称：</td>
                             <td>
-                                <input type="text" placeholder="请输入......" class="input label-content" name="keywords" value="{{ $topic->title }}" />
+                                <input type="text" placeholder="请输入......" class="input label-content" name="title" value="{{ $topic->title }}" />
                             </td>
                         </tr>
                         <tr>
                             <td class="label">小编点评：</td>
                             <td>
-                                <textarea class="textarea">{{ $topic->summary }}</textarea>
+                                <textarea class="textarea" name="summary">{{ $topic->summary }}</textarea>
                             </td>
                         </tr>
                         <tr>
@@ -48,7 +48,7 @@
                                 <div class="pr upload-button-wrap icon230x120 jq-addImg">
                                     <img src="{{ $topic->image }}" class="icon230x120" />
                                     <div class="add-img"><i class="icon-plus"></i></div>
-                                    <input type="file" class="upload-button" title="上传图片" style="width: 230px; height: 120px" />
+                                    <input type="file" class="upload-button" title="上传图片" name="image" style="width: 230px; height: 120px" />
                                 </div>
                             </td>
                         </tr>
@@ -56,16 +56,19 @@
                             <td class="label">首页展示：</td>
                             <td>
                                 <select class="select" name="location">
-                                    <option value="{{ $topic->location }}" selected>热门下载专题位</option>
-                                    <option value="">新品抢玩专题位</option>
+                                    <option value="default">默认列表</option>
+                                    <option value="slide">首页轮播</option>
+                                    <!--                                
                                     <option value="">首页专题位一</option>
                                     <option value="">首页专题位二</option>
                                     <option value="">首页专题位三</option>
-                                    <option value="">首页专题位四</option>
+                                    <option value="">首页专题位四</option> 
+                                    -->
                                 </select>
                             </td>
                         </tr>
                         <tr>
+
                             <td class="label">添加游戏内容：</td>
                             <td>
                                 <ul class="game-content fl">
@@ -85,6 +88,9 @@
                                 <input class="button jq-add" type="button" value="+">
                             </td>
                         </tr>
+                        
+                            
+                        
                     </tbody>
                 </table>
                 <p class="inline-button">
@@ -94,6 +100,7 @@
                     <input type="submit" value="  提  交  " class="button" />
                     <a href="@if($topic->status != 'stock') {{ URL::route('topics.index', 'dptopics') }} @else {{ URL::route('topics.index', 'sutopics') }} @endif" class="button">返回列表</a>
                 </p>
+
                 <!-- 添加状态隐藏域 -->
                 <input type="hidden" name="status" value="{{ $topic->status }}" />
             </form>

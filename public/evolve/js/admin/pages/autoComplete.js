@@ -14,7 +14,7 @@ $(function(){
                 dataType: 'json',  
                 quietMillis: opts.delay ,  
                 data: function (term, page) {
-                    return {q: term};
+                    return {query: term};
                 },  
                 results: function (data, page) { 
                     if (data.success == "true"){
@@ -49,7 +49,7 @@ $(function(){
     });
 
     $('.jq-searchGameName').select2Remote({  
-        url: '/evolve-ui/js/pages/autoComplete.json'
+        url: '/admin/searchapps?type=name'
     });
 
     // 游戏关键字（select2）

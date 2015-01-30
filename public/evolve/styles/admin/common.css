@@ -145,7 +145,7 @@ a { color: #333; }
 .orange { color: #f0a53c; }
 
 /* 左侧包裹层 */
-.side-wrap { width: 200px; height: 100%; position: fixed; left: 0; top: 0; color: #fff; background: url("../images/side_bg.png") repeat-y; text-align: right; }
+.side-wrap { width: 200px; height: 100%; position: fixed; left: 0; top: 0; color: #fff; background: url("../../images/admin/side_bg.png") repeat-y; text-align: right; }
 .side-wrap .title { font-size: 2em; margin: 50px 0; text-align: center; }
 .side-wrap .subtitle { padding-right: 15px; margin-bottom: 20px; }
 .side-wrap .operate a { text-decoration: none; color: #fff; cursor: pointer; padding-right: 15px; }
