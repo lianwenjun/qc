@@ -91,20 +91,22 @@
                     <td><span class="elimit6em cursor" title="{{ $game->cat }}">{{ $game->cat }}</span></td>
                     <td>{{ Helper::friendlySize($game->size) }}</td>
                     <td>{{ $game->version }}</td>
-                    <td class="link-blue jq-preview">预览</td>
+                    <td class="link-blue jq-preview" data-url="{{ route('game.stock.preview', $game->id) }}">预览</td>
                     <td>9999</td>
                     <td><span class="elimit7em cursor" title="{{ Helper::friendlyDate($game->unstocked_at) }}">{{ Helper::friendlyDate($game->unstocked_at) }}</span></td>
                     <td>
                         <!--
                             <a href="gift.html" class="button">礼包</a>
                         -->
-                        <a href="javascript:;" class="button jq-unstock" data-url="">下架</a>
+                        <a href="javascript:;" class="button jq-unstock" data-url="{{ route('game.stock.unstock', $game->id) }}">下架</a>
                         <a href="edit.html" class="button">更新</a>
                         <a href="history.html" class="button">历史版本</a>
                     </td>               
                 </tr>
             @empty
-                <tr>没找到数据</tr>
+                <tr>
+                    <td>没找到数据</td>
+                </tr>
             @endforelse
         </tbody>
     </table>

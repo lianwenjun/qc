@@ -20,7 +20,7 @@ $(function() {
                     $this.after($(f).attr({
                         method: 'post',
                         action: link
-                    }).append('<input type="hidden" name="_method" value="DELETE" />'));
+                    }).append('<input type="hidden" name="_method" value=" " />'));
                     $(f).submit();
                 }
             }

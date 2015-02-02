@@ -18,25 +18,7 @@ Route::get('/', function()
 {
     return Redirect::route('admin.index');
 });
-// usage inside a laravel route
-Route::get('/test/image', function()
-{
-    Image::configure(array('driver' => 'imagick'));
-    $img = Image::make(public_path() . '/test1.png');
-    // print_r($img);
-    // $img->resize(222, 371);
-    //$img->fit(720, 1200);
-    //$img->heighten(371);
-    //$img->widen(222);
-    //$img->trim();
-    $img->crop(480, 800, 0, 0);
-    $w = $img->width();
-    $h = $img->height();
-    //$img = Image::canvas(32, 32, '#ffffff');
-    //echo $w, $h;
-    return pathinfo('/apks/6/9/692d253307c3d55be0340bfc2e9f1511.apk');
-    //return $img->response('jpg');
-});
+
 
 Route::get('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_UsersController@signin']);
 Route::put('/admin/users/signin', ['as' => 'users.signin', 'uses' => 'Admin_UsersController@doSignin']);
@@ -53,8 +35,20 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
     Route::get('/users/changePwd', ['as' => 'users.changePwd','uses' => 'Admin_UsersController@changePwd']);
     Route::put('/users/changePwd', ['as' => 'users.changePwd','uses' => 'Admin_UsersController@doChangePwd']);
     
-    Route::get('/game/stocks', ['as' => 'game.stock', 'uses' => 'Evolve_Game_StockController@index']);
-     // 游戏APP列表
+    Route::group(['prefix' => 'game', 'before' => ''], function()
+    {
+        Route::get('stocks', ['as' => 'game.stocks', 'uses' => 'Evolve_Game_StockController@index']);
+        Route::get('stock/{id}/preview', ['as' => 'game.stock.preview', 'uses' => 'Evolve_Game_StockController@preview']);
+        Route::get('stock/{id}/edit', ['as' => 'game.stock.edit', 'uses' => 'Evolve_Game_StockController@edit']);
+        Route::put('stock/{id}/unstock', ['as' => 'game.stock.unstock', 'uses' => 'Evolve_Game_StockController@unstock']);
+        Route::get('stokc/{gameId}/histories', ['as' => 'game.history', 'uses' => 'Evolve_Game_HistoryController@index']);
+        Route::get('unstocks', ['as' => 'game.unstocks', 'uses' => 'Evolve_Game_ProcessController@unstocks']);
+        Route::get('notpasses', ['as' => 'game.notpasses', 'uses' => 'Evolve_Game_ProcessController@notpasses']);
+        Route::get('pendings', ['as' => 'game.pendings', 'uses' => 'Evolve_Game_ProcessController@pendings']);
+        Route::get('drafts', ['as' => 'game.drafts', 'uses' => 'Evolve_Game_ProcessController@drafts']);
+    });
+    
+    // 游戏APP列表
     Route::group(['prefix' => 'apps', 'before' => 'hasPermissions'], function()
     {
         // 列表

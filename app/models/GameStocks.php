@@ -1,13 +1,13 @@
 <?php
 
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
+//use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class GameStocks extends \EBase
 {
-    use SoftDeletingTrait;
+    //use SoftDeletingTrait;
 
-    protected $dates = ['deleted_at'];
-    protected $softDelete = false;
+    protected $dates = ['deleted_at', 'created_at', 'updated_at'];
+    //protected $softDelete = false;
     
     protected $table = 'game_stocks';
     protected $fillable = ['id', 'game_id'];
@@ -25,15 +25,24 @@ class GameStocks extends \EBase
         return $this->where('status', 'stock')->orderBy('id', 'desc');
     }
 
-
     /**
-     *
+     * 增加为上线数据
      *
      *
      */
-    public function preview($id)
+    public function add()
     {
-        $game = $this->select('id', 'title', 'screenHots')->find($id);
+
+    }
+
+    /**
+     * 更新为上线数据
+     *
+     *
+     */
+    public function patch()
+    {
+
     }
 
     /**
@@ -46,7 +55,7 @@ class GameStocks extends \EBase
     {
         $games = $this->select('id', 'icon', 'title')
                       ->where('author', $author)
-                      ->take(5)
+                      ->take(4)
                       ->get();
         return $games;
     }    
