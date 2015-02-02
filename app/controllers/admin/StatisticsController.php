@@ -77,9 +77,7 @@ class Admin_StatisticsController extends Admin_BaseController
         {
             $excel->sheet('sheet1', function($sheet) use($tmpData)
             {
-                foreach ($tmpData as $key => $value) {
-                    $sheet->appendRow($value);
-                }
+                $sheet->fromArray($tmpData, null, 'A1', false, false);
             });
         })->export('csv');
     }
