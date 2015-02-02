@@ -20,3 +20,4 @@ Artisan::add(new FixAppMd5);
 Artisan::add(new FixUcInfo);
 Artisan::add(new ExportAnything);
 Artisan::add(new NewCats);
+Artisan::add(new NewAds);
