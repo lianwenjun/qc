@@ -73,15 +73,13 @@ class Admin_StatisticsController extends Admin_BaseController
         $tmpData = DB::table($tableName)->get();
         $tmpData = CUtil::object2Array($tmpData);
 
-        /*foreach ($tmpData as $key => $value) {
-            str_replace('\\,', '|', $value['cats']);
-        }*/
-
         Excel::create('下载统计', function($excel) use($tmpData)
         {
             $excel->sheet('sheet1', function($sheet) use($tmpData)
             {
-                $sheet->fromArray($tmpData, null, 'A1', false, false);
+                foreach ($tmpData as $key => $value) {
+                    $sheet->appendRow($value);
+                }
             });
         })->export('csv');
     }
