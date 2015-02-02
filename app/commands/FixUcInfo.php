@@ -169,7 +169,6 @@ class FixUcInfo extends Command
     {
         foreach ($this->_result['data']['list'] as $key => $value) {
             if (!isset($value['deleted']) || $value['deleted'] != 0) {
-                $this->error('this game is already deleted in UC');
                 continue;
             }
 
@@ -187,16 +186,20 @@ class FixUcInfo extends Command
 
             $gameId = $this->_eid2GameInfo[$value['id']]['id'];
             $old_md5 = $this->_eid2GameInfo[$value['id']]['md5'];
-            $update = [
-                'md5' => $data['md5'],
-            ];
 
-            $this->info("----------Updating Game-{$gameId}----------");
-            $this->info("old md5 is:{$old_md5}");
-            $this->info("new md5 is:{$data['md5']}");
+            $this->info("checking No.{$gameId} Game...");
 
-            Apps::where('id', $gameId)->update($update);
-            $this->info("----------Update finished----------");
+            if ($old_md5 != $data['md5']) {
+                $update = [
+                    'md5' => $data['md5'],
+                ];
+
+                $this->info("old md5 is:{$old_md5}");
+                $this->info("new md5 is:{$data['md5']}");
+
+                Apps::where('id', $gameId)->update($update);
+                $this->info("----------updating----------");
+            }
         }
     }
 
