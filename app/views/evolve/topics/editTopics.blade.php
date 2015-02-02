@@ -81,7 +81,6 @@
                         <td colspan="7">亲！没有数据哦！</td>
                     <tr>
                 	@endforelse
-
                 </tbody>
             </table>
             <!-- /表格 -->

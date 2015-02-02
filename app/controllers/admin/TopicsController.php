@@ -4,33 +4,45 @@ class Admin_TopicsController extends \Admin_BaseController {
    
     /**
      * 专题待发布编辑管理列表
-     * GET /admin/topics/{type}
-     *
-     * @param type string
+     * GET /admin/topics/edittopics
      *
      * @return Response
      */
-    public function index($type)
+    public function editTopics()
     {
+        $type = 'editTopics';
         $ofStatus = Input::get('status');
         $title = Input::get('title');
         $datas = Topics::lists($this->pagesize, $type, $ofStatus, $title);
         $statusLang = Config::get('status.ads.topicsStatus');
 
-        if ($type == 'dptopics')
-            return view::make('evolve.topics.dptopics')
-               ->withDatas($datas)
-               ->with('statusLang', $statusLang);
-               
-        if ($type == 'sutopics')
-            return view::make('evolve.topics.sutopics')
-               ->withDatas($datas)
-               ->with('statusLang', $statusLang);
+        return view::make('evolve.topics.editTopics')
+           ->withDatas($datas)
+           ->with('statusLang', $statusLang);
+    }
+
+    /**
+     * 专题待发布编辑管理列表
+     * GET /admin/topics/stockTopics
+     *
+     * @return Response
+     */
+    public function stockTopics()
+    {
+        $type = 'stockTopics';
+        $ofStatus = Input::get('status');
+        $title = Input::get('title');
+        $datas = Topics::lists($this->pagesize, $type, $ofStatus, $title);
+        $statusLang = Config::get('status.ads.topicsStatus');
+
+        return view::make('evolve.topics.stockTopics')
+           ->withDatas($datas)
+           ->with('statusLang', $statusLang);
     }
 
     /**
      * 专题新增页
-     * GET /admin/topics/dptopics/create
+     * GET /admin/topics/editTopics/create
      *
      * @return Response
      */
@@ -82,12 +94,12 @@ class Admin_TopicsController extends \Admin_BaseController {
             if (Topics::create($data)) {
                 switch ($data['status']) {
                     case 'pending':
-                        return Redirect::to(URL::route('topics.index', 'dptopics'))
+                        return Redirect::to(URL::route('topics.index', 'editTopics'))
                             ->withSuccess('添加成功！');
                         break;
                 
                     default:
-                        return Redirect::to(URL::route('topics.index', 'sutopics'))
+                        return Redirect::to(URL::route('topics.index', 'stockTopics'))
                             ->withSuccess('添加成功！');
                         break;
                 }
@@ -97,7 +109,7 @@ class Admin_TopicsController extends \Admin_BaseController {
         } 
         // 存为草稿
         if (Topics::create($data)) {
-            return Redirect::to(URL::route('topics.index', 'dptopics'))
+            return Redirect::to(URL::route('topics.index', 'editTopics'))
                ->withSuccess('存为草稿成功！');
         }
         
@@ -175,12 +187,12 @@ class Admin_TopicsController extends \Admin_BaseController {
             if (Topics::where('id', $id)->update($data)) {
                 switch ($data['status']) {
                     case 'pending':
-                        return Redirect::to(URL::route('topics.index', 'dptopics'))
+                        return Redirect::to(URL::route('topics.index', 'editTopics'))
                             ->withSuccess('添加成功！');
                         break;
                 
                     default:
-                        return Redirect::to(URL::route('topics.index', 'sutopics'))
+                        return Redirect::to(URL::route('topics.index', 'stockTopics'))
                             ->withSuccess('添加成功！');
                         break;
                 }
@@ -191,7 +203,7 @@ class Admin_TopicsController extends \Admin_BaseController {
 
         // 存为草稿
         if (Topics::where('id', $id)->update($data)) {
-            return Redirect::to(URL::route('topics.index', 'dptopics'))
+            return Redirect::to(URL::route('topics.index', 'editTopics'))
                ->withSuccess('#'.$id.' 存为草稿！');
         }
 
@@ -214,7 +226,7 @@ class Admin_TopicsController extends \Admin_BaseController {
                                          ->update('status', 'draft');
 
         if ($topic) {
-            return Redirect::to(URL::route('topics.index', 'dptopics'))
+            return Redirect::to(URL::route('topics.index', 'editTopics'))
                ->withSuccess('#'. $id .' 撤销为编辑状态！');
         }
 
@@ -245,9 +257,9 @@ class Admin_TopicsController extends \Admin_BaseController {
 
     /**
      * 查看单个待发布&编辑中专题详情信息
-     * GET /admin/topics/dptopics/{id}
+     * GET /admin/topics/{id}/show
      *
-     * @param $type string 状态类型 ,$id int 分类id
+     * @param $id int 分类id
      *
      * @return Response
      */
@@ -287,7 +299,7 @@ class Admin_TopicsController extends \Admin_BaseController {
         $topic = Topics::InStatus($inStatus)->find($id);
 
         if ($topic) {
-            return Redirect::to(URL::route('topics.index', 'sutopics'))
+            return Redirect::to(URL::route('topics.index', 'stockTopics'))
                 ->withSuccess('# '. $id .' 下架成功!'); 
         }
 

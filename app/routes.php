@@ -226,11 +226,11 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 
     Route::group(['prefix' => 'topics', 'before' => 'hasPermissions'], function() // 专题广告推广
     {
-        Route::get('{type}/index', ['as' => 'topics.index', 'uses' => 'Admin_TopicsController@index']);// 专题首页
-        
+        Route::get('edittopics', ['as' => 'edittopics.index', 'uses' => 'Admin_TopicsController@editTopics']);// 专题首页
+        Route::get('stocktopics', ['as' => 'stocktopics.index', 'uses' => 'Admin_TopicsController@stockTopics']);// 专题首页
         Route::get('create', ['as' => 'topics.create', 'uses' => 'Admin_TopicsController@create']);// 专题添加页
         Route::post('create', ['as' => 'topics.create', 'uses' => 'Admin_TopicsController@store']);// 专题添加接口
-        Route::get('dptopics/{id}', ['as' => 'topics.show', 'uses' => 'Admin_TopicsController@show']);// 查看详情
+        Route::get('{id}/show', ['as' => 'topics.show', 'uses' => 'Admin_TopicsController@show']);// 查看详情
         Route::get('{id}/edit', ['as' => 'topics.edit', 'uses' => 'Admin_TopicsController@edit']);// 专题编辑页
         Route::put('{id}/edit', ['as' => 'topics.edit', 'uses' => 'Admin_TopicsController@update']);// 专题编辑页
         Route::put('{id}/unstock', ['as' => 'topics.unstock', 'uses' => 'Admin_TopicsController@unstock']);// 专题下架

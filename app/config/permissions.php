@@ -144,7 +144,8 @@ return [
     ],
     // 新增专题广告
     '专题广告' => [
-        'topics.index' => '列表',
+        'edittopics.index' => '编辑专题列表',
+        'stocktopics.index' => '上架专题列表',
         'topics.create' => '新增',
         'topics.edit' => '编辑',
         'topics.show' => '查看',

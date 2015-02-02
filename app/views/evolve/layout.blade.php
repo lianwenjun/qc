@@ -29,7 +29,8 @@
                         'cats.index',
                         'tags.index',
                         'gamecattags.index',
-                        'topics.index'
+                        'edittopics.index',
+                        'stocktopics.index'
                     ]
                 )
             )
@@ -60,11 +61,11 @@
                     <li><a href="../ads/frontendpics.html">首页图片位管理</a></li>
                     <li><a href="../ads/frontendgame.html">首页游戏位管理</a></li>
                     <li><a href="../ads/banner.html">banner图片管理</a></li>
-                    @if(Sentry::getUser()->hasAccess('tags.index')) 
-                    <li><a href="{{ URL::route('topics.index', 'dptopics') }}">专题编辑管理</a></li>
+                    @if(Sentry::getUser()->hasAccess('edittopics.index')) 
+                    <li><a href="{{ URL::route('edittopics.index') }}">专题编辑管理</a></li>
                     @endif  
-                    @if(Sentry::getUser()->hasAccess('tags.index')) 
-                    <li><a href="{{ URL::route('topics.index', 'sutopics') }}">上架专题管理</a></li>
+                    @if(Sentry::getUser()->hasAccess('stocktopics.index')) 
+                    <li><a href="{{ URL::route('stocktopics.index') }}">上架专题管理</a></li>
                     @endif 
                     <li><a href="../ads/rank.html">排行游戏位管理</a></li>
                     <li><a href="../ads/sort.html">分类页图片管理</a></li>
