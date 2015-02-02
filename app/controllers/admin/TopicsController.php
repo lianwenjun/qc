@@ -16,6 +16,7 @@ class Admin_TopicsController extends \Admin_BaseController {
 		$title = Input::get('title');
 		$datas = Topics::lists($this->pagesize, $type, $ofStatus, $title);
 		$statusLang = Config::get('status.ads.topicsStatus');
+
 		if ($type == 'dptopics')
 			return view::make('evolve.topics.dptopics')
 			   ->withDatas($datas)
@@ -79,13 +80,28 @@ class Admin_TopicsController extends \Admin_BaseController {
         	}
 
         	if (Topics::create($data)) {
-        		return Redirect::to(URL::route('topics.index', 'dptopics'))
-			   	   ->withSuccess('添加成功！');
+        		switch ($data['status']) {
+        			case 'pending':
+        				return Redirect::to(URL::route('topics.index', 'dptopics'))
+			   	   			->withSuccess('添加成功！');
+        				break;
+        		
+        			default:
+        				return Redirect::to(URL::route('topics.index', 'sutopics'))
+			   	   			->withSuccess('添加成功！');
+        				break;
+        		}
         	}
 
         	return Response::make('404 页面找不到', 404);
 		} 
-
+		// 存为草稿
+		if (Topics::create($data)) {
+    		return Redirect::to(URL::route('topics.index', 'dptopics'))
+		   	   ->withSuccess('存为草稿成功！');
+    	}
+		
+		return Response::make('404 页面找不到', 404);
 	}
 
 	/**
@@ -117,7 +133,7 @@ class Admin_TopicsController extends \Admin_BaseController {
 	}
 
 	/**
-	 * Update the specified resource in storage.
+	 * 专题更新
 	 * PUT /admin/topics/{id}
 	 *
 	 * @param  int  $id
@@ -125,7 +141,61 @@ class Admin_TopicsController extends \Admin_BaseController {
 	 */
 	public function update($id)
 	{
-		
+		$data = Input::only(
+			'title', 
+			'game_id',
+			'summary', 
+			'image', 
+			'location',
+			'stocked_at',
+			'unstocked_at',
+			'status'
+		);
+
+		if (! Input::has('status')) {
+			$validator = Topics::isNewValid($data);
+
+			if ($validator->fails()) {
+				return Redirect::back()->withErrors($validator);
+        	}
+        	
+        	// 当前时间戳
+        	$time = time();
+        	$stockTime = strtotime(Input::get('stocked_at'));
+        	$unstockTime = strtotime(Input::get('unstocked_at'));
+
+        	if ($stockTime < $time && $time < $unstockTime) {
+        		$data['status'] = 'stock';
+        	} else if ($stockTime > $time) {
+        		$data['status'] = 'pending';
+        	} else if ($unstockTime < $time) {
+        		$data['status'] = 'unstock';
+        	}
+
+        	if (Topics::where('id', $id)->update($data)) {
+        		switch ($data['status']) {
+        			case 'pending':
+        				return Redirect::to(URL::route('topics.index', 'dptopics'))
+			   	   			->withSuccess('添加成功！');
+        				break;
+        		
+        			default:
+        				return Redirect::to(URL::route('topics.index', 'sutopics'))
+			   	   			->withSuccess('添加成功！');
+        				break;
+        		}
+        	}
+
+        	return Response::make('404 页面找不到', 404);
+		} 
+
+		// 存为草稿
+		if (Topics::where('id', $id)->update($data)) {
+    		return Redirect::to(URL::route('topics.index', 'dptopics'))
+		   	   ->withSuccess('#'.$id.' 存为草稿！');
+    	}
+
+    	return Response::make('404 页面找不到', 404);
 	}
 
 	/**
@@ -140,9 +210,8 @@ class Admin_TopicsController extends \Admin_BaseController {
 	{
 		$inStatus = ['draft', 'pending'];
 
-		$topic = Topics::where('id', $id)
-			->InStatus($inStatus)
-			->update('status', 'draft');
+		$topic = Topics::where('id', $id)->InStatus($inStatus)
+										 ->update('status', 'draft');
 
 		if ($topic) {
 			return Redirect::to(URL::route('topics.index', 'dptopics'))
@@ -163,13 +232,12 @@ class Admin_TopicsController extends \Admin_BaseController {
     public function destroy($type, $id) 
     {
     	$inStatus = ['draft', 'pending', 'unstock'];
-    	$topic = Topics::where('id', $id)
-    		->InStatus($inStatus)
-			->delete();
+    	$topic = Topics::where('id', $id)->InStatus($inStatus)
+										 ->delete();
 
         if ($topic) {
             return Redirect::to('admin/topics/'. $type)
-				->withSuccess('# '. $id .' 删除成功!'); 
+            	->withSuccess('# '. $id .' 删除成功!'); 
         }
 
         return Response::make('404 页面找不到', 404);
@@ -225,12 +293,5 @@ class Admin_TopicsController extends \Admin_BaseController {
 
         return Response::make('404 页面找不到', 404);
     }
-
-	
-
-	
-
-	
-
 
 }
