@@ -63,7 +63,7 @@
                         <td>{{ $data->operator }}</td>
                         <td>
                         	@if(Sentry::getUser()->hasAccess('topics.revocate'))
-                            <a href="javascript:;" class="button jq-delete @if($data->status == 'draft') disabled @endif" data-url="{{ URL::route('topics.revocate', $data->id) }}">撤销</a>
+                            <a href="javascript:;" class="button @if($data->status == 'draft') disabled @else jq-delete @endif" data-url="{{ URL::route('topics.revocate', $data->id) }}">撤销</a>
                             @endif
                             @if(Sentry::getUser()->hasAccess('topics.show'))
                             <a href="{{ URL::route('topics.show', $data->id) }}" class="button">查看</a>

@@ -215,7 +215,7 @@ class Admin_TopicsController extends \Admin_BaseController {
 
 		if ($topic) {
 			return Redirect::to(URL::route('topics.index', 'dptopics'))
-			   ->withSuccess('#'. $id .' 以撤销为编辑状态！');
+			   ->withSuccess('#'. $id .' 撤销为编辑状态！');
 		}
 
 		return Response::make('404 页面找不到', 404);

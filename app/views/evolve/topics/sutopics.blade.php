@@ -62,10 +62,10 @@
                             <a href="javascript:;" class="button @if($data->status == 'unstock') disabled @endif" data-url="{{ URL::route('topics.unstock', $data->id) }}">下架</a>
                             @endif
                             @if(Sentry::getUser()->hasAccess('topics.edit'))
-                            <a href="{{ URL::route('topics.edit', $data->id) }}" class="button @if($data->status == 'unstock') disabled @endif">编辑</a>
+                            <a href="@if($data->status == 'unstock')javascript:;@else{{ URL::route('topics.edit', $data->id) }}@endif" class="button @if($data->status == 'unstock') disabled @endif">编辑</a>
                             @endif
                             @if(Sentry::getUser()->hasAccess('topics.delete'))
-                            <a href="javascript:;" class="button red-button jq-delete @if($data->status == 'stock') disabled @endif" data-url="{{ URL::route('topics.delete', $data->id) }}">删除</a>
+                            <a href="javascript:;" class="button red-button @if($data->status == 'stock') disabled @else jq-delete @endif" data-url="{{ URL::route('topics.delete', $data->id) }}">删除</a>
                             @endif
                         </td>               
                     </tr>
