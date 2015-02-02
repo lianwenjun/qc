@@ -1,7 +1,7 @@
 <?php
 
 class Admin_TopicsController extends \Admin_BaseController {
-    
+   
     /**
      * 专题待发布编辑管理列表
      * GET /admin/topics/{type}
@@ -293,5 +293,5 @@ class Admin_TopicsController extends \Admin_BaseController {
 
         return Response::make('404 页面找不到', 404);
     }
-
+    
 }
