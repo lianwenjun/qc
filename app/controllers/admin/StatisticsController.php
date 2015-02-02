@@ -56,6 +56,8 @@ class Admin_StatisticsController extends Admin_BaseController
             `imei` varchar(200) DEFAULT NULL,
             `device` varchar(200) DEFAULT NULL,
             `status` varchar(20) DEFAULT NULL,
+            `client_version` varchar(50) DEFAULT NULL,
+            `channel` varchar(64) DEFAULT NULL,
             `created_at` timestamp NULL DEFAULT NULL,
             PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8");
@@ -63,7 +65,7 @@ class Admin_StatisticsController extends Admin_BaseController
         DB::connection('logs')->statement("insert into qc.{$tableName}
             select null, app_id, a.title, (select GROUP_CONCAT(title) from qc.cats
             where id in (select cat_id from qc.app_cats where app_id = log.app_id and parent_id = 0))
-            as cats, ac.imei, ac.type, log.status, log.created_at from gZF7H as log
+            as cats, ac.imei, ac.type, log.status, log.client_version, log.channel, log.created_at from zPsmZ as log
             left join qc.apps a on (a.id = `app_id`)
             left join qc.accounts ac on (ac.id = account_id)
             where log.created_at between '{$startDate}' and '{$endDate}'");
@@ -71,9 +73,9 @@ class Admin_StatisticsController extends Admin_BaseController
         $tmpData = DB::table($tableName)->get();
         $tmpData = CUtil::object2Array($tmpData);
 
-        foreach ($tmpData as $key => $value) {
+        /*foreach ($tmpData as $key => $value) {
             str_replace('\\,', '|', $value['cats']);
-        }
+        }*/
 
         Excel::create('下载统计', function($excel) use($tmpData)
         {
