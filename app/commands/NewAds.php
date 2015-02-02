@@ -8,7 +8,7 @@ class NewAds extends Command {
 
 	/**
 	 * The console command name.
-	 *
+     *
 	 * @var string
 	 */
 	protected $name = 'newads';
@@ -72,12 +72,12 @@ class NewAds extends Command {
 	}
 
 	/**
-	* 清空数据表
-	*
-	* @param $table array or string 表名 可以为数组或字符串
-	*
-	* @return $result 返回被清空的表名
-	*/
+	 * 清空数据表
+	 *
+	 * @param $table array or string 表名 可以为数组或字符串
+	 *
+	 * @return $result 返回被清空的表名
+	 */
 	protected function truncateTable($table)
 	{
 		$result = '';
@@ -93,7 +93,7 @@ class NewAds extends Command {
 
 		return $result;
 	}
-	
+
 	/**
      * 数据入库 字段对比
      * 
