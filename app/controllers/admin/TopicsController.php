@@ -1,7 +1,7 @@
 <?php
 
 class Admin_TopicsController extends \Admin_BaseController {
-
+    
 	/**
 	 * 专题待发布编辑管理列表
 	 * GET /admin/topics/{type}
@@ -21,7 +21,7 @@ class Admin_TopicsController extends \Admin_BaseController {
 			return view::make('evolve.topics.dptopics')
 			   ->withDatas($datas)
 			   ->with('statusLang', $statusLang);
-
+               
 		if ($type == 'sutopics')
 			return view::make('evolve.topics.sutopics')
                ->withDatas($datas)
