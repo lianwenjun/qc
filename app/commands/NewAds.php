@@ -18,7 +18,7 @@ class NewAds extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = '';
+	protected $description = '将ads_bak表的数据重新导入到新的ads表中';
 
 	/**
 	 * Create a new command instance.
@@ -65,11 +65,10 @@ class NewAds extends Command {
 	 */
 	public function fire()
 	{
-		$this->info("=================== 开始导入数据、字段新增   ！ ====================");
-		$this->truncateTable('ads');
+		$this->info("=================== 开始清空数据、导入数据、字段新增！ ====================");
+		echo $this->truncateTable('ads');
 		$this->createNewAds();
 		$this->info("=================== 新的ads表数据导入成功啦！  ====================");
-
 	}
 
 	/**
@@ -85,52 +84,53 @@ class NewAds extends Command {
 		if (is_array($table)) {
 			foreach ($table as $value) {
 				DB::statement('truncate table '.$value);
-				$result = '清空'.$value.'表成功';
+				$result .= '清空'.$value."表成功!\n";
 			}
 		} else {
 			DB::statement('truncate table '.$table);
-			$result = '清空'.$table.'表成功';
+			$result = '清空'.$table."表成功!\n";
 		}
 
 		return $result;
 	}
-
+	
 	/**
      * 数据入库 字段对比
      * 
-     * @param $app obj 游戏数据
-     *
-     * @return obj game
+     * @return obj 
      */
-    public function createNewAds()
+    protected function createNewAds()
     {
         
-        $default = [ // 默认的
-        	'package' => '',
+        $default = [ 
+        	'package' => '', // 这个东西还要吗...
         	'status' => 'stock',
-        	'operator_id' => '0'
-            'operator' => '',
+        	'operator_id' => '0',
+            'operator' => ''
         ];
         
         $oldAds = DB::table('ads_bak')->get();
-        $newAds = Ads::all();
+        $newAds = new Ads;
+        foreach ($oldAds as $oldAd) {
+        	foreach ($this->data as $key => $value) {
+        		$newAds->$key = $oldAd->$value;   
+        	}
         
-        foreach ($this->data as $key => $value) {
-            $newAds->$key = $oldAds->$value;
-        }
-        
-        foreach ($this->dates as $key => $value) {
-            if ($oldAds->$value != Null)
-                $newAds->$key = strtotime($oldAds->$value);
-            else
-                $newAds->$key = $oldAds->$value;
+	        foreach ($this->dates as $key => $value) {
+	            if ($oldAd->$value != Null)
+	                $newAds->$key = strtotime($oldAd->$value);
+	            else
+	                $newAds->$key = $oldAd->$value;
+	        }
+
+	        foreach ($default as $key => $value) {
+	            $newAds->$key = $value;
+	        }
+
+	        return $newAds->save();
         }
 
-        foreach ($default as $key => $value) {
-            $newAds->$key = $value;
-        }
         
-        return $newAds->save();
     }
 
 	/**
