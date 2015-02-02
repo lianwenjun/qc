@@ -65,7 +65,7 @@ class Admin_StatisticsController extends Admin_BaseController
         DB::connection('logs')->statement("insert into qc.{$tableName}
             select null, app_id, a.title, (select GROUP_CONCAT(title) from qc.cats
             where id in (select cat_id from qc.app_cats where app_id = log.app_id and parent_id = 0))
-            as cats, ac.imei, ac.type, log.status, log.client_version, log.channel, log.created_at from zPsmZ as log
+            as cats, ac.imei, ac.type, log.status, log.client_version, log.channel, log.created_at from gZF7H as log
             left join qc.apps a on (a.id = `app_id`)
             left join qc.accounts ac on (ac.id = account_id)
             where log.created_at between '{$startDate}' and '{$endDate}'");
