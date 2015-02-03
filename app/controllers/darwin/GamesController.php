@@ -2,7 +2,7 @@
 
 class Darwin_GamesController extends \Darwin_BaseController {
 
-	/**
+    /**
      * 获得游戏基础数据
      * @param $game obj 游戏对象
      *
@@ -91,37 +91,37 @@ class Darwin_GamesController extends \Darwin_BaseController {
         return $this->result(['data' => $data]);
     }
 
-	/**
-	 * 第一次启动应用弹出精选必玩
-	 * GET /darwin/games/chice
-	 *
-	 * @return Response
-	 */
-	public function choice()
-	{
-		$ads = Ads::whereLocation('banner_slide')
-			->take('9')
-			->orderBy('sort','asc')
-			->get();
-		$gameIds = [];
+    /**
+     * 第一次启动应用弹出精选必玩
+     * GET /darwin/games/chice
+     *
+     * @return Response
+     */
+    public function choice()
+    {
+        $ads = Ads::whereLocation('banner_slide')
+            ->take('9')
+            ->orderBy('sort','asc')
+            ->get();
+        $gameIds = [];
 
-		foreach ($ads as $ad) {
-			$gameIds[] = $ad->game_id;
-		}
+        foreach ($ads as $ad) {
+            $gameIds[] = $ad->game_id;
+        }
 
-		$games = GameStocks::whereIn('id', $gameIds)->get();
-		$data = [];
-		foreach ($games as $game) {
-			$data = $this->getBaseInfo($game);
-		}
+        $games = GameStocks::whereIn('id', $gameIds)->get();
+        $data = [];
+        foreach ($games as $game) {
+            $data = $this->getBaseInfo($game);
+        }
         
         if (! $data) {
             return $this->result(['status' => 200, 'message' => '还没有数据']);
         }
-		
-		return $this->result(['data' => $data]);
+        
+        return $this->result(['data' => $data]);
 
-	}
-	
+    }
+    
 
 }
