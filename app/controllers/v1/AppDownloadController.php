@@ -41,6 +41,11 @@ class V1_AppDownloadController extends \V1_BaseController {
         $account = (new Api_Accounts)->ofCreate();
         
         $data['account_id'] = $account->id;
+
+        // -----add by RavenLee-----
+        $data['client_version'] = Input::get('client_version', '1.2-');
+        // -----add end-----
+
         $model = new Api_AppDownloadLogs();
         foreach ($data as $key => $value) {
             $model->$key = $value;
@@ -74,6 +79,11 @@ class V1_AppDownloadController extends \V1_BaseController {
         $account = (new Api_Accounts)->ofCreate($imei);
         
         $data['account_id'] = $account->id;
+
+        // -----add by RavenLee-----
+        $data['client_version'] = Input::get('client_version', '1.2-');
+        // -----add end-----
+
         $model = new Api_AppDownloadLogs();
         foreach ($data as $key => $value) {
             $model->$key = $value;
@@ -110,6 +120,10 @@ class V1_AppDownloadController extends \V1_BaseController {
         
         $account = (new Api_Accounts)->ofCreate();
         $data['account_id'] = $account->id;
+
+        // -----add by RavenLee-----
+        $data['client_version'] = Input::get('client_version', '1.2-');
+        // -----add end-----
         
         $table = Config::get('db_downloadlogs.table');
         $model = new Api_AppDownloadLogs($table);

@@ -333,3 +333,9 @@ Route::group(['prefix' => 'darwin'], function()
     Route::get('games/{id}', ['uses' => 'Darwin_GameController@getInfoById'])->where('id', '[0-9]+');
     Route::get('games/{package}', ['uses' => 'Darwin_GameController@getInfoByPackage'])->where('id', '[0-9a-z.]+');
 });
+
+// 第三方数据接口
+Route::group(['prefix' => 'tp'], function()
+{
+    Route::get('game', ['uses' => 'Tp_ApiController@getGameInfo']);
+});

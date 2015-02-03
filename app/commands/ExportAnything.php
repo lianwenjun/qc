@@ -43,6 +43,11 @@ class ExportAnything extends Command
         $this->$func();
     }
 
+    /**
+     * 导出上架列表中，游戏分类为空或者游戏标签为空的数据
+     * 字段包括：游戏id、游戏名称、游戏包名
+     *
+     */
     public function stockWithOutCat()
     {
         Excel::create('stock-without-cat', function($excel)
@@ -71,5 +76,29 @@ class ExportAnything extends Command
                         });
             });
         })->store('csv', '/var/data');
+    }
+
+    /**
+     * 导出上架列表中的游戏
+     * 字段包括：游戏id、游戏名称、游戏包名
+     *
+     */
+    public function stock()
+    {
+        Excel::create('stock-'.time(), function($excel)
+        {
+            $excel->sheet('sheet1', function($sheet)
+            {
+                Apps::select('id', 'title', 'pack')
+                    ->where('status', 'stock')
+                    ->chunk(1000, function($data) use($sheet)
+                      {
+                            foreach ($data as $key => $value) {
+                                $this->info("Adding id:{$value->id}, title:{$value->title}, pack:{$value->pack}");
+                                $sheet->appendRow(json_decode(json_encode($value), true));
+                            }
+                      });
+            });
+        })->store('csv', '/var/www/qc/public');
     }
 }
