@@ -26,26 +26,15 @@
 @stop
 
 @section('content')
-<div class="content"> 
-    <form action="#" method="post" class="validate jq-search">
+<div class="content">
+    @if (Session::get('success'))
+        <p class="alert alert-danger">{{ Session::get('success') }}</p>
+    @endif
+    <form class="validate jq-search">
         <!-- 查询-->
         <div class="search">
             <p>查询:
-                <select class="select" name="gametype">
-                    <option value="">全部</option>
-                    <option value="">角色扮演</option>
-                    <option value="">休闲益智</option>
-                    <option value="">射击游戏</option>
-                    <option value="">冒险游戏</option>
-                    <option value="">动作游戏</option>
-                    <option value="">策略游戏</option>
-                    <option value="">实时策略</option>
-                    <option value="">格斗游戏</option>
-                    <option value="">竞速游戏</option>
-                    <option value="">体育游戏</option>
-                    <option value="">单机游戏</option>
-                    <option value="">棋牌游戏</option>
-                </select>
+                {{ Form::select('gametype', $cats, '', ['class' => 'select']) }}
                 <input class="input" type="text" name="keyword" />
             </p>
             <div class="jq-date date">日期:
@@ -80,26 +69,26 @@
             @forelse($games as $game)
                 <tr>
                     <td>{{ $game->id }}</td>
-                    <td><img src="../images/pages/icon2.jpg" alt="图标1" class="icon25" /></td>
-                    <td><a href="javascript:;" class="link-blue elimit6em jq-download" title="会说话的汤姆猫" data-url="">会说话的汤姆猫</a></td>
-                    <td>巨象互动</td>
-                    <td>UC九游</td>
-                    <td><span class="elimit12em cursor" title="1234567890adcvbnmawertgyu0000000">1234567890adcvbnmawertgyu0000000</span></td>
-                    <td><span class="elimit6em cursor" title="策略游戏,休闲游戏">策略游戏,休闲游戏</span></td>
-                    <td>180.5M</td>
-                    <td>4.4.3</td>
-                    <td class="link-blue jq-preview">预览</td>
-                    <td>吸毒欧阳顺</td>
-                    <td>吸毒欧阳顺</td>
-                    <td><span class="elimit7em cursor" title="2014-09-03 19:09">2014-09-03 19:09</span></td>
+                    <td><img src="{{ $game->icon }}" alt="图标1" class="icon25" /></td>
+                    <td><a href="javascript:;" class="link-blue elimit6em jq-download" title="{{ $game->title }}" data-url="{{ $game->download_link }}">{{ $game->title }}</a></td>
+                    <td>{{ $game->author }}</td>
+                    <td>{{ $game->vendor }}</td>
+                    <td><span class="elimit12em cursor" title="{{ $game->package }}">{{ $game->package }}</span></td>
+                    <td><span class="elimit6em cursor" title="{{ $game->cat }}">{{ $game->cat }}</span></td>
+                    <td>{{ Helper::friendlySize($game->size) }}</td>
+                    <td>{{ $game->version }}</td>
+                    <td class="link-blue jq-preview" data-url="">预览</td>
+                    <td>{{ $game->creator }}</td>
+                    <td>{{ $game->operator }}</td>
+                    <td><span class="elimit7em cursor" title="{{ Helper::friendlyDate($game->stocked_at) }}">{{ Helper::friendlyDate($game->stocked_at) }}</span></td>
                     <td>
-                        <a href="javascript:;" class="button jq-pass" data-url="">通过</a>
-                        <a href="javascript:;" class="button jq-notpass" data-url="">不通过</a>
+                        <a href="javascript:;" class="button jq-pass" data-url="{{ route('game.pending.pass', $game->id) }}">通过</a>
+                        <a href="javascript:;" class="button jq-notpass" data-url="{{ route('game.pending.notpass', $game->id) }}">不通过</a>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="13">没找到数据</td>
+                    <td colspan="14">没找到数据</td>
                 </tr>
             @endforelse
         </tbody>
@@ -179,7 +168,8 @@
         <input class="input w250 jq-insertReason" type="text" value="" placeholder="请输入原因......" />
     </p>
     <form action="" method="post" class="jq-notpassForm validate validate-em">
-        <input class="jq-reason" type="hidden" value="" name="notpass-reason" />
+        <input type="hidden" name="_method" value="PUT" />
+        <input class="jq-reason" type="hidden" value="" name="reason" />
     </form>
 </div>   
 <!-- /不通过弹窗 -->

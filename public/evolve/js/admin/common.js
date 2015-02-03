@@ -75,7 +75,7 @@ $(function(){
                     if (fn == ''){
                         window.location.href = selector.data('url');  
                     } else {
-                        fn();
+                        fn(selector);
                     }         
                     alertdiv.dialog("close");
                 },
@@ -102,17 +102,35 @@ $(function(){
             }).append('<input type="hidden" name="_method" value="PUT" />'));
             $(f).submit();
         };         
-        alertDialog($(this), "确定要下架吗？", unstock($(this)));               
+        alertDialog($(this), "确定要下架吗？", unstock);               
     });
 
     // 删除弹窗
-    $('.jq-delete').click(function() {         
-        alertDialog($(this), "确定要删除吗？", '');               
+    $('.jq-delete').click(function() {
+        var delGame = function(obj){
+            var url = obj.attr('data-url');
+            var f = document.createElement('form');
+            obj.after($(f).attr({
+                method: 'post',
+                action: url
+            }).append('<input type="hidden" name="_method" value="DELETE" />'));
+            $(f).submit();
+        };     
+        alertDialog($(this), "确定要删除吗？", delGame);               
     });
 
     // 通过弹窗
-    $('.jq-pass').click(function() {         
-        alertDialog($(this), "确定要通过吗？", '');               
+    $('.jq-pass').click(function() {
+        var pass = function(obj){
+            var url = obj.attr('data-url');
+            var f = document.createElement('form');
+            obj.after($(f).attr({
+                method: 'post',
+                action: url
+            }).append('<input type="hidden" name="_method" value="PUT" />'));
+            $(f).submit();
+        };         
+        alertDialog($(this), "确定要通过吗？", pass);               
     });
    
 

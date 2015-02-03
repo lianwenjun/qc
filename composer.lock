@@ -1880,12 +1880,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/davejamesmiller/laravel-breadcrumbs.git",
-                "reference": "e8c9df70b4f545141166dcaa78803c125c7b85d0"
+                "reference": "a6c9e6f5bc7e1872b7bf6d0cfaf993e370865162"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/davejamesmiller/laravel-breadcrumbs/zipball/e8c9df70b4f545141166dcaa78803c125c7b85d0",
-                "reference": "e8c9df70b4f545141166dcaa78803c125c7b85d0",
+                "url": "https://api.github.com/repos/davejamesmiller/laravel-breadcrumbs/zipball/a6c9e6f5bc7e1872b7bf6d0cfaf993e370865162",
+                "reference": "a6c9e6f5bc7e1872b7bf6d0cfaf993e370865162",
                 "shasum": ""
             },
             "require": {
@@ -1920,7 +1920,7 @@
             "keywords": [
                 "laravel"
             ],
-            "time": "2015-01-27 21:15:47"
+            "time": "2015-02-01 00:39:14"
         },
         {
             "name": "doctrine/instantiator",
@@ -2362,16 +2362,16 @@
         },
         {
             "name": "maatwebsite/excel",
-            "version": "v1.2.3",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maatwebsite/Laravel-Excel.git",
-                "reference": "331792997e21cc37e027abd10e5d988a624f4569"
+                "reference": "b108babda9f0375b5deb9abbd2252044b84a0ddd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/331792997e21cc37e027abd10e5d988a624f4569",
-                "reference": "331792997e21cc37e027abd10e5d988a624f4569",
+                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/b108babda9f0375b5deb9abbd2252044b84a0ddd",
+                "reference": "b108babda9f0375b5deb9abbd2252044b84a0ddd",
                 "shasum": ""
             },
             "require": {
@@ -2425,7 +2425,7 @@
                 "import",
                 "laravel"
             ],
-            "time": "2014-12-16 21:01:32"
+            "time": "2015-01-30 15:39:03"
         },
         {
             "name": "mews/captcha",

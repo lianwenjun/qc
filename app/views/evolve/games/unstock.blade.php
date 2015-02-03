@@ -23,27 +23,9 @@
         <!-- 查询-->
         <div class="search">
             <p>查询:
-                <select class="select" name="gametype">
-                    <option value="">游戏分类 </option>
-                    <option value="">格斗游戏</option>
-                    <option value="">动作游戏</option>
-                    <option value="">策略卡牌</option>
-                    <option value="">体育竞技</option>
-                </select>
-                <select class="select" name="gamename">
-                    <option value="">游戏名称</option>
-                    <option value="">游戏包名</option>
-                    <option value="">版本号</option>
-                </select>
+                {{ Form::select('gametype', $cats, '', ['class' => 'select']) }}
                 <input class="input" type="text" name="keyword" />
             </p>
-            <p>ID:
-                <input class="input w60" type="text" name="id" /></p>
-            <p>标签:
-                <input class="input" type="text" name="tag" /></p>                
-            <p>大小:
-                <input class="input w60 jq-sizeStart" type="text" placeholder="0K" name="size[]" />—<input class="input w60 jq-sizeEnd" type="text" placeholder="10M" name="size[]" />
-            </p>  
             <div class="jq-date date">日期:
                 <input class="input" type="text" name="date[]" placeholder="2014.10.10—2014.11.11" /><div class="date-table"></div>   
             </div> 

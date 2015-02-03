@@ -43,7 +43,7 @@ $(function(){
 
             $.ajax({
                 type: "GET", // 此处应用POST
-                url: "/evolve-ui/js/pages/others/signin.json",
+                url: "../evolve-ui/js/pages/others/signin.json",
                 dataType: "json",
                 data: { "old-password": oldPwd, "new-password": newPwd, "_method": "PUT" },
                 success: function(data)

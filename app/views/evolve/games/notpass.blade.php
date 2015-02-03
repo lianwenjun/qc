@@ -18,32 +18,21 @@
 @stop
 
 @section('content')
-<div class="content"> 
-    <form action="#" method="post" class="validate jq-search">
+<div class="content">
+    @if (Session::get('success'))
+        <p class="alert alert-danger">{{ Session::get('success') }}</p>
+    @endif
+    <form class="validate jq-search">
         <!-- 查询-->
         <div class="search">
             <p>查询:
-                <select class="select" name="gametype">
-                    <option value="">全部</option>
-                    <option value="">角色扮演</option>
-                    <option value="">休闲益智</option>
-                    <option value="">射击游戏</option>
-                    <option value="">冒险游戏</option>
-                    <option value="">动作游戏</option>
-                    <option value="">策略游戏</option>
-                    <option value="">实时策略</option>
-                    <option value="">格斗游戏</option>
-                    <option value="">竞速游戏</option>
-                    <option value="">体育游戏</option>
-                    <option value="">单机游戏</option>
-                    <option value="">棋牌游戏</option>
-                </select>
+                {{ Form::select('gametype', $cats, '', ['class' => 'select']) }}
                 <input class="input" type="text" name="keyword" />
             </p>
             <div class="jq-date date">日期:
                 <input class="input" type="text" name="date" placeholder="2014.10.10——2014.11.11" /><div class="date-table"></div>
             </div>
-            <input type="button" class="button" value="查询" />
+            <input type="submit" class="button" value="查询" />
         </div>
         <!-- /查询 -->
     </form>
@@ -68,7 +57,7 @@
             @forelse($games as $game)
                 <tr>
                     <td>{{ $game->id }}</td>
-                    <td><img src="{{ $game->id }}" alt="图标1" class="icon25" /></td>
+                    <td><img src="{{ $game->icon }}" alt="图标1" class="icon25" /></td>
                     <td><a href="javascript:;" class="link-blue elimit6em jq-download" title="{{ $game->title }}" data-url="{{ $game->download_link }}">{{ $game->title }}</a></td>
                     <td><span class="elimit12em cursor" title="{{ $game->package }}">{{ $game->package }}</span></td>
                     <td><span class="elimit6em cursor" title="{{ $game->cats }}">{{ $game->cats }}</span></td>
@@ -77,8 +66,8 @@
                     <td><span class="elimit7em cursor" title="{{ Helper::friendlyDate($game->checked_at) }}">{{ Helper::friendlyDate($game->checked_at) }}</span></td>
                     <td><span class="elimit12em cursor" title="{{ $game->reason }}">{{ $game->reason }}</span></td>
                     <td>
-                        <a href="edit.html" class="button">编辑</a>
-                        <a href="javascript:;" class="button red-button jq-delete" data-url="">删除</a>
+                        <a href="{{ route('game.process.edit', ['notpass', $game->id]) }}" class="button">编辑</a>
+                        <a href="javascript:;" class="button red-button jq-delete" data-url="{{ route('game.process.destroy', ['notpass', $game->id])}}">删除</a>
                     </td>
                 </tr>
             @empty

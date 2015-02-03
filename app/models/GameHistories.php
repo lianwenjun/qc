@@ -57,6 +57,7 @@ class GameHistories extends \EBase
         foreach ($fields as $key => $value) {
             $data[$key] = $game->value;
         }
+        $data['game_id'] = $game->id;
         $this->create($data);
     }
 }

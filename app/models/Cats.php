@@ -201,6 +201,23 @@ class Cats extends \Eloquent {
         return $apps;
     }
 
+
+    /**
+     * 输出查询选择FORM的分类
+     * 
+     * @param
+     *
+     * @return array
+     */
+    public function selectForm()
+    {
+        $cats = ['' => '所有分类'];
+        foreach ($this->allCats() as $cat) {
+            $cats[$cat->id] = $cat->title;
+        }
+
+        return $cats;
+    }
     
     // //过滤分类
     // public $catsRules = [

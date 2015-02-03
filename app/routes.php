@@ -46,6 +46,17 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('notpasses', ['as' => 'game.notpasses', 'uses' => 'Evolve_Game_ProcessController@notpasses']);
         Route::get('pendings', ['as' => 'game.pendings', 'uses' => 'Evolve_Game_ProcessController@pendings']);
         Route::get('drafts', ['as' => 'game.drafts', 'uses' => 'Evolve_Game_ProcessController@drafts']);
+        Route::delete('{type}/{id}', ['as' => 'game.process.destroy', 'uses' => 'Evolve_Game_ProcessController@destroy'])
+            ->where('type', 'draft|notpass');
+        Route::get('{type}/{id}/edit', ['as' => 'game.process.edit', 'uses' => 'Evolve_Game_ProcessController@edit'])
+            ->where('type', 'draft|notpass');
+        Route::put('pendings/{id}/pass', ['as' => 'game.pending.pass', 'uses' => 'Evolve_Game_ProcessController@pass']);
+        Route::put('pendings/{id}/notpass', ['as' => 'game.pending.notpass', 'uses' => 'Evolve_Game_ProcessController@notpass']);
+        
+        Route::post('icon', ['as' => 'game.icon', 'uses' => 'Evolve_Game_ProcessController@icon']);    
+        Route::post('screenshot', ['as' => 'game.screenshot', 'uses' => 'Evolve_Game_ProcessController@screenshot']);
+        Route::post('apk', ['as' => 'game.apk', 'uses' => 'Evolve_Game_ProcessController@apk']);
+        Route::post('{type}/{id}/apk', ['as' => 'game.apk.udpate', 'uses' => 'Evolve_Game_ProcessController@apkUpdate']);
     });
     
     // 游戏APP列表
@@ -313,4 +324,12 @@ Route::group(['prefix' => 'api'], function() //V1版本
     Route::post('game/feedback/add', ['uses' => 'V1_FeedbacksController@store']);
     
     //Route::get('/', ['uses' => 'V1_BaseController@result']);
+
+    Route::get('base', ['uses' => 'Darwir_']);
+});
+
+Route::group(['prefix' => 'darwin'], function()
+{
+    Route::get('games/{id}', ['uses' => 'Darwin_GameController@getInfoById'])->where('id', '[0-9]+');
+    Route::get('games/{package}', ['uses' => 'Darwin_GameController@getInfoByPackage'])->where('id', '[0-9a-z.]+');
 });
