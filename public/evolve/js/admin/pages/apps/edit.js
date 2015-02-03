@@ -11,19 +11,21 @@ $(function() {
                 $(this).dialog("close");
 
                 // 确认游戏分类
-                var hideSort = "";
+                var hideSort = ",";
                 var sort = "";
                 $(".jq-sortClick").each(function(){
                     if (this.checked == true) {
                         hideSort += this.value + ",";
                         sort += $(this).parent().text() + "，";
+                    } else {
+                        
                     }
-                    $(".jq-initGamesort").html(sort.substring(0, sort.length-1));
+                    $(".jq-initCate").html(sort.substring(0, sort.length-1));
                     $(".jq-gameCate").val(hideSort);
                 });
 
                 // 确认游戏标签
-                var hideTag = "";
+                var hideTag = ",";
                 var tag = "";
                 $(".jq-tagClick").each(function(){
                     if (this.checked == true) {
@@ -101,17 +103,17 @@ $(function() {
     }
 
 
-    // 游戏关键字（select2）
+/*    // 游戏关键字（select2）
     $('.jq-keyword').select2({
         tags: ["我叫MT online"],
         maximumInputLength: 10,
         tokenSeparators: [",", " "],
-    });
+    });*/
 
 
     // 富文本编辑
     var editor = new Simditor({
-      textarea: $('.jq-summary, .jq-features'),
+      textarea: $('.jq-intro, .jq-features'),
       toolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent'],
       pasteImage: true,
       defaultImage: 'images/image.png',
@@ -120,9 +122,12 @@ $(function() {
       }: false
     });
 
-
     var summary = $('.jq-summary').prev().find('.simditor-body').html();
-    $('.jq-summary').val(summary);
+    if (summary == '<p></br></p>'){
+        $('.jq-summary').val('');
+    } else {
+        $('.jq-summary').val(summary);
+    }
 
 
 
@@ -136,14 +141,7 @@ $(function() {
     $(".jq-picDelete").on('click', function() {
         $(this).parent().fadeOut('500', function(){ $(this).remove(); });
     });
-
-
-    // 上传apk图标鼠标划过显示
-    $(".jq-apkIcon").hover(function() {
-        $('.add-icon').show();
-    }, function() {
-        $('.add-icon').hide();
-    });
+    
 
     
     // 截图预览图片上传
@@ -176,69 +174,23 @@ $(function() {
     picUpload.bind('FileUploaded',function(uploader, files, object){
         $.tmpl('imgTemplate', object.response).appendTo(".jq-sortable");
     });
-
-
-    // apk文件上传
-    var apkUpload = new plupload.Uploader({
-        runtimes: 'html5',
-        browse_button : 'apkUpload',
-        chunk_size: '1mb',
-        url : '/evolve-ui/js/pages/others/signin.json',
-        flash_swf_url : '../../plugins/plupload/Moxie.swf',
-        filters : {
-            max_file_size : '2048mb',
-            mime_types: [
-                {title : "apk files", extensions : "apk"}
-            ]
-        }
+    $(".jq-uploadIcon").click(function() {
+        $.ajax({
+            type: "GET", // 此处应用POST
+            url: "/js/pages/apps/edit.json",
+            dataType: "json",
+            success: function (data) {
+                if ( data.success == "true" ) {
+                    $(".upload-icon").attr("src", data.data.img)
+                } else {
+                    alert(data.msg);
+                }
+            },
+            error: function() {
+                alert("加载数据错误！");
+            }
+        });
     });
-
-    apkUpload.init(); //初始化
-
-    apkUpload.bind('FilesAdded',function(uploader, files){
-        apkUpload.start(); //开始上传
-        
-    });
-
-    apkUpload.bind('FileUploaded',function(uploader, files, object){
-        var response;
-        for(i in object.response.data){
-            var datas = object.response.data;
-            $('.jq-apkName').text(datas.title);
-            $('.jq-apkBag').text(datas.package);
-            $('.jq-apkSize').text(datas.size);
-            $('.jq-apkVersion').text(datas.version);
-            $('.jq-apkDate').text(datas['created_at']);
-            $('.jq-apkIcon').attr('src', datas.icon);
-        }     
-    });
-
-
-    // apk图标上传
-    var iconUpload = new plupload.Uploader({
-        runtimes: 'html5',
-        browse_button : 'iconUpload',
-        chunk_size: '1mb',
-        url : '/evolve-ui/js/pages/others/signin.json',
-        flash_swf_url : '../../plugins/plupload/Moxie.swf',
-        filters : {
-            max_file_size : '2mb',
-            mime_types: [
-                {title : "Image files", extensions : "jpg,gif,png"}
-            ]
-        }
-    });
-
-    iconUpload.init(); //初始化
-
-    iconUpload.bind('FilesAdded',function(uploader, files){
-        iconUpload.start(); //开始上传
-    });
-
-    iconUpload.bind('FileUploaded',function(uploader, files, object){
-        $('.jq-apkIcon').attr('src', object.response.icon);
-    });
-
 
 
     // 截图预览图片张数必须在1-6之间
@@ -249,6 +201,36 @@ $(function() {
     jQuery.validator.addMethod("maxImages", function(value, element) {
         return $('input[name="images[]"]').length < 7;
     }, "图片必须少于6张！");
+
+    // 游戏分类验证
+    jQuery.validator.addMethod("checkCate", function(value, element) {
+        var val = $(".jq-gameCate").val();
+        if (val == "," || val == "") {
+            return false;
+        } else {
+            return true;
+        }
+    }, "游戏分类为必填！");
+
+    // 游戏标签验证
+    jQuery.validator.addMethod("checkTag", function(value, element) {
+        var val = $(".jq-gameTag").val();
+        if (val == "," || val == "") {
+            return false;
+        } else {
+            return true;
+        }
+    }, "游戏标签为必填！");
+
+    // 游戏介绍验证
+    jQuery.validator.addMethod("simditor", function(value, element) {
+        summary = editor.getValue();
+        if (summary == "") {
+            return false;
+        } else {
+            return true;
+        }
+    }, "游戏介绍为必填！");
 
 
     // 表单验证
@@ -261,7 +243,10 @@ $(function() {
             author: 'required',
             supplier: "required",
             "os_version": 'required',
-            summary: 'required',
+            summary: {
+                required: true,
+                simditor: true
+            },
             "images[]":{ 
                 minImages: true,
                 maxImages: true    
@@ -274,7 +259,10 @@ $(function() {
             author: { required: '游戏作者为必填！' },
             supplier: { required: '供应商为必选！' },
             "os_version": { required: '系统要求为必选！' },
-            summary: { required: '游戏介绍为必填！' }
+            summary: {
+                required: '游戏介绍为必填！',
+                simditor: '游戏介绍为必填！'
+            }
         },
         errorPlacement: function(error, element) { 
             error.appendTo(element.closest('td')); 
@@ -285,7 +273,6 @@ $(function() {
             form.submit();
         }
     });
-
 
 
 });

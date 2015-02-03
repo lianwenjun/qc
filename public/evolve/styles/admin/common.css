@@ -211,6 +211,12 @@ a { color: #333; }
 .gametag { height: 25px; line-height: 25px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; background: linear-gradient(to bottom, #F4F4F4 20%, #F0F0F0 50%, #E8E8E8 52%, #EEE 100%); border: 1px solid #999; padding: 0 5px 0 8px; margin: 2px; display: inline-block; }
 .gametag span { width: 15px; height: 25px; line-height: 25px; display: inline-block; text-align: center; cursor: pointer; }
 
+.add-icon, .add-img { text-align: center; background: rgba(255, 255, 255, 0.8); font-size: 1.2em; display: none; position: absolute; left: 0; top: 0; }
+
+.add-icon { height: 90px; line-height: 90px; width: 90px; }
+
+.add-img { height: 120px; line-height: 120px; width: 230px; }
+
 /* 礼包内容 */
 .gift-content, .gift-content label, .gift-content .progress { display: inline-block; }
 

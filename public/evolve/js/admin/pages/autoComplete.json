@@ -1,0 +1,20 @@
+{
+    "success" : "true",
+    "msg" : "成功",
+    "query": "Unit",
+    "data": 
+    {
+        "query": "Unit",
+        "suggestions": 
+        [
+            {"key": "111", "value": "efdasf"},
+            {"key": "222", "value": "fdxzcvf"},
+            {"key": "333", "value": "ergf"},
+            {"key": "444", "value": "zxgtj"},
+            {"key": "555", "value": "wrfrgs"},
+            {"key": "666", "value": "xghuj"}
+        ]
+    } 
+}
+
+

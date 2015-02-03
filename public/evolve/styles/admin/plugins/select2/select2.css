@@ -559,7 +559,7 @@ html[dir="rtl"] .select2-container-multi .select2-choices li
 }
 
 .select2-container-multi .select2-choices .select2-search-choice {
-    padding: 3px 18px 3px 5px;
+    padding: 3px 5px 3px 18px;
     margin: 3px 0 3px 5px;
     position: relative;
 
@@ -618,7 +618,7 @@ html[dir="rtl"] .select2-search-choice-close {
 }
 
 .select2-container-multi .select2-search-choice-close {
-    right: 3px;
+    left: 3px;
 }
 
 html[dir="rtl"] .select2-container-multi .select2-search-choice-close {

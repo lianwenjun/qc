@@ -25,11 +25,7 @@
                         'apps.draft',
                         'apps.pending',
                         'apps.notpass',
-                        'apps.unstock',
-                        'cats.index',
-                        'tags.index',
-                        'gamecattags.index',
-                        'topics.index'
+                        'apps.unstock'
                     ]
                 )
             )
@@ -54,25 +50,54 @@
                 </ul>
             </li>
             @endif
+            @if(
+                Sentry::getUser()->hasAnyAccess(
+                    [
+                        'edittopics.index',
+                        'stocktopics.index',
+                        'banners.index',
+                        'ads.apps.index',
+                        'ads.ranks.index',
+                        'ads.choice.index',
+                    ]
+                )
+            )
             <li class="nested-li">
                 <h3>广告位管理</h3>
                 <ul>
-                    <li><a href="../ads/frontendpics.html">首页图片位管理</a></li>
-                    <li><a href="../ads/frontendgame.html">首页游戏位管理</a></li>
-                    <li><a href="../ads/banner.html">banner图片管理</a></li>
-                    @if(Sentry::getUser()->hasAccess('tags.index')) 
-                    <li><a href="{{ URL::route('topics.index', 'dptopics') }}">专题编辑管理</a></li>
+                    @if(Sentry::getUser()->hasAccess('banners.index')) 
+                    <li><a href="{{ URL::route('banners.index') }}">首页图片位管理</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('ads.apps.index'))  
+                    <li><a href="{{ URL::route('ads.apps.index') }}">首页游戏位管理</a></li>
+                    @endif
+                    @if(Sentry::getUser()->hasAccess('edittopics.index')) 
+                    <li><a href="{{ URL::route('edittopics.index') }}">专题编辑管理</a></li>
                     @endif  
-                    @if(Sentry::getUser()->hasAccess('tags.index')) 
-                    <li><a href="{{ URL::route('topics.index', 'sutopics') }}">上架专题管理</a></li>
+                    @if(Sentry::getUser()->hasAccess('stocktopics.index')) 
+                    <li><a href="{{ URL::route('stocktopics.index') }}">上架专题管理</a></li>
                     @endif 
-                    <li><a href="../ads/rank.html">排行游戏位管理</a></li>
+                    @if(Sentry::getUser()->hasAccess('ads.ranks.index'))  
+                    <li><a href="{{ URL::route('ads.ranks.index') }}">排行游戏位管理</a></li>
+                    @endif 
                     <li><a href="../ads/sort.html">分类页图片管理</a></li>
-                    <li><a href="../ads/gift.html">礼包广告位管理</a></li>
-                    <li><a href="../ads/select.html">精选必玩管理</a></li>
-                    <li><a href="../ads/launch.html">启动页管理</a></li>
+                    <!-- <li><a href="../ads/gift.html">礼包广告位管理</a></li> -->
+                    @if(Sentry::getUser()->hasAccess('ads.choice.index'))
+                    <li><a href="{{ URL::route('ads.choice.index') }}">精选必玩管理</a></li>
+                    @endif 
+                    <!-- <li><a href="../ads/launch.html">启动页管理</a></li> -->
                 </ul>
             </li>
+            @endif
+            @if(
+                Sentry::getUser()->hasAnyAccess(
+                    [
+                        'cats.index',
+                        'tags.index',
+                        'gamecattags.index',
+                    ]
+                )
+            )
             <li class="nested-li">
                 <h3>系统管理</h3>
                 <ul>
@@ -92,6 +117,7 @@
                     <li><a href="../system/version.html">版本管理</a></li>
                 </ul>
             </li>
+            @endif
             <li class="nested-li">
                 <h3>评论管理</h3>
                 <ul>
