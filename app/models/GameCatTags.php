@@ -46,8 +46,11 @@ class GameCatTags extends \Eloquent {
     {
         $conditions = ['id', 'cat_id', 'tag_id', 'operator_id', 'operator'];
 
-        return GameCatTags::select($conditions)->orderBy('id', 'desc')->paginate($pageSize);
+        return GameCatTags::select($conditions)->orderBy('id', 'desc')
+                                               ->where('game_id', '0')
+                                               ->paginate($pageSize);
     }
+
     /**
     * 查询相应分类的标签ids
     *

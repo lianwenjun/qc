@@ -387,24 +387,11 @@ Route::group(['prefix' => 'api'], function() //V1版本
 
 Route::group(['prefix' => 'darwin'], function()
 {
-    Route::get('games/{id}', ['uses' => 'Darwin_GameController@getInfoById'])->where('id', '[0-9]+');
-    Route::get('games/{package}', ['uses' => 'Darwin_GameController@getInfoByPackage'])->where('id', '[0-9a-z.]+');
-});
-
-// 第三方数据接口
-Route::group(['prefix' => 'tp'], function()
-{
-    Route::get('game', ['uses' => 'Tp_ApiController@getGameInfo']);
-});
-
-
-Route::group(['prefix' => 'darwin'], function() // darwin版本
-{   
-    Route::group(['prefix' => 'games'], function() {
-        Route::get('/choice', ['uses' => 'Darwin_GamesController@choice']);// 第一次启动应用弹出精选必玩!
-        Route::get('/rank', ['uses' => 'Darwin_GamesController@ranks']);// 游戏排行
-    });
-
+    Route::get('games/choice', ['uses' => 'Darwin_GamesController@choice']);// 第一次启动应用弹出精选必玩!
+    Route::get('games/rank', ['uses' => 'Darwin_GamesController@ranks']);// 游戏排行
+    Route::get('games/{id}', ['uses' => 'Darwin_GamesController@getInfoById'])->where('id', '[0-9]+');
+    Route::get('games/{package}', ['uses' => 'Darwin_GamesController@getInfoByPackage'])->where('id', '[0-9a-z.]+');
+    
     Route::group(['prefix' => 'cats'], function() {
         Route::get('/', ['uses' => 'Darwin_CatsController@catIndex']);// 游戏分类
         Route::get('/{cat_id}', ['uses' => 'Darwin_CatsController@cats']);// 分类的游戏列表
@@ -421,3 +408,11 @@ Route::group(['prefix' => 'darwin'], function() // darwin版本
         Route::get('/{id}', ['uses' => 'Darwin_TopicsController@topics']);// 专题列表游戏
     });
 });
+
+// 第三方数据接口
+Route::group(['prefix' => 'tp'], function()
+{
+    Route::get('game', ['uses' => 'Tp_ApiController@getGameInfo']);
+});
+
+

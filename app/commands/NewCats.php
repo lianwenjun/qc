@@ -44,7 +44,6 @@ class NewCats extends Command {
      */
     public function fire()
     {
-        
         if (Schema::hasTable('cats_bak'))
         {   
             $this->info("=================== 开始导入数据  ====================");
@@ -56,12 +55,10 @@ class NewCats extends Command {
             DB::statement('truncate table game_cat_tags');
             echo "game_cat_tags表清空\n";
 
-        
             // 获取老版本数据
             $cats = DB::select('select id,title,sort,created_at,updated_at,deleted_at from cats_bak where parent_id = 0');
             $tags = DB::select('select id,title,sort,parent_id,created_at,updated_at,deleted_at from cats_bak where parent_id > 0');
-
-            
+           
             // 导入cats新表数据
             if (! empty($cats)) {
                 // 新表cats有个新字段position,这里默认定义为hotcats;

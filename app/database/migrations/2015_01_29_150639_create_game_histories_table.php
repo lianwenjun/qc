@@ -37,6 +37,7 @@ class CreateGameHistoriesTable extends Migration {
             $table->string('operator', 256)->comment('修改人');
             $table->string('reason', 256)->comment('审核原因');
             $table->string('cats', 256)->comment('类');
+            // $table->text('review')->comment('小编点评');
             $table->text('tags')->comment('标签');
             $table->text('keywords')->comment('关键词');
             $table->decimal('rate', 3, 2)->comment('评分');
