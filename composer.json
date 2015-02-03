@@ -16,7 +16,8 @@
         "codeception/codeception": "*",
         "bankdev/logviewer": "dev-master",
         "regulus/activity-log": "0.3.0",
-        "maatwebsite/excel": "1.*"
+        "maatwebsite/excel": "1.*",
+        "fabpot/goutte": "~2.0"
     },
     "autoload": {
         "classmap": [
@@ -25,7 +26,8 @@
             "app/models",
             "app/database/migrations",
             "app/database/seeds",
-            "app/tests/TestCase.php"
+            "app/tests/TestCase.php",
+            "app/classes"
         ]
     },
     "scripts": {
