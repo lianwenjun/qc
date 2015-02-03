@@ -375,3 +375,28 @@ Route::group(['prefix' => 'api'], function() //V1版本
     
     //Route::get('/', ['uses' => 'V1_BaseController@result']);
 });
+
+
+Route::group(['prefix' => 'darwin'], function() // darwin版本
+{   
+    Route::group(['prefix' => 'games'], function() {
+        Route::get('/choice', ['uses' => 'Darwin_GamesController@choice']);// 第一次启动应用弹出精选必玩!
+        Route::get('/rank', ['uses' => 'Darwin_GamesController@ranks']);// 游戏排行
+    });
+
+    Route::group(['prefix' => 'cats'], function() {
+        Route::get('/', ['uses' => 'Darwin_CatsController@catIndex']);// 游戏分类
+        Route::get('/{cat_id}', ['uses' => 'Darwin_CatsController@cats']);// 分类的游戏列表
+    });
+
+    Route::group(['prefix' => 'tags'], function() {
+        Route::get('/{tags_id}', ['uses' => 'Darwin_CatsController@tags']);// 标签游戏列表
+        Route::get('/hot', ['uses' => 'Darwin_CatsController@hotTags']);// 本周热门标签
+    });
+
+    Route::group(['prefix' => 'topics'], function() {
+        Route::get('/', ['uses' => 'Darwin_TopicsController@oldTopics']);// 专题往期列表
+        Route::get('/banner', ['uses' => 'Darwin_TopicsController@topicsBanner']);// 专题列表推广图[最新专题]
+        Route::get('/{id}', ['uses' => 'Darwin_TopicsController@topics']);// 专题列表游戏
+    });
+});

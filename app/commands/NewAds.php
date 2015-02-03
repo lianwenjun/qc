@@ -40,8 +40,7 @@ class NewAds extends Command {
         'title' => 'title',
         'image' => 'image',
         'location' => 'location',
-        'sort' => 'sort'
-        
+        'sort' => 'sort',
     ];
 
     /**
@@ -103,7 +102,6 @@ class NewAds extends Command {
         
         $default = [ 
             'package' => '', // 这个东西还要吗...
-            'status' => 'stock',
             'operator_id' => '0',
             'operator' => ''
         ];
@@ -112,6 +110,12 @@ class NewAds extends Command {
         $newAds = new Ads;
         foreach ($oldAds as $oldAd) {
             foreach ($this->data as $key => $value) {
+                // 状态分析
+                if ($oldAd->is_stock == 'yes')
+                    $newAds->status = 'stock';
+                else
+                    $newAds->status = 'unstock';
+
                 $newAds->$key = $oldAd->$value;   
             }
         
@@ -128,7 +132,6 @@ class NewAds extends Command {
 
             return $newAds->save();
         }
-
         
     }
 

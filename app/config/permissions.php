@@ -66,6 +66,14 @@ return [
         'ads.choice.edit' => '编辑',
         'ads.choice.delete' => '删除',
     ],
+    '编辑推荐管理' => [
+        'editorads.index' => '列表',
+        'editorads.create' => '新增',
+        'editorads.unstock' => '下架',
+        'editorads.edit' => '编辑',
+        'editorads.delete' => '删除',
+        'editorads.upload' => '图片上传'
+    ],
     '分类页图片位推广' => [
         'catads.index' => '列表',
         'catads.upload' => '上传',
