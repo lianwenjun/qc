@@ -40,26 +40,6 @@ class Packages extends Base
     }
 
     /**
-     * 读取配置文件，重新爬取所有内容
-     *
-     * @return void
-     * @author 
-     **/
-    public static function refreshListFromConfig()
-    {
-        $names = Config::get('packages.names');
-        $sites = Config::get('packages.sites');
-
-        if ($names) {
-            foreach ($names as $name) {
-                foreach ($sites as $key => $value) {
-                    static::refresh($name, $value['alias']);
-                }
-            }
-        }
-    }
-
-    /**
      * 爬取单个包在单个网站中的内容
      *
      * @param $name string 包名
@@ -103,7 +83,7 @@ class Packages extends Base
      * @return void
      * @author 
      **/
-    public static function createOrUpdate($data)
+    private static function createOrUpdate($data)
     {
         //先查找是否已经有记录了
         $model = static::where('site', $data['site'])
@@ -120,12 +100,12 @@ class Packages extends Base
     }
 
     /**
-     * 下载apk
+     * 下载apk（暂时不使用）
      *
      * @return void
      * @author 
      **/
-    public function download()
+    private function download()
     {
         @mkdir(public_path().'/upload');
 
@@ -143,14 +123,14 @@ class Packages extends Base
     }
 
     /**
-     * 获取数据并返回数据长度
+     * 分段下载并保存apk（暂时不使用）
      *
      * @param $curl
      * @param $string
      *
      * @return int
      */
-    public function filePutContent($curl, $string)
+    private function filePutContent($curl, $string)
     {
         $writeFile = public_path().'/upload/test.apk';
 
