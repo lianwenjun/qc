@@ -53,8 +53,8 @@
             @if(
                 Sentry::getUser()->hasAnyAccess(
                     [
-                        'edittopics.index',
-                        'stocktopics.index',
+                        'topics.index',
+                        'stocks.index',
                         'banners.index',
                         'ads.apps.index',
                         'ads.ranks.index',
@@ -71,11 +71,11 @@
                     @if(Sentry::getUser()->hasAccess('ads.apps.index'))  
                     <li><a href="{{ URL::route('ads.apps.index') }}">首页游戏位管理</a></li>
                     @endif
-                    @if(Sentry::getUser()->hasAccess('edittopics.index')) 
-                    <li><a href="{{ URL::route('edittopics.index') }}">专题编辑管理</a></li>
+                    @if(Sentry::getUser()->hasAccess('topics.index')) 
+                    <li><a href="{{ URL::route('topics.index') }}">专题编辑管理</a></li>
                     @endif  
-                    @if(Sentry::getUser()->hasAccess('stocktopics.index')) 
-                    <li><a href="{{ URL::route('stocktopics.index') }}">上架专题管理</a></li>
+                    @if(Sentry::getUser()->hasAccess('stocks.index')) 
+                    <li><a href="{{ URL::route('stocks.index') }}">上架专题管理</a></li>
                     @endif 
                     @if(Sentry::getUser()->hasAccess('ads.ranks.index'))  
                     <li><a href="{{ URL::route('ads.ranks.index') }}">排行游戏位管理</a></li>

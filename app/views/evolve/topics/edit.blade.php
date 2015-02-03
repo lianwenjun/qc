@@ -98,7 +98,7 @@
                     <input type="button" value="存为草稿件" class="button" />
                     @endif
                     <input type="submit" value="  提  交  " class="button" />
-                    <a href="@if($topic->status != 'stock') {{ URL::route('edittopics.index') }} @else {{ URL::route('stocktopics.index') }} @endif" class="button">返回列表</a>
+                    <a href="@if($topic->status != 'stock') {{ URL::route('topics.index') }} @else {{ URL::route('stocks.index') }} @endif" class="button">返回列表</a>
                 </p>
 
                 <!-- 添加状态隐藏域 -->

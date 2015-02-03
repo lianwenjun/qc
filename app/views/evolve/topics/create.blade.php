@@ -93,7 +93,7 @@
                 <p class="inline-button">
                     <input type="button" value="存为草稿件" class="button" />
                     <input type="submit" value="  提  交  " class="button" />
-                    <a href="{{ URL::route('edittopics.index') }}" class="button">返回列表</a>
+                    <a href="{{ URL::route('topics.index') }}" class="button">返回列表</a>
                 </p>
                 <input type="hidden" name="game_id" value="3">
                 <input type="hidden" name="image" value="../images/pages/pic-preview1.jpg">

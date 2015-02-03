@@ -57,13 +57,13 @@
                 'app_rise' => '飙升'
             ],
             // 编辑专题广告状态 
-            'editTopicsStatus' => [
+            'topicsStatus' => [
                 '' => '状态',
                 'pending' => '待发布',
                 'draft' => '编辑中'
             ],
             // 上架专题广告状态 
-            'stockTopicsStatus' => [
+            'stocksStatus' => [
                 '' => '状态',
                 'stock' => '线上展示',
                 'unstock' => '下架'
