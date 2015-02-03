@@ -54,6 +54,28 @@ return array(
         ),
 
     ),
+    
+    'redis' => array(
+
+        'cluster' => false,
+
+        'default' => array(
+            'host'     => '127.0.0.1',
+            'port'     => 6379,
+            'database' => 0,
+        ),
+        'cache' => array(
+            'host'     => '127.0.0.1',
+            'port'     => 6379,
+            'database' => 1,
+        ),
+        'session' => array(
+            'host'     => '127.0.0.1',
+            'port'     => 6379,
+            'database' => 2,
+        ),
+
+    ),
     'log' => true,
     
 );

@@ -18,12 +18,13 @@ class NewCats extends Command {
      */
     protected $name = 'newcats';
 
+
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description.';
+    protected $description = 'cats表的拆分与数据导入';
 
     /**
      * Create a new command instance.
@@ -34,6 +35,7 @@ class NewCats extends Command {
     {
         parent::__construct();
     }
+
 
     /**
      * Execute the console command.
@@ -53,7 +55,7 @@ class NewCats extends Command {
         // 导入cats新表数据
         if (! empty($cats)) {
             // 新表cats有个新字段position,这里默认定义为hotcats;
-            $position = 'hotcats';
+            $position = 'gamecats';
 
             foreach ($cats as $cat) {
                 DB::insert('insert into cats (id,title,sort,position,created_at,updated_at,deleted_at) values(?,?,?,?,?,?,?)', [$cat->id, $cat->title, $cat->sort, $position, $cat->created_at, $cat->updated_at, $cat->deleted_at]);

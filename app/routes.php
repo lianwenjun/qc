@@ -168,15 +168,6 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::delete('{id}', ['as' => 'gamecattags.delete', 'uses' => 'Admin_Cat_GameCatTagsController@destroy']);// 游戏分类删除
     });
 
-    Route::group(['prefix' => 'topics', 'before' => 'hasPermissions'], function() // 专题广告
-    {
-        Route::get('{type}', ['as' => 'topics.index', 'uses' => 'Admin_TopicsController@index']);// 专题首页
-        Route::get('dptopics/create', ['as' => 'topics.create', 'uses' => 'Admin_TopicsController@create']);// 查看详情
-        Route::get('dptopics/{id}', ['as' => 'topics.show', 'uses' => 'Admin_TopicsController@show']);// 查看详情
-        Route::get('{type}/{id}', ['as' => 'topics.edit', 'uses' => 'Admin_TopicsController@edit']);// 查看详情
-    });
-
-
     Route::group(['prefix' => 'rating', 'before' => 'hasPermissions'], function() //游戏评分
     {
         Route::get('index', ['as' => 'rating.index', 'uses' => 'Admin_RatingsController@index']);
@@ -206,6 +197,9 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::post('{id}/edit', ['as' =>'keyword.update', 'uses' => 'Admin_KeywordsController@update']);
         Route::delete('{id}/delete', ['as' =>'keyword.delete', 'uses' => 'Admin_KeywordsController@destroy']);
     });
+
+    
+    // 老版本广告路由
     Route::group(['prefix' => 'appsads', 'before' => 'hasPermissions'], function() //游戏位推广
     {
         Route::get('index', ['as' => 'appsads.index', 'uses' => 'Admin_Apps_AppsAdsController@index']);
@@ -216,8 +210,8 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::delete('{id}/delete', ['as' => 'appsads.delete', 'uses' => 'Admin_Apps_AppsAdsController@destroy']);
         Route::get('{id}/unstock', ['as' => 'appsads.unstock', 'uses' => 'Admin_Apps_AppsAdsController@unstock']);
         Route::post('imageupload', ['as' => 'appsads.upload', 'uses' => 'Admin_Apps_AppsAdsController@upload']);
-
     });
+    
     Route::group(['prefix' => 'rankads', 'before' => 'hasPermissions'], function() //游戏位推广
     {
         Route::get('index', ['as' => 'rankads.index', 'uses' => 'Admin_rankAdsController@index']);
@@ -228,6 +222,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::delete('{id}/delete', ['as' => 'rankads.delete', 'uses' => 'Admin_rankAdsController@destroy']);
         Route::get('{id}/unstock', ['as' => 'rankads.unstock', 'uses' => 'Admin_rankAdsController@unstock']);
     });
+
     Route::group(['prefix' => 'indexads', 'before' => 'hasPermissions'], function() //首页图片位推广
     {
         Route::get('index', ['as' => 'indexads.index', 'uses' => 'Admin_indexAdsController@index']);
@@ -239,6 +234,7 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('{id}/unstock', ['as' => 'indexads.unstock', 'uses' => 'Admin_indexAdsController@unstock']);
         Route::post('imageupload', ['as' => 'indexads.upload', 'uses' => 'Admin_indexAdsController@upload']);
     });
+
     Route::group(['prefix' => 'editorads', 'before' => 'hasPermissions'], function() //编辑推荐
     {
         Route::get('index', ['as'=>'editorads.index', 'uses' => 'Admin_EditorAdsController@index']);
@@ -250,6 +246,67 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
         Route::get('{id}/unstock', ['as'=>'editorads.unstock', 'uses' => 'Admin_EditorAdsController@unstock']);
         Route::post('imageupload', ['as' => 'editorads.upload', 'uses' => 'Admin_EditorAdsController@upload']);
     });
+
+    // 新版本广告路由
+    Route::group(['prefix' => 'banners', 'before' => 'hasPermissions'], function() //游戏位推广
+    {
+        Route::get('/', ['as' => 'banners.index', 'uses' => 'Admin_Ads_BannersController@index']);// 首页图片位管理首页
+        Route::get('create', ['as' => 'banners.create', 'uses' => 'Admin_Ads_BannersController@create']);// 首页图片位管理添加页接口
+        Route::post('create', ['as' => 'banners.create', 'uses' => 'Admin_Ads_BannersController@store']);// 首页图片位管理添加
+        Route::get('{id}/edit', ['as' => 'banners.edit', 'uses' => 'Admin_Ads_BannersController@edit']);// 首页图片位管理编辑页接口
+        Route::put('{id}/edit', ['as' => 'banners.edit', 'uses' => 'Admin_Ads_BannersController@update']);// 首页图片位管理更新
+        Route::delete('{id}', ['as' => 'banners.delete', 'uses' => 'Admin_Ads_BannersController@destroy']);
+        Route::put('{id}/unstock', ['as' => 'banners.unstock', 'uses' => 'Admin_Ads_BannersController@unstock']);
+        Route::post('image', ['as' => 'banners.imageupload', 'uses' => 'Admin_Ads_BannersController@imageUpload']);// 首页图片位图片上传接口
+    });
+
+    Route::group(['prefix' => 'topics', 'before' => 'hasPermissions'], function() // 专题广告推广
+    {
+        Route::get('/', ['as' => 'edittopics.index', 'uses' => 'Admin_TopicsController@editTopics']);// 专题首页
+        Route::get('stock', ['as' => 'stocktopics.index', 'uses' => 'Admin_TopicsController@stockTopics']);// 专题首页
+        Route::get('create', ['as' => 'topics.create', 'uses' => 'Admin_TopicsController@create']);// 专题添加页
+        Route::post('create', ['as' => 'topics.create', 'uses' => 'Admin_TopicsController@store']);// 专题添加接口
+        Route::get('{id}/show', ['as' => 'topics.show', 'uses' => 'Admin_TopicsController@show']);// 查看详情
+        Route::get('{id}/edit', ['as' => 'topics.edit', 'uses' => 'Admin_TopicsController@edit']);// 专题编辑页
+        Route::put('{id}/edit', ['as' => 'topics.edit', 'uses' => 'Admin_TopicsController@update']);// 专题编辑页
+        Route::put('{id}/unstock', ['as' => 'topics.unstock', 'uses' => 'Admin_TopicsController@unstock']);// 专题下架
+        Route::put('{id}/revocate', ['as' => 'topics.revocate', 'uses' => 'Admin_TopicsController@revocate']);// 专题撤销
+        Route::delete('{id}', ['as' => 'topics.delete', 'uses' => 'Admin_TopicsController@destroy']);// 专题删除
+    });
+
+    // 广告路由整合
+    Route::group(['prefix' => 'ads', 'before' => 'hasPermissions'], function() 
+    {
+        Route::get('/ranks', ['as' => 'ads.ranks.index', 'uses' => 'Admin_Ads_GameAdsController@ranks']);
+        Route::get('/apps', ['as' => 'ads.apps.index','uses' => 'Admin_Ads_GameAdsController@apps']); 
+        Route::get('/choice', ['as' => 'ads.choice.index', 'uses' => 'Admin_Ads_GameAdsController@choice']);
+
+        Route::get('/ranks/create', ['as' => 'ads.ranks.create', 'uses' => 'Admin_Ads_GameAdsController@create']);
+        Route::get('/apps/create', ['as' => 'ads.apps.create', 'uses' => 'Admin_Ads_GameAdsController@create']);
+        Route::get('/choice/create', ['as' => 'ads.choice.create', 'uses' => 'Admin_Ads_GameAdsController@create']);
+        
+        Route::post('/ranks/create', ['as' => 'ads.ranks.create', 'uses' => 'Admin_Ads_GameAdsController@store']);
+        Route::post('/apps/create', ['as' => 'ads.apps.create', 'uses' => 'Admin_Ads_GameAdsController@store']);
+        Route::post('/choice/create', ['as' => 'ads.choice.create', 'uses' => 'Admin_Ads_GameAdsController@store']);
+
+        Route::get('/ranks/{id}/edit', ['as' => 'ads.ranks.edit', 'uses' => 'Admin_Ads_GameAdsController@edit']);
+        Route::get('/apps/{id}/edit', ['as' => 'ads.apps.edit', 'uses' => 'Admin_Ads_GameAdsController@edit']);
+        Route::get('/choice/{id}/edit', ['as' => 'ads.choice.edit', 'uses' => 'Admin_Ads_GameAdsController@edit']);
+
+        Route::put('/ranks/{id}/edit', ['as' => 'ads.ranks.edit', 'uses' => 'Admin_Ads_GameAdsController@update']);
+        Route::put('/apps/{id}/edit', ['as' => 'ads.apps.edit', 'uses' => 'Admin_Ads_GameAdsController@update']);
+        Route::put('/choice/{id}/edit', ['as' => 'ads.choice.edit', 'uses' => 'Admin_Ads_GameAdsController@update']);
+
+        Route::delete('/ranks/{id}', ['as' => 'ads.ranks.delete', 'uses' => 'Admin_Ads_GameAdsController@destroy']);
+        Route::delete('/apps/{id}', ['as' => 'ads.apps.delete', 'uses' => 'Admin_Ads_GameAdsController@destroy']);
+        Route::delete('/choice/{id}', ['as' => 'ads.choice.delete', 'uses' => 'Admin_Ads_GameAdsController@destroy']);
+
+        Route::put('/ranks/{id}/unstock', ['as' => 'ads.ranks.unstock', 'uses' => 'Admin_Ads_GameAdsController@unstock']);
+        Route::put('/apps/{id}/unstock', ['as' => 'ads.apps.unstock', 'uses' => 'Admin_Ads_GameAdsController@unstock']);
+        Route::put('/choice/{id}/unstock', ['as' => 'ads.choice.unstock', 'uses' => 'Admin_Ads_GameAdsController@unstock']);
+        // Route::post('/{type}/image', ['as' => 'ads.imageupload', 'uses' => 'Admin_Ads_GameAdsController@imageUpload']);
+    });
+
     Route::group(['prefix' => 'catads', 'before' => 'hasPermissions'], function() //分类推广
     {
         Route::get('index', ['as' => 'catads.index', 'uses' => 'Admin_Cat_CatAdsController@index']);
@@ -338,4 +395,29 @@ Route::group(['prefix' => 'darwin'], function()
 Route::group(['prefix' => 'tp'], function()
 {
     Route::get('game', ['uses' => 'Tp_ApiController@getGameInfo']);
+});
+
+
+Route::group(['prefix' => 'darwin'], function() // darwin版本
+{   
+    Route::group(['prefix' => 'games'], function() {
+        Route::get('/choice', ['uses' => 'Darwin_GamesController@choice']);// 第一次启动应用弹出精选必玩!
+        Route::get('/rank', ['uses' => 'Darwin_GamesController@ranks']);// 游戏排行
+    });
+
+    Route::group(['prefix' => 'cats'], function() {
+        Route::get('/', ['uses' => 'Darwin_CatsController@catIndex']);// 游戏分类
+        Route::get('/{cat_id}', ['uses' => 'Darwin_CatsController@cats']);// 分类的游戏列表
+    });
+
+    Route::group(['prefix' => 'tags'], function() {
+        Route::get('/{tags_id}', ['uses' => 'Darwin_CatsController@tags']);// 标签游戏列表
+        Route::get('/hot', ['uses' => 'Darwin_CatsController@hotTags']);// 本周热门标签
+    });
+
+    Route::group(['prefix' => 'topics'], function() {
+        Route::get('/', ['uses' => 'Darwin_TopicsController@oldTopics']);// 专题往期列表
+        Route::get('/banner', ['uses' => 'Darwin_TopicsController@topicsBanner']);// 专题列表推广图[最新专题]
+        Route::get('/{id}', ['uses' => 'Darwin_TopicsController@topics']);// 专题列表游戏
+    });
 });

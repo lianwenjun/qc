@@ -23,28 +23,28 @@ $(function(){
     });
 
     // 验证添加分类弹窗
-    $('.jq-addCatForm').validate({
+    $('.jq-addCateForm').validate({
         rules: {
-            catName: {
+            cateName: {
                 required: true
             },
-            catLocation: {
+            cateLocation: {
                 required: true
             },
-            catSort: {
+            cateSort: {
                 required: true,
                 min: 0,
                 digits: true
             }
         },
         messages: {
-            catName: {
+            cateName: {
                 required: "请输入分类名称！"
             },
-            catLocation: {
+            cateLocation: {
                 required: "请选择分类位置！"
             },
-            catSort: {
+            cateSort: {
                 required: "请输入排序！",
                 min: "请输入最小为0的值！",
                 digits: "请输入整数！"

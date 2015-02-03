@@ -38,35 +38,41 @@ return [
         'apps.unstock.edit' => '编辑',
         'apps.iconupload' => '游戏icon上传',
     ],
+    '首页图片位管理' => [
+        'banners.index' => '列表',
+        'banners.create' => '新增',
+        'banners.unstock' => '下架',
+        'banners.edit' => '编辑',
+        'banners.delete' => '删除'
+    ],
     '首页游戏位管理' => [
-        'appsads.index' => '列表',
-        'appsads.create' => '新增',
-        'appsads.unstock' => '下架',
-        'appsads.edit' => '编辑',
-        'appsads.delete' => '删除',
-        'appsads.upload' => '上传',
+        'ads.apps.index' => '列表',
+        'ads.apps.create' => '新增',
+        'ads.apps.unstock' => '下架',
+        'ads.apps.edit' => '编辑',
+        'ads.apps.delete' => '删除',
     ],
     '排行游戏位管理' => [
-        'rankads.index' => '列表',
-        'rankads.create' => '新增',
-        'rankads.unstock' => '下架',
-        'rankads.edit' => '编辑',
-        'rankads.delete' => '删除',
+        'ads.ranks.index' => '列表',
+        'ads.ranks.create' => '新增',
+        'ads.ranks.unstock' => '下架',
+        'ads.ranks.edit' => '编辑',
+        'ads.ranks.delete' => '删除',
     ],
-    '首页图片位管理' => [
-        'indexads.index' => '列表',
-        'indexads.create' => '新增',
-        'indexads.unstock' => '下架',
-        'indexads.edit' => '编辑',
-        'indexads.delete' => '删除',
-
+    '精选必玩管理' => [
+        'ads.choice.index' => '列表',
+        'ads.choice.create' => '新增',
+        'ads.choice.unstock' => '下架',
+        'ads.choice.edit' => '编辑',
+        'ads.choice.delete' => '删除',
     ],
-    '编辑精选管理' => [
+    '编辑推荐管理' => [
         'editorads.index' => '列表',
         'editorads.create' => '新增',
         'editorads.unstock' => '下架',
         'editorads.edit' => '编辑',
         'editorads.delete' => '删除',
+        'editorads.upload' => '图片上传'
     ],
     '分类页图片位推广' => [
         'catads.index' => '列表',
@@ -144,7 +150,8 @@ return [
     ],
     // 新增专题广告
     '专题广告' => [
-        'topics.index' => '列表',
+        'edittopics.index' => '编辑专题列表',
+        'stocktopics.index' => '上架专题列表',
         'topics.create' => '新增',
         'topics.edit' => '编辑',
         'topics.show' => '查看',

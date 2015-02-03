@@ -7,7 +7,18 @@ class Topics extends \Eloquent {
     protected $softDelete = true;
     protected $dates = ['deleted_at'];
     protected $table = 'topics';
-    protected $fillable = [];
+    protected $fillable = [
+        'title', 
+        'game_id', 
+        'summary', 
+        'image', 
+        'location', 
+        'status',
+        'stocked_at', 
+        'unstocked_at',
+        'operator_id',
+        'operator'
+    ];
 
     /**
      * 验证
@@ -21,17 +32,20 @@ class Topics extends \Eloquent {
         // 分类数据验证规则
         $rules = [
             'title' => 'sometimes|required|',
-            'position' => 'sometimes|required|in:hotcats,gamecats',
-            'sort' => 'sometimes|numeric',
-            'image' => 'sometimes|required|image'
+            'game_id' => 'sometimes|required|',
+            'summary' => 'sometimes|required|',
+            'image' => 'sometimes|required',
+            'location' => 'sometimes|required',
+            'stocked_at' => 'sometimes|required',
         ];
         // 错误信息
         $messages = [
-            'title.required' => '分类标题不能为空',
-            'title.unique' => '分类已存在',
-            'position.required' => '请选择分类位置',
-            'position.in' => '请不要违法操作',
-            'sort.numeric' => '排序必须为数字'
+            'title.required' => '标题不能为空',
+            'game_id.required' => '请添加游戏',
+            'summary.required' => '点评不能为空',
+            'image.required' => '图片不能为空',
+            'location.required' => '请选择专题位置',
+            'stocked_at.required' => '上架时间不能为空'
         ];
 
         return Validator::make($data, $rules, $messages);
@@ -46,11 +60,11 @@ class Topics extends \Eloquent {
      */
     public function lists($pagesize, $type ,$ofStatus = null, $title = null ) 
     {
-        if ($type == 'dptopics') {
+        if ($type == 'editTopics') {
         	$inStatus = ['draft', 'pending'];
         }
 
-        if ($type == 'sutopics') {
+        if ($type == 'stockTopics') {
         	$inStatus = ['stock', 'unstock'];
         }
 
@@ -104,4 +118,7 @@ class Topics extends \Eloquent {
 
     	return $query->whereIn('status', $inStatus);
     }
+
+
+    
 }

@@ -1,6 +1,8 @@
 <?php
 
-class Darwin_BaseController extends \Controller {
+class Darwin_BaseController extends \Controller
+{
+
 
     /**
      * 基础配置数据获取
