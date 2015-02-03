@@ -16,7 +16,7 @@
 @stop
 
 @section('content')
-	<div class="breadcrumb">
+	   <div class="breadcrumb">
             <a href="javascript:;">系统管理</a><span>&gt;</span>游戏分类管理
         </div>  
         <div class="content"> 

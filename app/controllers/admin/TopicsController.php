@@ -14,7 +14,7 @@ class Admin_TopicsController extends \Admin_BaseController {
         $ofStatus = Input::get('status');
         $title = Input::get('title');
         $datas = Topics::lists($this->pagesize, $type, $ofStatus, $title);
-        $statusLang = Config::get('status.ads.topicsStatus');
+        $statusLang = Config::get('status.ads.editTopicsStatus');
 
         return view::make('evolve.topics.editTopics')
            ->withDatas($datas)
@@ -33,7 +33,7 @@ class Admin_TopicsController extends \Admin_BaseController {
         $ofStatus = Input::get('status');
         $title = Input::get('title');
         $datas = Topics::lists($this->pagesize, $type, $ofStatus, $title);
-        $statusLang = Config::get('status.ads.topicsStatus');
+        $statusLang = Config::get('status.ads.stockTopicsStatus');
 
         return view::make('evolve.topics.stockTopics')
            ->withDatas($datas)
