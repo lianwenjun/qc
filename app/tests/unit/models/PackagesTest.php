@@ -9,6 +9,12 @@ class PackagesTest extends TestCase
         $this->assertTrue(Packages::refresh('com.halfbrick.fruitninjafree', 'wdj'));
     }
 
+    // 测试豌豆荚数据(这个包是不存在的)
+    public function testWdjRefresh2()
+    {
+        $this->assertFalse(Packages::refresh('com.halfbrick.fruitninjafree123', 'wdj'));
+    }
+
     // 测试应用宝数据
     public function testYybRefresh()
     {
@@ -16,7 +22,7 @@ class PackagesTest extends TestCase
     }
 
     // 测试应用宝数据(这个包是不存在的)
-    public function testYybRefresh()
+    public function testYybRefresh2()
     {
         $this->assertFalse(Packages::refresh('com.halfbrick.fruitninjafree111', 'yyb'));
     }
