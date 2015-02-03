@@ -17,7 +17,11 @@ class WdjDomParser extends BaseDomParser implements DomParserInterface
      **/
     public function getTitle()
     {
-        return $this->crawler->filter('span.title')->first()->html();
+        try {
+            return $this->crawler->filter('span.title')->first()->html();
+        } catch (\InvalidArgumentException $e) {
+            throw new DomParserException('找不到游戏名称');
+        }
     }
 
     /**
@@ -29,7 +33,11 @@ class WdjDomParser extends BaseDomParser implements DomParserInterface
      **/
     public function getVersionCode()
     {
-        return intval($this->crawler->filter('a.push-btn')->first()->attr('data-vc'));
+        try {
+            return intval($this->crawler->filter('a.push-btn')->first()->attr('data-vc'));
+        } catch (\InvalidArgumentException $e) {
+            throw new DomParserException('找不到游戏名称');
+        }
     }
 
     /**
@@ -41,6 +49,10 @@ class WdjDomParser extends BaseDomParser implements DomParserInterface
      **/
     public function getDownloadLink()
     {
-        return $this->crawler->filter('a.install-btn')->first()->attr('href');
+        try {
+            return $this->crawler->filter('a.install-btn')->first()->attr('href');
+        } catch (\InvalidArgumentException $e) {
+            throw new DomParserException('找不到游戏名称');
+        }
     }
 }
