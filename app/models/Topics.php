@@ -60,11 +60,11 @@ class Topics extends \Eloquent {
      */
     public function lists($pagesize, $type ,$ofStatus = null, $title = null ) 
     {
-        if ($type == 'editTopics') {
+        if ($type == 'topics') {
         	$inStatus = ['draft', 'pending'];
         }
 
-        if ($type == 'stockTopics') {
+        if ($type == 'stocks') {
         	$inStatus = ['stock', 'unstock'];
         }
 

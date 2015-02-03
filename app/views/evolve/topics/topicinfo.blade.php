@@ -54,7 +54,7 @@
                 </tbody>
             </table>
             <p class="inline-button">
-                <a href="{{ URL::route('edittopics.index') }}" class="button">返回列表</a>
+                <a href="{{ URL::route('topics.index') }}" class="button">返回列表</a>
             </p>
         </form>
         <!-- /表单 -->

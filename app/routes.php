@@ -251,8 +251,8 @@ Route::group(['prefix' => 'admin', 'before' => 'adminAuth'], function()
 
     Route::group(['prefix' => 'topics', 'before' => 'hasPermissions'], function() // 专题广告推广
     {
-        Route::get('/', ['as' => 'edittopics.index', 'uses' => 'Admin_TopicsController@editTopics']);// 专题首页
-        Route::get('stock', ['as' => 'stocktopics.index', 'uses' => 'Admin_TopicsController@stockTopics']);// 专题首页
+        Route::get('/', ['as' => 'topics.index', 'uses' => 'Admin_TopicsController@topics']);// 专题首页
+        Route::get('stocks', ['as' => 'stocks.index', 'uses' => 'Admin_TopicsController@stocks']);// 专题首页
         Route::get('create', ['as' => 'topics.create', 'uses' => 'Admin_TopicsController@create']);// 专题添加页
         Route::post('create', ['as' => 'topics.create', 'uses' => 'Admin_TopicsController@store']);// 专题添加接口
         Route::get('{id}/show', ['as' => 'topics.show', 'uses' => 'Admin_TopicsController@show']);// 查看详情
